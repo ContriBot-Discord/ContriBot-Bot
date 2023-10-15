@@ -46,12 +46,14 @@ interface UserAttributes {
   userId: string;
   contributionPoint: number;
   allContributionPoint: number;
+  lang: string
 }
 
 export class ContributionUser extends Model<UserAttributes> implements UserAttributes {
   public userId!: string;
   public contributionPoint!: number;
   public allContributionPoint!: number;
+  public lang!: string
 
   public static initialize(sequelize: Sequelize) {
     this.init(
@@ -71,6 +73,11 @@ export class ContributionUser extends Model<UserAttributes> implements UserAttri
           allowNull: false,
           defaultValue: 0,
         },
+        lang: {
+          type: DataTypes.CHAR(2),
+          allowNull: false,
+          defaultValue: 'fr'
+        }
       },
       {
         sequelize,

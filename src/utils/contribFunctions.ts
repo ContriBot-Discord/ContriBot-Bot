@@ -7,6 +7,24 @@ export function getPoints(id: string, all: boolean = false): number {
   return contribution.get(id)?.contributionPoint ?? 0;
 }
 
+export async function setLang(
+    id: string,
+    lang: string
+): Promise<ContributionUser> {
+  const user = contribution.get(id) ?? (await createNewUser(id, 0)); // No need to set the user language in createNewUser, we will set it later
+
+  user.lang = lang;
+  await user.save();
+  return user;
+}
+
+export async function getLang (
+    id: string
+): Promise<string> {
+  const user = contribution.get(id) ?? (await createNewUser(id, 0)); // If new user, the default language will be returned
+  return user.lang
+}
+
 export async function addPoints(
   id: string,
   amount: number,
@@ -66,11 +84,12 @@ export async function resetAllUsersPoints(
   return users;
 }
 
-async function createNewUser(id: string, amount: number) {
+async function createNewUser(id: string, amount: number, language: string = "fr") {
   const newUser = await Contribution.create({
     userId: id,
     contributionPoint: amount,
     allContributionPoint: amount,
+    lang: language
   });
 
   contribution.set(id, newUser);
