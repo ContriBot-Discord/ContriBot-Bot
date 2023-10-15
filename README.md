@@ -1,6 +1,6 @@
 # ContriBot
 
-This is a Discord Bot that allows you to reward the member of your server with contribution points.
+This is a Discord Bot that allows you to reward the member of your server with contribution points. </br>
 It's still in development, so it's not ready to be used yet.
 
 ## Installation
@@ -13,7 +13,7 @@ It's still in development, so it's not ready to be used yet.
    
 ## Usage
 
-The bot is still in development, so it's not ready to be used yet.
+The bot is still in development, so it's not ready to be used yet. </br>
 This section will be updated when the bot will be ready to be used.
 
 ## Contributing
@@ -26,6 +26,6 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ## Credits
 
-This bot has been made by [EAnathos](https://github.com/EAnathos)
+This bot has been made by [EAnathos](https://github.com/EAnathos) </br>
 Here are the contributors:
 - [V0ltis](https://github.com/v0ltis)
