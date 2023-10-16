@@ -53,7 +53,9 @@ const event: BotEvent = {
         const endIndex: number = startIndex + 10;
 
         for (let i = startIndex; i < endIndex; i++) {
-          const user: ContributionUser = contribution.get(contribution.keyAt(i)!)!;
+          const user: ContributionUser = contribution.get(
+            contribution.keyAt(i)!
+          )!;
           if (user) {
             embed.addFields({
               name: `Top ${i + 1} : `,
@@ -61,6 +63,13 @@ const event: BotEvent = {
             });
           }
         }
+
+        await interaction.message.edit({
+          embeds: [embed],
+          components: [button],
+        });
+
+        await interaction.deferUpdate();
       }
     } else {
       if (actualPageInt * 10 + 1 > contribution.size) {
@@ -76,7 +85,9 @@ const event: BotEvent = {
             : startIndex + 10;
 
         for (let i = startIndex; i < endIndex; i++) {
-          const user: ContributionUser = contribution.get(contribution.keyAt(i)!)!;
+          const user: ContributionUser = contribution.get(
+            contribution.keyAt(i)!
+          )!;
           if (user) {
             embed.addFields({
               name: `Top ${i + 1} : `,
@@ -84,15 +95,15 @@ const event: BotEvent = {
             });
           }
         }
+
+        await interaction.message.edit({
+          embeds: [embed],
+          components: [button],
+        });
+
+        await interaction.deferUpdate();
       }
     }
-
-    await interaction.message.edit({
-      embeds: [embed],
-      components: [button],
-    });
-
-    await interaction.deferUpdate();
   },
 };
 

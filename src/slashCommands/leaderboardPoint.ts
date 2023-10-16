@@ -17,7 +17,7 @@ export const command: SlashCommand = {
   async execute(interaction: CommandInteraction<CacheType>) {
     const embed = new EmbedBuilder()
       .setTitle("Leaderboard [1]")
-      .setDescription(`Voici le leaderboard des points de contribution.`)
+      .setDescription(`Here is the leaderboard of contribution points.`)
       .setColor("#0000ff")
       .setTimestamp();
 
@@ -28,7 +28,7 @@ export const command: SlashCommand = {
       if (user) {
         embed.addFields({
           name: `Top ${i + 1} : `,
-          value: `<@${user.userId}> avec **${user.contributionPoint}** points de contribution`,
+          value: `<@${user.userId}> with **${user.contributionPoint}** contribution points`,
         });
       }
     }
