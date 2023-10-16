@@ -30,7 +30,7 @@ const event: BotEvent = {
 
     const embed = new EmbedBuilder()
       .addFields({
-        name: "📜 Leaderboard",
+        name: "<:shinybluesparkles:1163503829174734918> Leaderboard",
         value: "*Here is the leaderboard of total contribution points*",
       })
       .setColor("#0000ff")

@@ -16,7 +16,7 @@ export const command: SlashCommand = {
     .setDescription("Show the leaderboard of total contribution point"),
   async execute(interaction: CommandInteraction<CacheType>) {
     const embed = new EmbedBuilder()
-      .addFields({ name: "📜 Leaderboard", value: "*Here is the leaderboard of total contribution points*" })
+      .addFields({ name: "<:shinybluesparkles:1163503829174734918> Leaderboard", value: "*Here is the leaderboard of total contribution points*" })
       .setColor("#0000ff")
       .setFooter({ text: `Page 1/${Math.ceil(contribution.size / 10)}`})
       .setTimestamp();
