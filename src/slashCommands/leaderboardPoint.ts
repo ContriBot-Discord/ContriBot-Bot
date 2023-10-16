@@ -16,30 +16,39 @@ export const command: SlashCommand = {
     .setDescription("Show the leaderboard of total contribution point"),
   async execute(interaction: CommandInteraction<CacheType>) {
     const embed = new EmbedBuilder()
-      .setTitle("Leaderboard [1]")
-      .setDescription(`Here is the leaderboard of total contribution points.`)
+      .addFields({ name: "📜 Leaderboard", value: "*Here is the leaderboard of total contribution points*" })
       .setColor("#0000ff")
+      .setFooter({ text: `Page 1/${Math.ceil(contribution.size / 10)}`})
       .setTimestamp();
 
-    contribution.sort((a, b) => b.allContributionPoint - a.allContributionPoint);
+    contribution.sort(
+      (a, b) => b.allContributionPoint - a.allContributionPoint
+    );
 
     for (let i = 0; i < 9; i++) {
       const user: ContributionUser = contribution.get(contribution.keyAt(i)!)!;
       if (user) {
         embed.addFields({
-          name: `Top ${i + 1} : `,
-          value: `<@${user.userId}> with **${user.allContributionPoint}** total contribution points`,
+          name: ` `,
+          value: `**#${i+1} ·** <@${user.userId}> · **${user.allContributionPoint}** points`,
         });
       }
     }
 
     const button = new ActionRowBuilder<ButtonBuilder>()
       .addComponents(
-        new ButtonBuilder().setCustomId("previous").setEmoji("⬅️").setStyle(1)
+        new ButtonBuilder().setCustomId("previous").setLabel("◀︎").setStyle(1)
       )
       .addComponents(
-        new ButtonBuilder().setCustomId("next").setEmoji("➡️").setStyle(1)
+        new ButtonBuilder().setCustomId("next").setLabel("▶").setStyle(1)
+      )
+      .addComponents(
+        new ButtonBuilder().setCustomId("refresh").setLabel("⟲").setStyle(1)
       );
+
+    button.components[0].setDisabled(true);
+    
+    if (contribution.size <= 10) button.components[1].setDisabled(true);
 
     await interaction.reply({ embeds: [embed], components: [button] });
   },
