@@ -26,7 +26,7 @@ const event: BotEvent = {
 
     const embed = new EmbedBuilder()
       .setTitle(`Leaderboard [${actualPageInt + 1}]`)
-      .setDescription(`Here is the leaderboard of contribution points.`)
+      .setDescription(`Here is the leaderboard of total contribution points.`)
       .setColor("#0000ff")
       .setTimestamp();
 
@@ -38,7 +38,7 @@ const event: BotEvent = {
         new ButtonBuilder().setCustomId("next").setEmoji("➡️").setStyle(1)
       );
 
-    contribution.sort((a, b) => b.contributionPoint - a.contributionPoint);
+    contribution.sort((a, b) => b.allContributionPoint - a.allContributionPoint);
 
     if (interaction.customId === "previous") {
       if (actualPageInt == 1) {
@@ -59,7 +59,7 @@ const event: BotEvent = {
           if (user) {
             embed.addFields({
               name: `Top ${i + 1} : `,
-              value: `<@${user.userId}> with **${user.contributionPoint}** contribution points`,
+              value: `<@${user.userId}> with **${user.allContributionPoint}** total contribution points`,
             });
           }
         }
@@ -91,7 +91,7 @@ const event: BotEvent = {
           if (user) {
             embed.addFields({
               name: `Top ${i + 1} : `,
-              value: `<@${user.userId}> with **${user.contributionPoint}** contribution points`,
+              value: `<@${user.userId}> with **${user.allContributionPoint}** total contribution points`,
             });
           }
         }

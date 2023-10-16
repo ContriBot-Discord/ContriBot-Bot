@@ -23,7 +23,7 @@ export const command: SlashCommand = {
     .addBooleanOption((option) =>
       option
         .setName("all")
-        .setDescription("Whether to add to all contribution points or not.")
+        .setDescription("Whether to add to all contribution points or not. (Default: true)")
         .setRequired(false)
     ),
   async execute(interaction: CommandInteraction<CacheType>) {
