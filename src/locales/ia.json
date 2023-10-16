@@ -1,0 +1,70 @@
+{
+	"global": {
+		"points": {
+			"zero": "0 punctos de contribution",
+			"one": "**%s** puncto de contribution",
+			"other": "**%s** punctos de contribution"
+		}
+	},
+	"leaderboard": {
+		"embed": {
+			"title": "Tabula de resultatos [%s]",
+			"description": "Ecce le tabula de resultatos de contribution.",
+			"field": {
+				"name": "Top %s",
+				"value": "<@%s> con %s"
+			}
+		},
+		"buttons": {
+			"errors": {
+				"goBack": "Tu non pote retroceder!",
+				"goForward": "Tu non pote avancar!"
+			}
+		}
+	},
+	"addContribPoint": {
+		"embed": {
+			"title": "Addition",
+			"description": "<@%s> ha addite %s a <@%s>."
+		}
+	},
+	"getContribPoint": {
+		"embed": {
+			"title": "Presentation",
+			"description": "<@%s> ha %s."
+		}
+	},
+	"removeContribPoint": {
+		"embed": {
+			"title": "Subtraction",
+			"description": "<@%s> ha subtrahite %s a <@%s>."
+		}
+	},
+	"resetAllContribPoint": {
+		"embed": {
+			"title": "Reinitiation",
+			"description": "@%s> ha reinitiate le punctos de contribution de omne membros."
+		}
+	},
+	"resetContribPoint": {
+		"embed": {
+			"title": "Reinitiation",
+			"description": "<@%s> ha reinitiate le punctos de contribution de <@%s>."
+		}
+	},
+	"setLang": {
+		"embed": {
+			"title": "Lingua",
+			"description": "Tu lingua ha essite cambiate a interlingua."
+		}
+	},
+	"sendEmbedTicket": {
+		"embed": {
+			"name": "Aperir un ticket",
+			"description": "**Benvenite al sala de creation de ticket!**\n            \n Le systema de ticket pote esser usate pro:\n* Invitar un persona in le servitor (extra de BUT).\n* Reportar un jocator / un bug.\n* Reservar le servitor de evento.\n* Requestar le accesso al commandos bloc in le servitor creative.\n\n *Pro aperir un ticket, clicca sur le button infra.*"
+		},
+		"button": {
+			"label": "Crear un ticket"
+		}
+	}
+}
