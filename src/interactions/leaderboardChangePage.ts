@@ -16,83 +16,139 @@ const event: BotEvent = {
     if (!interaction.isButton()) return;
 
     if (
-      !(interaction.customId === "previous" || interaction.customId === "next")
+      !(
+        interaction.customId === "previous" ||
+        interaction.customId === "next" ||
+        interaction.customId === "refresh"
+      )
     )
       return;
 
     const actualPageInt: number = parseInt(
-      interaction.message.embeds[0].title!.split("[")[1].split("]")[0]
+      interaction.message.embeds[0].footer!.text!.split(" ")[1].split("/")[0]
     );
 
     const embed = new EmbedBuilder()
-      .setTitle(`Leaderboard [${actualPageInt + 1}]`)
-      .setDescription(`Here is the leaderboard of contribution points.`)
+      .addFields({
+        name: "<:shinybluesparkles:1163503829174734918> Leaderboard",
+        value: "*Here is the leaderboard of total contribution points*",
+      })
       .setColor("#0000ff")
+      .setFooter({
+        text: `Page ${actualPageInt}/${Math.ceil(contribution.size / 10)}`,
+      })
       .setTimestamp();
 
     const button = new ActionRowBuilder<ButtonBuilder>()
       .addComponents(
-        new ButtonBuilder().setCustomId("previous").setEmoji("⬅️").setStyle(1)
+        new ButtonBuilder().setCustomId("previous").setLabel("◀︎").setStyle(1)
       )
       .addComponents(
-        new ButtonBuilder().setCustomId("next").setEmoji("➡️").setStyle(1)
+        new ButtonBuilder().setCustomId("next").setLabel("▶").setStyle(1)
+      )
+      .addComponents(
+        new ButtonBuilder().setCustomId("refresh").setLabel("⟲").setStyle(1)
       );
 
-    contribution.sort((a, b) => b.contributionPoint - a.contributionPoint);
+    contribution.sort(
+      (a, b) => b.allContributionPoint - a.allContributionPoint
+    );
 
     if (interaction.customId === "previous") {
-      if (actualPageInt == 1) {
-        await interaction.reply({
-          content: "You can't go back !",
-          ephemeral: true,
-        });
-      } else {
-        embed.setTitle(`Leaderboard [${actualPageInt - 1}]`);
+      embed.setFooter({
+        text: `Page ${actualPageInt - 1}/${Math.ceil(contribution.size / 10)}`,
+      });
 
-        const startIndex: number = (actualPageInt - 2) * 10;
-        const endIndex: number = startIndex + 10;
+      const startIndex: number = (actualPageInt - 1) * 10;
+      const endIndex: number = startIndex + 10;
 
-        for (let i = startIndex; i < endIndex; i++) {
-          const user: ContributionUser = contribution.get(contribution.keyAt(i)!)!;
-          if (user) {
-            embed.addFields({
-              name: `Top ${i + 1} : `,
-              value: `<@${user.userId}> with **${user.contributionPoint}** contribution points`,
-            });
-          }
+      for (let i = startIndex; i < endIndex; i++) {
+        const user: ContributionUser = contribution.get(
+          contribution.keyAt(i)!
+        )!;
+        if (user) {
+          embed.addFields({
+            name: ` `,
+            value: `**#${i + 1} ·** <@${user.userId}> · **${
+              user.allContributionPoint
+            }** points`,
+          });
         }
       }
+
+      if (actualPageInt == 1) button.components[0].setDisabled(true);
+      if (actualPageInt == Math.ceil(contribution.size / 10))
+        button.components[1].setDisabled(true);
+
+      await interaction.message.edit({
+        embeds: [embed],
+        components: [button],
+      });
+
+      await interaction.deferUpdate();
+    } else if (interaction.customId === "next") {
+      const startIndex = actualPageInt * 10;
+      const endIndex =
+        startIndex + 10 > contribution.size
+          ? contribution.size
+          : startIndex + 10;
+
+      for (let i = startIndex; i < endIndex; i++) {
+        const user: ContributionUser = contribution.get(
+          contribution.keyAt(i)!
+        )!;
+        if (user) {
+          embed.addFields({
+            name: ` `,
+            value: `**#${i + 1} ·** <@${user.userId}> · **${
+              user.allContributionPoint
+            }** points`,
+          });
+        }
+      }
+
+      if (actualPageInt == 1) button.components[0].setDisabled(true);
+      if (actualPageInt == Math.ceil(contribution.size / 10))
+        button.components[1].setDisabled(true);
+
+      await interaction.message.edit({
+        embeds: [embed],
+        components: [button],
+      });
+
+      await interaction.deferUpdate();
     } else {
-      if (actualPageInt * 10 + 1 > contribution.size) {
-        await interaction.reply({
-          content: "You can't go further",
-          ephemeral: true,
-        });
-      } else {
-        const startIndex = actualPageInt * 10;
-        const endIndex =
-          startIndex + 10 > contribution.size
-            ? contribution.size
-            : startIndex + 10;
+      const startIndex = (actualPageInt - 1) * 10;
+      const endIndex =
+        startIndex + 10 > contribution.size
+          ? contribution.size
+          : startIndex + 10;
 
-        for (let i = startIndex; i < endIndex; i++) {
-          const user: ContributionUser = contribution.get(contribution.keyAt(i)!)!;
-          if (user) {
-            embed.addFields({
-              name: `Top ${i + 1} : `,
-              value: `<@${user.userId}> with **${user.contributionPoint}** contribution points`,
-            });
-          }
+      for (let i = startIndex; i < endIndex; i++) {
+        const user: ContributionUser = contribution.get(
+          contribution.keyAt(i)!
+        )!;
+        if (user) {
+          embed.addFields({
+            name: ` `,
+            value: `**#${i + 1} ·** <@${user.userId}> · **${
+              user.allContributionPoint
+            }** points`,
+          });
         }
       }
+
+      if (actualPageInt == 1) button.components[0].setDisabled(true);
+      if (actualPageInt == Math.ceil(contribution.size / 10))
+        button.components[1].setDisabled(true);
+
+      await interaction.message.edit({
+        embeds: [embed],
+        components: [button],
+      });
+
+      await interaction.deferUpdate();
     }
-
-    await interaction.message.edit({
-      embeds: [embed],
-      components: [button],
-    });
-
-    await interaction.deferUpdate();
   },
 };
 

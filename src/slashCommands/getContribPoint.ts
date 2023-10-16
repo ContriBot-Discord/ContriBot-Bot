@@ -17,7 +17,7 @@ export const command: SlashCommand = {
     .addBooleanOption((option: SlashCommandBooleanOption) =>
         option
             .setName("all")
-            .setDescription("Whether to get all contribution points or not.")
+            .setDescription("Whether to get all contribution points or not. (Default: false)")
             .setRequired(false)
         ),
     async execute(interaction: CommandInteraction<CacheType>) {

@@ -35,3 +35,5 @@ const event: BotEvent = {
     console.log(`💪 Logged in as ${client.user?.tag}`);
   },
 };
+
+export default event;

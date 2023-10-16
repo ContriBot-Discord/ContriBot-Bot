@@ -4,17 +4,17 @@ import { join } from "path";
 import { BotEvent } from "../types";
 
 module.exports = (client: Client) => {
-    let eventsDir = join(__dirname, "../interactions")
+    let interactionsDir = join(__dirname, "../interactions")
 
-    readdirSync(eventsDir).forEach(file => {
+    readdirSync(interactionsDir).forEach(file => {
         if (!file.endsWith(".js")) return;
 
-        const event: BotEvent = require(`${eventsDir}/${file}`).default;
+        const interaction: BotEvent = require(`${interactionsDir}/${file}`).default;
 
-        event.once 
-        ? client.once(event.name, (...args) => event.execute(...args)) 
-        : client.on(event.name, (...args) => event.execute(...args));
+        interaction.once 
+        ? client.once(interaction.name, (...args) => interaction.execute(...args)) 
+        : client.on(interaction.name, (...args) => interaction.execute(...args));
 
-        console.log(`🌠 Successfully loaded interaction ${event.name}`);
+        console.log(`🌠 Successfully loaded interaction ${file}`);
     })
 }
