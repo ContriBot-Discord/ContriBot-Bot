@@ -1,39 +1,62 @@
-import { SlashCommandBuilder, EmbedBuilder, CacheType, CommandInteraction, SlashCommandBooleanOption, SlashCommandUserOption } from "discord.js"
+import {
+  SlashCommandBuilder,
+  EmbedBuilder,
+  CacheType,
+  CommandInteraction,
+  SlashCommandBooleanOption,
+  SlashCommandUserOption,
+} from "discord.js";
 import { SlashCommand } from "@/types";
 
 import { resetPoints } from "../utils/contribFunctions";
 
 export const command: SlashCommand = {
-    name: 'resetcontribpoint',
-    data: new SlashCommandBuilder()
-        .setName("resetcontribpoint")
-        .setDescription("Reset contribution points of a user")
-        .addUserOption((option: SlashCommandUserOption) =>
-            option
-                .setName("membre")
-                .setDescription("Member you want to reset contribution points of")
-                .setRequired(true)
-            )
-            .addBooleanOption((option: SlashCommandBooleanOption) =>
-                option
-                    .setName("all")
-                    .setDescription("Whether to reset all contribution points or not. (Default: false)")
-                    .setRequired(false)
-                ),
-    async execute(interaction: CommandInteraction<CacheType>) {
-        const memberId = interaction.options.getUser("membre")!.id;
-        const all = interaction.options.get("all")?.value as boolean;
+  name: "resetcontribpoint",
+  data: new SlashCommandBuilder()
+    .setName("resetcontribpoint")
+    .setDescription("Reset contribution points of a user")
+    .addUserOption((option: SlashCommandUserOption) =>
+      option
+        .setName("membre")
+        .setDescription("Member you want to reset contribution points of")
+        .setRequired(true)
+    )
+    .addBooleanOption((option: SlashCommandBooleanOption) =>
+      option
+        .setName("all")
+        .setDescription(
+          "Whether to reset all contribution points or not. (Default: false)"
+        )
+        .setRequired(false)
+    ),
+  async execute(interaction: CommandInteraction<CacheType>) {
+    const memberId = interaction.options.getUser("membre")!.id;
+    const all = interaction.options.get("all")?.value as boolean;
 
-        const embed = new EmbedBuilder()
-            .setTitle("Reset points")
-            .setDescription(`<@${memberId}>'s contribution points have been reset by <@${interaction.user.id}.`)
-            .setColor("#0000ff")
-            .setTimestamp();
+    const lineString: string = `<:shiny_orange_bar:1163759934702374942>`.repeat(
+      9
+    );
 
-        if (all) embed.setDescription(`<@${memberId}>'s total contribution points have been reset.`);
+    const embed = new EmbedBuilder()
+      .addFields({
+        name: "<:shiny_orange_moderator:1163759368853004298> Reset points command.",
+        value: lineString,
+      })
+      .addFields({
+        name: " ",
+        value: `All of <@${memberId}>'s contribution points have been reset.`,
+      })
+      .setColor("#ff8e4d")
+      .setTimestamp();
 
-        resetPoints(memberId, all);
+    if (all)
+      embed.spliceFields(1, 1, {
+        name: " ",
+        value: `**All of <@${memberId}>**'s total contribution points have been reset.`,
+      });
 
-        await interaction.reply({ embeds: [embed] });
-    },
-}
+    resetPoints(memberId, all);
+
+    await interaction.reply({ embeds: [embed] });
+  },
+};

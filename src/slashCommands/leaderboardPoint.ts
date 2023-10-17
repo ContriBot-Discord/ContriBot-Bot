@@ -15,10 +15,15 @@ export const command: SlashCommand = {
     .setName("leaderboardpoint")
     .setDescription("Show the leaderboard of total contribution point"),
   async execute(interaction: CommandInteraction<CacheType>) {
+    const lineString: string = `<:lineviolett:1163753428317638696>`.repeat(6);
+
     const embed = new EmbedBuilder()
-      .addFields({ name: "<:shinybluesparkles:1163503829174734918> Leaderboard", value: "*Here is the leaderboard of total contribution points*" })
-      .setColor("#0000ff")
-      .setFooter({ text: `Page 1/${Math.ceil(contribution.size / 10)}`})
+      .addFields({
+        name: "<:shinypurplestar:1163585447201607781> Leaderboard",
+        value: lineString,
+      })
+      .setColor("#aa54e1")
+      .setFooter({ text: `Page 1/${Math.ceil(contribution.size / 10)}` })
       .setTimestamp();
 
     contribution.sort(
@@ -30,7 +35,9 @@ export const command: SlashCommand = {
       if (user) {
         embed.addFields({
           name: ` `,
-          value: `**#${i+1} ·** <@${user.userId}> · **${user.allContributionPoint}** points`,
+          value: `**#${i + 1} ·** <@${user.userId}> · **${
+            user.allContributionPoint
+          }** points`,
         });
       }
     }
@@ -47,7 +54,7 @@ export const command: SlashCommand = {
       );
 
     button.components[0].setDisabled(true);
-    
+
     if (contribution.size <= 10) button.components[1].setDisabled(true);
 
     await interaction.reply({ embeds: [embed], components: [button] });
