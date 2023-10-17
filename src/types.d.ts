@@ -1,8 +1,6 @@
 import {
   Collection,
   CommandInteraction,
-  Message,
-  PermissionResolvable,
   SlashCommandBuilder,
   SlashCommandSubcommandBuilder,
 } from "discord.js";
@@ -24,7 +22,14 @@ export interface SlashCommand {
 export interface SlashCommandData {
   name: string;
   description: string;
-  options?: any[];
+  options?: {
+    type: ApplicationCommandOptionType,
+    name: string,
+    description: string,
+    required: boolean
+  }[];
+  subcommands?: SlashCommandSubcommandBuilder[];
+  group?: string;
 }
 
 declare global {
