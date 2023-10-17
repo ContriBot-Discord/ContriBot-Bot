@@ -3,6 +3,7 @@ import { SlashCommand, ContributionUser } from './types';
 import { join } from 'path';
 import { readdirSync } from 'fs';
 import * as dotenv from 'dotenv';
+import i18n from 'i18n';
 
 dotenv.config();
 
@@ -13,6 +14,16 @@ const client = new Client({
     GatewayIntentBits.GuildMessageReactions,
     GatewayIntentBits.MessageContent,
   ]
+});
+
+// i18n configuration:
+i18n.configure({
+    locales: [
+        'de', 'el', 'en', 'es', 'fr', 'ia', 'it', 'ja', 'zh'
+        // Dutch, Greek, English, Spanish, French, Interlingua, Italian, Japanese, Chinese
+    ],
+    directory: join(__dirname, './locales'),
+    objectNotation: true, // Allows to use dot notation for nested translations
 });
 
 export const contribution = new Collection<string, ContributionUser>();
