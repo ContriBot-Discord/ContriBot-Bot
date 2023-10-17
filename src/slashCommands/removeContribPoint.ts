@@ -8,30 +8,32 @@ import {
 } from "discord.js";
 import { SlashCommand } from "@/types";
 
-import { addPoints } from "../utils/contribFunctions";
+import { removePoints } from "../utils/contribFunctions";
 
 export const command: SlashCommand = {
-  name: "addcontribpoint",
+  name: "removecontribpoint",
   data: new SlashCommandBuilder()
-    .setName("addcontribpoint")
-    .setDescription("Adds contribution points to a user.")
+    .setName("removecontribpoint")
+    .setDescription("Remove contribution points from a user.")
     .addUserOption((option: SlashCommandUserOption) =>
       option
         .setName("member")
-        .setDescription("The user you want to add contribution points to.")
+        .setDescription("The user you want to remove contribution points from.")
         .setRequired(true)
     )
     .addIntegerOption((option: SlashCommandIntegerOption) =>
       option
         .setName("amount")
-        .setDescription("The amount of contribution points to add to the user.")
+        .setDescription(
+          "The amount of contribution points to remove of the user."
+        )
         .setRequired(true)
     )
     .addBooleanOption((option) =>
       option
         .setName("all")
         .setDescription(
-          "Whether to add to all contribution points or not. (Default: true)"
+          "Whether to remove to all contribution points or not. (Default: true)"
         )
         .setRequired(false)
     ),
@@ -41,17 +43,17 @@ export const command: SlashCommand = {
     const all = interaction.options.get("all")?.value as boolean;
 
     const lineString: string = `<:shiny_orange_bar:1163759934702374942>`.repeat(
-      9
+      10
     );
 
     const embed = new EmbedBuilder()
       .addFields({
-        name: "<:shiny_orange_moderator:1163759368853004298> Add points command.",
+        name: "<:shiny_orange_moderator:1163759368853004298> Remove points command.",
         value: lineString,
       })
       .addFields({
         name: " ",
-        value: `**${amount}** contribution points has been added to <@${memberId}>. `,
+        value: `**${amount}** contribution points has been removed from <@${memberId}>. `,
       })
       .setColor("#ff8e4d")
       .setTimestamp();
@@ -59,10 +61,10 @@ export const command: SlashCommand = {
     if (all)
       embed.spliceFields(1, 1, {
         name: " ",
-        value: `${amount} total contribution points has been added to <@${memberId}>.`,
+        value: `${amount} total contribution points has been removed from <@${memberId}>.`,
       });
 
-    await addPoints(memberId, amount, all);
+    await removePoints(memberId, amount, all);
 
     await interaction.reply({ embeds: [embed] });
   },

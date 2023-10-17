@@ -28,12 +28,14 @@ const event: BotEvent = {
       interaction.message.embeds[0].footer!.text!.split(" ")[1].split("/")[0]
     );
 
+    const lineString: string = `<:lineviolett:1163753428317638696>`.repeat(6);
+
     const embed = new EmbedBuilder()
       .addFields({
-        name: "<:shinybluesparkles:1163503829174734918> Leaderboard",
-        value: "*Here is the leaderboard of total contribution points*",
+        name: "<:shinypurplestar:1163585447201607781> Leaderboard",
+        value: lineString,
       })
-      .setColor("#0000ff")
+      .setColor("#aa54e1")
       .setFooter({
         text: `Page ${actualPageInt}/${Math.ceil(contribution.size / 10)}`,
       })
