@@ -1,5 +1,6 @@
 import { Guild } from "./Guild";
 import { UserItem } from "@/classes/UserItem";
+import mysql from "mysql";
 
 export class User{
     guild: Guild;
@@ -8,6 +9,7 @@ export class User{
     allPoints: number;
     lang: string;
     inventory: UserItem[];
+    #db: mysql.Connection;
 
     constructor(
         guild: Guild,
@@ -15,14 +17,22 @@ export class User{
         points: number = 0,
         allPoints: number = 0,
         lang: string,
-        inventory: UserItem[] = []
+        db: mysql.Connection
     ){
         this.guild = guild;
         this.id = id
         this.points = points;
         this.allPoints = allPoints;
         this.lang = lang;
-        this.inventory = inventory;
+        this.inventory = this.fetchInventory();
+        this.#db = db;
+    }
+
+    fetchInventory(): UserItem[]{
+        // Fetch all items from database
+
+        // Since Database is not configured yet, return empty array
+        return [];
     }
 
     update(): void{

@@ -1,4 +1,5 @@
 import {User} from "@/classes/User";
+import mysql from "mysql";
 
 export class UserItem {
     user: User;
@@ -10,6 +11,7 @@ export class UserItem {
     refundedAt: Date;
     used: boolean;
     usedAt: Date;
+    #db: mysql.Connection;
 
     constructor(
         user: User,
@@ -21,6 +23,7 @@ export class UserItem {
         refundedAt: Date = new Date(),
         used: boolean = false,
         usedAt: Date = new Date(),
+        db: mysql.Connection
     ){
         this.user = user;
         this.id = id;
@@ -31,6 +34,7 @@ export class UserItem {
         this.refundedAt = refundedAt;
         this.used = used;
         this.usedAt = usedAt;
+        this.#db = db;
     }
 
     update(): void{

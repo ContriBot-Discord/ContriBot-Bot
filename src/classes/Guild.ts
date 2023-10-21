@@ -1,20 +1,24 @@
 import { User } from "./User";
 import {ShopItem} from "@/classes/ShopItem";
+import mysql from 'mysql';
 
 export class Guild{
     id: string;
     lang: string;
     users: User[];
     shop: ShopItem[];
+    #db: mysql.Connection;
 
     constructor(
         id: string,
         lang: string,
+        db: mysql.Connection
     ){
         this.id = id;
         this.lang = lang;
         this.shop = this.fetchShop();
         this.users = this.fetchUsers();
+        this.#db = db;
     }
 
     getUser(id: string): User{
@@ -33,7 +37,7 @@ export class Guild{
 
         // Create a guild in the database
         // Since Database is not configured yet, return a new guild
-        let user = new User(this, id, 0, 0, this.lang);
+        let user = new User(this, id, 0, 0, this.lang, this.#db);
 
         // The .update method sends data to the database.
         // With that, we can make sure that the user is created in the database
@@ -54,9 +58,22 @@ export class Guild{
 
     fetchUsers(): User[]{
         // Fetch all users from database
+        const users: User[] = [];
 
-        // Since Database is not configured yet, return empty array
-        return [];
+        this.#db.query("SELECT * FROM users WHERE guild_id = ?", [this.id],
+            (err, result) => {
+
+            for (let i = 0; i < result.length; i++) {
+                const user = result[i];
+
+                users.push (
+                    new User(this, user.id, user.points, user.global_points, user.lang, this.#db)
+                );
+            }
+
+        });
+
+        return users;
     }
 
     fetchShop(): ShopItem[]{

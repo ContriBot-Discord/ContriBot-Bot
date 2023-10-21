@@ -1,11 +1,19 @@
 import {Guild} from "@/classes/Guild";
+import mysql from 'mysql';
 
 export class Database{
     guilds: Guild[];
+    #db: mysql.Connection;
 
     constructor(){
         // Represent all the guilds in the database
         this.guilds = this.fetchGuilds();
+        this.#db = mysql.createConnection({
+            host     : process.env.DB_HOST + ":" + process.env.DB_PORT,
+            user     : process.env.DB_USERNAME,
+            password : process.env.DB_PASSWORD,
+            database : process.env.DB_DATABASE
+        });
     }
 
     getGuild(id: string): Guild{
@@ -23,7 +31,7 @@ export class Database{
     createGuild(id: string): Guild{
         // Create a guild in the database
         // Since Database is not configured yet, return a new guild
-        let guild = new Guild(id, "en");
+        let guild = new Guild(id, "en", this.#db);
 
         // The .update method sends data to the database.
         // With that, we can make sure that the guild is created in the database
