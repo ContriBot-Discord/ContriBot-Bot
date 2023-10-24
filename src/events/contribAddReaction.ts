@@ -19,7 +19,7 @@ const event: BotEvent = {
             messageReaction.users.cache.has(user.id)
         );
 
-        if (userReactions.size < 2) DB.getGuild(message.guildId).getUser(user.id).addPoints();
+        if (userReactions.size < 2) DB.getGuild(message.guildId!).getUser(user.id).addPoints();
     },
 };
 
