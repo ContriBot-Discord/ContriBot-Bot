@@ -89,6 +89,23 @@ export class Guild{
         return users;
     }
 
+    resetPoints(): void{
+
+        // Reset all users' points in database
+        this.#db.query("UPDATE USER SET points = 0, global_points = 0  WHERE guild_id = ?", [this.id],
+            (err, result) => {
+                if (err) throw err;
+            });
+
+        // We now update the cache
+        this.users.forEach(user => {
+            user.points = 0;
+            user.allPoints = 0;
+        });
+    }
+
+
+
     fetchShop(): ShopItem[]{
         // Fetch all shop items from database
 
