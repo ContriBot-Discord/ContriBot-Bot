@@ -17,11 +17,8 @@ export class Database{
         this.guilds = this.fetchGuilds();
     }
 
-    getGuild(id: string|null): Guild{
+    getGuild(id: string): Guild{
         // Get a guild from the database
-
-        if (id == null) throw new Error("Guild ID cannot be Null");
-
         // If the guild does not exist, create it and return it
         let guild = this.guilds.find(guild => guild.id === id);
 
