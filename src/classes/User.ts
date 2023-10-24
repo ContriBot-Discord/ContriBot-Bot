@@ -77,7 +77,7 @@ export class User{
         this.update();
     }
 
-    getContribPoint(all: false): number{
+    getContribPoint(all: boolean): number{
 
         if (all) {
             return this.allPoints;
