@@ -1,4 +1,4 @@
-import { BotEvent } from "../types";
+import { BotEvent } from "@/types";
 import { Events, MessageReaction, User, ThreadChannel } from "discord.js";
 import {DB} from "@/index";
 
@@ -20,7 +20,7 @@ const event: BotEvent = {
         );
 
         if (userReactions.size === 0) {
-            DB.getGuild(message.guildId).getUser(user.id).addPoints(-1)
+            DB.getGuild(message.guildId!).getUser(user.id).addPoints(-1)
           }
     },
 };
