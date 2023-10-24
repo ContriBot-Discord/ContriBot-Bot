@@ -7,7 +7,7 @@ export class Guild{
     lang: string;
     users: User[];
     shop: ShopItem[];
-    #db: mysql.Connection;
+    readonly #db: mysql.Connection;
 
     constructor(
         id: string,
@@ -37,7 +37,7 @@ export class Guild{
 
         // Create a guild in the database
         // Since Database is not configured yet, return a new guild
-        let user = new User(this, id, 0, 0, this.lang, this.#db);
+        let user = new User(this, id, 0, 0, this.#db);
 
         // Insert a new row in the database
         user.create();
@@ -80,7 +80,7 @@ export class Guild{
                 const user = result[i];
 
                 users.push (
-                    new User(this, user.id, user.points, user.global_points, user.lang, this.#db)
+                    new User(this, user.id, user.points, user.global_points, this.#db)
                 );
             }
 
@@ -97,4 +97,10 @@ export class Guild{
 
     }
 
+    setLang(lang: string) {
+
+        this.lang = lang;
+        this.update();
+
+    }
 }

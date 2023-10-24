@@ -2,7 +2,7 @@
 import { SlashCommandBuilder, EmbedBuilder, CacheType, CommandInteraction, SlashCommandBooleanOption } from "discord.js"
 import { SlashCommand } from "@/types";
 
-import { setLang } from "../utils/contribFunctions";
+import {DB} from "@/index";
 
 import i18n from 'i18n'
 
@@ -45,7 +45,7 @@ export const command: SlashCommand = {
                 "setLang.embed.description",
             ))
 
-        setLang(interaction.user.id, lang)
+        DB.getGuild(interaction.guildId!).setLang(lang);
 
         await interaction.reply({ embeds: [embed] });
     },
