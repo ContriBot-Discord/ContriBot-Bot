@@ -8,7 +8,7 @@ import {
 } from "discord.js";
 import { SlashCommand } from "@/types";
 
-import { addPoints } from "../utils/contribFunctions";
+import {DB} from "@/index";
 
 export const command: SlashCommand = {
   name: "addcontribpoint",
@@ -62,7 +62,7 @@ export const command: SlashCommand = {
         value: `${amount} total contribution points has been added to <@${memberId}>.`,
       });
 
-    await addPoints(memberId, amount, all);
+    DB.getGuild(interaction.guildId!).getUser(memberId).addPoints(amount, all);
 
     await interaction.reply({ embeds: [embed] });
   },
