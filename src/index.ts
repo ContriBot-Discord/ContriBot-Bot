@@ -1,5 +1,5 @@
 import { Client, Collection, GatewayIntentBits } from 'discord.js';
-import { SlashCommand, ContributionUser } from './types';
+import { SlashCommand} from './types';
 import { join } from 'path';
 import { readdirSync } from 'fs';
 import * as dotenv from 'dotenv';
@@ -25,8 +25,6 @@ i18n.configure({
     directory: join(__dirname, './locales'),
     objectNotation: true, // Allows to use dot notation for nested translations
 });
-
-export const contribution = new Collection<string, ContributionUser>();
 
 client.slashCommands = new Collection<string, SlashCommand>();
 
