@@ -26,7 +26,7 @@ export class Guild{
         // If the user does not exist, create it and return it
         let user = this.users.find(user => user.id === id);
 
-        if (user == undefined) {
+        if (user === undefined) {
             user = this.createUser(id);
         }
 
@@ -39,9 +39,8 @@ export class Guild{
         // Since Database is not configured yet, return a new guild
         let user = new User(this, id, 0, 0, this.lang, this.#db);
 
-        // The .update method sends data to the database.
-        // With that, we can make sure that the user is created in the database
-        user.update();
+        // Insert a new row in the database
+        user.create();
 
         // Once created, we add the user to the guilds array
         this.users.push(user);
@@ -51,16 +50,30 @@ export class Guild{
 
     }
 
+    create(): void{
+        // Insert a new row in the database
+
+        this.#db.query("INSERT INTO GUILD (guild_id, lang) VALUES (?, ?)", [this.id, this.lang],
+            (err, result) => {
+                if (err) throw err;
+            })
+
+    }
+
     update(): void{
         // Update guild in database
-        // This should send all the data to the database
+
+        this.#db.query("UPDATE GUILD SET lang = ? WHERE guild_id = ?", [this.lang, this.id],
+            (err, result) => {
+                if (err) throw err;
+            });
     }
 
     fetchUsers(): User[]{
         // Fetch all users from database
         const users: User[] = [];
 
-        this.#db.query("SELECT * FROM users WHERE guild_id = ?", [this.id],
+        this.#db.query("SELECT * FROM USER WHERE guild_id = ?", [this.id],
             (err, result) => {
 
             for (let i = 0; i < result.length; i++) {

@@ -7,17 +7,21 @@ export class Database{
 
     constructor(){
         // Represent all the guilds in the database
-        this.guilds = this.fetchGuilds();
         this.#db = mysql.createConnection({
             host     : process.env.DB_HOST + ":" + process.env.DB_PORT,
             user     : process.env.DB_USERNAME,
             password : process.env.DB_PASSWORD,
             database : process.env.DB_DATABASE
         });
+
+        this.guilds = this.fetchGuilds();
     }
 
-    getGuild(id: string): Guild{
+    getGuild(id: string|null): Guild{
         // Get a guild from the database
+
+        if (id == null) throw new Error("Guild ID cannot be Null");
+
         // If the guild does not exist, create it and return it
         let guild = this.guilds.find(guild => guild.id === id);
 
@@ -45,9 +49,20 @@ export class Database{
     }
 
     fetchGuilds(): Guild[]{
-        // Fetch all guilds from database
 
-        // Since Database is not configured yet, return empty array
-        return [];
+        // Fetch all the guilds from the database
+
+        let guilds: Guild[] = [];
+
+        // The .query method sends a query to the database
+
+        this.#db.query("SELECT * FROM GUILD", (err, result) => {
+            if (err) throw err;
+            result.forEach((guild: any) => {
+                guilds.push(new Guild(guild.id, guild.language, this.#db));
+            });
+        })
+
+        return guilds;
     }
 }

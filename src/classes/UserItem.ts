@@ -1,6 +1,9 @@
 import {User} from "@/classes/User";
 import mysql from "mysql";
 
+
+// Represents an item in the inventory of a user.
+// The id is the unique_item_id in the database
 export class UserItem {
     user: User;
     id: string;
@@ -38,8 +41,12 @@ export class UserItem {
     }
 
     update(): void{
-        // Update item in database
-        // This should send all the data to the database
+
+        this.#db.query("UPDATE INVENTORY SET refunded = ?, refunded_at = ?, used = ?, used_at = ? WHERE unique_item_id = ?",
+            [this.refunded, this.refundedAt, this.used, this.usedAt, this.id],
+            (err, result) => {
+                if (err) throw err;
+            });
     }
 
     refund(): void{
@@ -53,7 +60,6 @@ export class UserItem {
 
             this.update();
         }
-
 
     }
 

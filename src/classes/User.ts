@@ -30,7 +30,6 @@ export class User{
 
     fetchInventory(): UserItem[]{
         // Fetch all items from database
-        // TODO: Make sure that this request is correct
         const items: UserItem[] = [];
 
         // Join the inventory and the shop to get the name and description
@@ -50,17 +49,35 @@ export class User{
 
     }
 
+    create(): void{
+        // Register user in database
+
+        this.#db.query("INSERT INTO USER (user_id, guild_id, points, global_points, lang) VALUES (?, ?, ?, ?, ?)",
+            [this.id, this.guild.id, this.points, this.allPoints, this.lang],
+            (err, result) => {
+                if (err) throw err;
+            });
+    }
+
     update(): void{
         // Update user in database
         // This should send all the data to the database
 
         // If the user exists in the database, it gets updated. If not, it gets created
-        this.#db.query("REPLACE INTO USER (user_id, guild_id, points, global_points, lang) VALUES (?, ?, ?, ?, ?)",
-            [this.id, this.guild.id, this.points, this.allPoints, this.lang],
+        this.#db.query("UPDATE USER SET points = ?, global_points = ?, lang = ? WHERE user_id = ? AND guild_id = ?",
+            [this.points, this.allPoints, this.lang, this.id, this.guild.id],
             (err, result) => {
                 if (err) throw err;
-            });
+            }
+        );
 
+    }
+
+    addPoints(qtee: number = 1, allPoints: boolean = true): void{
+        // Add points to user
+        this.points += qtee;
+        if (allPoints) this.allPoints += qtee;
+        this.update();
     }
 
 
