@@ -6,8 +6,8 @@ import {
   CacheType,
   CommandInteraction,
 } from "discord.js";
-import { SlashCommand } from "@/types";
-import {DB} from "@/index";
+import { SlashCommand } from "../types";
+import {DB} from "../index";
 
 export const command: SlashCommand = {
   name: "leaderboardpoint",

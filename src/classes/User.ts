@@ -1,5 +1,5 @@
 import { Guild } from "./Guild";
-import { UserItem } from "@/classes/UserItem";
+import { UserItem } from "./UserItem";
 import mysql from "mysql";
 
 export class User{

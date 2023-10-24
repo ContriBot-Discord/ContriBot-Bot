@@ -5,9 +5,9 @@ import {
   CommandInteraction,
   SlashCommandBooleanOption,
 } from "discord.js";
-import { SlashCommand } from "@/types";
+import { SlashCommand } from "../types";
 
-import {DB} from "@/index";
+import {DB} from "../index";
 
 export const command: SlashCommand = {
   name: "resetalluserscontribpoint",

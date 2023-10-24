@@ -7,8 +7,8 @@ import {
   EmbedBuilder,
 } from "discord.js";
 
-import { DB } from "@/index";
-import {User} from "@/classes/User";
+import { DB } from "../index";
+import {User} from "../classes/User";
 
 const event: BotEvent = {
   name: Events.InteractionCreate,

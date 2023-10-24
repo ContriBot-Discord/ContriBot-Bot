@@ -4,7 +4,7 @@ import { join } from 'path';
 import { readdirSync } from 'fs';
 import * as dotenv from 'dotenv';
 import i18n from 'i18n';
-import {Database} from '@/classes/Database';
+import {Database} from './classes/Database';
 
 dotenv.config();
 

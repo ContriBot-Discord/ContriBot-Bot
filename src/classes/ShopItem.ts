@@ -1,4 +1,4 @@
-import {Guild} from "@/classes/Guild";
+import {Guild} from "./Guild";
 
 import mysql from "mysql";
 

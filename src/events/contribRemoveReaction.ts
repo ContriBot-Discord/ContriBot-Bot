@@ -1,6 +1,6 @@
-import { BotEvent } from "@/types";
+import { BotEvent } from "../types";
 import { Events, MessageReaction, User, ThreadChannel } from "discord.js";
-import {DB} from "@/index";
+import {DB} from "../index";
 
 const event: BotEvent = {
     name: Events.MessageReactionRemove,

@@ -1,8 +1,8 @@
 // 🗿
-import { SlashCommandBuilder, EmbedBuilder, CacheType, CommandInteraction, SlashCommandBooleanOption } from "discord.js"
-import { SlashCommand } from "@/types";
+import { SlashCommandBuilder, EmbedBuilder, CacheType, CommandInteraction} from "discord.js"
+import { SlashCommand } from "../types";
 
-import {DB} from "@/index";
+import {DB} from "../index";
 
 import i18n from 'i18n'
 
