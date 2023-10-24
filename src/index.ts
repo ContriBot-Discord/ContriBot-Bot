@@ -4,6 +4,7 @@ import { join } from 'path';
 import { readdirSync } from 'fs';
 import * as dotenv from 'dotenv';
 import i18n from 'i18n';
+import {Database} from '@/classes/Database';
 
 dotenv.config();
 
@@ -29,6 +30,8 @@ i18n.configure({
 client.slashCommands = new Collection<string, SlashCommand>();
 
 const handlersDir = join(__dirname, "./handlers");
+
+export const DB = new Database;
 
 readdirSync(handlersDir).forEach(handler => {
   require(`${handlersDir}/${handler}`)(client);

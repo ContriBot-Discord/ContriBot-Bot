@@ -1,7 +1,6 @@
 import { BotEvent } from "../types";
 import { Events, MessageReaction, User, ThreadChannel } from "discord.js";
-
-import { addPoints } from "../utils/contribFunctions";
+import {DB} from "@/index";
 
 const event: BotEvent = {
     name: Events.MessageReactionAdd,
@@ -20,7 +19,7 @@ const event: BotEvent = {
             messageReaction.users.cache.has(user.id)
         );
 
-        if (userReactions.size < 2) addPoints(user.id, 1);
+        if (userReactions.size < 2) DB.getGuild(message.guildId).getUser(user.id).addPoints();
     },
 };
 

@@ -1,7 +1,6 @@
 import { BotEvent } from "../types";
 import { Events, MessageReaction, User, ThreadChannel } from "discord.js";
-
-import { removePoints } from "../utils/contribFunctions";
+import {DB} from "@/index";
 
 const event: BotEvent = {
     name: Events.MessageReactionRemove,
@@ -21,7 +20,7 @@ const event: BotEvent = {
         );
 
         if (userReactions.size === 0) {
-            removePoints(user.id, 1);
+            DB.getGuild(message.guildId).getUser(user.id).addPoints(-1)
           }
     },
 };
