@@ -49,8 +49,11 @@ export class User{
     create(): void{
         // Register user in database
 
+        // We do ignore a warning here because we don't need to do anything with the result
+        // noinspection JSUnusedLocalSymbols
         this.#db.query("INSERT INTO USER (user_id, guild_id, points, global_points) VALUES (?, ?, ?, ?)",
             [this.id, this.guild.id, this.points, this.allPoints],
+
             (err, result) => {
                 if (err) throw err;
             });
@@ -61,8 +64,12 @@ export class User{
         // This should send all the data to the database
 
         // If the user exists in the database, it gets updated. If not, it gets created
+
+        // We do ignore a warning here because we don't need to do anything with the result
+        // noinspection JSUnusedLocalSymbols
         this.#db.query("UPDATE USER SET points = ?, global_points = ? WHERE user_id = ? AND guild_id = ?",
             [this.points, this.allPoints, this.id, this.guild.id],
+
             (err, result) => {
                 if (err) throw err;
             }
