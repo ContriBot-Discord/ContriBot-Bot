@@ -6,8 +6,8 @@ import {
   CacheType,
   CommandInteraction,
 } from "discord.js";
-import { ContributionUser, SlashCommand } from "@/types";
-import { contribution } from "../index";
+import { SlashCommand } from "@/types";
+import {DB} from "@/index";
 
 export const command: SlashCommand = {
   name: "leaderboardpoint",
@@ -17,26 +17,31 @@ export const command: SlashCommand = {
   async execute(interaction: CommandInteraction<CacheType>) {
     const lineString: string = `<:lineviolett:1163753428317638696>`.repeat(6);
 
+    const guild = DB.getGuild(interaction.guildId!);
+
     const embed = new EmbedBuilder()
       .addFields({
         name: "<:shinypurplestar:1163585447201607781> Leaderboard",
         value: lineString,
       })
       .setColor("#aa54e1")
-      .setFooter({ text: `Page 1/${Math.ceil(contribution.size / 10)}` })
+      .setFooter({ text: `Page 1/${Math.ceil(guild.users.length / 10)}` })
       .setTimestamp();
 
-    contribution.sort(
-      (a, b) => b.allContributionPoint - a.allContributionPoint
+    // Copied list of the guild users
+    let users = [...guild.users]
+
+    users.sort(
+      (a, b) => b.getContribPoint(true) - a.getContribPoint(true)
     );
 
     for (let i = 0; i < 9; i++) {
-      const user: ContributionUser = contribution.get(contribution.keyAt(i)!)!;
+      const user = users[i];
       if (user) {
         embed.addFields({
           name: ` `,
-          value: `**#${i + 1} ·** <@${user.userId}> · **${
-            user.allContributionPoint
+          value: `**#${i + 1} ·** <@${user.id}> · **${
+            user.getContribPoint(true)
           }** points`,
         });
       }
@@ -55,7 +60,7 @@ export const command: SlashCommand = {
 
     button.components[0].setDisabled(true);
 
-    if (contribution.size <= 10) button.components[1].setDisabled(true);
+    if (guild.users.length <= 10) button.components[1].setDisabled(true);
 
     await interaction.reply({ embeds: [embed], components: [button] });
   },
