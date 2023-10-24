@@ -77,6 +77,13 @@ export class User{
 
     }
 
+    setPoints(qtee: number, allPoints: boolean = true): void{
+        // Set points to user
+        this.points = qtee;
+        if (allPoints) this.allPoints = qtee;
+        this.update();
+    }
+
     addPoints(qtee: number = 1, allPoints: boolean = true): void{
         // Add points to user
         this.points += qtee;
