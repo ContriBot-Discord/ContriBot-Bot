@@ -53,6 +53,8 @@ export class Guild{
     create(): void{
         // Insert a new row in the database
 
+        // We do ignore a warning here because we don't need to do anything with the result
+        // noinspection JSUnusedLocalSymbols
         this.#db.query("INSERT INTO GUILD (guild_id, lang) VALUES (?, ?)", [this.id, this.lang],
             (err, result) => {
                 if (err) throw err;
@@ -63,6 +65,8 @@ export class Guild{
     update(): void{
         // Update guild in database
 
+        // We do ignore a warning here because we don't need to do anything with the result
+        // noinspection JSUnusedLocalSymbols
         this.#db.query("UPDATE GUILD SET lang = ? WHERE guild_id = ?", [this.lang, this.id],
             (err, result) => {
                 if (err) throw err;
@@ -92,6 +96,9 @@ export class Guild{
     resetPoints(): void{
 
         // Reset all users' points in database
+
+        // We do ignore a warning here because we don't need to do anything with the result
+        // noinspection JSUnusedLocalSymbols
         this.#db.query("UPDATE USER SET points = 0, global_points = 0  WHERE guild_id = ?", [this.id],
             (err, result) => {
                 if (err) throw err;
