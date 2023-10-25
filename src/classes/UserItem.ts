@@ -1,5 +1,5 @@
 import {User} from "./User";
-import mysql from "mysql";
+import mysql from "mysql2";
 
 
 // Represents an item in the inventory of a user.
@@ -28,6 +28,7 @@ export class UserItem {
         usedAt: Date = new Date(),
         db: mysql.Connection
     ){
+        this.#db = db;
         this.user = user;
         this.id = id;
         this.name = name;
@@ -37,7 +38,6 @@ export class UserItem {
         this.refundedAt = refundedAt;
         this.used = used;
         this.usedAt = usedAt;
-        this.#db = db;
     }
 
     update(): void{
@@ -47,6 +47,19 @@ export class UserItem {
             (err, result) => {
                 if (err) throw err;
             });
+    }
+
+    use(): void{
+
+            // Check if item is already used
+            if(this.used){
+                throw new Error("UserItem is already used");
+            } else {
+                this.used = true;
+                this.usedAt = new Date();
+
+                this.update();
+            }
     }
 
     refund(): void{

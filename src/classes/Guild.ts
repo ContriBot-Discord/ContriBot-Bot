@@ -1,12 +1,14 @@
 import { User } from "./User";
 import {ShopItem} from "./ShopItem";
 import mysql, {RowDataPacket} from 'mysql2';
+import {UserItem} from "@/classes/UserItem";
 
 export class Guild{
     id: string;
     lang: string;
     users: User[];
     shop: ShopItem[];
+    globalInventory: UserItem[];
     readonly #db: mysql.Connection;
 
     constructor(
@@ -14,17 +16,20 @@ export class Guild{
         lang: string,
         db: mysql.Connection
     ){
+        this.#db = db;
         this.id = id;
         this.lang = lang;
         this.shop = this.fetchShop();
         this.users = this.fetchUsers();
-        this.#db = db;
+        // Represent a list with all the items bought by all the users
+        // We will merge all the inventories of all the users in this list
+        this.globalInventory = this.users.map( user => user.inventory).flat();
     }
 
     getUser(id: string): User{
         // Get a user from the database
         // If the user does not exist, create it and return it
-        let user = this.users.find(user => user.id === id);
+        let user = this.users.find(user => user.id == id);
 
         if (user === undefined) {
             user = this.createUser(id);
@@ -55,7 +60,7 @@ export class Guild{
 
         // We do ignore a warning here because we don't need to do anything with the result
         // noinspection JSUnusedLocalSymbols
-        this.#db.query("INSERT INTO GUILD (guild_id, lang) VALUES (?, ?)", [this.id, this.lang],
+        this.#db.query<RowDataPacket[]>("INSERT INTO GUILD (guild_id, lang) VALUES (?, ?)", [this.id, this.lang],
             (err, result) => {
                 if (err) throw err;
             })
@@ -127,6 +132,33 @@ export class Guild{
 
         this.lang = lang;
         this.update();
+
+    }
+
+    getItemByDate(date: Date|undefined): UserItem[]{
+        // Get All items bought after a date
+
+        if (date === undefined){
+            date = new Date(0);
+        }
+
+        return this.globalInventory.filter(item => item.boughtAt >= date!);
+
+    }
+
+    getItemById(id: string, date: undefined | Date = undefined): UserItem[]{
+        // Return a list, bought before a date (default: Ignore date) with specific id
+
+        // if date is undefined, we set it to the 1st January 1970
+        if (date === undefined){
+            date = new Date(0);
+        }
+
+        // Get all items bought before a date
+        const items = this.getItemByDate(date);
+
+        // Return the list of items with the id
+        return items.filter(item => item.id === id);
 
     }
 }

@@ -1,6 +1,6 @@
 import {Guild} from "./Guild";
 
-import mysql from "mysql";
+import mysql from "mysql2";
 
 export class ShopItem{
     price: number;
@@ -30,6 +30,7 @@ export class ShopItem{
         restockDuration: number,
         db: mysql.Connection
     ){
+        this.#db = db;
         this.price = price;
         this.name = name;
         this.description = description;
@@ -41,7 +42,6 @@ export class ShopItem{
         this.availableAfter = availableAfter;
         this.availableBefore = availableBefore;
         this.restockDuration = restockDuration;
-        this.#db = db;
     }
 
     update(): void{
@@ -67,7 +67,6 @@ export class ShopItem{
                 if (err) throw err;
             }
         )
-
     }
 
     delete(): void{

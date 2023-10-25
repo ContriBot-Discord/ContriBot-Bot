@@ -1,6 +1,7 @@
 import { Guild } from "./Guild";
 import { UserItem } from "./UserItem";
-import mysql from "mysql";
+import mysql, {RowDataPacket, ResultSetHeader} from "mysql2";
+import {ShopItem} from "@/classes/ShopItem";
 
 export class User{
     guild: Guild;
@@ -8,7 +9,7 @@ export class User{
     points: number;
     allPoints: number;
     inventory: UserItem[];
-    #db: mysql.Connection;
+    readonly #db: mysql.Connection;
 
     constructor(
         guild: Guild,
@@ -17,12 +18,12 @@ export class User{
         allPoints: number = 0,
         db: mysql.Connection
     ){
+        this.#db = db;
         this.guild = guild;
         this.id = id
         this.points = points;
         this.allPoints = allPoints;
         this.inventory = this.fetchInventory();
-        this.#db = db;
     }
 
     fetchInventory(): UserItem[]{
@@ -30,7 +31,7 @@ export class User{
         const items: UserItem[] = [];
 
         // Join the inventory and the shop to get the name and description
-        this.#db.query("SELECT * FROM INVENTORY INNER JOIN SHOP ON INVENTORY.item_id = SHOP.item_id WHERE user_id = ? AND SHOP.guild_id = ?",
+        this.#db.query<RowDataPacket[]>("SELECT * FROM INVENTORY INNER JOIN SHOP ON INVENTORY.item_id = SHOP.item_id WHERE user_id = ? AND SHOP.guild_id = ?",
             [this.id, this.guild.id],
             (err, result) => {
             if (err) throw err;
@@ -51,7 +52,7 @@ export class User{
 
         // We do ignore a warning here because we don't need to do anything with the result
         // noinspection JSUnusedLocalSymbols
-        this.#db.query("INSERT INTO USER (user_id, guild_id, points, global_points) VALUES (?, ?, ?, ?)",
+        this.#db.query<RowDataPacket[]>("INSERT INTO USER (user_id, guild_id, points, global_points) VALUES (?, ?, ?, ?)",
             [this.id, this.guild.id, this.points, this.allPoints],
 
             (err, result) => {
@@ -101,5 +102,48 @@ export class User{
 
     }
 
+    buyItem(item: ShopItem): void{
 
+        // All of the verification should be done BEFORE calling this method.
+        // No verification is done here.
+        // Points should be removed from the user before calling this method.
+
+        let itemId;
+
+        // Create a new item in the database
+        this.#db.query<ResultSetHeader>(
+            "INSERT INTO INVENTORY (item_id, user_id, guild_id) VALUES (?, ?, ?)",
+            [item.id, this.id, this.guild.id],
+            (err, result) => {
+                if (err) throw err;
+
+                itemId = result.insertId; // We get the id of the item we just created
+            });
+
+        // Create a new UserItem object
+        const userItem = new UserItem(
+            this, itemId!.toString(), item.name, item.description, new Date(), false, new Date(), false, new Date(), this.#db
+        );
+    }
+
+    getItemsByDate(date: Date): UserItem[]{
+        // Get all items bought after a date
+        return this.inventory.filter(item => item.boughtAt >= date);
+    }
+
+    getItemsById(id: string, date: undefined|Date = undefined): UserItem[]{
+        // Get all items with a specific id
+
+        if (date === undefined) {
+            return this.inventory.filter(item => item.id === id);
+
+        } else {
+
+            return this.getItemsByDate(date).filter(item => item.id === id);
+
+        }
+
+
+
+    }
 }
