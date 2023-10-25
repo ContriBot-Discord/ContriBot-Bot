@@ -15,7 +15,6 @@
   "license": "ISC",
   "devDependencies": {
     "@types/i18n": "^0.13.7",
-    "@types/mysql": "^2.15.23",
     "@types/node": "^20.8.4",
     "@types/validator": "^13.11.2",
     "typescript": "^5.2.2"
@@ -25,10 +24,6 @@
     "dotenv": "^16.3.1",
     "i18n": "^0.13.1",
     "module-alias": "^2.2.3",
-    "mysql": "^2.18.1",
-    "mysql2": "^3.6.2",
-    "reflect-metadata": "^0.1.13",
-    "sequelize-typescript": "^2.1.5",
-    "sqlite3": "^5.1.6"
+    "mysql2": "^3.6.2"
   }
 }
