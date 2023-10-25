@@ -1,6 +1,6 @@
 import { User } from "./User";
 import {ShopItem} from "./ShopItem";
-import mysql from 'mysql';
+import mysql, {RowDataPacket} from 'mysql2';
 
 export class Guild{
     id: string;
@@ -67,7 +67,7 @@ export class Guild{
 
         // We do ignore a warning here because we don't need to do anything with the result
         // noinspection JSUnusedLocalSymbols
-        this.#db.query("UPDATE GUILD SET lang = ? WHERE guild_id = ?", [this.lang, this.id],
+        this.#db.query<RowDataPacket[]>("UPDATE GUILD SET lang = ? WHERE guild_id = ?", [this.lang, this.id],
             (err, result) => {
                 if (err) throw err;
             });
@@ -77,18 +77,20 @@ export class Guild{
         // Fetch all users from database
         const users: User[] = [];
 
-        this.#db.query("SELECT * FROM USER WHERE guild_id = ?", [this.id],
-            (err, result) => {
+        this.#db.execute<RowDataPacket[]>("SELECT * FROM USER WHERE guild_id = ?", [this.id],
+            (err, result, fields) => {
 
-            for (let i = 0; i < result.length; i++) {
-                const user = result[i];
+                if (err) throw err;
 
-                users.push (
-                    new User(this, user.id, user.points, user.global_points, this.#db)
-                );
+                result.forEach((user: any) => {
+                    users.push(
+                        new User(this, user.user_id, user.points, user.global_points, this.#db)
+                    );
+                });
+
             }
 
-        });
+        );
 
         return users;
     }
@@ -99,7 +101,7 @@ export class Guild{
 
         // We do ignore a warning here because we don't need to do anything with the result
         // noinspection JSUnusedLocalSymbols
-        this.#db.query("UPDATE USER SET points = 0, global_points = 0  WHERE guild_id = ?", [this.id],
+        this.#db.query<RowDataPacket[]>("UPDATE USER SET points = 0, global_points = 0  WHERE guild_id = ?", [this.id],
             (err, result) => {
                 if (err) throw err;
             });

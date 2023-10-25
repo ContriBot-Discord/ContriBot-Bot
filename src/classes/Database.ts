@@ -1,5 +1,5 @@
 import {Guild} from "./Guild";
-import mysql from 'mysql';
+import mysql, {RowDataPacket} from 'mysql2';
 
 export class Database{
     guilds: Guild[];
@@ -8,7 +8,8 @@ export class Database{
     constructor(){
         // Represent all the guilds in the database
         this.#db = mysql.createConnection({
-            host     : process.env.DB_HOST + ":" + process.env.DB_PORT,
+            host     : process.env.DB_HOST,
+            port     : Number(process.env.DB_PORT),
             user     : process.env.DB_USERNAME,
             password : process.env.DB_PASSWORD,
             database : process.env.DB_NAME
@@ -17,7 +18,7 @@ export class Database{
         this.guilds = this.fetchGuilds();
     }
 
-    getGuild(id: string): Guild{
+    getGuild(id: string): Guild {
         // Get a guild from the database
         // If the guild does not exist, create it and return it
         let guild = this.guilds.find(guild => guild.id === id);
@@ -53,11 +54,12 @@ export class Database{
 
         // The .query method sends a query to the database
 
-        this.#db.query("SELECT * FROM GUILD", (err, result) => {
+        this.#db.query<RowDataPacket[]>("SELECT * FROM GUILD", (err, result) => {
             if (err) throw err;
+            // For each guild in the database, create a new Guild object
             result.forEach((guild: any) => {
-                guilds.push(new Guild(guild.id, guild.language, this.#db));
-            });
+                guilds.push(new Guild(guild.guild_id, guild.lang, this.#db));
+            })
         })
 
         return guilds;
