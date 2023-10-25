@@ -83,7 +83,7 @@ export class Guild{
         const users: User[] = [];
 
         this.#db.execute<RowDataPacket[]>("SELECT * FROM USER WHERE guild_id = ?", [this.id],
-            (err, result, fields) => {
+            (err, result) => {
 
                 if (err) throw err;
 

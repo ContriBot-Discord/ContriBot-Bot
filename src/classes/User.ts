@@ -124,6 +124,9 @@ export class User{
         const userItem = new UserItem(
             this, itemId!.toString(), item.name, item.description, new Date(), false, new Date(), false, new Date(), this.#db
         );
+
+        // Add the item to the inventory
+        this.inventory.push(userItem);
     }
 
     getItemsByDate(date: Date): UserItem[]{
