@@ -8,7 +8,7 @@ import {
 } from "discord.js";
 
 import { DB } from "@/index";
-import {User} from "@/classes/User";
+import { User } from "@/classes/User";
 
 const event: BotEvent = {
   name: Events.InteractionCreate,
@@ -55,11 +55,9 @@ const event: BotEvent = {
         new ButtonBuilder().setCustomId("refresh").setLabel("⟲").setStyle(1)
       );
 
-    let users = [...guild.users]
+    let users = [...guild.users];
 
-    users.sort(
-      (a: User, b: User) => b.allPoints - a.allPoints
-    );
+    users.sort((a: User, b: User) => b.allPoints - a.allPoints);
 
     if (interaction.customId === "previous") {
       embed.setFooter({
@@ -83,7 +81,7 @@ const event: BotEvent = {
       }
 
       if (actualPageInt == 1) button.components[0].setDisabled(true);
-      if (actualPageInt == Math.ceil(guild.users.length  / 10))
+      if (actualPageInt == Math.ceil(guild.users.length / 10))
         button.components[1].setDisabled(true);
 
       await interaction.message.edit({
@@ -96,8 +94,8 @@ const event: BotEvent = {
       const startIndex = actualPageInt * 10;
       const endIndex =
         startIndex + 10 > guild.users.length
-            ? guild.users.length
-            : startIndex + 10;
+          ? guild.users.length
+          : startIndex + 10;
 
       for (let i = startIndex; i < endIndex; i++) {
         const user = users[i];

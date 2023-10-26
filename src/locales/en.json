@@ -1,70 +1,70 @@
 {
-	"global": {
-		"points": {
-			"zero": "0 points de contribution",
-			"one": "**%s** point de contribution",
-			"other": "**%s** contribution points"
-		}
-	},
-	"leaderboard": {
-		"embed": {
-			"title": "Leaderboard [%s]",
-			"description": "Here is the contribution points leaderboard.",
-			"field": {
-				"name": "Top %s",
-				"value": "<@%s> with %s"
-			}
-		},
-		"buttons": {
-			"errors": {
-				"goBack": "You can't go back!",
-				"goForward": "You can't go forward !"
-			}
-		}
-	},
-	"addContribPoint": {
-		"embed": {
-			"title": "Ajout",
-			"description": "<@%s> added %s to <@%s>."
-		}
-	},
-	"getContribPoint": {
-		"embed": {
-			"title": "Affichage",
-			"description": "<@%s> a %s."
-		}
-	},
-	"removeContribPoint": {
-		"embed": {
-			"title": "Retrait",
-			"description": "<@%s> a retiré %s à <@%s>."
-		}
-	},
-	"resetAllContribPoint": {
-		"embed": {
-			"title": "Reset",
-			"description": "<@%s> a réinitialisé les points de contribution de tous les membres."
-		}
-	},
-	"resetContribPoint": {
-		"embed": {
-			"title": "Réinitialisation",
-			"description": "<@%s> a réinitialisé les points de contribution de <@%s>."
-		}
-	},
-	"setLang": {
-		"embed": {
-			"title": "Langue",
-			"description": "Votre langue a été changée en français."
-		}
-	},
-	"sendEmbedTicket": {
-		"embed": {
-			"name": "Ouvrir un ticket",
-			"description": "**Bienvenue dans le salon de création de ticket !**\n            \n Le système de ticket peut servir à :\n* Inviter une personne sur le serveur (autre que du BUT).\n* Signaler un joueur / un bug.\n* Réserver le serveur événement.\n* Demander l'accès aux commands blocks dans le serveur créatif.\n\n *Pour ouvrir un ticket, cliquez sur le bouton ci-dessous.*"
-		},
-		"button": {
-			"label": "Créer un ticket"
-		}
-	}
+  "global": {
+    "points": {
+      "zero": "0 points de contribution",
+      "one": "**%s** point de contribution",
+      "other": "**%s** contribution points"
+    }
+  },
+  "leaderboard": {
+    "embed": {
+      "title": "Leaderboard [%s]",
+      "description": "Here is the contribution points leaderboard.",
+      "field": {
+        "name": "Top %s",
+        "value": "<@%s> with %s"
+      }
+    },
+    "buttons": {
+      "errors": {
+        "goBack": "You can't go back!",
+        "goForward": "You can't go forward !"
+      }
+    }
+  },
+  "addContribPoint": {
+    "embed": {
+      "title": "Ajout",
+      "description": "<@%s> added %s to <@%s>."
+    }
+  },
+  "getContribPoint": {
+    "embed": {
+      "title": "Affichage",
+      "description": "<@%s> a %s."
+    }
+  },
+  "removeContribPoint": {
+    "embed": {
+      "title": "Retrait",
+      "description": "<@%s> a retiré %s à <@%s>."
+    }
+  },
+  "resetAllContribPoint": {
+    "embed": {
+      "title": "Reset",
+      "description": "<@%s> a réinitialisé les points de contribution de tous les membres."
+    }
+  },
+  "resetContribPoint": {
+    "embed": {
+      "title": "Réinitialisation",
+      "description": "<@%s> a réinitialisé les points de contribution de <@%s>."
+    }
+  },
+  "setLang": {
+    "embed": {
+      "title": "Langue",
+      "description": "Votre langue a été changée en français."
+    }
+  },
+  "sendEmbedTicket": {
+    "embed": {
+      "name": "Ouvrir un ticket",
+      "description": "**Bienvenue dans le salon de création de ticket !**\n            \n Le système de ticket peut servir à :\n* Inviter une personne sur le serveur (autre que du BUT).\n* Signaler un joueur / un bug.\n* Réserver le serveur événement.\n* Demander l'accès aux commands blocks dans le serveur créatif.\n\n *Pour ouvrir un ticket, cliquez sur le bouton ci-dessous.*"
+    },
+    "button": {
+      "label": "Créer un ticket"
+    }
+  }
 }

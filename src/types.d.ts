@@ -20,10 +20,10 @@ export interface SlashCommandData {
   name: string;
   description: string;
   options?: {
-    type: ApplicationCommandOptionType,
-    name: string,
-    description: string,
-    required: boolean
+    type: ApplicationCommandOptionType;
+    name: string;
+    description: string;
+    required: boolean;
   }[];
   subcommands?: SlashCommandSubcommandBuilder[];
   group?: string;

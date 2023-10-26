@@ -6,8 +6,8 @@ import {
   CacheType,
   CommandInteraction,
 } from "discord.js";
-import { SlashCommand } from "../types";
-import {DB} from "../index";
+import { SlashCommand } from "@/types";
+import { DB } from "@/index";
 
 export const command: SlashCommand = {
   name: "leaderboardpoint",
@@ -29,27 +29,29 @@ export const command: SlashCommand = {
       .setTimestamp();
 
     // Copied list of the guild users
-    let users = [...guild.users]
+    let users = [...guild.users];
 
-    users.sort(
-      (a, b) => b.getContribPoint(true) - a.getContribPoint(true)
-    );
+    users.sort((a, b) => b.getContribPoint(true) - a.getContribPoint(true));
 
     for (let i = 0; i < 9; i++) {
       const user = users[i];
       if (user) {
         embed.addFields({
           name: ` `,
-          value: `**#${i + 1} ·** <@${user.id}> · **${
-            user.getContribPoint(true)
-          }** points`,
+          value: `**#${i + 1} ·** <@${user.id}> · **${user.getContribPoint(
+            true
+          )}** points`,
         });
       }
     }
 
     const button = new ActionRowBuilder<ButtonBuilder>()
       .addComponents(
-        new ButtonBuilder().setCustomId("previous").setLabel("◀︎").setStyle(1).setDisabled(true)
+        new ButtonBuilder()
+          .setCustomId("previous")
+          .setLabel("◀︎")
+          .setStyle(1)
+          .setDisabled(true)
       )
       .addComponents(
         new ButtonBuilder().setCustomId("next").setLabel("▶").setStyle(1)
