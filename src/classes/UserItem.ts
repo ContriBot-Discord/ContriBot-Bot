@@ -50,8 +50,8 @@ export class UserItem {
     }
 
     use(): void{
-
             // Check if item is already used
+
             if(this.used){
                 throw new Error("UserItem is already used");
             } else {
@@ -63,8 +63,8 @@ export class UserItem {
     }
 
     refund(): void{
-
         // Check if item is already refunded
+
         if(this.refunded){
             throw new Error("UserItem is already refunded");
         } else {

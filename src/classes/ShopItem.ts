@@ -58,8 +58,8 @@ export class ShopItem{
     }
 
     create(): void{
-
         // Insert a new row in the database
+
         this.#db.query(
             "INSERT INTO SHOP (item_id, guild_id, price, label, description, max_quantity, action, available, available_after, available_before, restock_duration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             [this.id, this.guild.id, this.price, this.name, this.description, this.max_quantity, this.action, this.available, this.availableAfter, this.availableBefore, this.restockDuration],

@@ -31,9 +31,11 @@ export class Database{
         let guild = this.guilds.find(guild => guild.id == id);
 
         if (guild == undefined) {
+            // Since Database do not exist, we create it
             guild = this.createGuild(id);
         }
-        // Since Database is not configured yet, return a new guild
+
+
         return guild
     }
 
@@ -48,7 +50,6 @@ export class Database{
         // Once created, we add the guild to the guilds array
         this.guilds.push(guild);
 
-        // And return it
         return guild;
     }
 

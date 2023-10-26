@@ -50,7 +50,6 @@ export class Guild{
         // Once created, we add the user to the guilds array
         this.users.push(user);
 
-        // And return it
         return user;
 
     }
@@ -58,8 +57,6 @@ export class Guild{
     create(): void{
         // Insert a new row in the database
 
-        // We do ignore a warning here because we don't need to do anything with the result
-        // noinspection JSUnusedLocalSymbols
         this.#db.query<RowDataPacket[]>("INSERT INTO GUILD (guild_id, lang) VALUES (?, ?)", [this.id, this.lang],
             (err, result) => {
                 if (err) throw err;
@@ -70,8 +67,6 @@ export class Guild{
     update(): void{
         // Update guild in database
 
-        // We do ignore a warning here because we don't need to do anything with the result
-        // noinspection JSUnusedLocalSymbols
         this.#db.query<RowDataPacket[]>("UPDATE GUILD SET lang = ? WHERE guild_id = ?", [this.lang, this.id],
             (err, result) => {
                 if (err) throw err;
@@ -104,8 +99,6 @@ export class Guild{
 
         // Reset all users' points in database
 
-        // We do ignore a warning here because we don't need to do anything with the result
-        // noinspection JSUnusedLocalSymbols
         this.#db.query<RowDataPacket[]>("UPDATE USER SET points = 0, global_points = 0  WHERE guild_id = ?", [this.id],
             (err, result) => {
                 if (err) throw err;
@@ -123,8 +116,10 @@ export class Guild{
     fetchShop(): ShopItem[]{
         // Fetch all shop items from database
 
-        // Since Database is not configured yet, return empty array
-        return [];
+        const shop: ShopItem[] = [];
+
+        this.#db.execute<RowDataPacket[]>("SELECT * FROM SHOP WHERE guild_id = ?", [this.id],
+            (err, result) => {
 
     }
 
