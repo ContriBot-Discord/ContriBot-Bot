@@ -121,6 +121,18 @@ export class Guild{
         this.#db.execute<RowDataPacket[]>("SELECT * FROM SHOP WHERE guild_id = ?", [this.id],
             (err, result) => {
 
+                if (err) throw err;
+
+                result.forEach((item: any) => {
+                    shop.push(
+                        new ShopItem(
+                            item.price, item.name, item.description, item.id, this, item.max_quantity, item.action,
+                            item.available,item.available_after, item.available_before, item.restock_duration, this.#db,
+                        )
+                    );
+                });
+            });
+        return shop;
     }
 
     setLang(lang: string) {
