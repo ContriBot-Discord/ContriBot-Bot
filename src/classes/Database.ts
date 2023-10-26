@@ -21,7 +21,6 @@ export class Database{
             if (err) throw err;
             console.log("🌠 Successfully connected to the database");
         });
-
         this.guilds = this.fetchGuilds();
     }
 
@@ -62,7 +61,6 @@ export class Database{
                 guilds.push(new Guild(guild.guild_id, guild.lang, this.#db));
             })
         })
-
         return guilds;
     }
 }

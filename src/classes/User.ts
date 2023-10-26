@@ -41,10 +41,8 @@ export class User{
                     new UserItem(this, item.unique_item_id, item.name, item.description, item.bought_at, item.refunded, item.refunded_at, item.used, item.used_at, this.#db
                     ));
             });
-        }
-        )
+        })
     return items;
-
     }
 
     create(): void{
@@ -90,7 +88,6 @@ export class User{
     getContribPoint(all: boolean): number{
 
         return all ? this.allPoints : this.points;
-
     }
 
     buyItem(item: ShopItem): void{
@@ -133,8 +130,5 @@ export class User{
         } else {
             return this.getItemsByDate(date).filter(item => item.id === id);
         }
-
-
-
     }
 }

@@ -73,7 +73,5 @@ export class UserItem {
 
             this.update();
         }
-
     }
-
 }

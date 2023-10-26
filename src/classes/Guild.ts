@@ -47,7 +47,6 @@ export class Guild{
         this.users.push(user);
 
         return user;
-
     }
 
     create(): void{
@@ -57,7 +56,6 @@ export class Guild{
             (err, result) => {
                 if (err) throw err;
             })
-
     }
 
     update(): void{
@@ -83,11 +81,8 @@ export class Guild{
                         new User(this, user.user_id, user.points, user.global_points, this.#db)
                     );
                 });
-
             }
-
         );
-
         return users;
     }
 
@@ -135,7 +130,6 @@ export class Guild{
 
         this.lang = lang;
         this.update();
-
     }
 
     getItemByDate(date: Date|undefined): UserItem[]{
@@ -146,7 +140,6 @@ export class Guild{
         }
 
         return this.globalInventory.filter(item => item.boughtAt >= date!);
-
     }
 
     getItemById(id: string, date: undefined | Date = undefined): UserItem[]{
@@ -162,6 +155,5 @@ export class Guild{
 
         // Return the list of items with the id
         return items.filter(item => item.id === id);
-
     }
 }

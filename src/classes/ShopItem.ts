@@ -54,7 +54,6 @@ export class ShopItem{
                 if (err) throw err;
             }
         )
-
     }
 
     create(): void{
@@ -79,8 +78,5 @@ export class ShopItem{
                 if (err) throw err;
             }
         )
-
     }
-
-
 }
