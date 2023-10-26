@@ -11,8 +11,8 @@ export class ShopItem{
     max_quantity: number;
     action: number;
     available: boolean;
-    availableAfter: Date;
-    availableBefore: Date;
+    availableSince: Date;
+    availableUntil: Date;
     restockDuration: number;
     #db: mysql.Connection;
 
@@ -25,8 +25,8 @@ export class ShopItem{
         max_quantity: number,
         action: number,
         available: boolean,
-        availableAfter: Date,
-        availableBefore: Date,
+        availableSince: Date,
+        availableUntil : Date,
         restockDuration: number,
         db: mysql.Connection
     ){
@@ -39,8 +39,8 @@ export class ShopItem{
         this.max_quantity = max_quantity;
         this.action = action;
         this.available = available;
-        this.availableAfter = availableAfter;
-        this.availableBefore = availableBefore;
+        this.availableSince = availableSince;
+        this.availableUntil  = availableUntil ;
         this.restockDuration = restockDuration;
     }
 
@@ -49,7 +49,7 @@ export class ShopItem{
 
         this.#db.query(
             "UPDATE SHOP SET price = ?, label = ?, description = ?, max_quantity = ?, action = ?, available = ?, available_after = ?, available_before = ?, restock_duration = ? WHERE item_id = ?",
-            [this.price, this.name, this.description, this.max_quantity, this.action, this.available, this.availableAfter, this.availableBefore, this.restockDuration, this.id],
+            [this.price, this.name, this.description, this.max_quantity, this.action, this.available, this.availableSince, this.availableUntil , this.restockDuration, this.id],
             (err, result) => {
                 if (err) throw err;
             }
@@ -62,7 +62,7 @@ export class ShopItem{
 
         this.#db.query(
             "INSERT INTO SHOP (item_id, guild_id, price, label, description, max_quantity, action, available, available_after, available_before, restock_duration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            [this.id, this.guild.id, this.price, this.name, this.description, this.max_quantity, this.action, this.available, this.availableAfter, this.availableBefore, this.restockDuration],
+            [this.id, this.guild.id, this.price, this.name, this.description, this.max_quantity, this.action, this.available, this.availableSince, this.availableUntil , this.restockDuration],
             (err, result) => {
                 if (err) throw err;
             }
