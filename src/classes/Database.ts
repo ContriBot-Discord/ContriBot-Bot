@@ -30,13 +30,7 @@ export class Database{
         // If the guild does not exist, create it and return it
         let guild = this.guilds.find(guild => guild.id == id);
 
-        if (guild == undefined) {
-            // Since Database do not exist, we create it
-            guild = this.createGuild(id);
-        }
-
-
-        return guild
+        return (!guild) ? this.createGuild(id): guild;
     }
 
     createGuild(id: string): Guild{

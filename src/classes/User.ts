@@ -89,11 +89,7 @@ export class User{
 
     getContribPoint(all: boolean): number{
 
-        if (all) {
-            return this.allPoints;
-        } else {
-            return this.points;
-        }
+        return all ? this.allPoints : this.points;
 
     }
 
@@ -135,9 +131,7 @@ export class User{
             return this.inventory.filter(item => item.id === id);
 
         } else {
-
             return this.getItemsByDate(date).filter(item => item.id === id);
-
         }
 
 

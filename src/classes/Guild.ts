@@ -31,11 +31,7 @@ export class Guild{
         // If the user does not exist, create it and return it
         let user = this.users.find(user => user.id == id);
 
-        if (user === undefined) {
-            user = this.createUser(id);
-        }
-
-        return user
+        return (!user) ? this.createUser(id): user;
     }
 
     createUser(id: string): User{
