@@ -6,9 +6,9 @@ import {
   SlashCommandBooleanOption,
   SlashCommandUserOption,
 } from "discord.js";
-import { SlashCommand } from "@/types";
+import { SlashCommand } from "../types";
 
-import { getPoints } from "../utils/contribFunctions";
+import {DB} from "../index";
 
 export const command: SlashCommand = {
   name: "getcontribpoint",
@@ -32,7 +32,7 @@ export const command: SlashCommand = {
   async execute(interaction: CommandInteraction<CacheType>) {
     const memberId = interaction.options.getUser("membre")!.id;
     const all = interaction.options.get("all")?.value as boolean;
-    const amount = getPoints(memberId, all);
+    const amount = DB.getGuild(interaction.guildId!).getUser(memberId).getContribPoint(true);
 
     const lineString: string = `<:lineviolett:1163753428317638696>`.repeat(9);
 

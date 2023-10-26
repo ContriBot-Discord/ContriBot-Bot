@@ -1,14 +1,12 @@
-import { BotEvent, ContributionUser } from "../types";
+import { BotEvent} from "../types";
 import { Client, Events, Collection, Message, TextChannel, ForumChannel, ThreadChannel, MessageReaction } from "discord.js";
-import { Contribution } from "../dbInit";
-import { contribution } from "../index";
 
 const event: BotEvent = {
   name: Events.ClientReady,
   once: true,
+
+
   async execute(client: Client) {
-    const users: ContributionUser[] = await Contribution.findAll();
-    users.forEach((user: ContributionUser) => contribution.set(user.userId, user));
 
     const infoChannel: TextChannel = client.channels.cache.get(process.env.INFO_CHANNEL_ID!) as TextChannel;
     let messages: Collection<string, Message> = await infoChannel.messages.fetch({ limit: 30 });

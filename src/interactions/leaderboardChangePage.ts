@@ -1,4 +1,4 @@
-import { BotEvent, ContributionUser } from "../types";
+import { BotEvent } from "@/types";
 import {
   Events,
   Interaction,
@@ -7,7 +7,8 @@ import {
   EmbedBuilder,
 } from "discord.js";
 
-import { contribution } from "../index";
+import { DB } from "@/index";
+import {User} from "@/classes/User";
 
 const event: BotEvent = {
   name: Events.InteractionCreate,
@@ -30,6 +31,8 @@ const event: BotEvent = {
 
     const lineString: string = `<:lineviolett:1163753428317638696>`.repeat(6);
 
+    const guild = DB.getGuild(interaction.guildId!);
+
     const embed = new EmbedBuilder()
       .addFields({
         name: "<:shinypurplestar:1163585447201607781> Leaderboard",
@@ -37,7 +40,7 @@ const event: BotEvent = {
       })
       .setColor("#aa54e1")
       .setFooter({
-        text: `Page ${actualPageInt}/${Math.ceil(contribution.size / 10)}`,
+        text: `Page ${actualPageInt}/${Math.ceil(guild.users.length / 10)}`,
       })
       .setTimestamp();
 
@@ -52,34 +55,35 @@ const event: BotEvent = {
         new ButtonBuilder().setCustomId("refresh").setLabel("⟲").setStyle(1)
       );
 
-    contribution.sort(
-      (a, b) => b.allContributionPoint - a.allContributionPoint
+    let users = [...guild.users]
+
+    users.sort(
+      (a: User, b: User) => b.allPoints - a.allPoints
     );
 
     if (interaction.customId === "previous") {
       embed.setFooter({
-        text: `Page ${actualPageInt - 1}/${Math.ceil(contribution.size / 10)}`,
+        text: `Page ${actualPageInt - 1}/${Math.ceil(guild.users.length / 10)}`,
       });
 
       const startIndex: number = (actualPageInt - 1) * 10;
       const endIndex: number = startIndex + 10;
 
       for (let i = startIndex; i < endIndex; i++) {
-        const user: ContributionUser = contribution.get(
-          contribution.keyAt(i)!
-        )!;
+        const user = users[i];
+
         if (user) {
           embed.addFields({
             name: ` `,
-            value: `**#${i + 1} ·** <@${user.userId}> · **${
-              user.allContributionPoint
+            value: `**#${i + 1} ·** <@${user.id}> · **${
+              user.allPoints
             }** points`,
           });
         }
       }
 
       if (actualPageInt == 1) button.components[0].setDisabled(true);
-      if (actualPageInt == Math.ceil(contribution.size / 10))
+      if (actualPageInt == Math.ceil(guild.users.length  / 10))
         button.components[1].setDisabled(true);
 
       await interaction.message.edit({
@@ -91,26 +95,24 @@ const event: BotEvent = {
     } else if (interaction.customId === "next") {
       const startIndex = actualPageInt * 10;
       const endIndex =
-        startIndex + 10 > contribution.size
-          ? contribution.size
-          : startIndex + 10;
+        startIndex + 10 > guild.users.length
+            ? guild.users.length
+            : startIndex + 10;
 
       for (let i = startIndex; i < endIndex; i++) {
-        const user: ContributionUser = contribution.get(
-          contribution.keyAt(i)!
-        )!;
+        const user = users[i];
         if (user) {
           embed.addFields({
             name: ` `,
-            value: `**#${i + 1} ·** <@${user.userId}> · **${
-              user.allContributionPoint
+            value: `**#${i + 1} ·** <@${user.id}> · **${
+              user.allPoints
             }** points`,
           });
         }
       }
 
       if (actualPageInt == 1) button.components[0].setDisabled(true);
-      if (actualPageInt == Math.ceil(contribution.size / 10))
+      if (actualPageInt == Math.ceil(guild.users.length / 10))
         button.components[1].setDisabled(true);
 
       await interaction.message.edit({
@@ -122,26 +124,24 @@ const event: BotEvent = {
     } else {
       const startIndex = (actualPageInt - 1) * 10;
       const endIndex =
-        startIndex + 10 > contribution.size
-          ? contribution.size
+        startIndex + 10 > guild.users.length
+          ? guild.users.length
           : startIndex + 10;
 
       for (let i = startIndex; i < endIndex; i++) {
-        const user: ContributionUser = contribution.get(
-          contribution.keyAt(i)!
-        )!;
+        const user = users[i];
         if (user) {
           embed.addFields({
             name: ` `,
-            value: `**#${i + 1} ·** <@${user.userId}> · **${
-              user.allContributionPoint
+            value: `**#${i + 1} ·** <@${user.id}> · **${
+              user.allPoints
             }** points`,
           });
         }
       }
 
       if (actualPageInt == 1) button.components[0].setDisabled(true);
-      if (actualPageInt == Math.ceil(contribution.size / 10))
+      if (actualPageInt == Math.ceil(guild.users.length / 10))
         button.components[1].setDisabled(true);
 
       await interaction.message.edit({

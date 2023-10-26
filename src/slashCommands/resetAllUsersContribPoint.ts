@@ -5,9 +5,9 @@ import {
   CommandInteraction,
   SlashCommandBooleanOption,
 } from "discord.js";
-import { SlashCommand } from "@/types";
+import { SlashCommand } from "../types";
 
-import { resetAllUsersPoints } from "../utils/contribFunctions";
+import {DB} from "../index";
 
 export const command: SlashCommand = {
   name: "resetalluserscontribpoint",
@@ -47,7 +47,10 @@ export const command: SlashCommand = {
         value: `All of the users' total contribution points have been reset.`,
       });
 
-    resetAllUsersPoints(all);
+
+    // Reset all users' points in database, and then update the cache
+    DB.getGuild(interaction.guildId!).resetPoints();
+
 
     await interaction.reply({ embeds: [embed] });
   },

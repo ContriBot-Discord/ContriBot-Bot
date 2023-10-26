@@ -6,9 +6,9 @@ import {
   SlashCommandUserOption,
   SlashCommandIntegerOption,
 } from "discord.js";
-import { SlashCommand } from "@/types";
+import { SlashCommand } from "../types";
 
-import { removePoints } from "../utils/contribFunctions";
+import {DB} from "../index";
 
 export const command: SlashCommand = {
   name: "removecontribpoint",
@@ -64,7 +64,7 @@ export const command: SlashCommand = {
         value: `${amount} total contribution points has been removed from <@${memberId}>.`,
       });
 
-    await removePoints(memberId, amount, all);
+    DB.getGuild(interaction.guildId!).getUser(memberId).addPoints(-amount, all);
 
     await interaction.reply({ embeds: [embed] });
   },

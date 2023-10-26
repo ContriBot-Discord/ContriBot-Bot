@@ -1,5 +1,5 @@
 import { SlashCommandBuilder, EmbedBuilder, CommandInteraction, CacheType } from "discord.js"
-import { SlashCommand } from "@/types";
+import { SlashCommand } from "../types";
 
 export const command: SlashCommand = {
     name: 'ping',
