@@ -49,7 +49,7 @@ export const command: SlashCommand = {
 
     const button = new ActionRowBuilder<ButtonBuilder>()
       .addComponents(
-        new ButtonBuilder().setCustomId("previous").setLabel("◀︎").setStyle(1)
+        new ButtonBuilder().setCustomId("previous").setLabel("◀︎").setStyle(1).setDisabled(true)
       )
       .addComponents(
         new ButtonBuilder().setCustomId("next").setLabel("▶").setStyle(1)
@@ -57,8 +57,6 @@ export const command: SlashCommand = {
       .addComponents(
         new ButtonBuilder().setCustomId("refresh").setLabel("⟲").setStyle(1)
       );
-
-    button.components[0].setDisabled(true);
 
     if (guild.users.length <= 10) button.components[1].setDisabled(true);
 
