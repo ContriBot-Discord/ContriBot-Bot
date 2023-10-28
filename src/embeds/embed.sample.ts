@@ -1,11 +1,8 @@
 import {EmbedBuilder} from "discord.js";
 
-export function sample (title: string) : EmbedBuilder {
+export default function (title: string) : EmbedBuilder {
 
-    const embed = new EmbedBuilder()
+    return new EmbedBuilder()
         .setTitle(title)
 
-
-
-    return embed;
 }
