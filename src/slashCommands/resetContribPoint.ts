@@ -1,6 +1,5 @@
 import {
   SlashCommandBuilder,
-  EmbedBuilder,
   CacheType,
   CommandInteraction,
   SlashCommandBooleanOption,
@@ -33,10 +32,6 @@ export const command: SlashCommand = {
   async execute(interaction: CommandInteraction<CacheType>) {
     const memberId = interaction.options.getUser("membre")!.id;
     const all = interaction.options.get("all")?.value as boolean;
-
-    const lineString: string = `<:shiny_orange_bar:1163759934702374942>`.repeat(
-      9
-    );
 
     const embed = resetContribPoint(memberId, all);
 
