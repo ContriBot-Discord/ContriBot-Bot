@@ -9,6 +9,7 @@ import {
 import { SlashCommand } from "@/types";
 
 import { DB } from "@/index";
+import getContribPoint from "@/embeds/getContribPoint";
 
 export const command: SlashCommand = {
   name: "getcontribpoint",
@@ -36,29 +37,7 @@ export const command: SlashCommand = {
       .getUser(memberId)
       .getContribPoint(true);
 
-    const lineString: string = `<:lineviolett:1163753428317638696>`.repeat(9);
-
-    const embed = new EmbedBuilder()
-      .addFields({
-        name: " ",
-        value: `**<:shinypurplestar:1163585447201607781> Get points command.**`,
-      })
-      .addFields({
-        name: " ",
-        value: lineString,
-      })
-      .addFields({
-        name: " ",
-        value: `<@${memberId}> has **${amount}** contributution point(s). `,
-      })
-      .setColor("#AA54E1")
-      .setTimestamp();
-
-    if (all)
-      embed.spliceFields(2, 1, {
-        name: " ",
-        value: `<@${memberId}> has **${amount}** total contribution point(s).`,
-      });
+    const embed = getContribPoint(memberId, amount, all);
 
     await interaction.reply({ embeds: [embed] });
   },
