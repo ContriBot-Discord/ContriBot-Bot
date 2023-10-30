@@ -1,6 +1,5 @@
 import {
   SlashCommandBuilder,
-  EmbedBuilder,
   CacheType,
   CommandInteraction,
   SlashCommandBooleanOption,
