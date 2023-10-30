@@ -1,6 +1,5 @@
 import {
   SlashCommandBuilder,
-  EmbedBuilder,
   CommandInteraction,
   CacheType,
 } from "discord.js";
