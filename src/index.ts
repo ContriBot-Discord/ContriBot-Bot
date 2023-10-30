@@ -36,6 +36,9 @@ i18n.configure({
   ],
   directory: join(__dirname, "locales"),
   objectNotation: true, // Allows to use dot notation for nested translations
+  defaultLocale: "en",
+  retryInDefaultLocale: true,
+  updateFiles: false,
 });
 
 export const DB = new Database();
