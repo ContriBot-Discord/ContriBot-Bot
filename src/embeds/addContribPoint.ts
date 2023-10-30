@@ -17,8 +17,6 @@ export default function (userId: string, amount: number, memberId: string, lang:
                 i18n.__n(`global.points`, amount),
                 memberId),
         })
-
         .setColor("#ff8e4d")
         .setTimestamp();
-
 }
