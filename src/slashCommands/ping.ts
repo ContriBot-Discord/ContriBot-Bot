@@ -6,18 +6,29 @@ import {
 } from "discord.js";
 import { SlashCommand } from "@/types";
 
+import i18n from "i18next";
+
 export const command: SlashCommand = {
   name: "ping",
   data: new SlashCommandBuilder()
     .setName("ping")
     .setDescription("Displays the bot's ping"),
   execute: async (interaction: CommandInteraction<CacheType>) => {
-    await interaction.reply({
+
+    const sent = await interaction.reply({
+      fetchReply: true,
       embeds: [
         new EmbedBuilder()
-          .setAuthor({ name: "Anathos" })
-          .setDescription(`🏓 Pong! \n 📡 Ping: ${interaction.client.ws.ping}`)
-          .setColor("#ff8e4d"),
+          .setDescription(i18n.t("commands:ping.embed.description", { ping: '...' }))
+          .setColor("#ff8e4d")
+      ],
+    });
+
+    await  interaction.editReply({
+      embeds: [
+        new EmbedBuilder()
+          .setDescription(i18n.t("commands:ping.embed.description", { ping: sent.createdTimestamp - interaction.createdTimestamp }))
+          .setColor("#ff8e4d")
       ],
     });
   },
