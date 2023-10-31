@@ -1,0 +1,31 @@
+#This file contains all strings related to commands.
+leaderboard:
+  embed:
+    title: "Таблица лидеров [{{index}}]"
+    description: "Вот и таблица лидеров"
+    fields:
+      name: "Топ {{index}}"
+      value: "<@{{userid}}}> с {{quantity}} {{pointsname}}"
+addContribPoint:
+  embed:
+    title: "Добавить очки команды."
+    description: "<@{{userid}}> добавил {{quantity}} {{pointsname}} к <@{{memberid}}>"
+    allDescription: "<@{{userid}}> добавил {{quantity}} таблицу лидеров {{pointsname}} к <@{{memberid}}>"
+getContribPoint:
+  embed:
+    title: "Получить очки команды."
+    allDescription: '<@{{user}}> имеет **{{amount}}** всего {{pointname}}.'
+    description: '<@{{user}}> имеет **{{amount}}** {{pointname}}.'
+config:
+  embed:
+    title: 'Настройка'
+    description: "Вот и ваша настройка сервера"
+    pointsCfg:
+      name: "Способы для получения очков:"
+      value: "Отправить сообщение: **{{message}}**\n Добавить реакцию на сообщение: **{{react}}**\n Голосовой канал: **{{voice}}**/15 minutes\n Бамп: **{{bump}}"
+    other:
+      name: "Остальное:"
+      value: "Название очков: **{{pointsname}}**\n Роль в день рождения: <@**{{birthdayrole}}**>\n Язык сервера: **{{lang}}**"
+ping:
+  embed:
+    description: "🏓 Понг!\n 📡 Пинг: {{ping}}мс" #ping of the bot (number)
