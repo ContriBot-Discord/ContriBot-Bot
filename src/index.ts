@@ -11,6 +11,7 @@ import Backend, {FsBackendOptions} from 'i18next-fs-backend';
 
 
 import { Database } from "@/classes/Database";
+import i18n from "i18next";
 dotenv.config();
 
 const client = new Client({
@@ -25,16 +26,17 @@ const client = new Client({
 // i18next config
 
 i18next.use(Backend).init<FsBackendOptions>({
-  initImmediate: false, // This is needed to prevent the backend from trying to load files before the client is ready
-  lng: 'en', // Default language
-  fallbackLng: 'en', // Language to fall back to if a translation is missing
-  preload: ['en', 'fr'], // Languages to load at startup / Directories to load from
-  ns: ['commands'], // Files to load at startup
+  initImmediate: false, // Required to prevent i18next from trying to load translations before the bot is ready
+  fallbackLng: 'en', // Fallback language (if a translation is missing)
+  preload: ['en', 'fr'], // List of languages to load translations for
+  ns: ['commands'], // Files to load translations from (./locales/fr/commands.yaml for instance)
   backend: {
-    loadPath: join(__dirname, 'locales/{{lng}}/{{ns}}.yaml'),
+    loadPath: join(__dirname, 'locales/{{lng}}/{{ns}}.yaml'), // Path to translation files
   },
 });
 
+
+console.log(i18n.t('command:', { ping: '...' }));
 export const DB = new Database();
 
 client.slashCommands = new Collection<string, SlashCommand>();
