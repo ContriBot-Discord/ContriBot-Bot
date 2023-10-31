@@ -31,6 +31,5 @@ export default function (client: Client) {
 
     // Wait for 15 minutes
     new Promise(resolve => setTimeout(resolve, 15 * 60 * 1000)).then(() => {});
-
     }
 }
