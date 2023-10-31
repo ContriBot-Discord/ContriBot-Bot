@@ -15,6 +15,8 @@ export const command: SlashCommand = {
     .setDescription("Displays the bot's ping"),
   execute: async (interaction: CommandInteraction<CacheType>) => {
 
+    i18n.changeLanguage(interaction.guild?.preferredLocale);
+
     const sent = await interaction.reply({
       fetchReply: true,
       embeds: [
