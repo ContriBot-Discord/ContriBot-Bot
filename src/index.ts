@@ -6,7 +6,9 @@ import { SlashCommand } from "@/types";
 import { join } from "path";
 import { readdirSync } from "fs";
 import * as dotenv from "dotenv";
-import i18n from "i18n";
+import i18next from 'i18next';
+import Backend, {FsBackendOptions} from 'i18next-fs-backend';
+
 
 import { Database } from "@/classes/Database";
 dotenv.config();
@@ -20,25 +22,17 @@ const client = new Client({
   ],
 });
 
-// i18n configuration:
-i18n.configure({
-  locales: [
-    "de",
-    "el",
-    "en",
-    "es",
-    "fr",
-    "ia",
-    "it",
-    "ja",
-    "zh",
-    // Dutch, Greek, English, Spanish, French, Interlingua, Italian, Japanese, Chinese
-  ],
-  directory: join(__dirname, "locales"),
-  objectNotation: true, // Allows to use dot notation for nested translations
-  defaultLocale: "en",
-  retryInDefaultLocale: true,
-  updateFiles: false,
+// i18next config
+
+i18next.use(Backend).init<FsBackendOptions>({
+  initImmediate: false, // This is needed to prevent the backend from trying to load files before the client is ready
+  lng: 'en', // Default language
+  fallbackLng: 'en', // Language to fall back to if a translation is missing
+  preload: ['en', 'fr'], // Languages to load at startup / Directories to load from
+  ns: ['commands'], // Files to load at startup
+  backend: {
+    loadPath: join(__dirname, 'locales/{{lng}}/{{ns}}.yaml'),
+  },
 });
 
 export const DB = new Database();
