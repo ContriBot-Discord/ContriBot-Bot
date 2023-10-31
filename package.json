@@ -22,7 +22,8 @@
   "dependencies": {
     "discord.js": "^14.13.0",
     "dotenv": "^16.3.1",
-    "i18n": "^0.13.1",
+    "i18next": "^23.6.0",
+    "i18next-fs-backend": "^2.2.0",
     "module-alias": "^2.2.3",
     "mysql2": "^3.6.2"
   }
