@@ -150,4 +150,10 @@ export class User {
       ? this.inventory.filter((item) => item.id === id)
       : this.getItemsByDate(date).filter((item) => item.id === id);
   }
+
+  addVoiceXp() {
+    // TODO: Add a voice XP multiplier in the guild settings
+    this.addPoints(1); // * this.guild.voiceXp * this.multiplier(channelId, RolesIDs)
+    // (multiplier is all the boosts that can be applied to the user: Role, channel, birthday, etc.)
+    }
 }
