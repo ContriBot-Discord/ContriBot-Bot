@@ -1,44 +1,67 @@
 import schedule from 'node-schedule';
 import {ClientUser} from 'discord.js';
 
+
+// Pretty long typehint, huh ?
+const Dates: {start:{month:number, day:number}, end:{month: number, day: number}, profilePic:string}[] = [
+    {
+        start: {month: 11,  day: 1},
+        end: {month: 11, day: 31},
+        profilePic: "christmas.png"
+    },
+    {
+        start: {month: 9, day: 15},
+        end: {month: 9, day: 31},
+        profilePic: "halloween.png"
+    },
+    {
+        start: {month: 1, day: 13},
+        end: {month: 1, day: 15},
+        profilePic: "valentine.png"
+    },
+    {
+        start: {month: 3, day: 1},
+        end: {month: 3, day: 1},
+        profilePic: "april.png"
+    },
+    {
+        start: {month: 5, day: 1},
+        end: {month: 5, day: 31},
+        profilePic: "pride.png"
+    }
+];
+
+
+
 // Should be called all days at 00:00:00
 export default function (client: ClientUser) {
 
     // Executed every day at 00h15
     const job = schedule.scheduleJob('15 0 * * *', function () {
+
         let now = new Date();
 
-        const path = './dist/assets/profilePics/';
-        let profilePic = path + 'default.png';
+        let profilePic = 'default.png';
 
-        // If we are between the 1st december and the 31st december (included), we choose the Christmas profile pic
-        if (now.getMonth() === 11) {
-            profilePic = path + 'christmas.png';
-        }
+        // We check if we are in a special period
+        for (let date of Dates) {
 
-        // If we are between the 15st october and the 31st october (included), we choose the Halloween profile pic
-        else if (now.getMonth() === 9 && now.getDate() >= 15) {
-            profilePic = path + 'halloween.png';
-        }
+            // We create a new Date object with the current year and the start/end month and day
+            const start_date = new Date(now.getFullYear(), date.start.month, date.start.day);
+            const end_date = new Date(now.getFullYear(), date.end.month, date.end.day);
 
-        // If we are the valentine's day (+/-1 day), we choose the Valentine's day profile pic
-        else if (now.getMonth() === 1 && now.getDate() >= 13 && now.getDate() <= 15) {
-            profilePic = path + 'valentine.png';
-        }
-
-        // If we are the 1st of april, we choose the April Fool profile pic
-        else if (now.getMonth() === 3 && now.getDate() === 1) {
-            profilePic = path + 'april.png';
-        }
-
-        // If we are the pride month (june), we choose the pride profile pic
-        else if (now.getMonth() === 5) {
-            profilePic = path + 'pride.png';
+            if (
+                // Simple Timestamp comparison
+                (now.getTime() >= start_date.getTime()) && (now.getTime() <= end_date.getTime())
+            ) {
+                profilePic = date.profilePic;
+                break;
+            }
         }
 
         // Now, we change the profile pic of the bot !
 
-        client.setAvatar(profilePic)
+        client.setAvatar('./dist/assets/profilePics/' + profilePic)
             .then(() => console.log(`Profile pic changed to ${profilePic}`))
             .catch(console.error);
     })
