@@ -1,7 +1,6 @@
 // 🗿
 import {
   SlashCommandBuilder,
-  EmbedBuilder,
   CacheType,
   CommandInteraction,
 } from "discord.js";
@@ -9,7 +8,7 @@ import { SlashCommand } from "@/types";
 
 import { DB } from "@/index";
 
-import i18n from "i18n";
+import setLang from "@/embeds/setLang";
 
 export const command: SlashCommand = {
   name: "setlang",
@@ -39,11 +38,7 @@ export const command: SlashCommand = {
   async execute(interaction: CommandInteraction<CacheType>) {
     const lang = interaction.options.get("language")?.value as string;
 
-    i18n.setLocale(lang);
-
-    const embed = new EmbedBuilder()
-      .setTitle(i18n.__("setLang.embed.title"))
-      .setDescription(i18n.__("setLang.embed.description"));
+    const embed = setLang(lang)
 
     DB.getGuild(interaction.guildId!).setLang(lang);
 
