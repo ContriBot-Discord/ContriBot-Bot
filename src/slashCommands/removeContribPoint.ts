@@ -1,6 +1,5 @@
 import {
   SlashCommandBuilder,
-  EmbedBuilder,
   CacheType,
   CommandInteraction,
   SlashCommandUserOption,
@@ -9,6 +8,7 @@ import {
 import { SlashCommand } from "@/types";
 
 import { DB } from "@/index";
+import removeContribPoint from "@/embeds/removeContribPoint";
 
 export const command: SlashCommand = {
   name: "removecontribpoint",
@@ -42,27 +42,7 @@ export const command: SlashCommand = {
     const amount: number = interaction.options.get("amount")!.value as number;
     const all = interaction.options.get("all")?.value as boolean;
 
-    const lineString: string = `<:shiny_orange_bar:1163759934702374942>`.repeat(
-      10
-    );
-
-    const embed = new EmbedBuilder()
-      .addFields({
-        name: "<:shiny_orange_moderator:1163759368853004298> Remove points command.",
-        value: lineString,
-      })
-      .addFields({
-        name: " ",
-        value: `**${amount}** contribution points has been removed from <@${memberId}>. `,
-      })
-      .setColor("#ff8e4d")
-      .setTimestamp();
-
-    if (all)
-      embed.spliceFields(1, 1, {
-        name: " ",
-        value: `${amount} total contribution points has been removed from <@${memberId}>.`,
-      });
+    const embed = removeContribPoint(amount, memberId, all);
 
     DB.getGuild(interaction.guildId!).getUser(memberId).addPoints(-amount, all);
 
