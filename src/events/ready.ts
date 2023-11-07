@@ -10,6 +10,8 @@ import {
   MessageReaction,
 } from "discord.js";
 
+import profilePicChooser from "@/tools/profilePicChooser";
+
 const event: BotEvent = {
   name: Events.ClientReady,
   once: true,
@@ -41,6 +43,8 @@ const event: BotEvent = {
         });
       });
     });
+
+    profilePicChooser(client.user!);
 
     console.log(`💪 Logged in as ${client.user?.tag}`);
   },
