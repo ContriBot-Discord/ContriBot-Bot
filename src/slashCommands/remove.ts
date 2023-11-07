@@ -29,22 +29,36 @@ export const command: SlashCommand = {
         )
         .setRequired(true)
     )
-    .addBooleanOption((option) =>
+    .addStringOption((option) =>
       option
-        .setName("all")
+        .setName("scope")
         .setDescription(
-          "Whether to remove to leaderboard points or not. (Default: true)"
+          "Specify the scope: storePoints, leaderboardPoints, or both. (Default: both)"
         )
         .setRequired(false)
+        .addChoices(
+          {
+            name: "storePoints",
+            value: "storePoints",
+          },
+          {
+            name: "leaderboardPoints",
+            value: "leaderboardPoints",
+          },
+          {
+            name: "both",
+            value: "both",
+          }
+        )
     ),
   async execute(interaction: CommandInteraction<CacheType>) {
     const memberId: string = interaction.options.getUser("member")!.id;
     const amount: number = interaction.options.get("amount")!.value as number;
-    const all = interaction.options.get("all")?.value as boolean;
+    const scope = interaction.options.get("scope")?.value as string;
 
-    const embed = removeEmbed(amount, memberId, all);
+    const embed = removeEmbed(amount, memberId, scope);
 
-    DB.getGuild(interaction.guildId!).getUser(memberId).addPoints(-amount, all);
+    DB.getGuild(interaction.guildId!).getUser(memberId).addPoints(-amount, scope);
 
     await interaction.reply({ embeds: [embed] });
   },

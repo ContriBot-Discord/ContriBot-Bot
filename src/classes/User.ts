@@ -85,17 +85,17 @@ export class User {
     );
   }
 
-  setPoints(qtee: number, allPoints: boolean = true): void {
+  setPoints(qtee: number, scope: string = "both"): void {
     // Set points to user
     this.storePoints = qtee;
-    if (allPoints) this.leaderboardPoints = qtee;
+    if (scope == "both") this.leaderboardPoints = qtee;
     this.update();
   }
 
-  addPoints(qtee: number = 1, allPoints: boolean = true): void {
+  addPoints(qtee: number = 1, scope: string = "both"): void {
     // Add points to user
     this.storePoints += qtee;
-    if (allPoints) this.leaderboardPoints += qtee;
+    if (scope == "both") this.leaderboardPoints += qtee;
     this.update();
   }
 

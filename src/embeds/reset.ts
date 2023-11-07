@@ -1,6 +1,6 @@
 import {EmbedBuilder} from "discord.js";
 
-export default function (userId:string, all:boolean): EmbedBuilder{
+export default function (userId:string, scope:string): EmbedBuilder{
 
         return new EmbedBuilder()
             .addFields({
@@ -11,6 +11,6 @@ export default function (userId:string, all:boolean): EmbedBuilder{
             .setTimestamp()
             .addFields({
                 name: " ",
-                value: all ? `All of <@${userId}>'s total contribution points have been reset.` : `All of <@${userId}>'s contribution points have been reset.`,
+                value: scope == "both" ? `All of <@${userId}>'s leaderboard points have been reset.` : `All of <@${userId}>'s store points have been reset.`,
             })
 }

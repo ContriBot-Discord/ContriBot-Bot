@@ -1,6 +1,6 @@
 import {EmbedBuilder} from "discord.js";
 
-export default function (amount: number, memberId: string, all:boolean) {
+export default function (amount: number, memberId: string, scope:string) {
     return new EmbedBuilder()
         .addFields({
         name: "<:shiny_orange_moderator:1163759368853004298> Remove points command.",
@@ -8,7 +8,7 @@ export default function (amount: number, memberId: string, all:boolean) {
     })
         .addFields({
         name: " ",
-        value: all ? `${amount} total contribution points has been removed from <@${memberId}>.` : `**${amount}** contribution points has been removed from <@${memberId}>. `,
+        value: scope == "both" ? `${amount} leaderboard points has been removed from <@${memberId}>.` : `**${amount}** store points has been removed from <@${memberId}>. `,
     })
         .setColor("#ff8e4d")
         .setTimestamp();

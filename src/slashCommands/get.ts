@@ -21,22 +21,37 @@ export const command: SlashCommand = {
         .setDescription("Member you want to see contribution points of")
         .setRequired(true)
     )
-    .addBooleanOption((option: SlashCommandBooleanOption) =>
+    .addStringOption((option) =>
       option
-        .setName("all")
+        .setName("scope")
         .setDescription(
-          "Whether to get leaderboard points or not. (Default: false)"
+          "Specify the scope: storePoints, leaderboardPoints, or both. (Default: both)"
         )
         .setRequired(false)
+        .addChoices(
+          {
+            name: "storePoints",
+            value: "storePoints",
+          },
+          {
+            name: "leaderboardPoints",
+            value: "leaderboardPoints",
+          },
+          {
+            name: "both",
+            value: "both",
+          }
+        )
     ),
+    
   async execute(interaction: CommandInteraction<CacheType>) {
     const memberId = interaction.options.getUser("membre")!.id;
-    const all = interaction.options.get("all")?.value as boolean;
+    const scope = interaction.options.get("scope")?.value as string;
     const amount = DB.getGuild(interaction.guildId!)
       .getUser(memberId)
       .getContribPoint(true);
 
-    const embed = getEmbed(memberId, amount, all);
+    const embed = getEmbed(memberId, amount, scope);
 
     await interaction.reply({ embeds: [embed] });
   },

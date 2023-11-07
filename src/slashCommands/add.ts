@@ -27,28 +27,43 @@ export const command: SlashCommand = {
         .setDescription("The amount of contribution points to add to the user.")
         .setRequired(true)
     )
-    .addBooleanOption((option) =>
+    .addStringOption((option) =>
       option
-        .setName("all")
+        .setName("scope")
         .setDescription(
-          "Whether to add to leaderboard points or not. (Default: true)"
+          "Specify the scope: storePoints, leaderboardPoints, or both. (Default: both)"
         )
         .setRequired(false)
+        .addChoices(
+          {
+            name: "storePoints",
+            value: "storePoints",
+          },
+          {
+            name: "leaderboardPoints",
+            value: "leaderboardPoints",
+          },
+          {
+            name: "both",
+            value: "both",
+          }
+        )
     ),
+
   async execute(interaction: CommandInteraction<CacheType>) {
     const memberId: string = interaction.options.getUser("member")!.id;
     const amount: number = interaction.options.get("amount")!.value as number;
-    const all = interaction.options.get("all")?.value as boolean;
+    const scope = interaction.options.get("scope")?.value as string;
 
     const embed = addEmbed(
-        interaction.user.id,
-        amount,
-        memberId,
-        interaction.guildId!,
-        all
-    )
+      interaction.user.id,
+      amount,
+      memberId,
+      interaction.guildId!,
+      scope
+    );
 
-    DB.getGuild(interaction.guildId!).getUser(memberId).addPoints(amount, all);
+    DB.getGuild(interaction.guildId!).getUser(memberId).addPoints(amount, scope);
 
     await interaction.reply({ embeds: [embed] });
   },
