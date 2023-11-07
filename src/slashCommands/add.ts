@@ -8,32 +8,30 @@ import {
 import { SlashCommand } from "@/types";
 
 import { DB } from "@/index";
-import removeContribPoint from "@/embeds/remove";
+import addEmbed from "@/embeds/add";
 
 export const command: SlashCommand = {
-  name: "removecontribpoint",
+  name: "add",
   data: new SlashCommandBuilder()
-    .setName("removecontribpoint")
-    .setDescription("Remove contribution points from a user.")
+    .setName("add")
+    .setDescription("Adds contribution points to a user.")
     .addUserOption((option: SlashCommandUserOption) =>
       option
         .setName("member")
-        .setDescription("The user you want to remove contribution points from.")
+        .setDescription("The user you want to add contribution points to.")
         .setRequired(true)
     )
     .addIntegerOption((option: SlashCommandIntegerOption) =>
       option
         .setName("amount")
-        .setDescription(
-          "The amount of contribution points to remove of the user."
-        )
+        .setDescription("The amount of contribution points to add to the user.")
         .setRequired(true)
     )
     .addBooleanOption((option) =>
       option
         .setName("all")
         .setDescription(
-          "Whether to remove to all contribution points or not. (Default: true)"
+          "Whether to add to leaderboard points or not. (Default: true)"
         )
         .setRequired(false)
     ),
@@ -42,9 +40,15 @@ export const command: SlashCommand = {
     const amount: number = interaction.options.get("amount")!.value as number;
     const all = interaction.options.get("all")?.value as boolean;
 
-    const embed = removeContribPoint(amount, memberId, all);
+    const embed = addEmbed(
+        interaction.user.id,
+        amount,
+        memberId,
+        interaction.guildId!,
+        all
+    )
 
-    DB.getGuild(interaction.guildId!).getUser(memberId).addPoints(-amount, all);
+    DB.getGuild(interaction.guildId!).getUser(memberId).addPoints(amount, all);
 
     await interaction.reply({ embeds: [embed] });
   },

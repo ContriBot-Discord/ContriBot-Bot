@@ -8,12 +8,12 @@ import {
 import { SlashCommand } from "@/types";
 
 import { DB } from "@/index";
-import getContribPoint from "@/embeds/get";
+import getEmbed from "@/embeds/get";
 
 export const command: SlashCommand = {
-  name: "getcontribpoint",
+  name: "get",
   data: new SlashCommandBuilder()
-    .setName("getcontribpoint")
+    .setName("get")
     .setDescription("Gets contribution points of a user")
     .addUserOption((option: SlashCommandUserOption) =>
       option
@@ -25,7 +25,7 @@ export const command: SlashCommand = {
       option
         .setName("all")
         .setDescription(
-          "Whether to get all contribution points or not. (Default: false)"
+          "Whether to get leaderboard points or not. (Default: false)"
         )
         .setRequired(false)
     ),
@@ -36,7 +36,7 @@ export const command: SlashCommand = {
       .getUser(memberId)
       .getContribPoint(true);
 
-    const embed = getContribPoint(memberId, amount, all);
+    const embed = getEmbed(memberId, amount, all);
 
     await interaction.reply({ embeds: [embed] });
   },

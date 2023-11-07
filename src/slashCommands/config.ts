@@ -3,9 +3,9 @@ import {
   CommandInteraction,
 } from "discord.js";
 import { SlashCommand } from "@/types";
-import config from "@/embeds/config";
 
 import { DB } from "..";
+import configEmbed from "@/embeds/config";
 
 export const command: SlashCommand = {
 
@@ -18,7 +18,7 @@ export const command: SlashCommand = {
     const guild = DB.getGuild(interaction.guildId!);
 
 
-    const embed = config(
+    const embed = configEmbed(
         guild.lang,
         "none",
         interaction.guild!.iconURL() as string,

@@ -8,12 +8,12 @@ import {
 import { SlashCommand } from "@/types";
 
 import { DB } from "@/index";
-import resetContribPoint from "@/embeds/reset";
+import resetEmbed from "@/embeds/reset";
 
 export const command: SlashCommand = {
-  name: "resetcontribpoint",
+  name: "reset",
   data: new SlashCommandBuilder()
-    .setName("resetcontribpoint")
+    .setName("reset")
     .setDescription("Reset contribution points of a user")
     .addUserOption((option: SlashCommandUserOption) =>
       option
@@ -33,7 +33,7 @@ export const command: SlashCommand = {
     const memberId = interaction.options.getUser("membre")!.id;
     const all = interaction.options.get("all")?.value as boolean;
 
-    const embed = resetContribPoint(memberId, all);
+    const embed = resetEmbed(memberId, all);
 
     DB.getGuild(interaction.guildId!).getUser(memberId).setPoints(0, all);
 

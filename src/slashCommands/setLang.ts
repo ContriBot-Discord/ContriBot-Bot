@@ -7,8 +7,7 @@ import {
 import { SlashCommand } from "@/types";
 
 import { DB } from "@/index";
-
-import setLang from "@/embeds/setLang";
+import setLangEmbed from "@/embeds/setLang";
 
 export const command: SlashCommand = {
   name: "setlang",
@@ -38,7 +37,7 @@ export const command: SlashCommand = {
   async execute(interaction: CommandInteraction<CacheType>) {
     const lang = interaction.options.get("language")?.value as string;
 
-    const embed = setLang(lang)
+    const embed = setLangEmbed(lang)
 
     DB.getGuild(interaction.guildId!).setLang(lang);
 

@@ -6,14 +6,14 @@ import {
   CommandInteraction,
 } from "discord.js";
 import { SlashCommand } from "@/types";
-import { DB } from "@/index";
 
+import { DB } from "@/index";
 import leaderboard from "@/embeds/leaderboard";
 
 export const command: SlashCommand = {
-  name: "leaderboardpoint",
+  name: "leaderboard",
   data: new SlashCommandBuilder()
-    .setName("leaderboardpoint")
+    .setName("leaderboard")
     .setDescription("Show the leaderboard of total contribution point"),
   async execute(interaction: CommandInteraction<CacheType>) {
 

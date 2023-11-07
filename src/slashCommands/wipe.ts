@@ -7,25 +7,25 @@ import {
 import { SlashCommand } from "@/types";
 
 import { DB } from "@/index";
-import resetAllUsersContribPoint from "@/embeds/wipe";
+import wipeEmbed from "@/embeds/wipe";
 
 export const command: SlashCommand = {
-  name: "resetalluserscontribpoint",
+  name: "wipe",
   data: new SlashCommandBuilder()
-    .setName("resetalluserscontribpoint")
-    .setDescription("Reset contribution points of all users")
+    .setName("wipe")
+    .setDescription("wipe contribution points of all users")
     .addBooleanOption((option: SlashCommandBooleanOption) => {
       return option
         .setName("all")
         .setDescription(
-          "Whether to reset all contribution points or not. (Default: false)"
+          "Whether to wipe leaderboard points or not. (Default: false)"
         )
         .setRequired(false);
     }),
   async execute(interaction: CommandInteraction<CacheType>) {
     const all = interaction.options.get("all")?.value as boolean;
 
-    const embed = resetAllUsersContribPoint(all);
+    const embed = wipeEmbed(all);
 
     // Reset all users' points in database, and then update the cache
     DB.getGuild(interaction.guildId!).resetPoints();
