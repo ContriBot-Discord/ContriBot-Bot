@@ -25,7 +25,7 @@ export const command: SlashCommand = {
       option
         .setName("scope")
         .setDescription(
-          "Specify the scope: storePoints, leaderboardPoints, or both. (Default: both)"
+          "Specify the scope: storePoints or leaderboardPoints. (Default: storePoints)"
         )
         .setRequired(false)
         .addChoices(
@@ -37,10 +37,6 @@ export const command: SlashCommand = {
             name: "leaderboardPoints",
             value: "leaderboardPoints",
           },
-          {
-            name: "both",
-            value: "both",
-          }
         )
     ),
     
@@ -49,7 +45,7 @@ export const command: SlashCommand = {
     const scope = interaction.options.get("scope")?.value as string;
     const amount = DB.getGuild(interaction.guildId!)
       .getUser(memberId)
-      .getContribPoint(true);
+      .getContribPoint(scope);
 
     const embed = getEmbed(memberId, amount, scope);
 

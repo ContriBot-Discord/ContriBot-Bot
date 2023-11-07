@@ -2,7 +2,7 @@ import {EmbedBuilder} from "discord.js";
 
 import i18n from "i18n";
 
-export default function (userId: string, amount: number, memberId: string, lang: string, scope:string) {
+export default function (userId: string, amount: number, memberId: string, lang: string, scope:string = "storePoints") {
 
     i18n.setLocale(lang);
     return new EmbedBuilder()
@@ -12,7 +12,7 @@ export default function (userId: string, amount: number, memberId: string, lang:
         })
         .addFields({
             name: " ",
-            value: i18n.__(scope == "both" ? `addContribPoint.embed.description` : '<@%s> added %s to <@%s>\' globals points.',
+            value: i18n.__(scope === "leaderboard" ? `addContribPoint.embed.description` : '<@%s> added %s to <@%s>\' globals points.',
                 userId,
                 i18n.__n(`global.points`, amount),
                 memberId),

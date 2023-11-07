@@ -14,18 +14,33 @@ export const command: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName("wipe")
     .setDescription("wipe contribution points of all users")
-    .addBooleanOption((option: SlashCommandBooleanOption) => {
-      return option
-        .setName("all")
+    .addStringOption((option) =>
+      option
+        .setName("scope")
         .setDescription(
-          "Whether to wipe leaderboard points or not. (Default: false)"
+          "Specify the scope: storePoints, leaderboardPoints, or both. (Default: both)"
         )
-        .setRequired(false);
-    }),
-  async execute(interaction: CommandInteraction<CacheType>) {
-    const all = interaction.options.get("all")?.value as boolean;
+        .setRequired(false)
+        .addChoices(
+          {
+            name: "storePoints",
+            value: "storePoints",
+          },
+          {
+            name: "leaderboardPoints",
+            value: "leaderboardPoints",
+          },
+          {
+            name: "both",
+            value: "both",
+          }
+        )
+    ),
 
-    const embed = wipeEmbed(all);
+  async execute(interaction: CommandInteraction<CacheType>) {
+    const scope = interaction.options.get("scope")?.value as string;
+
+    const embed = wipeEmbed(scope);
 
     // Reset all users' points in database, and then update the cache
     DB.getGuild(interaction.guildId!).resetPoints();

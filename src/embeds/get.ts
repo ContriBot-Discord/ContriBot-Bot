@@ -1,6 +1,6 @@
 import {EmbedBuilder} from "discord.js";
 
-export default function getContribPoint(memberId: string, amount: number, scope: string) {
+export default function getContribPoint(memberId: string, amount: number, scope: string = "storePoints") {
 
     return new EmbedBuilder()
         .addFields({
@@ -13,7 +13,7 @@ export default function getContribPoint(memberId: string, amount: number, scope:
         },
         {
             name: " ",
-            value: scope == "both" ? `<@${memberId}> has **${amount}** leaderboard point(s).` : `<@${memberId}> has **${amount}** store point(s). `,
+            value: scope === "leaderboardPoints" ? `<@${memberId}> has **${amount}** leaderboard point(s).` : `<@${memberId}> has **${amount}** store point(s). `,
         })
         .setColor("#AA54E1")
         .setTimestamp();

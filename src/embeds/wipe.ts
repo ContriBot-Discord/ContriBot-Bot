@@ -1,6 +1,11 @@
 import {EmbedBuilder} from "discord.js";
 
-export default function (all: boolean) {
+export default function (scope: string = "both") {
+
+    let value: string = `both of the users' points have been reset.`;
+    if (scope === "leaderboardPoints") value = `users' leaderboard points have been reset.`;
+    else if (scope === "storePoints") value = `users' store points have been reset.`;
+
     return new EmbedBuilder()
         .addFields({
         name: "<:shiny_orange_moderator:1163759368853004298> wipe all users points command.",
@@ -8,7 +13,7 @@ export default function (all: boolean) {
     })
         .addFields({
         name: " ",
-        value: all ? `All of the users' leaderboard points have been reset.` : `All of the users' store points have been reset.`,
+        value: value,
     })
         .setColor("#ff8e4d")
         .setTimestamp();

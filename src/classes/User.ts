@@ -85,22 +85,22 @@ export class User {
     );
   }
 
-  setPoints(qtee: number, scope: string = "both"): void {
+  setPoints(amount: number, scope: string = "both"): void {
     // Set points to user
-    this.storePoints = qtee;
-    if (scope == "both") this.leaderboardPoints = qtee;
+    if (scope === "both" || scope === "storePoints") this.storePoints = amount;
+    if (scope === "both" || scope === "leaderboardPoints") this.leaderboardPoints = amount;
     this.update();
   }
 
-  addPoints(qtee: number = 1, scope: string = "both"): void {
+  addPoints(amount: number = 1, scope: string = "both"): void {
     // Add points to user
-    this.storePoints += qtee;
-    if (scope == "both") this.leaderboardPoints += qtee;
+    if (scope === "both" || scope === "storePoints") this.storePoints += amount;
+    if (scope === "both" || scope === "leaderboardPoints") this.leaderboardPoints += amount;
     this.update();
   }
 
-  getContribPoint(all: boolean): number {
-    return all ? this.leaderboardPoints : this.storePoints;
+  getContribPoint(scope: string = "storePoints"): number {
+    return scope === "leaderboardPoints" ? this.leaderboardPoints : this.storePoints;
   }
 
   buyItem(item: ShopItem): void {

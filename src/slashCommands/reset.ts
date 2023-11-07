@@ -43,6 +43,7 @@ export const command: SlashCommand = {
           }
         )
     ),
+    
   async execute(interaction: CommandInteraction<CacheType>) {
     const memberId = interaction.options.getUser("membre")!.id;
     const scope = interaction.options.get("scope")?.value as string;
