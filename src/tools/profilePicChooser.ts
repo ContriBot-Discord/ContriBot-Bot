@@ -61,7 +61,7 @@ export default function (client: ClientUser) {
 
         // Now, we change the profile pic of the bot !
 
-        client.setAvatar('./dist/assets/profilePics/' + profilePic)
+        client.setAvatar('./assets/profilePics/' + profilePic)
             .then(() => console.log(`Profile pic changed to ${profilePic}`))
             .catch(console.error);
     })
