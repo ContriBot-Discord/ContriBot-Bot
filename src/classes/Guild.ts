@@ -81,8 +81,8 @@ export class Guild {
             new User(
               this,
               user.user_id,
-              user.points,
-              user.global_points,
+              user.storePoints,
+              user.leaderboardPoints,
               this.#db
             )
           );
@@ -96,7 +96,7 @@ export class Guild {
   resetPoints(): void {
     // Reset all users' points in database
     this.#db.query<RowDataPacket[]>(
-      "UPDATE USER SET points = 0, global_points = 0  WHERE guild_id = ?",
+      "UPDATE USER SET store_points = 0, leaderboard_points = 0  WHERE guild_id = ?",
       [this.id],
       (err, result) => {
         if (err) throw err;
@@ -105,8 +105,8 @@ export class Guild {
 
     // We now update the cache
     this.users.forEach((user) => {
-      user.points = 0;
-      user.allPoints = 0;
+      user.storePoints = 0;
+      user.leaderboardPoints = 0;
     });
   }
 

@@ -6,23 +6,23 @@ import { ShopItem } from "@/classes/ShopItem";
 export class User {
   guild: Guild;
   id: string;
-  points: number;
-  allPoints: number;
+  storePoints: number;
+  leaderboardPoints: number;
   inventory: UserItem[];
   readonly #db: mysql.Connection;
 
   constructor(
     guild: Guild,
     id: string,
-    points: number = 0,
-    allPoints: number = 0,
+    storePoints: number = 0,
+    leaderboardPoints: number = 0,
     db: mysql.Connection
   ) {
     this.#db = db;
     this.guild = guild;
     this.id = id;
-    this.points = points;
-    this.allPoints = allPoints;
+    this.storePoints = storePoints;
+    this.leaderboardPoints = leaderboardPoints;
     this.inventory = this.fetchInventory();
   }
 
@@ -61,8 +61,8 @@ export class User {
   create(): void {
     // Register user in database
     this.#db.query<RowDataPacket[]>(
-      "INSERT INTO USER (user_id, guild_id, points, global_points) VALUES (?, ?, ?, ?)",
-      [this.id, this.guild.id, this.points, this.allPoints],
+      "INSERT INTO USER (user_id, guild_id, store_points, leaderboard_points) VALUES (?, ?, ?, ?)",
+      [this.id, this.guild.id, this.storePoints, this.leaderboardPoints],
 
       (err, result) => {
         if (err) throw err;
@@ -76,8 +76,8 @@ export class User {
 
     // If the user exists in the database, it gets updated. If not, it gets created
     this.#db.query(
-      "UPDATE USER SET points = ?, global_points = ? WHERE user_id = ? AND guild_id = ?",
-      [this.points, this.allPoints, this.id, this.guild.id],
+      "UPDATE USER SET store_points = ?, leaderboard_points = ? WHERE user_id = ? AND guild_id = ?",
+      [this.storePoints, this.leaderboardPoints, this.id, this.guild.id],
 
       (err, result) => {
         if (err) throw err;
@@ -87,20 +87,20 @@ export class User {
 
   setPoints(qtee: number, allPoints: boolean = true): void {
     // Set points to user
-    this.points = qtee;
-    if (allPoints) this.allPoints = qtee;
+    this.storePoints = qtee;
+    if (allPoints) this.leaderboardPoints = qtee;
     this.update();
   }
 
   addPoints(qtee: number = 1, allPoints: boolean = true): void {
     // Add points to user
-    this.points += qtee;
-    if (allPoints) this.allPoints += qtee;
+    this.storePoints += qtee;
+    if (allPoints) this.leaderboardPoints += qtee;
     this.update();
   }
 
   getContribPoint(all: boolean): number {
-    return all ? this.allPoints : this.points;
+    return all ? this.leaderboardPoints : this.storePoints;
   }
 
   buyItem(item: ShopItem): void {
