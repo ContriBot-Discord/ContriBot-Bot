@@ -9,7 +9,7 @@ import { SlashCommand } from "@/types";
 
 import { DB } from "@/index";
 
-import addContribPoint from "@/embeds/addContribPoint";
+import addContribPoint from "@/embeds/add";
 
 export const command: SlashCommand = {
   name: "addcontribpoint",

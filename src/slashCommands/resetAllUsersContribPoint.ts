@@ -7,7 +7,7 @@ import {
 import { SlashCommand } from "@/types";
 
 import { DB } from "@/index";
-import resetAllUsersContribPoint from "@/embeds/resetAllUsersContribPoint";
+import resetAllUsersContribPoint from "@/embeds/wipe";
 
 export const command: SlashCommand = {
   name: "resetalluserscontribpoint",

@@ -8,7 +8,7 @@ import {
 import { SlashCommand } from "@/types";
 
 import { DB } from "@/index";
-import getContribPoint from "@/embeds/getContribPoint";
+import getContribPoint from "@/embeds/get";
 
 export const command: SlashCommand = {
   name: "getcontribpoint",
