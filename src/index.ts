@@ -11,7 +11,7 @@ import Backend, {FsBackendOptions} from 'i18next-fs-backend';
 
 
 import { Database } from "@/classes/Database";
-import i18n from "i18next";
+
 dotenv.config();
 
 const client = new Client({
