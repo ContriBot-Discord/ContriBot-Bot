@@ -17,8 +17,8 @@ add:
     leaderboardPoints: "<@{{userid}}> added {{quantity}} leaderboard {{pointsname}} to <@{{memberid}}>"
 
 getContribPoint:
-  allDescription: '<@{{user}}> has **{{amount}}** total {{pointname}}.'
-  description: '<@{{user}}> has **{{amount}}** {{pointname}}.'
+  allDescription: '<@{{userid}}> has **{{amount}}** total {{pointname}}.'
+  description: '<@{{userid}}> has **{{amount}}** {{pointname}}.'
 
 config:
   title: 'Config'
