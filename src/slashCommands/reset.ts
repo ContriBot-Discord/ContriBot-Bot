@@ -47,10 +47,11 @@ export const command: SlashCommand = {
   async execute(interaction: CommandInteraction<CacheType>) {
     const memberId = interaction.options.getUser("membre")!.id;
     const scope = interaction.options.get("scope")?.value as string;
+    const guild = DB.getGuild(interaction.guildId!)
 
-    const embed = resetEmbed(memberId, scope);
+    const embed = resetEmbed(memberId, scope, guild.lang);
 
-    DB.getGuild(interaction.guildId!).getUser(memberId).setPoints(0, scope);
+    guild.getUser(memberId).setPoints(0, scope);
 
     await interaction.reply({ embeds: [embed] });
   },
