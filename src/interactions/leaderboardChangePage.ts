@@ -91,7 +91,7 @@ const event: BotEvent = {
         if (actualPageInt === Math.ceil(guild.users.length / 10)) button.components[1].setDisabled(true);
 
         // We now do generate the embed with all the data we got
-        const embed = leaderboard(actualPageInt, Math.ceil(guild.users.length / 10), fields);
+        const embed = leaderboard(actualPageInt, Math.ceil(guild.users.length / 10), fields, guild.lang);
 
         // editReply is required since we used deferUpdate
         await interaction.editReply({embeds: [embed], components: [button]});

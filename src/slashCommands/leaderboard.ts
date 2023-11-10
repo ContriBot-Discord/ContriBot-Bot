@@ -40,7 +40,7 @@ export const command: SlashCommand = {
     }
 
     // Generate the embed
-    const embed = leaderboard(1, Math.ceil(guild.users.length / 10), fields);
+    const embed = leaderboard(1, Math.ceil(guild.users.length / 10), fields, guild.lang);
 
     const button = new ActionRowBuilder<ButtonBuilder>()
       .addComponents(
