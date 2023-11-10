@@ -8,12 +8,12 @@ import {
 import { SlashCommand } from "@/types";
 
 import { DB } from "@/index";
-import getContribPoint from "@/embeds/getContribPoint";
+import getEmbed from "@/embeds/get";
 
 export const command: SlashCommand = {
-  name: "getcontribpoint",
+  name: "get",
   data: new SlashCommandBuilder()
-    .setName("getcontribpoint")
+    .setName("get")
     .setDescription("Gets contribution points of a user")
     .addUserOption((option: SlashCommandUserOption) =>
       option
@@ -21,22 +21,33 @@ export const command: SlashCommand = {
         .setDescription("Member you want to see contribution points of")
         .setRequired(true)
     )
-    .addBooleanOption((option: SlashCommandBooleanOption) =>
+    .addStringOption((option) =>
       option
-        .setName("all")
+        .setName("scope")
         .setDescription(
-          "Whether to get all contribution points or not. (Default: false)"
+          "Specify the scope: storePoints or leaderboardPoints. (Default: storePoints)"
         )
         .setRequired(false)
+        .addChoices(
+          {
+            name: "storePoints",
+            value: "storePoints",
+          },
+          {
+            name: "leaderboardPoints",
+            value: "leaderboardPoints",
+          },
+        )
     ),
+    
   async execute(interaction: CommandInteraction<CacheType>) {
     const memberId = interaction.options.getUser("membre")!.id;
-    const all = interaction.options.get("all")?.value as boolean;
+    const scope = interaction.options.get("scope")?.value as string;
     const amount = DB.getGuild(interaction.guildId!)
       .getUser(memberId)
-      .getContribPoint(true);
+      .getContribPoint(scope);
 
-    const embed = getContribPoint(memberId, amount, all);
+    const embed = getEmbed(memberId, amount, scope);
 
     await interaction.reply({ embeds: [embed] });
   },

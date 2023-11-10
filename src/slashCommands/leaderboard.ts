@@ -6,15 +6,15 @@ import {
   CommandInteraction,
 } from "discord.js";
 import { SlashCommand } from "@/types";
-import { DB } from "@/index";
 
+import { DB } from "@/index";
 import leaderboard from "@/embeds/leaderboard";
 
 export const command: SlashCommand = {
-  name: "leaderboardpoint",
+  name: "leaderboard",
   data: new SlashCommandBuilder()
-    .setName("leaderboardpoint")
-    .setDescription("Show the leaderboard of total contribution point"),
+    .setName("leaderboard")
+    .setDescription("Show the leaderboard of users"),
   async execute(interaction: CommandInteraction<CacheType>) {
 
     const guild = DB.getGuild(interaction.guildId!);
@@ -24,7 +24,7 @@ export const command: SlashCommand = {
 
     const fields: {name:string, value:string}[] = [];
 
-    users.sort((a, b) => b.getContribPoint(true) - a.getContribPoint(true));
+    users.sort((a, b) => b.getContribPoint("leaderboardPoints") - a.getContribPoint("leaderboardPoints"));
 
     // Add the first 10 users to the embed
     for (let i = 0; i < 9; i++) {
@@ -33,7 +33,7 @@ export const command: SlashCommand = {
         fields.push({
           name: ` `,
           value: `**#${i + 1} ·** <@${user.id}> · **${user.getContribPoint(
-            true
+            "leaderboardPoints"
           )}** points`,
         });
       }

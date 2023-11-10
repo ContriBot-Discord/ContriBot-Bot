@@ -16,7 +16,7 @@ function getUserList(startingFrom: number, userList: User[]): { name: string, va
         if (user) {
             fields.push({
                 name: ` `,
-                value: `**#${i + 1} ·** <@${user.id}> · **${user.allPoints}** points`,
+                value: `**#${i + 1} ·** <@${user.id}> · **${user.leaderboardPoints}** points`,
             });
         }
     }
@@ -52,7 +52,7 @@ const event: BotEvent = {
         // We sort the users by their total points
         const guild = DB.getGuild(interaction.guildId!);
         let users = [...guild.users];
-        users.sort((a: User, b: User) => b.allPoints - a.allPoints);
+        users.sort((a: User, b: User) => b.leaderboardPoints - a.leaderboardPoints);
 
 
         // We initialize the fields variable so it can be edited in the if statements

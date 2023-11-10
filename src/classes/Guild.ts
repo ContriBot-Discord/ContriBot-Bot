@@ -81,8 +81,8 @@ export class Guild {
             new User(
               this,
               user.user_id,
-              user.points,
-              user.global_points,
+              user.storePoints,
+              user.leaderboardPoints,
               this.#db
             )
           );
@@ -93,10 +93,26 @@ export class Guild {
     return users;
   }
 
-  resetPoints(): void {
+  resetPoints(scope: string = "both"): void {
+
+    let req: string;
+
+    // We choose the request depending on the scope
+    switch (scope) {
+        case "storePoints":
+            req = "UPDATE USER SET store_points = 0 WHERE guild_id = ?";
+            break;
+        case "leaderboardPoints":
+            req = "UPDATE USER SET leaderboard_points = 0 WHERE guild_id = ?";
+            break;
+        default:
+            req = "UPDATE USER SET store_points = 0, leaderboard_points = 0  WHERE guild_id = ?";
+            break;
+    }
+
     // Reset all users' points in database
     this.#db.query<RowDataPacket[]>(
-      "UPDATE USER SET points = 0, global_points = 0  WHERE guild_id = ?",
+      req,
       [this.id],
       (err, result) => {
         if (err) throw err;
@@ -105,8 +121,8 @@ export class Guild {
 
     // We now update the cache
     this.users.forEach((user) => {
-      user.points = 0;
-      user.allPoints = 0;
+      if (scope === "both" || scope === "storePoints") user.storePoints = 0;
+      if (scope === "both" || scope === "leaderboardPoints") user.leaderboardPoints = 0;
     });
   }
 

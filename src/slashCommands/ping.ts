@@ -4,7 +4,8 @@ import {
   CacheType,
 } from "discord.js";
 import { SlashCommand } from "@/types";
-import ping from "@/embeds/ping";
+
+import pingEmbed from "@/embeds/ping";
 
 export const command: SlashCommand = {
   name: "ping",
@@ -14,7 +15,7 @@ export const command: SlashCommand = {
   execute: async (interaction: CommandInteraction<CacheType>) => {
     await interaction.reply({
       embeds: [
-        ping(interaction.client.ws.ping)
+        pingEmbed(interaction.client.ws.ping)
       ],
     });
   },

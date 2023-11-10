@@ -8,12 +8,12 @@ import {
 import { SlashCommand } from "@/types";
 
 import { DB } from "@/index";
-import resetContribPoint from "@/embeds/resetContribPoint";
+import resetEmbed from "@/embeds/reset";
 
 export const command: SlashCommand = {
-  name: "resetcontribpoint",
+  name: "reset",
   data: new SlashCommandBuilder()
-    .setName("resetcontribpoint")
+    .setName("reset")
     .setDescription("Reset contribution points of a user")
     .addUserOption((option: SlashCommandUserOption) =>
       option
@@ -21,21 +21,36 @@ export const command: SlashCommand = {
         .setDescription("Member you want to reset contribution points of")
         .setRequired(true)
     )
-    .addBooleanOption((option: SlashCommandBooleanOption) =>
+    .addStringOption((option) =>
       option
-        .setName("all")
+        .setName("scope")
         .setDescription(
-          "Whether to reset all contribution points or not. (Default: false)"
+          "Specify the scope: storePoints, leaderboardPoints, or both. (Default: both)"
         )
         .setRequired(false)
+        .addChoices(
+          {
+            name: "storePoints",
+            value: "storePoints",
+          },
+          {
+            name: "leaderboardPoints",
+            value: "leaderboardPoints",
+          },
+          {
+            name: "both",
+            value: "both",
+          }
+        )
     ),
+    
   async execute(interaction: CommandInteraction<CacheType>) {
     const memberId = interaction.options.getUser("membre")!.id;
-    const all = interaction.options.get("all")?.value as boolean;
+    const scope = interaction.options.get("scope")?.value as string;
 
-    const embed = resetContribPoint(memberId, all);
+    const embed = resetEmbed(memberId, scope);
 
-    DB.getGuild(interaction.guildId!).getUser(memberId).setPoints(0, all);
+    DB.getGuild(interaction.guildId!).getUser(memberId).setPoints(0, scope);
 
     await interaction.reply({ embeds: [embed] });
   },
