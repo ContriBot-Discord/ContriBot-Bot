@@ -17,8 +17,9 @@ add:
     leaderboardPoints: "<@{{userid}}> added {{quantity}} leaderboard {{pointsname}} to <@{{memberid}}>"
 
 getContribPoint:
-  allDescription: '<@{{userid}}> has **{{amount}}** total {{pointname}}.'
-  description: '<@{{userid}}> has **{{amount}}** {{pointname}}.'
+  description:
+    storePoints: '<@{{userid}}> has **{{amount}}** store {{pointname}}.'
+    leaderboardPoints: '<@{{userid}}> has **{{amount}}** leaderboard {{pointname}}.'
 
 config:
   title: 'Config'
@@ -26,16 +27,16 @@ config:
   pointsCfg:
     name: "Way to earn points:"
     value: "Send message: **{{message}}**\n
-              React to a message: **{{react}}**\n
-              Voice channel: **{{voice}}**/15 minutes\n
-              Disboard Bump: **{{bump}}"
+            React to a message: **{{react}}**\n
+            Voice channel: **{{voice}}**/15 minutes\n
+            Disboard Bump: **{{bump}}"
 
   other:
     name: "Others:"
     value: "Points name: **{{pointsname}}**\n
-              Birthday role: <@**{{birthdayrole}}**>\n
-              Server language: **{{lang}}**"
+            Birthday role: <@**{{birthdayrole}}**>\n
+            Server language: **{{lang}}**"
 
 ping:
   description: "🏓 Pong!\n
-                  📡 Ping: {{ping}}ms" # ping of the bot (number)
+                📡 Ping: {{ping}}ms" # ping of the bot (number)
