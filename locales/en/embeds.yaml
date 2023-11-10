@@ -9,6 +9,8 @@ leaderboard:
   fields:
     name: "Top {{index}}"
     value: "<@{{userid}}}> with {{quantity}} {{pointsname}}"
+  footer:
+    text: "Page {{pageNumber}}/{{totalPages}}"
 
 add:
   description:
@@ -16,7 +18,7 @@ add:
     storePoints: "<@{{userid}}> added {{quantity}} store {{pointsname}} to <@{{memberid}}>"
     leaderboardPoints: "<@{{userid}}> added {{quantity}} leaderboard {{pointsname}} to <@{{memberid}}>"
 
-getContribPoint:
+get:
   description:
     storePoints: '<@{{userid}}> has **{{amount}}** store {{pointname}}.'
     leaderboardPoints: '<@{{userid}}> has **{{amount}}** leaderboard {{pointname}}.'
@@ -34,8 +36,13 @@ config:
   other:
     name: "Others:"
     value: "Points name: **{{pointsname}}**\n
-            Birthday role: <@**{{birthdayrole}}**>\n
+            Birthday role: **<@{{birthdayrole}}**>\n
             Server language: **{{lang}}**"
+
+lang:
+  title: "Language set !"
+  description: "The guild language is now: English" # Please, remplace "English" with the actual language this string is translated to
+
 
 ping:
   description: "🏓 Pong!\n
