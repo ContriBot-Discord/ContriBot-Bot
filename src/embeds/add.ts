@@ -4,7 +4,7 @@ import i18n from "i18next";
 
 export default function (userId: string, amount: number, memberId: string, lang: string, scope:string = "storePoints") {
 
-    i18n.language = lang;
+    i18n.changeLanguage(lang);
 
     let fieldName: string;
 
