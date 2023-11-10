@@ -2,7 +2,6 @@ import {
   SlashCommandBuilder,
   CacheType,
   CommandInteraction,
-  SlashCommandBooleanOption,
   SlashCommandUserOption,
 } from "discord.js";
 import { SlashCommand } from "@/types";
@@ -43,11 +42,12 @@ export const command: SlashCommand = {
   async execute(interaction: CommandInteraction<CacheType>) {
     const memberId = interaction.options.getUser("membre")!.id;
     const scope = interaction.options.get("scope")?.value as string;
-    const amount = DB.getGuild(interaction.guildId!)
+    const guild = DB.getGuild(interaction.guildId!)
+    const amount = guild
       .getUser(memberId)
       .getContribPoint(scope);
 
-    const embed = getEmbed(memberId, amount, scope);
+    const embed = getEmbed(memberId, amount, scope, guild.lang);
 
     await interaction.reply({ embeds: [embed] });
   },
