@@ -7,7 +7,7 @@ import {
 import { SlashCommand } from "@/types";
 
 import { DB } from "@/index";
-import setLangEmbed from "@/embeds/setlang";
+import setLangEmbed from "@/embeds/setLang";
 
 export const command: SlashCommand = {
   name: "setlang",
@@ -19,8 +19,17 @@ export const command: SlashCommand = {
         .setName("language")
         .setDescription("What language would you like to change to ?")
         .addChoices(
+          // Currently supported languages:
+          // 'de', 'el', 'en', 'es', 'fr', 'ia', 'it', 'ja', 'zh'
+          { name: "Deutsch", value: "de" },
+          { name: "Ελληνικά", value: "el" },
           { name: "English", value: "en" },
+          { name: "Español", value: "es" },
           { name: "Français", value: "fr" },
+          { name: "Interlingua", value: "ia" },
+          { name: "Italiano", value: "it" },
+          { name: "日本語", value: "ja" },
+          { name: "中文", value: "zh" }
         )
         .setRequired(true)
     ),
