@@ -12,7 +12,7 @@ export default function (userId: string, amount: number, memberId: string, lang:
         })
         .addFields({
             name: " ",
-            value: i18n.__(scope === "leaderboard" ? `addContribPoint.embed.description` : '<@%s> added %s to <@%s>\' globals points.',
+            value: i18n.__(scope === "leaderboard" ? `embeds:addContribPoint.embed.description` : '<@%s> added %s to <@%s>\' globals points.',
                 userId,
                 i18n.__n(`global.points`, amount),
                 memberId),

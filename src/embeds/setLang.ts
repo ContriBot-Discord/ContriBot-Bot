@@ -7,6 +7,6 @@ export default function (lang:string) : EmbedBuilder {
     i18n.setLocale(lang);
 
     return new EmbedBuilder()
-        .setTitle(i18n.__(`setLang.embed.setLang.title`))
-        .setDescription(i18n.__(`setLang.embed.setLang.description`))
+        .setTitle(i18n.__(`embeds:setLang.embed.setLang.title`))
+        .setDescription(i18n.__(`embeds:setLang.embed.setLang.description`))
 }
