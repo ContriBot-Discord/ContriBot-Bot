@@ -6,7 +6,7 @@ export default function getContribPoint(memberId: string, amount: number, scope:
     i18next.changeLanguage(lang)
 
     const translation = (scope === "storePoints") ?
-        "embeds:getContribPoint.description.storePoints" : "embeds:getContribPoint.description.leaderboardPoints"
+        "embeds:get.description.storePoints" : "embeds:get.description.leaderboardPoints"
 
     return new EmbedBuilder()
         .addFields({
