@@ -6,20 +6,66 @@ import { UserItem } from "@/classes/UserItem";
 export class Guild {
   id: string;
   lang: string;
+  dailyPoint: number;
+  weeklyPoint: number;
+  specialPoint: number;
+  allTimePoint: number;
+  pointName: string;
   users: User[];
   shop: ShopItem[];
   globalInventory: UserItem[];
   readonly #db: mysql.Connection;
 
-  constructor(id: string, lang: string, db: mysql.Connection) {
+  constructor(
+    id: string,
+    lang: string,
+    dailyPoints: number,
+    weeklyPoints: number,
+    specialPoints: number,
+    allTimePoints: number,
+    pointName: string,
+    db: mysql.Connection
+  ) {
     this.#db = db;
     this.id = id;
     this.lang = lang;
+    this.dailyPoint = dailyPoints;
+    this.weeklyPoint = weeklyPoints;
+    this.specialPoint = specialPoints;
+    this.allTimePoint = allTimePoints;
+    this.pointName = pointName;
     this.shop = this.fetchShop();
     this.users = this.fetchUsers();
     // Represent a list with all the items bought by all the users
     // We will merge all the inventories of all the users in this list
     this.globalInventory = this.users.map((user) => user.inventory).flat();
+  }
+
+  fetchUsers(): User[] {
+    // Fetch all users from database
+    const users: User[] = [];
+
+    this.#db.execute<RowDataPacket[]>(
+      "SELECT * FROM USER WHERE guild_id = ?",
+      [this.id],
+      (err, result) => {
+        if (err) throw err;
+
+        result.forEach((user: any) => {
+          users.push(
+            new User(
+              this,
+              user.user_id,
+              user.storePoints,
+              user.leaderboardPoints,
+              this.#db
+            )
+          );
+        });
+      }
+    );
+
+    return users;
   }
 
   getUser(id: string): User {
@@ -66,63 +112,33 @@ export class Guild {
     );
   }
 
-  fetchUsers(): User[] {
-    // Fetch all users from database
-    const users: User[] = [];
-
-    this.#db.execute<RowDataPacket[]>(
-      "SELECT * FROM USER WHERE guild_id = ?",
-      [this.id],
-      (err, result) => {
-        if (err) throw err;
-
-        result.forEach((user: any) => {
-          users.push(
-            new User(
-              this,
-              user.user_id,
-              user.storePoints,
-              user.leaderboardPoints,
-              this.#db
-            )
-          );
-        });
-      }
-    );
-
-    return users;
-  }
-
   resetPoints(scope: string = "both"): void {
-
     let req: string;
 
     // We choose the request depending on the scope
     switch (scope) {
-        case "storePoints":
-            req = "UPDATE USER SET store_points = 0 WHERE guild_id = ?";
-            break;
-        case "leaderboardPoints":
-            req = "UPDATE USER SET leaderboard_points = 0 WHERE guild_id = ?";
-            break;
-        default:
-            req = "UPDATE USER SET store_points = 0, leaderboard_points = 0  WHERE guild_id = ?";
-            break;
+      case "storePoints":
+        req = "UPDATE USER SET store_points = 0 WHERE guild_id = ?";
+        break;
+      case "leaderboardPoints":
+        req = "UPDATE USER SET leaderboard_points = 0 WHERE guild_id = ?";
+        break;
+      default:
+        req =
+          "UPDATE USER SET store_points = 0, leaderboard_points = 0  WHERE guild_id = ?";
+        break;
     }
 
     // Reset all users' points in database
-    this.#db.query<RowDataPacket[]>(
-      req,
-      [this.id],
-      (err, result) => {
-        if (err) throw err;
-      }
-    );
+    this.#db.query<RowDataPacket[]>(req, [this.id], (err, result) => {
+      if (err) throw err;
+    });
 
     // We now update the cache
     this.users.forEach((user) => {
       if (scope === "both" || scope === "storePoints") user.storePoints = 0;
-      if (scope === "both" || scope === "leaderboardPoints") user.leaderboardPoints = 0;
+      if (scope === "both" || scope === "leaderboardPoints")
+        user.leaderboardPoints = 0;
     });
   }
 
@@ -160,11 +176,6 @@ export class Guild {
     return shop;
   }
 
-  setLang(lang: string) {
-    this.lang = lang;
-    this.update();
-  }
-
   getItemByDate(date: Date | undefined): UserItem[] {
     // Get All items bought after a date
     if (date === undefined) {
@@ -187,5 +198,15 @@ export class Guild {
 
     // Return the list of items with the id
     return items.filter((item) => item.id === id);
+  }
+
+  setLang(lang: string) {
+    this.lang = lang;
+    this.update();
+  }
+
+  setPointName(pointName: string) {
+    this.pointName = pointName;
+    this.update();
   }
 }
