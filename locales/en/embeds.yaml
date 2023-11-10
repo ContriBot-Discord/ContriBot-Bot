@@ -1,0 +1,41 @@
+# This file contains all strings related to commands.
+
+default:
+  title: "**{{command_name}}** command" # For instance: **Add** command
+
+leaderboard:
+  title: "Leaderboard [{{index}}]"
+  description: "Here is the leaderboard"
+  fields:
+    name: "Top {{index}}"
+    value: "<@{{userid}}}> with {{quantity}} {{pointsname}}"
+
+add:
+  description:
+    both: "<@{{userid}}> added {{quantity}} {{pointsname}} to <@{{memberid}}>"
+    storePoints: "<@{{userid}}> added {{quantity}} store {{pointsname}} to <@{{memberid}}>"
+    leaderboardPoints: "<@{{userid}}> added {{quantity}} leaderboard {{pointsname}} to <@{{memberid}}>"
+
+getContribPoint:
+  allDescription: '<@{{user}}> has **{{amount}}** total {{pointname}}.'
+  description: '<@{{user}}> has **{{amount}}** {{pointname}}.'
+
+config:
+  title: 'Config'
+  description: "Here is your server's config"
+  pointsCfg:
+    name: "Way to earn points:"
+    value: "Send message: **{{message}}**\n
+              React to a message: **{{react}}**\n
+              Voice channel: **{{voice}}**/15 minutes\n
+              Disboard Bump: **{{bump}}"
+
+  other:
+    name: "Others:"
+    value: "Points name: **{{pointsname}}**\n
+              Birthday role: <@**{{birthdayrole}}**>\n
+              Server language: **{{lang}}**"
+
+ping:
+  description: "🏓 Pong!\n
+                  📡 Ping: {{ping}}ms" # ping of the bot (number)
