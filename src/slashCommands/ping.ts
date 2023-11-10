@@ -1,12 +1,11 @@
 import {
   SlashCommandBuilder,
-  EmbedBuilder,
   CommandInteraction,
   CacheType,
 } from "discord.js";
 import { SlashCommand } from "@/types";
 
-import i18n from "i18next";
+import pingEmbed from "@/embeds/ping";
 
 export const command: SlashCommand = {
   name: "ping",
@@ -14,23 +13,9 @@ export const command: SlashCommand = {
     .setName("ping")
     .setDescription("Displays the bot's ping"),
   execute: async (interaction: CommandInteraction<CacheType>) => {
-
-    i18n.changeLanguage(interaction.guild?.preferredLocale);
-
-    const sent = await interaction.reply({
-      fetchReply: true,
+    await interaction.reply({
       embeds: [
-        new EmbedBuilder()
-          .setDescription(i18n.t("commands:ping.embed.description", { ping: '...' }))
-          .setColor("#ff8e4d")
-      ],
-    });
-
-    await  interaction.editReply({
-      embeds: [
-        new EmbedBuilder()
-          .setDescription(i18n.t("commands:ping.embed.description", { ping: sent.createdTimestamp - interaction.createdTimestamp }))
-          .setColor("#ff8e4d")
+        pingEmbed(interaction.client.ws.ping)
       ],
     });
   },

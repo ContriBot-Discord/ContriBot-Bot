@@ -1,49 +1,46 @@
 import {
   SlashCommandBuilder,
-  EmbedBuilder,
   ButtonBuilder,
   ActionRowBuilder,
   CacheType,
   CommandInteraction,
 } from "discord.js";
 import { SlashCommand } from "@/types";
+
 import { DB } from "@/index";
+import leaderboard from "@/embeds/leaderboard";
 
 export const command: SlashCommand = {
-  name: "leaderboardpoint",
+  name: "leaderboard",
   data: new SlashCommandBuilder()
-    .setName("leaderboardpoint")
-    .setDescription("Show the leaderboard of total contribution point"),
+    .setName("leaderboard")
+    .setDescription("Show the leaderboard of users"),
   async execute(interaction: CommandInteraction<CacheType>) {
-    const lineString: string = `<:lineviolett:1163753428317638696>`.repeat(6);
 
     const guild = DB.getGuild(interaction.guildId!);
-
-    const embed = new EmbedBuilder()
-      .addFields({
-        name: "<:shinypurplestar:1163585447201607781> Leaderboard",
-        value: lineString,
-      })
-      .setColor("#aa54e1")
-      .setFooter({ text: `Page 1/${Math.ceil(guild.users.length / 10)}` })
-      .setTimestamp();
 
     // Copied list of the guild users
     let users = [...guild.users];
 
-    users.sort((a, b) => b.getContribPoint(true) - a.getContribPoint(true));
+    const fields: {name:string, value:string}[] = [];
 
+    users.sort((a, b) => b.getContribPoint("leaderboardPoints") - a.getContribPoint("leaderboardPoints"));
+
+    // Add the first 10 users to the embed
     for (let i = 0; i < 9; i++) {
       const user = users[i];
       if (user) {
-        embed.addFields({
+        fields.push({
           name: ` `,
           value: `**#${i + 1} ·** <@${user.id}> · **${user.getContribPoint(
-            true
+            "leaderboardPoints"
           )}** points`,
         });
       }
     }
+
+    // Generate the embed
+    const embed = leaderboard(1, Math.ceil(guild.users.length / 10), fields);
 
     const button = new ActionRowBuilder<ButtonBuilder>()
       .addComponents(
@@ -60,6 +57,7 @@ export const command: SlashCommand = {
         new ButtonBuilder().setCustomId("refresh").setLabel("⟲").setStyle(1)
       );
 
+    // If there are less than 10 users, disable the "next" button
     if (guild.users.length <= 10) button.components[1].setDisabled(true);
 
     await interaction.reply({ embeds: [embed], components: [button] });

@@ -1,155 +1,102 @@
-import { BotEvent } from "@/types";
-import {
-  Events,
-  Interaction,
-  ActionRowBuilder,
-  ButtonBuilder,
-  EmbedBuilder,
-} from "discord.js";
+import {BotEvent} from "@/types";
+import {ActionRowBuilder, ButtonBuilder, Events, Interaction,} from "discord.js";
 
-import { DB } from "@/index";
-import { User } from "@/classes/User";
+import {DB} from "@/index";
+import {User} from "@/classes/User";
+import leaderboard from "@/embeds/leaderboard";
+
+function getUserList(startingFrom: number, userList: User[]): { name: string, value: string }[] {
+
+    const fields: { name: string, value: string }[] = [];
+
+    // We add the n + 10 first users to the embed. If there are less than 10 users, we stop the loop.
+    for (let i = startingFrom; i < startingFrom + 10 || i < userList.length; i++) {
+        const user = userList[i];
+
+        if (user) {
+            fields.push({
+                name: ` `,
+                value: `**#${i + 1} ·** <@${user.id}> · **${user.leaderboardPoints}** points`,
+            });
+        }
+    }
+
+    return fields
+}
 
 const event: BotEvent = {
-  name: Events.InteractionCreate,
-  once: false,
-  async execute(interaction: Interaction) {
-    if (!interaction.isButton()) return;
+    name: Events.InteractionCreate,
+    once: false,
+    async execute(interaction: Interaction) {
+        if (!interaction.isButton()) return;
 
-    if (
-      !(
-        interaction.customId === "previous" ||
-        interaction.customId === "next" ||
-        interaction.customId === "refresh"
-      )
-    )
-      return;
+        // If the button is not one of the three buttons, we stop the function since it's not related to the leaderboard
+        if (
+            !(
+                interaction.customId === "previous" ||
+                interaction.customId === "next" ||
+                interaction.customId === "refresh"
+            )
+        )
+            return;
 
-    const actualPageInt: number = parseInt(
-      interaction.message.embeds[0].footer!.text!.split(" ")[1].split("/")[0]
-    );
+        // Differing the response allow us to have up to 15 minutes to edit the message, instead of 3 seconds
+        await interaction.deferUpdate();
 
-    const lineString: string = `<:lineviolett:1163753428317638696>`.repeat(6);
+        // We get the actual page number. Used to know which users to display
+        const actualPageInt: number = parseInt(
+            interaction.message.embeds[0].footer!.text!.split(" ")[1].split("/")[0]
+        );
 
-    const guild = DB.getGuild(interaction.guildId!);
 
-    const embed = new EmbedBuilder()
-      .addFields({
-        name: "<:shinypurplestar:1163585447201607781> Leaderboard",
-        value: lineString,
-      })
-      .setColor("#aa54e1")
-      .setFooter({
-        text: `Page ${actualPageInt}/${Math.ceil(guild.users.length / 10)}`,
-      })
-      .setTimestamp();
+        // We sort the users by their total points
+        const guild = DB.getGuild(interaction.guildId!);
+        let users = [...guild.users];
+        users.sort((a: User, b: User) => b.leaderboardPoints - a.leaderboardPoints);
 
-    const button = new ActionRowBuilder<ButtonBuilder>()
-      .addComponents(
-        new ButtonBuilder().setCustomId("previous").setLabel("◀︎").setStyle(1)
-      )
-      .addComponents(
-        new ButtonBuilder().setCustomId("next").setLabel("▶").setStyle(1)
-      )
-      .addComponents(
-        new ButtonBuilder().setCustomId("refresh").setLabel("⟲").setStyle(1)
-      );
 
-    let users = [...guild.users];
+        // We initialize the fields variable so it can be edited in the if statements
+        let fields: { name: string, value: string }[];
 
-    users.sort((a: User, b: User) => b.allPoints - a.allPoints);
+        // We get the list of users depending on the button pressed
+        if (interaction.customId === "previous") {
 
-    if (interaction.customId === "previous") {
-      embed.setFooter({
-        text: `Page ${actualPageInt - 1}/${Math.ceil(guild.users.length / 10)}`,
-      });
+            fields = getUserList((actualPageInt - 1) * 10, users);
 
-      const startIndex: number = (actualPageInt - 1) * 10;
-      const endIndex: number = startIndex + 10;
+        } else if (interaction.customId === "next") {
 
-      for (let i = startIndex; i < endIndex; i++) {
-        const user = users[i];
+            fields = getUserList(actualPageInt * 10, users);
 
-        if (user) {
-          embed.addFields({
-            name: ` `,
-            value: `**#${i + 1} ·** <@${user.id}> · **${
-              user.allPoints
-            }** points`,
-          });
+        } else {
+            // In case the button is "refresh"
+            fields = getUserList((actualPageInt - 1) * 10, users)
         }
-      }
 
-      if (actualPageInt == 1) button.components[0].setDisabled(true);
-      if (actualPageInt == Math.ceil(guild.users.length / 10))
-        button.components[1].setDisabled(true);
+        // we initialize the buttons, and make them disabled if needed
+        const button = new ActionRowBuilder<ButtonBuilder>()
+            .addComponents(
+                new ButtonBuilder().setCustomId("previous").setLabel("◀︎").setStyle(1)
+            )
+            .addComponents(
+                new ButtonBuilder().setCustomId("next").setLabel("▶").setStyle(1)
+            )
+            .addComponents(
+                new ButtonBuilder().setCustomId("refresh").setLabel("⟲").setStyle(1)
+            );
 
-      await interaction.message.edit({
-        embeds: [embed],
-        components: [button],
-      });
+        // If the page is 1, we disable the "previous" button
+        if (actualPageInt === 1) button.components[0].setDisabled(true);
 
-      await interaction.deferUpdate();
-    } else if (interaction.customId === "next") {
-      const startIndex = actualPageInt * 10;
-      const endIndex =
-        startIndex + 10 > guild.users.length
-          ? guild.users.length
-          : startIndex + 10;
+        // If the page is the last one, we disable the "next" button
+        if (actualPageInt === Math.ceil(guild.users.length / 10)) button.components[1].setDisabled(true);
 
-      for (let i = startIndex; i < endIndex; i++) {
-        const user = users[i];
-        if (user) {
-          embed.addFields({
-            name: ` `,
-            value: `**#${i + 1} ·** <@${user.id}> · **${
-              user.allPoints
-            }** points`,
-          });
-        }
-      }
+        // We now do generate the embed with all the data we got
+        const embed = leaderboard(actualPageInt, Math.ceil(guild.users.length / 10), fields);
 
-      if (actualPageInt == 1) button.components[0].setDisabled(true);
-      if (actualPageInt == Math.ceil(guild.users.length / 10))
-        button.components[1].setDisabled(true);
+        // editReply is required since we used deferUpdate
+        await interaction.editReply({embeds: [embed], components: [button]});
 
-      await interaction.message.edit({
-        embeds: [embed],
-        components: [button],
-      });
-
-      await interaction.deferUpdate();
-    } else {
-      const startIndex = (actualPageInt - 1) * 10;
-      const endIndex =
-        startIndex + 10 > guild.users.length
-          ? guild.users.length
-          : startIndex + 10;
-
-      for (let i = startIndex; i < endIndex; i++) {
-        const user = users[i];
-        if (user) {
-          embed.addFields({
-            name: ` `,
-            value: `**#${i + 1} ·** <@${user.id}> · **${
-              user.allPoints
-            }** points`,
-          });
-        }
-      }
-
-      if (actualPageInt == 1) button.components[0].setDisabled(true);
-      if (actualPageInt == Math.ceil(guild.users.length / 10))
-        button.components[1].setDisabled(true);
-
-      await interaction.message.edit({
-        embeds: [embed],
-        components: [button],
-      });
-
-      await interaction.deferUpdate();
-    }
-  },
+    },
 };
 
 export default event;

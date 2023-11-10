@@ -1,6 +1,5 @@
 import {
   SlashCommandBuilder,
-  EmbedBuilder,
   CacheType,
   CommandInteraction,
   SlashCommandUserOption,
@@ -9,11 +8,12 @@ import {
 import { SlashCommand } from "@/types";
 
 import { DB } from "@/index";
+import removeEmbed from "@/embeds/remove";
 
 export const command: SlashCommand = {
-  name: "removecontribpoint",
+  name: "remove",
   data: new SlashCommandBuilder()
-    .setName("removecontribpoint")
+    .setName("remove")
     .setDescription("Remove contribution points from a user.")
     .addUserOption((option: SlashCommandUserOption) =>
       option
@@ -29,42 +29,36 @@ export const command: SlashCommand = {
         )
         .setRequired(true)
     )
-    .addBooleanOption((option) =>
+    .addStringOption((option) =>
       option
-        .setName("all")
+        .setName("scope")
         .setDescription(
-          "Whether to remove to all contribution points or not. (Default: true)"
+          "Specify the scope: storePoints, leaderboardPoints, or both. (Default: both)"
         )
         .setRequired(false)
+        .addChoices(
+          {
+            name: "storePoints",
+            value: "storePoints",
+          },
+          {
+            name: "leaderboardPoints",
+            value: "leaderboardPoints",
+          },
+          {
+            name: "both",
+            value: "both",
+          }
+        )
     ),
   async execute(interaction: CommandInteraction<CacheType>) {
     const memberId: string = interaction.options.getUser("member")!.id;
     const amount: number = interaction.options.get("amount")!.value as number;
-    const all = interaction.options.get("all")?.value as boolean;
+    const scope = interaction.options.get("scope")?.value as string;
 
-    const lineString: string = `<:shiny_orange_bar:1163759934702374942>`.repeat(
-      10
-    );
+    const embed = removeEmbed(amount, memberId, scope);
 
-    const embed = new EmbedBuilder()
-      .addFields({
-        name: "<:shiny_orange_moderator:1163759368853004298> Remove points command.",
-        value: lineString,
-      })
-      .addFields({
-        name: " ",
-        value: `**${amount}** contribution points has been removed from <@${memberId}>. `,
-      })
-      .setColor("#ff8e4d")
-      .setTimestamp();
-
-    if (all)
-      embed.spliceFields(1, 1, {
-        name: " ",
-        value: `${amount} total contribution points has been removed from <@${memberId}>.`,
-      });
-
-    DB.getGuild(interaction.guildId!).getUser(memberId).addPoints(-amount, all);
+    DB.getGuild(interaction.guildId!).getUser(memberId).addPoints(-amount, scope);
 
     await interaction.reply({ embeds: [embed] });
   },
