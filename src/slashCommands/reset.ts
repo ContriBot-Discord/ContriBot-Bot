@@ -2,7 +2,6 @@ import {
   SlashCommandBuilder,
   CacheType,
   CommandInteraction,
-  SlashCommandBooleanOption,
   SlashCommandUserOption,
 } from "discord.js";
 import { SlashCommand } from "@/types";
