@@ -6,7 +6,7 @@ leaderboard:
   description: "Voici le classement"
   fields:
     name: "Top {{index}}"
-    value: "<@{{userid}}}> avec {{quantity}} {{pointsname}}"
+    value: "<@{{userid}}> avec {{quantity}} {{pointsname}}"
   footer:
     text: "Page {{pageNumber}}/{{totalPages}}"
 add:
@@ -14,16 +14,31 @@ add:
     both: "<@{{userid}}> a ajouté {{quantity}} {{pointsname}} à <@{{memberid}}>"
     storePoints: "<@{{userid}}> a ajouté {{quantity}} {{pointsname}} de boutique à <@{{memberid}}>"
     leaderboardPoints: "<@{{userid}}> a ajouté {{quantity}} {{pointsname}} de classement à <@{{memberid}}>"
+remove:
+  description:
+    both: "<@{{userid}}> a retiré {{quantity}} {{pointsname}} à <@{{memberid}}>"
+    storePoints: "<@{{userid}}> a supprimé {{quantity}} {{pointsname}} de boutique de <@{{memberid}}>"
+    leaderboardPoints: "<@{{userid}}> a supprimé {{quantity}} {{pointsname}} de classement de <@{{memberid}}>"
 get:
   description:
     storePoints: '<@{{userid}}> a **{{amount}}** {{pointname}} de boutique.'
     leaderboardPoints: '<@{{userid}}> a **{{amount}}** {{pointname}} de classement.'
+reset:
+  description:
+    both: "Les {{pointsname}} de {{userid}} ont été complètement réinitialisés"
+    leaderboardPoints: "Les {{pointsname}} de classement de {{userid}} ont été complètement réinitialisés"
+    storePoints: "Les {{pointsname}} de boutique de {{userid}} ont été complètement réinitialisés"
+wipe:
+  description:
+    both: "Les {{pointsname}} du serveur ont été complètement réinitialisés"
+    leaderboardPoints: "Les {{pointsname}} de classement du serveur ont été complètement réinitialisés"
+    storePoints: "Les {{pointsname}} de boutique du serveur ont été complètement réinitialisés"
 config:
   title: 'Configuration'
   description: "Voici la configuration de votre serveur"
   pointsCfg:
     name: "Façons de gagner des points :"
-    value: "Envoyer un message : **{{message}}**\n Ajouter une réaction à un message : **{{react}}**\n Passer du temps dans un salon vocal : **{{voice}}**/15 minutes\n Bump Discord : **{{bump}}"
+    value: "Envoyer un message : **{{message}}**\n Ajouter une réaction à un message : **{{react}}**\n Passer du temps dans un salon vocal : **{{voice}}**/15 minutes\n Bump Discord : **{{bump}}**"
   other:
     name: "Divers :"
     value: "Nom des points : **{{pointsname}}**\n Rôle d'anniversaire : **<@{{birthdayrole}}**>\n Langue du serveur : **{{lang}}**"
