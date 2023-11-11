@@ -1,11 +1,17 @@
 import {EmbedBuilder} from "discord.js";
+import i18next from "i18next";
 
-export default function getContribPoint(memberId: string, amount: number, scope: string = "storePoints") {
+export default function getContribPoint(memberId: string, amount: number, scope: string = "both", lang: string) {
+
+    i18next.changeLanguage(lang)
+
+    const translation = (scope === "storePoints") ?
+        "embeds:get.description.storePoints" : "embeds:get.description.leaderboardPoints"
 
     return new EmbedBuilder()
         .addFields({
             name: " ",
-            value: `**<:shinypurplestar:1163585447201607781> Get points command.**`,
+            value: `<:shinypurplestar:1163585447201607781>` + i18next.t("embeds:default.title", {command_name: "get"}),
         },
         {
             name: " ",
@@ -13,7 +19,7 @@ export default function getContribPoint(memberId: string, amount: number, scope:
         },
         {
             name: " ",
-            value: scope === "leaderboardPoints" ? `<@${memberId}> has **${amount}** leaderboard point(s).` : `<@${memberId}> has **${amount}** store point(s). `,
+            value: i18next.t(translation, {userid: memberId, amount: amount}),
         })
         .setColor("#AA54E1")
         .setTimestamp();

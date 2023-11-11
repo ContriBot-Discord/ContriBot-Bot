@@ -20,6 +20,10 @@ This section will be updated when the bot will be ready to be used.
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
+## Translating
+
+You can translate or approuve strings on [our Crowdin project](https://crowdin.com/project/contribot).
+
 ## License
 
 // TODO

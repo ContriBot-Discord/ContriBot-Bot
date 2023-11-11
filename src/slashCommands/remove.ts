@@ -56,9 +56,11 @@ export const command: SlashCommand = {
     const amount: number = interaction.options.get("amount")!.value as number;
     const scope = interaction.options.get("scope")?.value as string;
 
-    const embed = removeEmbed(amount, memberId, scope);
+    const guild = DB.getGuild(interaction.guildId!);
 
-    DB.getGuild(interaction.guildId!).getUser(memberId).addPoints(-amount, scope);
+    const embed = removeEmbed(interaction.user.id, amount, memberId, scope, guild.lang);
+
+    guild.getUser(memberId).addPoints(-amount, scope);
 
     await interaction.reply({ embeds: [embed] });
   },

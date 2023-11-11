@@ -1,0 +1,6 @@
+internalError: "Произошла внутренняя ошибка. Пожалуйста, повторите попытку позже или свяжитесь с нами. Код внутренней ошибки: `{{code}}`" #Default error message for internal errors.
+goBack: "Вы не можете вернуться" #May occur when trying to load a page of an Embed that doesn't exist
+goForward: "Вы не можете идти вперед" #May occur when trying to load a page of an Embed that doesn't exist
+noPerms: "У меня нету разрешений делать это. Пожалуйста, убедитесь, что у меня есть все следующие разрешения на этом сервере: {{perms}}" #Raised when the bot does nat enough perms to perform an action. perms can be a list of perms, or a single permission.
+cantDm: "Извините, я не могу написать вам в ЛС. Пожалуйста, убедитесь, что у вас включен ЛС." #Raised when the bot can't DM the user invoking the event.
+cantDmUser: "Извините, я не могу написать в ЛС этому пользователю. Скорее всего у этого пользователя отключены ЛС." #Raised when the bot can't DM the user it is supposed to.

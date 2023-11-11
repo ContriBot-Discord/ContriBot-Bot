@@ -1,28 +1,36 @@
 import {EmbedBuilder} from "discord.js";
+import i18next from "i18next";
 
-export default function (lang: string, anniversaryRole: string, iconURL: string) {
+export default function (lang: string, birthdayRole: string, iconURL: string) {
+    // TODO: Obtain the real values
+
+    i18next.changeLanguage(lang);
 
     return new EmbedBuilder()
         .addFields({
-            name: "<:shiny_orange_moderator:1163759368853004298> Config",
+            name: `<:shiny_orange_moderator:1163759368853004298>` + i18next.t("embeds:config.title"),
             value: `<:shiny_orange_bar:1163759934702374942>`.repeat(4)
         })
         .addFields({
-            name: "Here is your server's configuration:",
+            name: i18next.t("embeds:config.description"),
             value: ` `,
         })
         .addFields({
-            name: `<:shinypurplestar:1163585447201607781> Way to earn points.       ‎ `,
-            value: `Send message: **1**
-                React message: **25**
-                Voice channel: **50**
-                Disboard bump: **100**`,
+            name: `<:shinypurplestar:1163585447201607781>` + i18next.t('embeds:config.pointsCfg.name'),
+            value: i18next.t("embeds:config.pointsCfg.value", {
+                message: 1,
+                react: 1,
+                voice: 1,
+                bump: 1
+            }),
             inline: true,
         })
         .addFields({
-            name: `<:shinybluelink:1163501771415625820> Others.`,
-            value: `Birthday rôle <@${anniversaryRole}>
-            Server language: ${lang}`,
+            name: `<:shinybluelink:1163501771415625820>` + i18next.t("embeds:config.other.name"),
+            value: i18next.t("embeds:config.other.value", {
+                birthdayrole: birthdayRole,
+                lang: lang
+            }),
             inline: true,
         })
         .setThumbnail(iconURL)

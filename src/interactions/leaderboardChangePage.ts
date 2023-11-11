@@ -5,7 +5,11 @@ import {DB} from "@/index";
 import {User} from "@/classes/User";
 import leaderboard from "@/embeds/leaderboard";
 
-function getUserList(startingFrom: number, userList: User[]): { name: string, value: string }[] {
+import i18next from "i18next";
+
+function getUserList(startingFrom: number, userList: User[], lang: string): { name: string, value: string }[] {
+
+    i18next.changeLanguage(lang)
 
     const fields: { name: string, value: string }[] = [];
 
@@ -16,11 +20,13 @@ function getUserList(startingFrom: number, userList: User[]): { name: string, va
         if (user) {
             fields.push({
                 name: ` `,
-                value: `**#${i + 1} ·** <@${user.id}> · **${user.leaderboardPoints}** points`,
-            });
+                value: `**#${i + 1} ·** ` + i18next.t("embeds:leaderboard.fields.value", {
+                    userid: user.id,
+                    quantity: user.leaderboardPoints
+                })
+            })
         }
     }
-
     return fields
 }
 
@@ -61,15 +67,15 @@ const event: BotEvent = {
         // We get the list of users depending on the button pressed
         if (interaction.customId === "previous") {
 
-            fields = getUserList((actualPageInt - 1) * 10, users);
+            fields = getUserList((actualPageInt - 1) * 10, users, guild.lang);
 
         } else if (interaction.customId === "next") {
 
-            fields = getUserList(actualPageInt * 10, users);
+            fields = getUserList(actualPageInt * 10, users, guild.lang);
 
         } else {
             // In case the button is "refresh"
-            fields = getUserList((actualPageInt - 1) * 10, users)
+            fields = getUserList((actualPageInt - 1) * 10, users, guild.lang)
         }
 
         // we initialize the buttons, and make them disabled if needed
@@ -81,7 +87,7 @@ const event: BotEvent = {
                 new ButtonBuilder().setCustomId("next").setLabel("▶").setStyle(1)
             )
             .addComponents(
-                new ButtonBuilder().setCustomId("refresh").setLabel("⟲").setStyle(1)
+                new ButtonBuilder().setCustomId("refresh").setLabel("↻").setStyle(1)
             );
 
         // If the page is 1, we disable the "previous" button
@@ -91,7 +97,7 @@ const event: BotEvent = {
         if (actualPageInt === Math.ceil(guild.users.length / 10)) button.components[1].setDisabled(true);
 
         // We now do generate the embed with all the data we got
-        const embed = leaderboard(actualPageInt, Math.ceil(guild.users.length / 10), fields);
+        const embed = leaderboard(actualPageInt, Math.ceil(guild.users.length / 10), fields, guild.lang);
 
         // editReply is required since we used deferUpdate
         await interaction.editReply({embeds: [embed], components: [button]});

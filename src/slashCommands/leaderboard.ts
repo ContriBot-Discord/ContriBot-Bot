@@ -2,22 +2,25 @@ import {
   SlashCommandBuilder,
   ButtonBuilder,
   ActionRowBuilder,
-  CacheType,
   CommandInteraction,
 } from "discord.js";
 import { SlashCommand } from "@/types";
 
 import { DB } from "@/index";
 import leaderboard from "@/embeds/leaderboard";
+import i18next from "i18next";
 
 export const command: SlashCommand = {
   name: "leaderboard",
   data: new SlashCommandBuilder()
     .setName("leaderboard")
     .setDescription("Show the leaderboard of users"),
-  async execute(interaction: CommandInteraction<CacheType>) {
+
+  async execute(interaction: CommandInteraction) {
 
     const guild = DB.getGuild(interaction.guildId!);
+
+    await i18next.changeLanguage(guild.lang);
 
     // Copied list of the guild users
     let users = [...guild.users];
@@ -32,15 +35,16 @@ export const command: SlashCommand = {
       if (user) {
         fields.push({
           name: ` `,
-          value: `**#${i + 1} ·** <@${user.id}> · **${user.getContribPoint(
-            "leaderboardPoints"
-          )}** points`,
+          value: `**#${i + 1} ·** ` + i18next.t("embeds:leaderboard.fields.value", {
+            userid: user.id,
+            quantity: user.leaderboardPoints
+          }),
         });
       }
     }
 
     // Generate the embed
-    const embed = leaderboard(1, Math.ceil(guild.users.length / 10), fields);
+    const embed = leaderboard(1, Math.ceil(guild.users.length / 10), fields, guild.lang);
 
     const button = new ActionRowBuilder<ButtonBuilder>()
       .addComponents(
@@ -54,7 +58,7 @@ export const command: SlashCommand = {
         new ButtonBuilder().setCustomId("next").setLabel("▶").setStyle(1)
       )
       .addComponents(
-        new ButtonBuilder().setCustomId("refresh").setLabel("⟲").setStyle(1)
+        new ButtonBuilder().setCustomId("refresh").setLabel("↻").setStyle(1)
       );
 
     // If there are less than 10 users, disable the "next" button

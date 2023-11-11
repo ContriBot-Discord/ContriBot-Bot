@@ -5,6 +5,8 @@ import {
 } from "discord.js";
 import { SlashCommand } from "@/types";
 
+import { DB } from "@/index";
+
 import pingEmbed from "@/embeds/ping";
 
 export const command: SlashCommand = {
@@ -15,7 +17,7 @@ export const command: SlashCommand = {
   execute: async (interaction: CommandInteraction<CacheType>) => {
     await interaction.reply({
       embeds: [
-        pingEmbed(interaction.client.ws.ping)
+        pingEmbed(interaction.client.ws.ping, DB.getGuild(interaction.guildId!).lang)
       ],
     });
   },

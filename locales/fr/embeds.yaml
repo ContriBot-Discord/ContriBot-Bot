@@ -1,0 +1,52 @@
+#This file contains all strings related to commands.
+default:
+  title: "Commande **{{command_name}}**" #For instance: **Add** command
+leaderboard:
+  title: "Classement [{{index}}]"
+  description: "Voici le classement"
+  fields:
+    name: "Top {{index}}"
+    value: "<@{{userid}}> avec {{quantity}} {{pointsname}}"
+  footer:
+    text: "Page {{pageNumber}}/{{totalPages}}"
+add:
+  description:
+    both: "<@{{userid}}> a ajouté {{quantity}} {{pointsname}} à <@{{memberid}}>"
+    storePoints: "<@{{userid}}> a ajouté {{quantity}} {{pointsname}} de boutique à <@{{memberid}}>"
+    leaderboardPoints: "<@{{userid}}> a ajouté {{quantity}} {{pointsname}} de classement à <@{{memberid}}>"
+remove:
+  description:
+    both: "<@{{userid}}> a retiré {{quantity}} {{pointsname}} à <@{{memberid}}>"
+    storePoints: "<@{{userid}}> a supprimé {{quantity}} {{pointsname}} de boutique de <@{{memberid}}>"
+    leaderboardPoints: "<@{{userid}}> a supprimé {{quantity}} {{pointsname}} de classement de <@{{memberid}}>"
+get:
+  description:
+    storePoints: '<@{{userid}}> a **{{amount}}** {{pointname}} de boutique.'
+    leaderboardPoints: '<@{{userid}}> a **{{amount}}** {{pointname}} de classement.'
+reset:
+  description:
+    both: "Les {{pointsname}} de {{userid}} ont été complètement réinitialisés"
+    leaderboardPoints: "Les {{pointsname}} de classement de {{userid}} ont été complètement réinitialisés"
+    storePoints: "Les {{pointsname}} de boutique de {{userid}} ont été complètement réinitialisés"
+wipe:
+  description:
+    both: "Les {{pointsname}} du serveur ont été complètement réinitialisés"
+    leaderboardPoints: "Les {{pointsname}} de classement du serveur ont été complètement réinitialisés"
+    storePoints: "Les {{pointsname}} de boutique du serveur ont été complètement réinitialisés"
+whois:
+  title: "Qui sommes-nous?"
+  description: "ContriBot est un projet étudiant, crée par [EAnathos](https://eanathos.com) &  [Voltis](https://voltis.me) à [Laval](https://maps.app.goo.gl/umYo5wYmG7eGwLWx5), en France.\n\n Ce projet a débuté début octobre 2023, alors que nous cherchions un bot Discord qui nous permettrait de gérer la communauté du serveur Minecraft de notre formation.\n\n Notre principal objectif est de créer un Bot utile, entièrement configurable et documenté, puissant et complet, avec toutes les fonctionnalités essentielles gratuites et traduit dans le plus de langues possibles\n\n Nous avons décidé de développer ce bot en TypeScript, en utilisant DiscordJS\n\nSi vous avez des questions, n'hésitez pas à venir nous voir sur notre [serveur Discord](https://discord.gg/wMHa7XHkNj) !"
+config:
+  title: 'Configuration'
+  description: "Voici la configuration de votre serveur"
+  pointsCfg:
+    name: "Façons de gagner des points :"
+    value: "Envoyer un message : **{{message}}**\n Ajouter une réaction à un message : **{{react}}**\n Passer du temps dans un salon vocal : **{{voice}}**/15 minutes\n Bump Discord : **{{bump}}**"
+  other:
+    name: "Divers :"
+    value: "Nom des points : **{{pointsname}}**\n Rôle d'anniversaire : **<@{{birthdayrole}}**>\n Langue du serveur : **{{lang}}**"
+lang:
+  title: "Langage mis à jour !"
+  description: "La langue du serveur est maintenant : français" #Please, remplace "English" with the actual language this string is translated to
+ping:
+  description: "🏓 Pong!\n 📡 Ping: {{ping}}ms" #ping of the bot (number)
