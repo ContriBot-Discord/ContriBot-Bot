@@ -37,7 +37,7 @@ export class Database {
   createGuild(id: string): Guild {
     // Create a guild in the database
     // Since Database is not configured yet, return a new guild
-    let guild = new Guild(id, "en", this.#db);
+    let guild = new Guild(id, "en", 5, 10, 30, 50, "points", this.#db);
 
     // Register guild in database
     guild.create();
@@ -57,7 +57,7 @@ export class Database {
       if (err) throw err;
       // For each guild in the database, create a new Guild object
       result.forEach((guild: any) => {
-        guilds.push(new Guild(guild.guild_id, guild.lang, this.#db));
+        guilds.push(new Guild(guild.guild_id, guild.lang, guild.daily_point, guild.weekly_point, guild.special_point, guild.all_time_point, guild.points_name, this.#db));
       });
     });
 

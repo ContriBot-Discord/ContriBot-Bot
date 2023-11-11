@@ -15,6 +15,7 @@ module.exports = async (client: Client) => {
       require(`${slashCommandsDir}/${file}`).command;
 
     client.slashCommands.set(slashCommand.name, slashCommand);
+
     body.push(slashCommand.data.toJSON());
   });
 

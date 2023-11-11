@@ -1,10 +1,11 @@
 import {
   SlashCommandBuilder,
-  EmbedBuilder,
   CommandInteraction,
   CacheType,
 } from "discord.js";
 import { SlashCommand } from "@/types";
+
+import pingEmbed from "@/embeds/ping";
 
 export const command: SlashCommand = {
   name: "ping",
@@ -14,10 +15,7 @@ export const command: SlashCommand = {
   execute: async (interaction: CommandInteraction<CacheType>) => {
     await interaction.reply({
       embeds: [
-        new EmbedBuilder()
-          .setAuthor({ name: "Anathos" })
-          .setDescription(`🏓 Pong! \n 📡 Ping: ${interaction.client.ws.ping}`)
-          .setColor("#ff8e4d"),
+        pingEmbed(interaction.client.ws.ping)
       ],
     });
   },
