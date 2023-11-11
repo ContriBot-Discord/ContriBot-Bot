@@ -2,7 +2,6 @@ import {
   SlashCommandBuilder,
   ButtonBuilder,
   ActionRowBuilder,
-  CacheType,
   CommandInteraction,
 } from "discord.js";
 import { SlashCommand } from "@/types";
@@ -17,11 +16,11 @@ export const command: SlashCommand = {
     .setName("leaderboard")
     .setDescription("Show the leaderboard of users"),
 
-  async execute(interaction: CommandInteraction<CacheType>) {
+  async execute(interaction: CommandInteraction) {
 
     const guild = DB.getGuild(interaction.guildId!);
 
-    i18next.changeLanguage(guild.lang);
+    await i18next.changeLanguage(guild.lang);
 
     // Copied list of the guild users
     let users = [...guild.users];
