@@ -32,6 +32,7 @@ const event: BotEvent = {
             ) {
                 const voiceDuration = new Date().getTime() - user.voiceJoinedAt!.getTime();
                 user.voiceJoinedAt = null;
+                user.addVoiceXp(voiceDuration, oldState.channel!.id, oldState.guild.id, oldState.member!.roles.cache.map(role => role.id));
             }
             else if (
                     // If the user just joined a voice channel in the same guild
@@ -42,6 +43,7 @@ const event: BotEvent = {
 
                     // In that case, we do update Xp (due to future XP-channels multipliers)
                     const voiceDuration = new Date().getTime() - user.voiceJoinedAt!.getTime();
+                    user.addVoiceXp(voiceDuration, oldState.channel!.id, oldState.guild.id, oldState.member!.roles.cache.map(role => role.id));
 
                     // We update the user's voiceJoinedAt
                     user.voiceJoinedAt = new Date();
@@ -57,8 +59,8 @@ const event: BotEvent = {
                 newGuild.getUser(newState.member!.id).voiceJoinedAt = new Date();
 
                 const voiceDuration = new Date().getTime() - user.voiceJoinedAt!.getTime();
-                user.voiceJoinedAt = new Date();
-
+                user.voiceJoinedAt = null;
+                user.addVoiceXp(voiceDuration, oldState.channel!.id, oldState.guild.id, oldState.member!.roles.cache.map(role => role.id));
             }
         }
     }
