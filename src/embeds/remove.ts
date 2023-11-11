@@ -1,7 +1,7 @@
 import {EmbedBuilder} from "discord.js";
 import i18next from "i18next";
 
-export default function (userId: string, amount: number, memberId: string, scope:string = "storePoints", lang: string) {
+export default function (userId: string, amount: number, memberId: string, scope:string = "both", lang: string) {
 
     i18next.changeLanguage(lang);
 
