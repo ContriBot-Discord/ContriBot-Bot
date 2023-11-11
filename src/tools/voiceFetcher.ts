@@ -1,8 +1,8 @@
-import {Client, GuildMember} from 'discord.js'
+import {Client} from 'discord.js'
 import {DB} from '@/index'
 
 
-function fetchVoiceUsers(client: Client): void {
+export default function (client: Client): void {
 
     // For each guild
     client.guilds.cache.forEach(async guild => {
