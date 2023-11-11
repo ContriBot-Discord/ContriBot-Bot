@@ -25,9 +25,15 @@ get:
 
 reset:
   description:
-    both: "User's {{pointsname}} have been fully reseted"
-    leaderboardPoints: "User's leaderboard {{pointsname}} have been reset."
-    storePoints: "User's leaderboard {{pointsname}} have been reset."
+    both: "{{userid}}'s {{pointsname}} have been fully reset"
+    leaderboardPoints: "{{userid}}'s leaderboard {{pointsname}} have been reset."
+    storePoints: "{{userid}}'s leaderboard {{pointsname}} have been reset."
+
+wipe:
+  description:
+    both: "Guild's {{pointsname}} have been fully reset"
+    leaderboardPoints: "Guild's leaderboard {{pointsname}} have been reset."
+    storePoints: "Guild's leaderboard {{pointsname}} have been reset."
 
 config:
   title: 'Config'
