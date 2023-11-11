@@ -1,6 +1,14 @@
 import {EmbedBuilder} from "discord.js";
+import i18next from "i18next";
 
-export default function (amount: number, memberId: string, scope:string = "storePoints") {
+export default function (userId: string, amount: number, memberId: string, scope:string = "storePoints", lang: string) {
+
+    i18next.changeLanguage(lang);
+
+    let translation = "embeds:remove.description.both";
+    if (scope === "leaderboardPoints") translation = "embeds:remove.description.leaderboardPoints";
+    else if (scope === "storePoints") translation = "embeds:remove.description.storePoints";
+
     return new EmbedBuilder()
         .addFields({
         name: "<:shiny_orange_moderator:1163759368853004298> Remove points command.",
@@ -8,7 +16,7 @@ export default function (amount: number, memberId: string, scope:string = "store
     })
         .addFields({
         name: " ",
-        value: scope === "leaderboardPoints" ? `${amount} leaderboard points has been removed from <@${memberId}>.` : `**${amount}** store points has been removed from <@${memberId}>. `,
+        value: i18next.t(translation, {userid: userId, quantity: amount, memberid: memberId})
     })
         .setColor("#ff8e4d")
         .setTimestamp();
