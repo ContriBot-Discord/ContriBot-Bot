@@ -38,11 +38,12 @@ export const command: SlashCommand = {
 
   async execute(interaction: CommandInteraction<CacheType>) {
     const scope = interaction.options.get("scope")?.value as string;
+    const guild = DB.getGuild(interaction.guildId!);
 
-    const embed = wipeEmbed(scope);
+    const embed = wipeEmbed(scope, guild.lang);
 
     // Reset all users' points in database, and then update the cache
-    DB.getGuild(interaction.guildId!).resetPoints();
+    guild.resetPoints();
 
     await interaction.reply({ embeds: [embed] });
   },
