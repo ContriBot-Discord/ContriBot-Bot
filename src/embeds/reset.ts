@@ -18,6 +18,6 @@ export default function (userId:string, scope:string = "storePoints", lang:strin
         .setTimestamp()
         .addFields({
             name: " ",
-            value: value,
+            value: i18next.t(value, {userid: userId})
         })
 }
