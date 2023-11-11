@@ -8,7 +8,7 @@ leaderboard:
   description: "Here is the leaderboard"
   fields:
     name: "Top {{index}}"
-    value: "<@{{userid}}}> with {{quantity}} {{pointsname}}"
+    value: "<@{{userid}}> with {{quantity}} {{pointsname}}"
   footer:
     text: "Page {{pageNumber}}/{{totalPages}}"
 
