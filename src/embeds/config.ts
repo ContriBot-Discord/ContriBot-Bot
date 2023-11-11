@@ -1,8 +1,10 @@
 import {EmbedBuilder} from "discord.js";
 import i18next from "i18next";
 
-export default function (lang: string, anniversaryRole: string, iconURL: string) {
+export default function (lang: string, birthdayRole: string, iconURL: string) {
     // TODO: Obtain the real values
+
+    i18next.changeLanguage(lang);
 
     return new EmbedBuilder()
         .addFields({
@@ -26,7 +28,7 @@ export default function (lang: string, anniversaryRole: string, iconURL: string)
         .addFields({
             name: `<:shinybluelink:1163501771415625820>` + i18next.t("embeds:config.other.name"),
             value: i18next.t("embeds:config.other.value", {
-                birthdayrole: "12345678923456789",
+                birthdayrole: birthdayRole,
                 lang: lang
             }),
             inline: true,
