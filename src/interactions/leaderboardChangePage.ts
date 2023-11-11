@@ -20,7 +20,7 @@ function getUserList(startingFrom: number, userList: User[], lang: string): { na
         if (user) {
             fields.push({
                 name: ` `,
-                value: "**#${i + 1} ·** " + i18next.t("embeds:leaderboard.fields.value", {
+                value: `**#${i + 1} ·** ` + i18next.t("embeds:leaderboard.fields.value", {
                     userid: user.id,
                     quantity: user.leaderboardPoints
                 })
@@ -87,7 +87,7 @@ const event: BotEvent = {
                 new ButtonBuilder().setCustomId("next").setLabel("▶").setStyle(1)
             )
             .addComponents(
-                new ButtonBuilder().setCustomId("refresh").setLabel("⟲").setStyle(1)
+                new ButtonBuilder().setCustomId("refresh").setLabel("↻").setStyle(1)
             );
 
         // If the page is 1, we disable the "previous" button
