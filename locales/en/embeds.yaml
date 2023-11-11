@@ -39,7 +39,7 @@ wipe:
   description:
     both: "Guild's {{pointsname}} have been fully reset"
     leaderboardPoints: "Guild's leaderboard {{pointsname}} have been reset."
-    storePoints: "Guild's leaderboard {{pointsname}} have been reset."
+    storePoints: "Guild's store {{pointsname}} have been reset."
 
 config:
   title: 'Config'
