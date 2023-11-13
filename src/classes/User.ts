@@ -153,7 +153,7 @@ export class User {
       : this.getItemsByDate(date).filter((item) => item.id === id);
   }
 
-  addVoiceXp(duration: number, channelId: string, guildId:string, roles:string[]): void {
+  addVoicePoint(duration: number, channelId: string, guildId:string, roles:string[]): void {
 
     this.addPoints(1);
 
