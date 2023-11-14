@@ -2,6 +2,7 @@ import { User } from "./User";
 import { ShopItem } from "./ShopItem";
 import mysql, { RowDataPacket } from "mysql2";
 import { UserItem } from "@/classes/UserItem";
+import {Boost} from "@/classes/Boost";
 
 export class Guild {
   id: string;
@@ -16,6 +17,7 @@ export class Guild {
   globalInventory: UserItem[];
   blockedChannels: string[];
   readonly #db: mysql.Connection;
+  private boosts: Boost[];
 
   constructor(
     id: string,
@@ -41,6 +43,7 @@ export class Guild {
     // We will merge all the inventories of all the users in this list
     this.globalInventory = this.users.map((user) => user.inventory).flat();
     this.blockedChannels = this.fetchBlockedChannels();
+    this.boosts = this.fetchBoosters();
   }
 
   fetchUsers(): User[] {
@@ -259,5 +262,49 @@ export class Guild {
 
   getBlockedChannels() {
     return this.blockedChannels;
+  }
+
+  fetchBoosters(): Boost[] {
+    // Fetch all boosters from database
+    const boosters: Boost[] = [];
+
+    this.#db.execute<RowDataPacket[]>(
+      "SELECT * FROM BOOST WHERE guild_id = ?",
+      [this.id],
+      (err, result) => {
+        if (err) throw err;
+
+        result.forEach((booster: any) => {
+          boosters.push(new Boost(
+                this.#db,
+                this,
+                booster.boost_type,
+                booster.boosted_id,
+                booster.multiplier,
+                booster.starting_at,
+                booster.ending_at,
+                booster.execute_every
+          ));
+        });
+      }
+    );
+
+    return boosters;
+
+  }
+
+  getMultiplier(IDs: string[]): number {
+
+    let multiplier = 1;
+    this.boosts.forEach(boost => {
+
+      if (IDs.includes(boost.appliedId)) {
+
+        multiplier *= boost.multiplier;
+
+      }
+    });
+    return multiplier;
+
   }
 }
