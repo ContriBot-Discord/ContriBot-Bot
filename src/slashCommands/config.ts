@@ -6,8 +6,7 @@ import {
 import { SlashCommand } from "@/types";
 
 import { DB } from "..";
-import configShowEmbed from "@/embeds/configShow";
-import configLangEmbed from "@/embeds/configLang";
+import { configShowEmbed, configLangEmbed } from "@/embeds/config";
 import { CommandInteractionOptionResolver } from "discord.js";
 
 export const command: SlashCommand = {
@@ -32,11 +31,11 @@ export const command: SlashCommand = {
     )
     .addSubcommand((subcommand: SlashCommandSubcommandBuilder) =>
       subcommand
-        .setName("pointName")
+        .setName("pointname")
         .setDescription("Change the point name.")
         .addStringOption((option) =>
           option
-            .setName("pointName")
+            .setName("pointname")
             .setDescription("What would you like to change the point name to ?")
             .setRequired(true)
         )
@@ -55,7 +54,10 @@ export const command: SlashCommand = {
       case "lang":
         await lang(interaction);
         break;
-      case "show":
+      case "pointname":
+        await pointName(interaction);
+        break;
+      default:
         await show(interaction);
         break;
     }
@@ -77,7 +79,7 @@ async function lang(
 async function pointName(
   interaction: CommandInteraction<import("discord.js").CacheType>
 ) {
-  const pointName = interaction.options.get("pointName")?.value as string;
+  const pointName = interaction.options.get("pointname")?.value as string;
 
   const embed = configLangEmbed(pointName);
 
@@ -93,7 +95,6 @@ async function show(
 
   const embed = configShowEmbed(
     guild.lang,
-    "none",
     interaction.guild!.iconURL() as string
   );
 

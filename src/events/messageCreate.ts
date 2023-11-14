@@ -18,7 +18,7 @@ const event: BotEvent = {
     if (user.bot) return;
 
     // If the message comes from a blocked channel, return
-    if (DB.getGuild(guild.id).getBlockedChannels().includes(channel.id)) return;
+    if (DB.getGuild(guild.id).disabledChannels.includes(channel.id)) return;
 
     // Get the current time
     const now = Date.now();

@@ -1,7 +1,17 @@
 import {EmbedBuilder} from "discord.js";
+
 import i18next from "i18next";
 
-export default function (lang: string, birthdayRole: string, iconURL: string) {
+export const configLangEmbed = function (lang:string) : EmbedBuilder {
+
+    i18next.changeLanguage(lang);
+
+    return new EmbedBuilder()
+        .setTitle(i18next.t(`embeds:lang.title`))
+        .setDescription(i18next.t(`embeds:lang.description`))
+}
+
+export const configShowEmbed = function (lang: string, iconURL: string) {
     // TODO: Obtain the real values
 
     i18next.changeLanguage(lang);
