@@ -2,11 +2,15 @@ import { User } from "./User";
 import { ShopItem } from "./ShopItem";
 import mysql, { RowDataPacket } from "mysql2";
 import { UserItem } from "@/classes/UserItem";
-import {Boost} from "@/classes/Boost";
+import { Boost } from "@/classes/Boost";
 
 export class Guild {
   id: string;
   lang: string;
+  messagePoint: number;
+  vocalPoint: number;
+  bumpPoint: number;
+  boostPoint: number;
   dailyPoint: number;
   weeklyPoint: number;
   specialPoint: number;
@@ -22,20 +26,28 @@ export class Guild {
   constructor(
     id: string,
     lang: string,
-    dailyPoints: number,
-    weeklyPoints: number,
-    specialPoints: number,
-    allTimePoints: number,
+    messagePoint: number,
+    vocalPoint: number,
+    bumpPoint: number,
+    boostPoint: number,
+    dailyPoint: number,
+    weeklyPoint: number,
+    specialPoint: number,
+    allTimePoint: number,
     pointName: string,
     db: mysql.Connection
   ) {
     this.#db = db;
     this.id = id;
     this.lang = lang;
-    this.dailyPoint = dailyPoints;
-    this.weeklyPoint = weeklyPoints;
-    this.specialPoint = specialPoints;
-    this.allTimePoint = allTimePoints;
+    this.messagePoint = messagePoint;
+    this.vocalPoint = vocalPoint;
+    this.bumpPoint = bumpPoint;
+    this.boostPoint = boostPoint;
+    this.dailyPoint = dailyPoint;
+    this.weeklyPoint = weeklyPoint;
+    this.specialPoint = specialPoint;
+    this.allTimePoint = allTimePoint;
     this.pointName = pointName;
     this.shop = this.fetchShop();
     this.users = this.fetchUsers();
@@ -98,19 +110,20 @@ export class Guild {
   create(): void {
     // Insert a new row in the database
     this.#db.query<RowDataPacket[]>(
-      "INSERT INTO GUILD (guild_id, lang) VALUES (?, ?)",
-      [this.id, this.lang],
-      (err) => {
-        if (err) throw err;
-      }
-    );
-  }
-
-  update(): void {
-    // Update guild in database
-    this.#db.query<RowDataPacket[]>(
-      "UPDATE GUILD SET lang = ? WHERE guild_id = ?",
-      [this.lang, this.id],
+      "INSERT INTO GUILD (guild_id, message_point, vocal_point, bump_point, boost_point, daily_point, weekly_point, special_point, all_time_point, point_name, lang) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      [
+        this.id,
+        this.messagePoint,
+        this.vocalPoint,
+        this.bumpPoint,
+        this.boostPoint,
+        this.dailyPoint,
+        this.weeklyPoint,
+        this.specialPoint,
+        this.allTimePoint,
+        this.pointName,
+        this.lang,
+      ],
       (err) => {
         if (err) throw err;
       }
@@ -207,12 +220,26 @@ export class Guild {
 
   setLang(lang: string) {
     this.lang = lang;
-    this.update();
+
+    this.#db.query<RowDataPacket[]>(
+      "UPDATE GUILD SET lang = ? WHERE guild_id = ?",
+      [lang, this.id],
+      (err) => {
+        if (err) throw err;
+      }
+    );
   }
 
   setPointName(pointName: string) {
     this.pointName = pointName;
-    this.update();
+
+    this.#db.query<RowDataPacket[]>(
+      "UPDATE GUILD SET point_name = ? WHERE guild_id = ?",
+      [pointName, this.id],
+      (err) => {
+        if (err) throw err;
+      }
+    );
   }
 
   fetchDisabledChannels(): string[] {
@@ -234,7 +261,7 @@ export class Guild {
     return disabledChannels;
   }
 
-  addBlockedChannel(channelId: string) {
+  addDisabledChannel(channelId: string) {
     this.disabledChannels.push(channelId);
 
     this.#db.query<RowDataPacket[]>(
@@ -246,7 +273,7 @@ export class Guild {
     );
   }
 
-  removeBlockedChannel(channelId: string) {
+  removeDisabledChannel(channelId: string) {
     this.disabledChannels = this.disabledChannels.filter(
       (channel) => channel !== channelId
     );
@@ -260,10 +287,6 @@ export class Guild {
     );
   }
 
-  getBlockedChannels() {
-    return this.disabledChannels;
-  }
-
   fetchBoosters(): Boost[] {
     // Fetch all boosters from database
     const boosters: Boost[] = [];
@@ -275,18 +298,20 @@ export class Guild {
         if (err) throw err;
 
         result.forEach((booster: any) => {
-          boosters.push(new Boost(
-                this.#db,
-                booster.boost_id,
-                this,
-                booster.boost_type,
-                booster.boosted_id,
-                booster.multiplier,
-                booster.starting_at,
-                booster.ending_at,
-                booster.execute_every,
-                booster.recurrent
-          ));
+          boosters.push(
+            new Boost(
+              this.#db,
+              booster.boost_id,
+              this,
+              booster.boost_type,
+              booster.boosted_id,
+              booster.multiplier,
+              booster.starting_at,
+              booster.ending_at,
+              booster.execute_every,
+              booster.recurrent
+            )
+          );
         });
       }
     );
@@ -294,18 +319,12 @@ export class Guild {
   }
 
   getMultiplier(IDs: string[]): number {
-
     let multiplier = 1;
-    this.boosts.forEach(boost => {
-
+    this.boosts.forEach((boost) => {
       if (IDs.includes(boost.appliedId)) {
-
         multiplier *= boost.getMultiplier();
-
       }
     });
     return multiplier;
-
   }
-
 }

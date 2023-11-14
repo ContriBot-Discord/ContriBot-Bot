@@ -32,6 +32,17 @@ export const command: SlashCommand = {
     )
     .addSubcommand((subcommand: SlashCommandSubcommandBuilder) =>
       subcommand
+        .setName("pointName")
+        .setDescription("Change the point name.")
+        .addStringOption((option) =>
+          option
+            .setName("pointName")
+            .setDescription("What would you like to change the point name to ?")
+            .setRequired(true)
+        )
+    )
+    .addSubcommand((subcommand: SlashCommandSubcommandBuilder) =>
+      subcommand
         .setName("show")
         .setDescription("Show the current configuration.")
     ),
@@ -51,14 +62,28 @@ export const command: SlashCommand = {
   },
 };
 
-async function lang(interaction: CommandInteraction<import("discord.js").CacheType>) {
+async function lang(
+  interaction: CommandInteraction<import("discord.js").CacheType>
+) {
   const lang = interaction.options.get("language")?.value as string;
 
-    const embed = configLangEmbed(lang)
+  const embed = configLangEmbed(lang);
 
-    DB.getGuild(interaction.guildId!).setLang(lang);
+  DB.getGuild(interaction.guildId!).setLang(lang);
 
-    await interaction.reply({ embeds: [embed] });
+  await interaction.reply({ embeds: [embed] });
+}
+
+async function pointName(
+  interaction: CommandInteraction<import("discord.js").CacheType>
+) {
+  const pointName = interaction.options.get("pointName")?.value as string;
+
+  const embed = configLangEmbed(pointName);
+
+  DB.getGuild(interaction.guildId!).setPointName(pointName);
+
+  await interaction.reply({ embeds: [embed] });
 }
 
 async function show(

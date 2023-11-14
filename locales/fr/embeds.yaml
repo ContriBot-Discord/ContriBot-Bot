@@ -44,7 +44,7 @@ config:
     value: "Envoyer un message : **{{message}}**\n Ajouter une réaction à un message : **{{react}}**\n Passer du temps dans un salon vocal : **{{voice}}**/15 minutes\n Bump Discord : **{{bump}}**"
   other:
     name: "Divers :"
-    value: "Nom des points : **{{pointsname}}**\n Rôle d'anniversaire : **<@{{birthdayrole}}**>\n Langue du serveur : **{{lang}}**"
+    value: "Nom des points : **{{pointsname}}**\n Langue du serveur : **{{lang}}**"
 lang:
   title: "Langage mis à jour !"
   description: "La langue du serveur est maintenant : français" #Please, remplace "English" with the actual language this string is translated to

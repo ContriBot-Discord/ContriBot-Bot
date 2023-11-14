@@ -62,7 +62,6 @@ config:
   other:
     name: "Others:"
     value: "Points name: **{{pointsname}}**\n
-            Birthday role: **<@{{birthdayrole}}**>\n
             Server language: **{{lang}}**"
 
 lang:

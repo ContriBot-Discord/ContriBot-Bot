@@ -25,14 +25,6 @@ export default function (lang: string, birthdayRole: string, iconURL: string) {
             }),
             inline: true,
         })
-        .addFields({
-            name: `<:shinybluelink:1163501771415625820>` + i18next.t("embeds:config.other.name"),
-            value: i18next.t("embeds:config.other.value", {
-                birthdayrole: birthdayRole,
-                lang: lang
-            }),
-            inline: true,
-        })
         .setThumbnail(iconURL)
         .setColor("#ff8e4d")
         .setTimestamp();
