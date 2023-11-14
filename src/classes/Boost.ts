@@ -3,8 +3,8 @@ import {Guild} from "@/classes/Guild";
 
 export class Boost {
     readonly #db: mysql.Connection;
-    #after_timestamp: Date | null | undefined; // Only for boost type 5
-    #before_timestamp: Date | null | undefined; // Only for boost type 5
+    #after_timestamp: Date | null | undefined; // Only if recurrent is true
+    #before_timestamp: Date | null | undefined; // Only if recurrent is true
     uid: number | null;
     guild: Guild;
     boostType: number;
@@ -12,7 +12,8 @@ export class Boost {
     multiplier: number;
     startAt: Date;
     endAt: Date;
-    renewEvery: Date | null | undefined; // Only for boost type 5
+    recurrent: boolean;
+    renewEvery: Date | null | undefined; // Only if recurrent is true
 
     constructor(
         db: mysql.Connection,
@@ -23,6 +24,7 @@ export class Boost {
         multiplier: number,
         startAt: Date,
         endAt: Date,
+        recurrent: boolean,
         renewEvery?: Date | null
     ) {
         this.#db = db;
@@ -33,9 +35,10 @@ export class Boost {
         this.multiplier = multiplier;
         this.startAt = startAt;
         this.endAt = endAt;
+        this.recurrent = recurrent;
         this.renewEvery = renewEvery;
 
-        if (this.boostType === 5) {
+        if (this.recurrent) {
             this.updateTimestamps()
         }
     }
@@ -57,8 +60,8 @@ export class Boost {
     update() {
 
         this.#db.execute(
-            "UPDATE BOOST SET boost_type = ?, boosted_id = ?, multiplier = ?, starting_at = ?, ending_at = ?, execute_every = ? WHERE boost_id = ?",
-            [this.boostType, this.appliedId, this.multiplier, this.startAt, this.endAt, this.renewEvery, this.uid],
+            "UPDATE BOOST SET boost_type = ?, boosted_id = ?, multiplier = ?, starting_at = ?, ending_at = ?, execute_every = ?, recurrent = ? WHERE boost_id = ?",
+            [this.boostType, this.appliedId, this.multiplier, this.startAt, this.endAt, this.renewEvery, this.uid, this.recurrent],
             (err) => {
                 if (err) throw err;
             }
@@ -76,10 +79,10 @@ export class Boost {
 
     updateTimestamps(){
 
-        // after_timestamp & before_timestamp will be updated so it is a time interval of the next available boost.
-        // If you are before thoose two values, you must wait.
-        // If you are between thoose two values, you can boost.
-        // If you are after thoose two values, you must call that function again to update the timestamps.
+        // after_timestamp & before_timestamp will be updated, so it is a time interval of the next available boost.
+        // If you are before those two values, you must wait.
+        // If you are between those two values, you can boost.
+        // If you are after those two values, you must call that function again to update the timestamps.
 
 
         const now = new Date();
@@ -97,14 +100,14 @@ export class Boost {
 
     getMultiplier(): number {
 
-        if (this.boostType !== 5) {
+        if (!this.recurrent) {
             // If we are between the time when the boost starts and the time when the boost ends
             if ( this.startAt.getTime() < new Date().getTime() && this.endAt.getTime() > new Date().getTime()) {
                 return this.multiplier;
             }
             else return 1;
 
-        // If boost type is 5, we need to check if the boost is available
+        // If our boost is recurrent
         } else {
 
             // We are checking if we are after the time when the boost ends.
