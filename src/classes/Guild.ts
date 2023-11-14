@@ -284,7 +284,8 @@ export class Guild {
                 booster.multiplier,
                 booster.starting_at,
                 booster.ending_at,
-                booster.execute_every
+                booster.execute_every,
+                booster.recurrent
           ));
         });
       }
