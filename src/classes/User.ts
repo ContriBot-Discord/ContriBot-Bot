@@ -10,6 +10,7 @@ export class User {
   leaderboardPoints: number;
   inventory: UserItem[];
   readonly #db: mysql.Connection;
+  voiceJoinedAt: Date | null;
 
   constructor(
     guild: Guild,
@@ -24,6 +25,7 @@ export class User {
     this.storePoints = storePoints;
     this.leaderboardPoints = leaderboardPoints;
     this.inventory = this.fetchInventory();
+    this.voiceJoinedAt = null;
   }
 
   fetchInventory(): UserItem[] {
@@ -41,14 +43,14 @@ export class User {
           items.push(
             new UserItem(
               this,
-              item.unique_item_id,
+              item.id,
               item.name,
               item.description,
-              item.bought_at,
+              item.boughtAt,
               item.refunded,
-              item.refunded_at,
+              item.refundedAt,
               item.used,
-              item.used_at,
+              item.usedAt,
               this.#db
             )
           );
@@ -64,7 +66,7 @@ export class User {
       "INSERT INTO USER (user_id, guild_id, store_points, leaderboard_points) VALUES (?, ?, ?, ?)",
       [this.id, this.guild.id, this.storePoints, this.leaderboardPoints],
 
-      (err, result) => {
+      (err) => {
         if (err) throw err;
       }
     );
@@ -79,7 +81,7 @@ export class User {
       "UPDATE USER SET store_points = ?, leaderboard_points = ? WHERE user_id = ? AND guild_id = ?",
       [this.storePoints, this.leaderboardPoints, this.id, this.guild.id],
 
-      (err, result) => {
+      (err) => {
         if (err) throw err;
       }
     );
@@ -104,7 +106,7 @@ export class User {
   }
 
   buyItem(item: ShopItem): void {
-    // All of the verification should be done BEFORE calling this method.
+    // All the verification should be done BEFORE calling this method.
     // No verification is done here.
     // Points should be removed from the user before calling this method.
 
@@ -150,4 +152,10 @@ export class User {
       ? this.inventory.filter((item) => item.id === id)
       : this.getItemsByDate(date).filter((item) => item.id === id);
   }
+
+  addVoicePoint(duration: number, channelId: string, guildId:string, roles:string[]): void {
+
+    this.addPoints(1);
+
+    }
 }

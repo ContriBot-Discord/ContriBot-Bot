@@ -2,6 +2,7 @@ import { User } from "./User";
 import { ShopItem } from "./ShopItem";
 import mysql, { RowDataPacket } from "mysql2";
 import { UserItem } from "@/classes/UserItem";
+import {Boost} from "@/classes/Boost";
 
 export class Guild {
   id: string;
@@ -16,6 +17,7 @@ export class Guild {
   globalInventory: UserItem[];
   disabledChannels: string[];
   readonly #db: mysql.Connection;
+  private boosts: Boost[];
 
   constructor(
     id: string,
@@ -41,6 +43,7 @@ export class Guild {
     // We will merge all the inventories of all the users in this list
     this.globalInventory = this.users.map((user) => user.inventory).flat();
     this.disabledChannels = this.fetchDisabledChannels();
+    this.boosts = this.getchBoosters();
   }
 
   fetchUsers(): User[] {
@@ -97,7 +100,7 @@ export class Guild {
     this.#db.query<RowDataPacket[]>(
       "INSERT INTO GUILD (guild_id, lang) VALUES (?, ?)",
       [this.id, this.lang],
-      (err, result) => {
+      (err) => {
         if (err) throw err;
       }
     );
@@ -108,7 +111,7 @@ export class Guild {
     this.#db.query<RowDataPacket[]>(
       "UPDATE GUILD SET lang = ? WHERE guild_id = ?",
       [this.lang, this.id],
-      (err, result) => {
+      (err) => {
         if (err) throw err;
       }
     );
@@ -132,7 +135,7 @@ export class Guild {
     }
 
     // Reset all users' points in database
-    this.#db.query<RowDataPacket[]>(req, [this.id], (err, result) => {
+    this.#db.query<RowDataPacket[]>(req, [this.id], (err) => {
       if (err) throw err;
     });
 
@@ -237,7 +240,7 @@ export class Guild {
     this.#db.query<RowDataPacket[]>(
       "INSERT INTO DISABLED_CHANNEL (guild_id, channel_id) VALUES (?, ?)",
       [this.id, channelId],
-      (err, result) => {
+      (err) => {
         if (err) throw err;
       }
     );
@@ -251,7 +254,7 @@ export class Guild {
     this.#db.query<RowDataPacket[]>(
       "DELETE FROM DISABLED_CHANNEL WHERE guild_id = ? AND channel_id = ?",
       [this.id, channelId],
-      (err, result) => {
+      (err) => {
         if (err) throw err;
       }
     );
@@ -260,4 +263,49 @@ export class Guild {
   getBlockedChannels() {
     return this.disabledChannels;
   }
+
+  fetchBoosters(): Boost[] {
+    // Fetch all boosters from database
+    const boosters: Boost[] = [];
+
+    this.#db.execute<RowDataPacket[]>(
+      "SELECT * FROM BOOST WHERE guild_id = ?",
+      [this.id],
+      (err, result) => {
+        if (err) throw err;
+
+        result.forEach((booster: any) => {
+          boosters.push(new Boost(
+                this.#db,
+                booster.boost_id,
+                this,
+                booster.boost_type,
+                booster.boosted_id,
+                booster.multiplier,
+                booster.starting_at,
+                booster.ending_at,
+                booster.execute_every,
+                booster.recurrent
+          ));
+        });
+      }
+    );
+    return boosters;
+  }
+
+  getMultiplier(IDs: string[]): number {
+
+    let multiplier = 1;
+    this.boosts.forEach(boost => {
+
+      if (IDs.includes(boost.appliedId)) {
+
+        multiplier *= boost.getMultiplier();
+
+      }
+    });
+    return multiplier;
+
+  }
+
 }
