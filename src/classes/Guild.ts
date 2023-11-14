@@ -307,4 +307,5 @@ export class Guild {
     return multiplier;
 
   }
+
 }
