@@ -15,7 +15,7 @@ export class Guild {
   users: User[];
   shop: ShopItem[];
   globalInventory: UserItem[];
-  blockedChannels: string[];
+  disabledChannels: string[];
   readonly #db: mysql.Connection;
   private boosts: Boost[];
 
@@ -42,8 +42,8 @@ export class Guild {
     // Represent a list with all the items bought by all the users
     // We will merge all the inventories of all the users in this list
     this.globalInventory = this.users.map((user) => user.inventory).flat();
-    this.blockedChannels = this.fetchBlockedChannels();
-    this.boosts = this.fetchBoosters();
+    this.disabledChannels = this.fetchDisabledChannels();
+    this.boosts = this.getchBoosters();
   }
 
   fetchUsers(): User[] {
@@ -215,9 +215,9 @@ export class Guild {
     this.update();
   }
 
-  fetchBlockedChannels(): string[] {
-    // Fetch all blocked channels from database
-    const blockedChannels: string[] = [];
+  fetchDisabledChannels(): string[] {
+    // Fetch all disabled channels from database
+    const disabledChannels: string[] = [];
 
     this.#db.execute<RowDataPacket[]>(
       "SELECT * FROM DISABLED_CHANNEL WHERE guild_id = ?",
@@ -226,16 +226,16 @@ export class Guild {
         if (err) throw err;
 
         result.forEach((channel: any) => {
-          blockedChannels.push(channel.channel_id);
+          disabledChannels.push(channel.channel_id);
         });
       }
     );
 
-    return blockedChannels;
+    return disabledChannels;
   }
 
   addBlockedChannel(channelId: string) {
-    this.blockedChannels.push(channelId);
+    this.disabledChannels.push(channelId);
 
     this.#db.query<RowDataPacket[]>(
       "INSERT INTO DISABLED_CHANNEL (guild_id, channel_id) VALUES (?, ?)",
@@ -247,7 +247,7 @@ export class Guild {
   }
 
   removeBlockedChannel(channelId: string) {
-    this.blockedChannels = this.blockedChannels.filter(
+    this.disabledChannels = this.disabledChannels.filter(
       (channel) => channel !== channelId
     );
 
@@ -261,7 +261,7 @@ export class Guild {
   }
 
   getBlockedChannels() {
-    return this.blockedChannels;
+    return this.disabledChannels;
   }
 
   fetchBoosters(): Boost[] {
