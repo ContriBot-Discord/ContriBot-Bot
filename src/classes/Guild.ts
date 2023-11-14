@@ -43,7 +43,7 @@ export class Guild {
     // We will merge all the inventories of all the users in this list
     this.globalInventory = this.users.map((user) => user.inventory).flat();
     this.disabledChannels = this.fetchDisabledChannels();
-    this.boosts = this.getchBoosters();
+    this.boosts = this.fetchBoosters();
   }
 
   fetchUsers(): User[] {
