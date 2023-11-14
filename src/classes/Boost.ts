@@ -8,7 +8,7 @@ export class Boost {
     guild: Guild;
     boostType: number;
     appliedId: string;
-    boost: number;
+    multiplier: number;
     startAt: Date;
     endAt: Date;
     renewEvery: Date | null | undefined; // Only for boost type 5
@@ -18,7 +18,7 @@ export class Boost {
         guild: Guild,
         boostType: number,
         appliedId: string,
-        boost: number,
+        multiplier: number,
         startAt: Date,
         endAt: Date,
         renewEvery?: Date | null
@@ -27,7 +27,7 @@ export class Boost {
         this.guild = guild;
         this.boostType = boostType;
         this.appliedId = appliedId;
-        this.boost = boost;
+        this.multiplier = multiplier;
         this.startAt = startAt;
         this.endAt = endAt;
         this.renewEvery = renewEvery;
@@ -72,7 +72,7 @@ export class Boost {
         if (this.boostType !== 5) {
             // If we are between the time when the boost starts and the time when the boost ends
             if ( this.startAt.getTime() < new Date().getTime() && this.endAt.getTime() > new Date().getTime()) {
-                return this.boost;
+                return this.multiplier;
             }
             else return 1;
 
@@ -87,7 +87,7 @@ export class Boost {
 
             // If we are between the time when the boost starts and the time when the boost ends
             if ( this.#after_timestamp!.getTime() < new Date().getTime() && this.#before_timestamp!.getTime() > new Date().getTime()) {
-                return this.boost;
+                return this.multiplier;
             }
             else return 1;
         }
