@@ -14,6 +14,7 @@ export class Guild {
   users: User[];
   shop: ShopItem[];
   globalInventory: UserItem[];
+  blockedChannels: string[];
   readonly #db: mysql.Connection;
 
   constructor(
@@ -39,6 +40,7 @@ export class Guild {
     // Represent a list with all the items bought by all the users
     // We will merge all the inventories of all the users in this list
     this.globalInventory = this.users.map((user) => user.inventory).flat();
+    this.blockedChannels = [];
   }
 
   fetchUsers(): User[] {
@@ -208,5 +210,19 @@ export class Guild {
   setPointName(pointName: string) {
     this.pointName = pointName;
     this.update();
+  }
+
+  addBlockedChannel(channelId: string) {
+    this.blockedChannels.push(channelId);
+  }
+
+  removeBlockedChannel(channelId: string) {
+    this.blockedChannels = this.blockedChannels.filter(
+      (channel) => channel !== channelId
+    );
+  }
+
+  getBlockedChannels() {
+    return this.blockedChannels;
   }
 }

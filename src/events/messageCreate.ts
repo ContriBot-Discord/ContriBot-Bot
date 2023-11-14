@@ -12,6 +12,13 @@ const event: BotEvent = {
   async execute(message: Message) {
     const guild = message.guild!;
     const user = message.author;
+    const channel = message.channel;
+
+    // If the message is from a bot, return
+    if (user.bot) return;
+
+    // If the message comes from a blocked channel, return
+    if (DB.getGuild(guild.id).getBlockedChannels().includes(channel.id)) return;
 
     // Get the current time
     const now = Date.now();
