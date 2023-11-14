@@ -6,7 +6,7 @@ import {
 import { SlashCommand } from "@/types";
 
 import { DB } from "..";
-import { configShowEmbed, configLangEmbed } from "@/embeds/config";
+import { configShowEmbed, configLangEmbed, configPointNameEmbed } from "@/embeds/config";
 import { CommandInteractionOptionResolver } from "discord.js";
 
 export const command: SlashCommand = {
@@ -81,7 +81,7 @@ async function pointName(
 ) {
   const pointName = interaction.options.get("pointname")?.value as string;
 
-  const embed = configLangEmbed(pointName);
+  const embed = configPointNameEmbed(pointName);
 
   DB.getGuild(interaction.guildId!).setPointName(pointName);
 
@@ -93,10 +93,7 @@ async function show(
 ) {
   const guild = DB.getGuild(interaction.guildId!);
 
-  const embed = configShowEmbed(
-    guild.lang,
-    interaction.guild!.iconURL() as string
-  );
+  const embed = configShowEmbed(interaction.guild!.iconURL() as string);
 
   await interaction.reply({ embeds: [embed] });
 }

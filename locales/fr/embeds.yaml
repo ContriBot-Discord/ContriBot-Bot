@@ -48,5 +48,8 @@ config:
 lang:
   title: "Langage mis à jour !"
   description: "La langue du serveur est maintenant : français" #Please, remplace "English" with the actual language this string is translated to
+pointname:
+  title: "Nom des points mis à jour !"
+  description: "Le nom des points est maintenant : {{pointname}}"
 ping:
   description: "🏓 Pong!\n 📡 Ping: {{ping}}ms" #ping of the bot (number)
