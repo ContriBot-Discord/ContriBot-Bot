@@ -1,10 +1,11 @@
-import mysql from "mysql2";
+import mysql, {ResultSetHeader} from "mysql2";
 import {Guild} from "@/classes/Guild";
 
 export class Boost {
     readonly #db: mysql.Connection;
     #after_timestamp: Date | null | undefined; // Only for boost type 5
     #before_timestamp: Date | null | undefined; // Only for boost type 5
+    uid: number | null;
     guild: Guild;
     boostType: number;
     appliedId: string;
@@ -15,6 +16,7 @@ export class Boost {
 
     constructor(
         db: mysql.Connection,
+        uid: number | null,
         guild: Guild,
         boostType: number,
         appliedId: string,
@@ -24,6 +26,7 @@ export class Boost {
         renewEvery?: Date | null
     ) {
         this.#db = db;
+        this.uid = uid;
         this.guild = guild;
         this.boostType = boostType;
         this.appliedId = appliedId;
@@ -37,11 +40,36 @@ export class Boost {
         }
     }
 
+    create() {
+
+        this.#db.execute<ResultSetHeader>(
+            "INSERT INTO BOOST (guild_id, boost_type, boosted_id, multiplier, starting_at, ending_at, execute_every) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            [this.guild.id, this.boostType, this.appliedId, this.multiplier, this.startAt, this.endAt, this.renewEvery],
+            (err, result) => {
+                if (err) throw err;
+
+                // We are updating the uid of the boost to the one given by the database
+                this.uid = result.insertId;
+            }
+        );
+    }
+
+    update() {
+
+        this.#db.execute(
+            "UPDATE BOOST SET boost_type = ?, boosted_id = ?, multiplier = ?, starting_at = ?, ending_at = ?, execute_every = ? WHERE boost_id = ?",
+            [this.boostType, this.appliedId, this.multiplier, this.startAt, this.endAt, this.renewEvery, this.uid],
+            (err) => {
+                if (err) throw err;
+            }
+        );
+
+    }
 
     delete(){
 
         this.#db.execute(
-            "DELETE FROM BOOST WHERE boost_type = ? AND boosted_id = ?", [this.boostType, this.appliedId], (err) => {
+            "DELETE FROM BOOST WHERE boost_id = ?", [this.uid], (err) => {
                 if (err) throw err;
             });
     }
