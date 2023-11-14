@@ -43,7 +43,7 @@ export class UserItem {
     this.#db.query(
       "UPDATE INVENTORY SET refunded = ?, refunded_at = ?, used = ?, used_at = ? WHERE unique_item_id = ?",
       [this.refunded, this.refundedAt, this.used, this.usedAt, this.id],
-      (err, result) => {
+      (err) => {
         if (err) throw err;
       }
     );

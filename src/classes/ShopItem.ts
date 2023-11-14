@@ -60,7 +60,7 @@ export class ShopItem {
         this.restockDuration,
         this.id,
       ],
-      (err, result) => {
+      (err) => {
         if (err) throw err;
       }
     );
@@ -83,7 +83,7 @@ export class ShopItem {
         this.availableUntil,
         this.restockDuration,
       ],
-      (err, result) => {
+      (err) => {
         if (err) throw err;
       }
     );
@@ -94,7 +94,7 @@ export class ShopItem {
     this.#db.query(
       "DELETE FROM SHOP WHERE item_id = ?",
       [this.id],
-      (err, result) => {
+      (err) => {
         if (err) throw err;
       }
     );
