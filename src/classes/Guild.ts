@@ -300,7 +300,7 @@ export class Guild {
 
       if (IDs.includes(boost.appliedId)) {
 
-        multiplier *= boost.multiplier;
+        multiplier *= boost.getMultiplier();
 
       }
     });
