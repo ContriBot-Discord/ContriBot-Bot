@@ -35,6 +35,7 @@ const event: BotEvent = {
         messageCooldowns.set(user.id, now);
       }
     } else {
+      DB.getGuild(guild.id).getUser(user.id).addPoints(1);
       // If the user doesn't have a timestamp in the cache, add it
       messageCooldowns.set(user.id, now);
     }
