@@ -14,6 +14,7 @@ export class Guild {
   users: User[];
   shop: ShopItem[];
   globalInventory: UserItem[];
+  blockedChannels: string[];
   readonly #db: mysql.Connection;
 
   constructor(
@@ -39,6 +40,7 @@ export class Guild {
     // Represent a list with all the items bought by all the users
     // We will merge all the inventories of all the users in this list
     this.globalInventory = this.users.map((user) => user.inventory).flat();
+    this.blockedChannels = this.fetchBlockedChannels();
   }
 
   fetchUsers(): User[] {
@@ -208,5 +210,54 @@ export class Guild {
   setPointName(pointName: string) {
     this.pointName = pointName;
     this.update();
+  }
+
+  fetchBlockedChannels(): string[] {
+    // Fetch all blocked channels from database
+    const blockedChannels: string[] = [];
+
+    this.#db.execute<RowDataPacket[]>(
+      "SELECT * FROM BLOCKED_CHANNEL WHERE guild_id = ?",
+      [this.id],
+      (err, result) => {
+        if (err) throw err;
+
+        result.forEach((channel: any) => {
+          blockedChannels.push(channel.channel_id);
+        });
+      }
+    );
+
+    return blockedChannels;
+  }
+
+  addBlockedChannel(channelId: string) {
+    this.blockedChannels.push(channelId);
+
+    this.#db.query<RowDataPacket[]>(
+      "INSERT INTO BLOCKED_CHANNEL (guild_id, channel_id) VALUES (?, ?)",
+      [this.id, channelId],
+      (err, result) => {
+        if (err) throw err;
+      }
+    );
+  }
+
+  removeBlockedChannel(channelId: string) {
+    this.blockedChannels = this.blockedChannels.filter(
+      (channel) => channel !== channelId
+    );
+
+    this.#db.query<RowDataPacket[]>(
+      "DELETE FROM BLOCKED_CHANNEL WHERE guild_id = ? AND channel_id = ?",
+      [this.id, channelId],
+      (err, result) => {
+        if (err) throw err;
+      }
+    );
+  }
+
+  getBlockedChannels() {
+    return this.blockedChannels;
   }
 }
