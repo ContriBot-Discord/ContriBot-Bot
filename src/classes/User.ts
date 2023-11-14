@@ -66,7 +66,7 @@ export class User {
       "INSERT INTO USER (user_id, guild_id, store_points, leaderboard_points) VALUES (?, ?, ?, ?)",
       [this.id, this.guild.id, this.storePoints, this.leaderboardPoints],
 
-      (err, result) => {
+      (err) => {
         if (err) throw err;
       }
     );
@@ -81,7 +81,7 @@ export class User {
       "UPDATE USER SET store_points = ?, leaderboard_points = ? WHERE user_id = ? AND guild_id = ?",
       [this.storePoints, this.leaderboardPoints, this.id, this.guild.id],
 
-      (err, result) => {
+      (err) => {
         if (err) throw err;
       }
     );
@@ -106,7 +106,7 @@ export class User {
   }
 
   buyItem(item: ShopItem): void {
-    // All of the verification should be done BEFORE calling this method.
+    // All the verification should be done BEFORE calling this method.
     // No verification is done here.
     // Points should be removed from the user before calling this method.
 

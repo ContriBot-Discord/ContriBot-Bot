@@ -100,7 +100,7 @@ export class Guild {
     this.#db.query<RowDataPacket[]>(
       "INSERT INTO GUILD (guild_id, lang) VALUES (?, ?)",
       [this.id, this.lang],
-      (err, result) => {
+      (err) => {
         if (err) throw err;
       }
     );
@@ -111,7 +111,7 @@ export class Guild {
     this.#db.query<RowDataPacket[]>(
       "UPDATE GUILD SET lang = ? WHERE guild_id = ?",
       [this.lang, this.id],
-      (err, result) => {
+      (err) => {
         if (err) throw err;
       }
     );
@@ -135,7 +135,7 @@ export class Guild {
     }
 
     // Reset all users' points in database
-    this.#db.query<RowDataPacket[]>(req, [this.id], (err, result) => {
+    this.#db.query<RowDataPacket[]>(req, [this.id], (err) => {
       if (err) throw err;
     });
 
@@ -240,7 +240,7 @@ export class Guild {
     this.#db.query<RowDataPacket[]>(
       "INSERT INTO DISABLED_CHANNEL (guild_id, channel_id) VALUES (?, ?)",
       [this.id, channelId],
-      (err, result) => {
+      (err) => {
         if (err) throw err;
       }
     );
@@ -254,7 +254,7 @@ export class Guild {
     this.#db.query<RowDataPacket[]>(
       "DELETE FROM DISABLED_CHANNEL WHERE guild_id = ? AND channel_id = ?",
       [this.id, channelId],
-      (err, result) => {
+      (err) => {
         if (err) throw err;
       }
     );
