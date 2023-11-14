@@ -277,6 +277,7 @@ export class Guild {
         result.forEach((booster: any) => {
           boosters.push(new Boost(
                 this.#db,
+                booster.boost_id,
                 this,
                 booster.boost_type,
                 booster.boosted_id,
@@ -288,9 +289,7 @@ export class Guild {
         });
       }
     );
-
     return boosters;
-
   }
 
   getMultiplier(IDs: string[]): number {
