@@ -14,7 +14,7 @@ export class Guild {
   users: User[];
   shop: ShopItem[];
   globalInventory: UserItem[];
-  blockedChannels: string[];
+  disabledChannels: string[];
   readonly #db: mysql.Connection;
 
   constructor(
@@ -40,7 +40,7 @@ export class Guild {
     // Represent a list with all the items bought by all the users
     // We will merge all the inventories of all the users in this list
     this.globalInventory = this.users.map((user) => user.inventory).flat();
-    this.blockedChannels = this.fetchBlockedChannels();
+    this.disabledChannels = this.fetchDisabledChannels();
   }
 
   fetchUsers(): User[] {
@@ -212,30 +212,30 @@ export class Guild {
     this.update();
   }
 
-  fetchBlockedChannels(): string[] {
-    // Fetch all blocked channels from database
-    const blockedChannels: string[] = [];
+  fetchDisabledChannels(): string[] {
+    // Fetch all disabled channels from database
+    const disabledChannels: string[] = [];
 
     this.#db.execute<RowDataPacket[]>(
-      "SELECT * FROM BLOCKED_CHANNEL WHERE guild_id = ?",
+      "SELECT * FROM DISABLED_CHANNEL WHERE guild_id = ?",
       [this.id],
       (err, result) => {
         if (err) throw err;
 
         result.forEach((channel: any) => {
-          blockedChannels.push(channel.channel_id);
+          disabledChannels.push(channel.channel_id);
         });
       }
     );
 
-    return blockedChannels;
+    return disabledChannels;
   }
 
   addBlockedChannel(channelId: string) {
-    this.blockedChannels.push(channelId);
+    this.disabledChannels.push(channelId);
 
     this.#db.query<RowDataPacket[]>(
-      "INSERT INTO BLOCKED_CHANNEL (guild_id, channel_id) VALUES (?, ?)",
+      "INSERT INTO DISABLED_CHANNEL (guild_id, channel_id) VALUES (?, ?)",
       [this.id, channelId],
       (err, result) => {
         if (err) throw err;
@@ -244,12 +244,12 @@ export class Guild {
   }
 
   removeBlockedChannel(channelId: string) {
-    this.blockedChannels = this.blockedChannels.filter(
+    this.disabledChannels = this.disabledChannels.filter(
       (channel) => channel !== channelId
     );
 
     this.#db.query<RowDataPacket[]>(
-      "DELETE FROM BLOCKED_CHANNEL WHERE guild_id = ? AND channel_id = ?",
+      "DELETE FROM DISABLED_CHANNEL WHERE guild_id = ? AND channel_id = ?",
       [this.id, channelId],
       (err, result) => {
         if (err) throw err;
@@ -258,6 +258,6 @@ export class Guild {
   }
 
   getBlockedChannels() {
-    return this.blockedChannels;
+    return this.disabledChannels;
   }
 }
