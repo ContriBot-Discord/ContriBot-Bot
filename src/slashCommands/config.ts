@@ -141,7 +141,7 @@ async function show(
 ) {
   const guild = DB.getGuild(interaction.guildId!);
 
-  const embed = configShowEmbed(interaction.guild!.iconURL() as string);
+  const embed = configShowEmbed(interaction.guildId!, interaction.guild!.iconURL() as string);
 
   await interaction.reply({ embeds: [embed] });
 }

@@ -20,14 +20,14 @@ add:
 
 remove:
   description:
-      both: "<@{{userid}}> removed {{quantity}} {{pointname}} from <@{{memberid}}>"
-      storePoints: "<@{{userid}}> removed {{quantity}} store {{pointname}} from <@{{memberid}}>"
-      leaderboardPoints: "<@{{userid}}> removed {{quantity}} leaderboard {{pointname}} from <@{{memberid}}>"
+    both: "<@{{userid}}> removed {{quantity}} {{pointname}} from <@{{memberid}}>"
+    storePoints: "<@{{userid}}> removed {{quantity}} store {{pointname}} from <@{{memberid}}>"
+    leaderboardPoints: "<@{{userid}}> removed {{quantity}} leaderboard {{pointname}} from <@{{memberid}}>"
 
 get:
   description:
-    storePoints: '<@{{userid}}> has **{{amount}}** store {{pointname}}.'
-    leaderboardPoints: '<@{{userid}}> has **{{amount}}** leaderboard {{pointname}}.'
+    storePoints: "<@{{userid}}> has **{{amount}}** store {{pointname}}."
+    leaderboardPoints: "<@{{userid}}> has **{{amount}}** leaderboard {{pointname}}."
 
 reset:
   description:
@@ -43,26 +43,27 @@ wipe:
 
 whois:
   title: "Who are we ?"
-  description: "ContriBot is a student project, made by [EAnathos](https://eanathos.com) &  [Voltis](https://voltis.me) at [Laval](https://maps.app.goo.gl/umYo5wYmG7eGwLWx5) in France.\n\n
-                This project has been started in early October 2023, while trying to find a Discord bot that would allow us to manage our training's minecraft server community.\n\n
-                Our main objective was to create a useful, fully configurable & documented and powerful Discord Bot, with all essential features free, and translated the most languages as possible.\n\n
-                We've decided to develop this bot in TypeScript while using Discord.JS\n\n
-                If you have any questions, do not hesitate to ask it on our [Discord Server](https://discord.gg/wMHa7XHkNj) !"
-  
+  description:
+    "ContriBot is a student project, made by [EAnathos](https://eanathos.com) &  [Voltis](https://voltis.me) at [Laval](https://maps.app.goo.gl/umYo5wYmG7eGwLWx5) in France.\n\n
+    This project has been started in early October 2023, while trying to find a Discord bot that would allow us to manage our training's minecraft server community.\n\n
+    Our main objective was to create a useful, fully configurable & documented and powerful Discord Bot, with all essential features free, and translated the most languages as possible.\n\n
+    We've decided to develop this bot in TypeScript while using Discord.JS\n\n
+    If you have any questions, do not hesitate to ask it on our [Discord Server](https://discord.gg/wMHa7XHkNj) !"
+
 config:
-  title: 'Config'
+  title: "Config"
   description: "Here is your server's config"
   pointsCfg:
     name: "Way to earn points:"
     value: "Send message: **{{message}}**\n
-            React to a message: **{{react}}**\n
-            Voice channel: **{{voice}}**/15 minutes\n
-            Disboard Bump: **{{bump}}**"
+      Voice channel: **{{vocal}}**/15 minutes\n
+      Disboard Bump: **{{bump}}**\n
+      Nitro Boost: **{{nitroBoost}}**"
 
   other:
     name: "Others:"
     value: "Points name: **{{pointname}}**\n
-            Server language: **{{lang}}**"
+      Server language: **{{lang}}**"
 
 lang:
   title: "Language set !"
@@ -74,7 +75,6 @@ actionpoint:
   title: "Base point set"
   description: "The base point is now: **{{point}}** for **{{action}}**"
 
-
 ping:
   description: "🏓 Pong!\n
-                📡 Ping: {{ping}}ms" # ping of the bot (number)
+    📡 Ping: {{ping}}ms" # ping of the bot (number)

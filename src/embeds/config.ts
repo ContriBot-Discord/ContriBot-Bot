@@ -1,6 +1,7 @@
 import { EmbedBuilder } from "discord.js";
 
 import i18next from "i18next";
+import { DB } from "..";
 
 export const configLangEmbed = function (lang: string): EmbedBuilder {
   i18next.changeLanguage(lang);
@@ -27,7 +28,7 @@ export const configActionPointEmbed = function (
     .setDescription(i18next.t(`embeds:actionpoint.description`));
 }
 
-export const configShowEmbed = function (iconURL: string) {
+export const configShowEmbed = function (guild_id: string, iconURL: string) {
   // TODO: Obtain the real values
 
   return new EmbedBuilder()
@@ -46,10 +47,10 @@ export const configShowEmbed = function (iconURL: string) {
         `<:shinypurplestar:1163585447201607781>` +
         i18next.t("embeds:config.pointsCfg.name"),
       value: i18next.t("embeds:config.pointsCfg.value", {
-        message: 1,
-        react: 1,
-        voice: 1,
-        bump: 1,
+        message: DB.getGuild(guild_id).messagePoint,
+        vocal: DB.getGuild(guild_id).vocalPoint,
+        bump: DB.getGuild(guild_id).bumpPoint,
+        nitroBoost: DB.getGuild(guild_id).boostPoint,
       }),
       inline: true,
     })
