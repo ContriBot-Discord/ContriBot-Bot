@@ -129,7 +129,7 @@ async function actionPoint(
   const action = interaction.options.get("action")?.value as string;
   const point = interaction.options.get("points")?.value as number;
 
-  const embed = configActionPointEmbed(action, point);
+  const embed = configActionPointEmbed(action, point, DB.getGuild(interaction.guildId!).pointName);
 
   DB.getGuild(interaction.guildId!).setActionPoint(action, point);
 

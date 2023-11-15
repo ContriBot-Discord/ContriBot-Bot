@@ -54,7 +54,7 @@ config:
   title: "Config"
   description: "Here is your server's config"
   pointsCfg:
-    name: "Way to earn points:"
+    name: "{{pointName}} earned by action:"
     value: "Send message: **{{message}}**\n
       Voice channel: **{{vocal}}**/15 minutes\n
       Disboard Bump: **{{bump}}**\n
@@ -64,16 +64,15 @@ config:
     name: "Others:"
     value: "Points name: **{{pointname}}**\n
       Server language: **{{lang}}**"
-
 lang:
   title: "Language set !"
   description: "The guild language is now: English" # Please, remplace "English" with the actual language this string is translated to
 pointname:
   title: "Point name set !"
-  description: "Guild points are now called : **{{point}}**"
+  description: "Guild points are now called : **{{pointName}}**"
 actionpoint:
-  title: "Base point set"
-  description: "The base point is now: **{{point}}** for **{{action}}**"
+  title: "Basic points set !"
+  description: "The base points for the action {{action}} are now {{point}} {{pointName}}."
 
 ping:
   description: "🏓 Pong!\n
