@@ -89,7 +89,7 @@ export const command: SlashCommand = {
       case "pointname":
         await pointName(interaction);
         break;
-      case "basepoint":
+      case "actionpoint":
         await actionPoint(interaction);
         break;
       default:
