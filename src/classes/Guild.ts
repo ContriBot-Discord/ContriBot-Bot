@@ -73,8 +73,8 @@ export class Guild {
             new User(
               this,
               user.user_id,
-              user.storePoints,
-              user.leaderboardPoints,
+              user.store_points,
+              user.leaderboard_points,
               this.#db
             )
           );
