@@ -70,6 +70,9 @@ lang:
 pointname:
   title: "Point name set !"
   description: "Guild points are now called : **{{point}}**"
+actionpoint:
+  title: "Base point set"
+  description: "The base point is now: **{{point}}** for **{{action}}**"
 
 
 ping:

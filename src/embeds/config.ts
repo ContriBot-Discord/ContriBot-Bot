@@ -18,6 +18,15 @@ export const configPointNameEmbed = function (
     .setDescription(i18next.t(`embeds:pointname.description`));
 }
 
+export const configActionPointEmbed = function (
+  action: string,
+  point: number
+): EmbedBuilder {
+  return new EmbedBuilder()
+    .setTitle(i18next.t(`embeds:actionpoint.title`))
+    .setDescription(i18next.t(`embeds:actionpoint.description`));
+}
+
 export const configShowEmbed = function (iconURL: string) {
   // TODO: Obtain the real values
 

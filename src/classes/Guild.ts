@@ -327,4 +327,75 @@ export class Guild {
     });
     return multiplier;
   }
+
+  setActionPoint(action: string, point: number): void {
+    switch (action) {
+      case "message":
+        this.setMessagePoint(point);
+        break;
+      case "react":
+        this.setVocalPoint(point);
+        break;
+      case "voice":
+        this.setVocalPoint(point);
+        break;
+      case "bump":
+        this.setBumpPoint(point);
+        break;
+      case "boost":
+        this.setBoostPoint(point);
+        break;
+      default:
+        break;
+    }
+
+  }
+
+  setMessagePoint(point: number): void {
+    this.messagePoint = point;
+
+    this.#db.query<RowDataPacket[]>(
+      "UPDATE GUILD SET message_point = ? WHERE guild_id = ?",
+      [point, this.id],
+      (err) => {
+        if (err) throw err;
+      }
+    );
+  }
+
+  setVocalPoint(point: number): void {
+    this.vocalPoint = point;
+
+    this.#db.query<RowDataPacket[]>(
+      "UPDATE GUILD SET vocal_point = ? WHERE guild_id = ?",
+      [point, this.id],
+      (err) => {
+        if (err) throw err;
+      }
+    );
+  }
+
+  setBumpPoint(point: number): void {
+    this.bumpPoint = point;
+
+    this.#db.query<RowDataPacket[]>(
+      "UPDATE GUILD SET bump_point = ? WHERE guild_id = ?",
+      [point, this.id],
+      (err) => {
+        if (err) throw err;
+      }
+    );
+  }
+
+  setBoostPoint(point: number): void {
+    this.boostPoint = point;
+
+    this.#db.query<RowDataPacket[]>(
+      "UPDATE GUILD SET boost_point = ? WHERE guild_id = ?",
+      [point, this.id],
+      (err) => {
+        if (err) throw err;
+      }
+    );
+  }
 }
