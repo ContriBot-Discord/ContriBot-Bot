@@ -44,7 +44,6 @@ export class Boost {
     }
 
     create() {
-
         this.#db.execute<ResultSetHeader>(
             "INSERT INTO BOOST (guild_id, boost_type, boosted_id, multiplier, starting_at, ending_at, execute_every) VALUES (?, ?, ?, ?, ?, ?, ?)",
             [this.guild.id, this.boostType, this.appliedId, this.multiplier, this.startAt, this.endAt, this.renewEvery],
@@ -58,7 +57,6 @@ export class Boost {
     }
 
     update() {
-
         this.#db.execute(
             "UPDATE BOOST SET boost_type = ?, boosted_id = ?, multiplier = ?, starting_at = ?, ending_at = ?, execute_every = ?, recurrent = ? WHERE boost_id = ?",
             [this.boostType, this.appliedId, this.multiplier, this.startAt, this.endAt, this.renewEvery, this.uid, this.recurrent],
@@ -66,7 +64,6 @@ export class Boost {
                 if (err) throw err;
             }
         );
-
     }
 
     delete(){

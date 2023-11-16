@@ -1,75 +1,123 @@
 import { BotEvent } from "@/types";
-import { Events, VoiceState } from "discord.js";
+import {Events, GuildMember, VoiceBasedChannel, VoiceState} from "discord.js";
 import { DB } from "@/index";
+import {User} from "@/classes/User";
+import {Guild} from "@/classes/Guild";
+
+function register(user: User, channel: VoiceBasedChannel, guild: Guild) {
+
+  user.voiceJoinedAt = new Date();
+
+  // We are searching for new eligible members in the voice channel that were not registered before because there were alone in the voice channel
+  const members = channel.members.filter(member => eligible(member.voice) && !registered(guild.getUser(member.id)))
+
+  members.forEach(member => {
+
+    // Registering every eligible & unregistered member
+    register(guild.getUser(member.id), channel, guild);
+
+  });
+
+}
+
+function registered(dbUser: User) {
+
+  return dbUser.voiceJoinedAt !== null;
+
+}
+
+function eligible(newState: VoiceState) {
+
+  const members = newState.channel!.members.filter(member => !member.user.bot)
+
+  // If the user is a bot, is muted or deaf or is not in a voice channel or is alone in the voice channel, we return false
+  // Else, True will be returned
+  return !(newState.deaf || newState.mute || newState.channelId === null || members.size <= 1 || newState.member!.user.bot);
+
+}
+
+function givePoints(member: GuildMember, user: User, channel:  VoiceBasedChannel, guild:Guild) {
+
+  const voiceDuration = new Date().getTime() - user.voiceJoinedAt!.getTime();
+  user.addVoicePoint(
+    voiceDuration,
+    member.voice.channel!.id,
+    member.roles.cache.map((role) => role.id)
+  );
+
+
+  // Represent a list of all eligible members in the voice channel
+  const members = channel.members.filter(member => eligible(member.voice))
+
+  // If the voice channel do not have enough eligible members, we are unregistering the user, and giving them their points
+  if (members.size <= 1) {
+
+    members.forEach(member => {
+      user = guild.getUser(member.id);
+
+      if (registered(user)) {
+
+        // Giving points to every newly uneligible member
+        givePoints(member, user, channel, guild);
+      }
+    });
+  }
+
+  user.voiceJoinedAt = null;
+
+}
+
+
 
 const event: BotEvent = {
   name: Events.VoiceStateUpdate,
   once: false,
 
   async execute(oldState: VoiceState, newState: VoiceState) {
-    // TODO: Use a real method to add voice point, which is not added yet.
 
-    const guild = DB.getGuild(oldState.guild.id);
-    const user = guild.getUser(oldState.member!.id);
+    const guild = (oldState.guild === null) ? DB.getGuild(newState.guild.id) : DB.getGuild(oldState.guild.id);
+    const user = guild.getUser(newState.member!.id);
 
-    // If the user is not registered as "In voice channel" in our RAM DB
-    if (user.voiceJoinedAt === null) {
-      // We are checking if the user is "eligible" for voice points
-      if (!newState.deaf && !newState.mute && !(newState.channelId === null))
-        return;
-      // In that case, the user is eligible for voice points
-      user.voiceJoinedAt = new Date();
+
+    if (!registered(user)) {
+      if (eligible(newState)) {
+          register(user, newState.channel!, guild);
+        }
     }
+
     // In the case the user IS registered as "In voice channel" in our RAM DB
     // That means the user is NOT muted, NOT deafened and is in a voice channel
     else {
-      if (
-        // If the user just muted itself
-        (newState.mute && newState.deaf) ||
-        // If the user just left the voice channel
-        newState.channelId === null
-      ) {
-        const voiceDuration =
-          new Date().getTime() - user.voiceJoinedAt!.getTime();
-        user.voiceJoinedAt = null;
-        user.addVoicePoint(
-          voiceDuration,
-          oldState.channel!.id,
-          oldState.member!.roles.cache.map((role) => role.id)
-        );
+
+      if (!eligible(newState)) {
+
+        givePoints(newState.member!, user, newState.channel!, guild);
+
+
       } else if (
-        // If the user just joined a voice channel in the same guild
-        // Due to previous checks, we know that the user was in a voice channel before, and is still in a voice channel
-        // The last check is required, because this condition could be True if the user just start streaming or sharing his screen
+        // If the user just changed voice channel, but is still in the same guild
         newState.guild.id === oldState.guild.id &&
         newState.channelId !== oldState.channelId
       ) {
-        // In that case, we do update point (due to future point-channels multipliers)
-        const voiceDuration =
-          new Date().getTime() - user.voiceJoinedAt!.getTime();
-        user.addVoicePoint(
-          voiceDuration,
-          oldState.channel!.id,
-          oldState.member!.roles.cache.map((role) => role.id)
-        );
 
-        // We update the user's voiceJoinedAt
-        user.voiceJoinedAt = new Date();
+        givePoints(newState.member!, user, newState.channel!, guild);
+
+        // We are re-registering the user as "In voice channel" in our RAM DB
+        register(user, newState.channel!, guild);
+
       } else if (
         // If the user just changed guild but is STILL in a voice channel
         newState.guild.id !== oldState.guild.id
       ) {
-        const newGuild = DB.getGuild(newState.guild.id);
-        newGuild.getUser(newState.member!.id).voiceJoinedAt = new Date();
 
-        const voiceDuration =
-          new Date().getTime() - user.voiceJoinedAt!.getTime();
-        user.voiceJoinedAt = null;
-        user.addVoicePoint(
-          voiceDuration,
-          oldState.channel!.id,
-          oldState.member!.roles.cache.map((role) => role.id)
-        );
+        // We are giving the points to the user on the old guild
+        givePoints(oldState.member!, user, oldState.channel!, guild);
+
+        // We are registering the user on the new guild
+        const newGuild = DB.getGuild(newState.guild.id);
+
+        register(newGuild.getUser(newState.member!.id), newState.channel!, newGuild);
+
       }
     }
   },
