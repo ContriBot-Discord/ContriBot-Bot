@@ -40,6 +40,17 @@ wipe:
     leaderboardPoints: "Guild's leaderboard {{pointName}} have been reset."
     storePoints: "Guild's store {{pointName}} have been reset."
 
+profile:
+  description: "Here is the profile of <@{{userid}}>"
+  stats:
+    name: "Stats :"
+    value: "Message points: **{{messagePoint}}**\n
+      Voice points: **{{voicePoint}}**"
+  points:
+    name: "{{pointName}} :        ‎"
+    value: "store {{pointName}}: **{{storePoints}}**\n
+      leaderboard {{pointName}}: **{{leaderboardPoints}}**"
+
 whois:
   title: "Who are we ?"
   description:
