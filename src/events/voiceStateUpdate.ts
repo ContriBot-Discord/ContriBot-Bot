@@ -7,7 +7,6 @@ const event: BotEvent = {
   once: false,
 
   async execute(oldState: VoiceState, newState: VoiceState) {
-    // TODO: Use a real method to add voice point, which is not added yet.
 
     const guild = (oldState.guild === null) ? DB.getGuild(newState.guild.id) : DB.getGuild(oldState.guild.id);
     const user = guild.getUser(newState.member!.id);
