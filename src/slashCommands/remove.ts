@@ -58,7 +58,14 @@ export const command: SlashCommand = {
 
     const guild = DB.getGuild(interaction.guildId!);
 
-    const embed = removeEmbed(interaction.user.id, amount, memberId, scope, guild.lang);
+    const embed = removeEmbed(
+      interaction.user.id,
+      amount,
+      memberId,
+      scope,
+      guild.lang,
+      guild.pointName
+    );
 
     guild.getUser(memberId).addPoints(-amount, scope);
 

@@ -40,7 +40,7 @@ export const command: SlashCommand = {
     const scope = interaction.options.get("scope")?.value as string;
     const guild = DB.getGuild(interaction.guildId!);
 
-    const embed = wipeEmbed(scope, guild.lang);
+    const embed = wipeEmbed(scope, guild.lang, guild.pointName);
 
     // Reset all users' points in database, and then update the cache
     guild.resetPoints();

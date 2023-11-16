@@ -35,19 +35,23 @@ export const command: SlashCommand = {
           {
             name: "leaderboardPoints",
             value: "leaderboardPoints",
-          },
+          }
         )
     ),
-    
+
   async execute(interaction: CommandInteraction<CacheType>) {
     const memberId = interaction.options.getUser("membre")!.id;
     const scope = interaction.options.get("scope")?.value as string;
-    const guild = DB.getGuild(interaction.guildId!)
-    const amount = guild
-      .getUser(memberId)
-      .getContribPoint(scope);
+    const guild = DB.getGuild(interaction.guildId!);
+    const amount = guild.getUser(memberId).getContribPoint(scope);
 
-    const embed = getEmbed(memberId, amount, scope, guild.lang);
+    const embed = getEmbed(
+      memberId,
+      amount,
+      scope,
+      guild.lang,
+      guild.pointName
+    );
 
     await interaction.reply({ embeds: [embed] });
   },

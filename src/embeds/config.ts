@@ -9,12 +9,12 @@ export const configLangEmbed = function (lang: string): EmbedBuilder {
   return new EmbedBuilder()
     .addFields({
       name:
-        `<:shiny_orange_moderator:1163759368853004298> ` +
-        i18next.t(`embeds:lang.title`),
-      value: `<:shiny_orange_bar:1163759934702374942>`.repeat(10)
+        `<:shiny_orange_moderator:1163759368853004298>` +
+        i18next.t(`config:default.title`, { command_name: "config lang" }),
+      value: `<:shiny_orange_bar:1163759934702374942>`.repeat(10),
     })
     .addFields({
-      name: i18next.t(`embeds:lang.description`),
+      name: i18next.t(`config:lang.description`),
       value: ` `,
     })
     .setColor("#ff8e4d")
@@ -30,12 +30,12 @@ export const configPointNameEmbed = function (
   return new EmbedBuilder()
     .addFields({
       name:
-        `<:shiny_orange_moderator:1163759368853004298> ` +
-        i18next.t(`embeds:pointname.title`),
-      value: `<:shiny_orange_bar:1163759934702374942>`.repeat(10)
+        `<:shiny_orange_moderator:1163759368853004298>` +
+        i18next.t(`config:default.title`, { command_name: "config pointname" }),
+      value: `<:shiny_orange_bar:1163759934702374942>`.repeat(10),
     })
     .addFields({
-      name: i18next.t(`embeds:pointname.description`, { pointName: pointName }),
+      name: i18next.t(`config:pointname.description`, { pointName: pointName }),
       value: ` `,
     })
     .setColor("#ff8e4d")
@@ -53,12 +53,12 @@ export const configActionPointEmbed = function (
   return new EmbedBuilder()
     .addFields({
       name:
-        `<:shiny_orange_moderator:1163759368853004298> ` +
-        i18next.t(`embeds:actionpoint.title`),
-      value: `<:shiny_orange_bar:1163759934702374942>`.repeat(10)
+        `<:shiny_orange_moderator:1163759368853004298>` +
+        i18next.t(`config:default.title`, { command_name: "config add" }),
+      value: `<:shiny_orange_bar:1163759934702374942>`.repeat(10),
     })
     .addFields({
-      name: i18next.t(`embeds:actionpoint.description`, {
+      name: i18next.t(`config:actionpoint.description`, {
         action: action,
         point: point,
         pointName: pointName,
@@ -79,21 +79,21 @@ export const configShowEmbed = function (
   return new EmbedBuilder()
     .addFields({
       name:
-        `<:shiny_orange_moderator:1163759368853004298> ` +
-        i18next.t("embeds:config.title"),
-      value: `<:shiny_orange_bar:1163759934702374942>`.repeat(10)
+        `<:shiny_orange_moderator:1163759368853004298>` +
+        i18next.t("config:default.title", { command_name: "config show" }),
+      value: `<:shiny_orange_bar:1163759934702374942>`.repeat(10),
     })
     .addFields({
-      name: i18next.t("embeds:config.description"),
+      name: i18next.t("config:show.description"),
       value: ` `,
     })
     .addFields({
       name:
         `<:shiny_orange_star:1174461572459020408> ` +
-        i18next.t("embeds:config.pointsCfg.name", {
+        i18next.t("config:show.pointsCfg.name", {
           pointName: DB.getGuild(guild_id).pointName,
         }),
-      value: i18next.t("embeds:config.pointsCfg.value", {
+      value: i18next.t("config:show.pointsCfg.value", {
         message: DB.getGuild(guild_id).messagePoint,
         vocal: DB.getGuild(guild_id).vocalPoint,
         bump: DB.getGuild(guild_id).bumpPoint,

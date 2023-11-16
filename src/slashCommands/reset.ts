@@ -48,7 +48,7 @@ export const command: SlashCommand = {
     const scope = interaction.options.get("scope")?.value as string;
     const guild = DB.getGuild(interaction.guildId!)
 
-    const embed = resetEmbed(memberId, scope, guild.lang);
+    const embed = resetEmbed(memberId, scope, guild.lang, guild.pointName);
 
     guild.getUser(memberId).setPoints(0, scope);
 
