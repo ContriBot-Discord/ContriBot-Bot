@@ -25,7 +25,7 @@ export const pointName = async function pointName(
 ) {
   const pointName = interaction.options.get("pointname")?.value as string;
 
-  const embed = configPointNameEmbed(pointName);
+  const embed = configPointNameEmbed(pointName, DB.getGuild(interaction.guildId!).lang);
 
   DB.getGuild(interaction.guildId!).setPointName(pointName);
 
@@ -41,7 +41,8 @@ export const actionPoint = async function actionPoint(
   const embed = configActionPointEmbed(
     action,
     point,
-    DB.getGuild(interaction.guildId!).pointName
+    DB.getGuild(interaction.guildId!).pointName,
+    DB.getGuild(interaction.guildId!).lang
   );
 
   DB.getGuild(interaction.guildId!).setActionPoint(action, point);
@@ -56,7 +57,8 @@ export const show = async function show(
 
   const embed = configShowEmbed(
     interaction.guildId!,
-    interaction.guild!.iconURL() as string
+    interaction.guild!.iconURL() as string,
+    DB.getGuild(interaction.guildId!).lang
   );
 
   await interaction.reply({ embeds: [embed] });
