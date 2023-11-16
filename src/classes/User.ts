@@ -154,8 +154,6 @@ export class User {
   }
 
   addVoicePoint(duration: number, channelId: string, guildId:string, roles:string[]): void {
-
-    this.addPoints(1);
-
+      this.addPoints(Math.floor(this.guild.voicePoint * (duration/15)));
     }
 }

@@ -95,7 +95,7 @@ export const configShowEmbed = function (
         }),
       value: i18next.t("config:show.pointsCfg.value", {
         message: DB.getGuild(guild_id).messagePoint,
-        vocal: DB.getGuild(guild_id).vocalPoint,
+        voice: DB.getGuild(guild_id).voicePoint,
         bump: DB.getGuild(guild_id).bumpPoint,
         nitroBoost: DB.getGuild(guild_id).boostPoint,
       }),

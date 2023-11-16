@@ -8,7 +8,7 @@ export class Guild {
   id: string;
   lang: string;
   messagePoint: number;
-  vocalPoint: number;
+  voicePoint: number;
   bumpPoint: number;
   boostPoint: number;
   dailyPoint: number;
@@ -27,7 +27,7 @@ export class Guild {
     id: string,
     lang: string,
     messagePoint: number,
-    vocalPoint: number,
+    voicePoint: number,
     bumpPoint: number,
     boostPoint: number,
     dailyPoint: number,
@@ -41,7 +41,7 @@ export class Guild {
     this.id = id;
     this.lang = lang;
     this.messagePoint = messagePoint;
-    this.vocalPoint = vocalPoint;
+    this.voicePoint = voicePoint;
     this.bumpPoint = bumpPoint;
     this.boostPoint = boostPoint;
     this.dailyPoint = dailyPoint;
@@ -110,11 +110,11 @@ export class Guild {
   create(): void {
     // Insert a new row in the database
     this.#db.query<RowDataPacket[]>(
-      "INSERT INTO GUILD (guild_id, message_point, vocal_point, bump_point, boost_point, daily_point, weekly_point, special_point, all_time_point, point_name, lang) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO GUILD (guild_id, message_point, voice_point, bump_point, boost_point, daily_point, weekly_point, special_point, all_time_point, point_name, lang) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         this.id,
         this.messagePoint,
-        this.vocalPoint,
+        this.voicePoint,
         this.bumpPoint,
         this.boostPoint,
         this.dailyPoint,
@@ -334,10 +334,10 @@ export class Guild {
         this.setMessagePoint(point);
         break;
       case "react":
-        this.setVocalPoint(point);
+        this.setVoicePoint(point);
         break;
       case "voice":
-        this.setVocalPoint(point);
+        this.setVoicePoint(point);
         break;
       case "bump":
         this.setBumpPoint(point);
@@ -363,11 +363,11 @@ export class Guild {
     );
   }
 
-  setVocalPoint(point: number): void {
-    this.vocalPoint = point;
+  setVoicePoint(point: number): void {
+    this.voicePoint = point;
 
     this.#db.query<RowDataPacket[]>(
-      "UPDATE GUILD SET vocal_point = ? WHERE guild_id = ?",
+      "UPDATE GUILD SET voice_point = ? WHERE guild_id = ?",
       [point, this.id],
       (err) => {
         if (err) throw err;

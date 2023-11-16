@@ -6,7 +6,7 @@ show:
   pointsCfg:
     name: "{{pointName}} earned by action:"
     value: "Send message: **{{message}}**\n
-      Voice channel: **{{vocal}}**/15 minutes\n
+      Voice channel: **{{voice}}**/15 minutes\n
       Disboard Bump: **{{bump}}**\n
       Nitro Boost: **{{nitroBoost}}**"
   other:

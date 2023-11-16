@@ -40,7 +40,7 @@ export class Database {
             guild.guild_id,
             guild.lang,
             guild.message_point,
-            guild.vocal_point,
+            guild.voice_point,
             guild.bump_point,
             guild.boost_point,
             guild.daily_point,
