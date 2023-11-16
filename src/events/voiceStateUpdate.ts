@@ -9,16 +9,16 @@ const event: BotEvent = {
   async execute(oldState: VoiceState, newState: VoiceState) {
     // TODO: Use a real method to add voice point, which is not added yet.
 
-    const guild = DB.getGuild(oldState.guild.id);
-    const user = guild.getUser(oldState.member!.id);
+    const guild = (oldState.guild === null) ? DB.getGuild(newState.guild.id) : DB.getGuild(oldState.guild.id);
+    const user = guild.getUser(newState.member!.id);
 
     // If the user is not registered as "In voice channel" in our RAM DB
     if (user.voiceJoinedAt === null) {
+
       // We are checking if the user is "eligible" for voice points
       if (!newState.deaf && !newState.mute && !(newState.channelId === null))
-        return;
-      // In that case, the user is eligible for voice points
-      user.voiceJoinedAt = new Date();
+        user.voiceJoinedAt = new Date();
+
     }
     // In the case the user IS registered as "In voice channel" in our RAM DB
     // That means the user is NOT muted, NOT deafened and is in a voice channel
