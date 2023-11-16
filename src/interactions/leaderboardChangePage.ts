@@ -7,7 +7,7 @@ import leaderboard from "@/embeds/leaderboard";
 
 import i18next from "i18next";
 
-function getUserList(startingFrom: number, userList: User[], lang: string): { name: string, value: string }[] {
+function getUserList(startingFrom: number, userList: User[], lang: string, pointName: string): { name: string, value: string }[] {
 
     i18next.changeLanguage(lang)
 
@@ -22,7 +22,8 @@ function getUserList(startingFrom: number, userList: User[], lang: string): { na
                 name: ` `,
                 value: `**#${i + 1} ·** ` + i18next.t("embeds:leaderboard.fields.value", {
                     userid: user.id,
-                    quantity: user.leaderboardPoints
+                    quantity: user.leaderboardPoints,
+                    pointName: pointName,
                 })
             })
         }
@@ -67,15 +68,15 @@ const event: BotEvent = {
         // We get the list of users depending on the button pressed
         if (interaction.customId === "previous") {
 
-            fields = getUserList((actualPageInt - 1) * 10, users, guild.lang);
+            fields = getUserList((actualPageInt - 1) * 10, users, guild.lang, guild.pointName);
 
         } else if (interaction.customId === "next") {
 
-            fields = getUserList(actualPageInt * 10, users, guild.lang);
+            fields = getUserList(actualPageInt * 10, users, guild.lang, guild.pointName);
 
         } else {
             // In case the button is "refresh"
-            fields = getUserList((actualPageInt - 1) * 10, users, guild.lang)
+            fields = getUserList((actualPageInt - 1) * 10, users, guild.lang, guild.pointName)
         }
 
         // we initialize the buttons, and make them disabled if needed

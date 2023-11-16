@@ -37,7 +37,8 @@ export const command: SlashCommand = {
           name: ` `,
           value: `**#${i + 1} ·** ` + i18next.t("embeds:leaderboard.fields.value", {
             userid: user.id,
-            quantity: user.leaderboardPoints
+            quantity: user.leaderboardPoints,
+            pointName: guild.pointName,
           }),
         });
       }
