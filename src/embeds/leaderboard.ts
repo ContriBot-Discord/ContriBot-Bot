@@ -14,7 +14,7 @@ export default function (
       name:
         "<:shinypurplestar:1163585447201607781> " +
         i18next.t("embeds:leaderboard.title", { index: pageNumber }),
-      value: `<:lineviolett:1163753428317638696>`.repeat(10),
+      value: `<:lineviolett:1163753428317638696>`.repeat(8),
     })
     .setFooter({
       text: i18next.t("embeds:leaderboard.footer.text", {

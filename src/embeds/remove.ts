@@ -20,7 +20,7 @@ export default function (
   return new EmbedBuilder()
     .addFields({
       name: "<:shiny_orange_moderator:1163759368853004298> Remove points command.",
-      value: `<:shiny_orange_bar:1163759934702374942>`.repeat(10),
+      value: `<:shiny_orange_bar:1163759934702374942>`.repeat(8),
     })
     .addFields({
       name: " ",

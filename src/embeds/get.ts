@@ -25,7 +25,7 @@ export default function getContribPoint(
       },
       {
         name: " ",
-        value: `<:lineviolett:1163753428317638696>`.repeat(10),
+        value: `<:lineviolett:1163753428317638696>`.repeat(8),
       },
       {
         name: " ",

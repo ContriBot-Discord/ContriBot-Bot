@@ -33,7 +33,7 @@ export default function (
         "embeds:default.title",
         { command_name: "add" }
       )}`,
-      value: `<:shiny_orange_bar:1163759934702374942>`.repeat(10),
+      value: `<:shiny_orange_bar:1163759934702374942>`.repeat(8),
     })
     .addFields({
       name: " ",

@@ -19,7 +19,7 @@ export default function (
       name:
         "<:shiny_orange_moderator:1163759368853004298>" +
         i18next.t("embeds:default.title", { command_name: "wipe" }),
-      value: `<:shiny_orange_bar:1163759934702374942>`.repeat(10),
+      value: `<:shiny_orange_bar:1163759934702374942>`.repeat(8),
     })
     .addFields({
       name: " ",
