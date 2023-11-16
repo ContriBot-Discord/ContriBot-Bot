@@ -163,7 +163,8 @@ export class User {
     roles.push(channelId, this.guild.id, this.id);
 
     this.addPoints(
-      this.guild.voicePoint * (duration / 15) * this.guild.getMultiplier(roles)
+      this.guild.voicePoint *
+        ((duration / 900000) * this.guild.getMultiplier(roles))
     );
   }
 }
