@@ -21,7 +21,7 @@ export default function (client: Client): void {
                     if (!(member.voice.deaf || member.voice.mute)){
 
                         // We register the member as "In voice channel" so it can get voice xp
-                        guild.getUser(member.id).voiceJoinedAt = new Date()
+                        guild.getUser(member.id).voiceJoinedAt = new Date();
                     }
                 });
             }
