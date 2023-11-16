@@ -7,7 +7,7 @@ import {
 } from "discord.js";
 import { SlashCommand } from "@/types";
 
-import {lang, pointName, actionPoint, show} from "@/tools/configFunctions";
+import { lang, pointName, actionPoint, show } from "@/tools/configFunctions";
 
 import { CommandInteractionOptionResolver } from "discord.js";
 
@@ -23,7 +23,7 @@ export const command: SlashCommand = {
         .addStringOption((option: SlashCommandStringOption) =>
           option
             .setName("language")
-            .setDescription("What language would you like to change to ?")
+            .setDescription("Select a language for your guild")
             .addChoices(
               { name: "English", value: "en" },
               { name: "Français", value: "fr" }
@@ -63,7 +63,7 @@ export const command: SlashCommand = {
         .addNumberOption((option: SlashCommandNumberOption) =>
           option
             .setName("points")
-            .setDescription("How many points would you like to set ?")
+            .setDescription("Set the base points for this action.")
             .setRequired(true)
         )
     )

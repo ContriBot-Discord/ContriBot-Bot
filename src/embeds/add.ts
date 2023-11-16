@@ -1,3 +1,4 @@
+import { pointName } from "@/tools/configFunctions";
 import { EmbedBuilder } from "discord.js";
 
 import i18n from "i18next";
@@ -7,7 +8,8 @@ export default function (
   amount: number,
   memberId: string,
   lang: string,
-  scope: string = "both"
+  scope: string = "both",
+  pointName: string
 ) {
   i18n.changeLanguage(lang);
 
@@ -40,6 +42,7 @@ export default function (
         quantity: amount,
         pointsname: "points",
         memberid: memberId,
+        pointName: pointName,
       }),
     })
     .setColor("#ff8e4d")

@@ -1,7 +1,11 @@
 import { EmbedBuilder } from "discord.js";
 import i18next from "i18next";
 
-export default function (scope: string = "both", lang: string) {
+export default function (
+  scope: string = "both",
+  lang: string,
+  pointName: string
+) {
   i18next.changeLanguage(lang);
 
   let value: string = `embeds:wipe.description.both`;
@@ -19,7 +23,7 @@ export default function (scope: string = "both", lang: string) {
     })
     .addFields({
       name: " ",
-      value: i18next.t(value),
+      value: i18next.t(value, { pointName: pointName }),
     })
     .setColor("#ff8e4d")
     .setTimestamp();

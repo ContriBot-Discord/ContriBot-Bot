@@ -1,44 +1,44 @@
 # This file contains all strings related to commands.
 
 default:
-  title: "**{{command_name}}** command" # For instance: **Add** command
+  title: "**{{command_name}}** command"
 leaderboard:
   title: "Leaderboard [{{index}}]"
   description: "Here is the leaderboard"
   fields:
     name: "Top {{index}}"
-    value: "<@{{userid}}> with {{quantity}} {{pointname}}"
+    value: "<@{{userid}}> with {{quantity}} {{pointName}}"
   footer:
     text: "Page {{pageNumber}}/{{totalPages}}"
 
 add:
   description:
-    both: "<@{{userid}}> added {{quantity}} {{pointname}} to <@{{memberid}}>"
-    storePoints: "<@{{userid}}> added {{quantity}} store {{pointname}} to <@{{memberid}}>"
-    leaderboardPoints: "<@{{userid}}> added {{quantity}} leaderboard {{pointname}} to <@{{memberid}}>"
+    both: "<@{{userid}}> added {{quantity}} {{pointName}} to <@{{memberid}}>"
+    storePoints: "<@{{userid}}> added {{quantity}} store {{pointName}} to <@{{memberid}}>"
+    leaderboardPoints: "<@{{userid}}> added {{quantity}} leaderboard {{pointName}} to <@{{memberid}}>"
 
 remove:
   description:
-    both: "<@{{userid}}> removed {{quantity}} {{pointname}} from <@{{memberid}}>"
-    storePoints: "<@{{userid}}> removed {{quantity}} store {{pointname}} from <@{{memberid}}>"
-    leaderboardPoints: "<@{{userid}}> removed {{quantity}} leaderboard {{pointname}} from <@{{memberid}}>"
+    both: "<@{{userid}}> removed {{quantity}} {{pointName}} from <@{{memberid}}>"
+    storePoints: "<@{{userid}}> removed {{quantity}} store {{pointName}} from <@{{memberid}}>"
+    leaderboardPoints: "<@{{userid}}> removed {{quantity}} leaderboard {{pointName}} from <@{{memberid}}>"
 
 get:
   description:
-    storePoints: "<@{{userid}}> has **{{amount}}** store {{pointname}}."
-    leaderboardPoints: "<@{{userid}}> has **{{amount}}** leaderboard {{pointname}}."
+    storePoints: "<@{{userid}}> has **{{amount}}** store {{pointName}}."
+    leaderboardPoints: "<@{{userid}}> has **{{amount}}** leaderboard {{pointName}}."
 
 reset:
   description:
-    both: "{{userid}}'s {{pointname}} have been fully reset"
-    leaderboardPoints: "{{userid}}'s leaderboard {{pointname}} have been reset."
-    storePoints: "{{userid}}'s leaderboard {{pointname}} have been reset."
+    both: "<@{{userid}}>'s {{pointName}} have been fully reset"
+    leaderboardPoints: "<@{{userid}}>'s leaderboard {{pointName}} have been reset."
+    storePoints: "<@{{userid}}>'s leaderboard {{pointName}} have been reset."
 
 wipe:
   description:
-    both: "Guild's {{pointname}} have been fully reset"
-    leaderboardPoints: "Guild's leaderboard {{pointname}} have been reset."
-    storePoints: "Guild's store {{pointname}} have been reset."
+    both: "Guild's {{pointName}} have been fully reset"
+    leaderboardPoints: "Guild's leaderboard {{pointName}} have been reset."
+    storePoints: "Guild's store {{pointName}} have been reset."
 
 whois:
   title: "Who are we ?"

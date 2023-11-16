@@ -4,7 +4,8 @@ import i18next from "i18next";
 export default function (
   userId: string,
   scope: string = "both",
-  lang: string
+  lang: string,
+  pointName: string
 ): EmbedBuilder {
   i18next.changeLanguage(lang);
 
@@ -23,7 +24,7 @@ export default function (
     })
     .addFields({
       name: " ",
-      value: i18next.t(value, { userid: userId }),
+      value: i18next.t(value, { userid: userId, pointName: pointName }),
     })
     .setColor("#ff8e4d")
     .setTimestamp();

@@ -1,5 +1,7 @@
+default:
+  title: "**{{command_name}}** command"
+
 show:
-  title: "Config"
   description: "Here is your server's config"
   pointsCfg:
     name: "{{pointName}} earned by action:"
@@ -7,17 +9,16 @@ show:
       Voice channel: **{{vocal}}**/15 minutes\n
       Disboard Bump: **{{bump}}**\n
       Nitro Boost: **{{nitroBoost}}**"
-
   other:
     name: "Others:"
     value: "Points name: **{{pointname}}**\n
       Server language: **{{lang}}**"
+
 lang:
-  title: "Language set !"
   description: "The guild language is now: English" # Please, remplace "English" with the actual language this string is translated to
+
 pointname:
-  title: "Point name set !"
   description: "Guild points are now called : **{{pointName}}**"
+
 actionpoint:
-  title: "Basic points set !"
-  description: "The base points for the action {{action}} are now {{point}} {{pointName}}."
+  description: "The base points for the action [{{action}}] are now [{{point}}] {{pointName}}."

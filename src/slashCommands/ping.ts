@@ -1,8 +1,4 @@
-import {
-  SlashCommandBuilder,
-  CommandInteraction,
-  CacheType,
-} from "discord.js";
+import { SlashCommandBuilder, CommandInteraction, CacheType } from "discord.js";
 import { SlashCommand } from "@/types";
 
 import { DB } from "@/index";
@@ -17,7 +13,10 @@ export const command: SlashCommand = {
   execute: async (interaction: CommandInteraction<CacheType>) => {
     await interaction.reply({
       embeds: [
-        pingEmbed(interaction.client.ws.ping, DB.getGuild(interaction.guildId!).lang)
+        pingEmbed(
+          interaction.client.ws.ping,
+          DB.getGuild(interaction.guildId!).lang
+        ),
       ],
     });
   },

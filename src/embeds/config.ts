@@ -9,8 +9,8 @@ export const configLangEmbed = function (lang: string): EmbedBuilder {
   return new EmbedBuilder()
     .addFields({
       name:
-        `<:shiny_orange_moderator:1163759368853004298> ` +
-        i18next.t(`config:lang.title`),
+        `<:shiny_orange_moderator:1163759368853004298>` +
+        i18next.t(`config:default.title`, { command_name: "config lang" }),
       value: `<:shiny_orange_bar:1163759934702374942>`.repeat(10),
     })
     .addFields({
@@ -30,8 +30,8 @@ export const configPointNameEmbed = function (
   return new EmbedBuilder()
     .addFields({
       name:
-        `<:shiny_orange_moderator:1163759368853004298> ` +
-        i18next.t(`config:pointname.title`),
+        `<:shiny_orange_moderator:1163759368853004298>` +
+        i18next.t(`config:default.title`, { command_name: "config pointname" }),
       value: `<:shiny_orange_bar:1163759934702374942>`.repeat(10),
     })
     .addFields({
@@ -53,8 +53,8 @@ export const configActionPointEmbed = function (
   return new EmbedBuilder()
     .addFields({
       name:
-        `<:shiny_orange_moderator:1163759368853004298> ` +
-        i18next.t(`config:actionpoint.title`),
+        `<:shiny_orange_moderator:1163759368853004298>` +
+        i18next.t(`config:default.title`, { command_name: "config add" }),
       value: `<:shiny_orange_bar:1163759934702374942>`.repeat(10),
     })
     .addFields({
@@ -79,8 +79,8 @@ export const configShowEmbed = function (
   return new EmbedBuilder()
     .addFields({
       name:
-        `<:shiny_orange_moderator:1163759368853004298> ` +
-        i18next.t("config:show.title"),
+        `<:shiny_orange_moderator:1163759368853004298>` +
+        i18next.t("config:default.title", { command_name: "config show" }),
       value: `<:shiny_orange_bar:1163759934702374942>`.repeat(10),
     })
     .addFields({

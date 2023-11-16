@@ -6,7 +6,8 @@ export default function (
   amount: number,
   memberId: string,
   scope: string = "both",
-  lang: string
+  lang: string,
+  pointName: string
 ) {
   i18next.changeLanguage(lang);
 
@@ -27,6 +28,7 @@ export default function (
         userid: userId,
         quantity: amount,
         memberid: memberId,
+        pointName: pointName,
       }),
     })
     .setColor("#ff8e4d")

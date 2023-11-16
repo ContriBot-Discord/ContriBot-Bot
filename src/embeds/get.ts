@@ -5,7 +5,8 @@ export default function getContribPoint(
   memberId: string,
   amount: number,
   scope: string = "storePoints",
-  lang: string
+  lang: string,
+  pointName: string
 ) {
   i18next.changeLanguage(lang);
 
@@ -28,7 +29,7 @@ export default function getContribPoint(
       },
       {
         name: " ",
-        value: i18next.t(translation, { userid: memberId, amount: amount }),
+        value: i18next.t(translation, { userid: memberId, amount: amount, pointName: pointName}),
       }
     )
     .setColor("#AA54E1")
