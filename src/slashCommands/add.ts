@@ -4,6 +4,7 @@ import {
   CommandInteraction,
   SlashCommandUserOption,
   SlashCommandIntegerOption,
+  PermissionFlagsBits,
 } from "discord.js";
 import { SlashCommand } from "@/types";
 
@@ -15,6 +16,7 @@ export const command: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName("add")
     .setDescription("Adds contribution points to a user.")
+    .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
     .addUserOption((option: SlashCommandUserOption) =>
       option
         .setName("member")
@@ -51,6 +53,10 @@ export const command: SlashCommand = {
     ),
 
   async execute(interaction: CommandInteraction<CacheType>) {
+
+    //Verify if the user has the permission to use the command
+    console.log(interaction.member!)
+    
     const memberId: string = interaction.options.getUser("member")!.id;
     const amount: number = interaction.options.get("amount")!.value as number;
     const scope = interaction.options.get("scope")?.value as string;

@@ -3,6 +3,7 @@ import {
   CacheType,
   CommandInteraction,
   SlashCommandUserOption,
+  PermissionFlagsBits,
 } from "discord.js";
 import { SlashCommand } from "@/types";
 
@@ -14,6 +15,7 @@ export const command: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName("reset")
     .setDescription("Reset contribution points of a user")
+    .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
     .addUserOption((option: SlashCommandUserOption) =>
       option
         .setName("membre")

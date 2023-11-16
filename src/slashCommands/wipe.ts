@@ -2,6 +2,7 @@ import {
   SlashCommandBuilder,
   CacheType,
   CommandInteraction,
+  PermissionFlagsBits,
 } from "discord.js";
 import { SlashCommand } from "@/types";
 
@@ -13,6 +14,7 @@ export const command: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName("wipe")
     .setDescription("wipe contribution points of all users")
+    .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
     .addStringOption((option) =>
       option
         .setName("scope")

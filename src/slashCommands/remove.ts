@@ -4,6 +4,7 @@ import {
   CommandInteraction,
   SlashCommandUserOption,
   SlashCommandIntegerOption,
+  PermissionFlagsBits,
 } from "discord.js";
 import { SlashCommand } from "@/types";
 
@@ -15,6 +16,7 @@ export const command: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName("remove")
     .setDescription("Remove contribution points from a user.")
+    .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
     .addUserOption((option: SlashCommandUserOption) =>
       option
         .setName("member")

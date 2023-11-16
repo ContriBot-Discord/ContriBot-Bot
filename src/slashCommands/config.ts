@@ -4,6 +4,7 @@ import {
   SlashCommandSubcommandBuilder,
   SlashCommandStringOption,
   SlashCommandNumberOption,
+  PermissionFlagsBits,
 } from "discord.js";
 import { SlashCommand } from "@/types";
 
@@ -16,6 +17,7 @@ export const command: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName("config")
     .setDescription("Configure the bot.")
+    .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
     .addSubcommand((subcommand: SlashCommandSubcommandBuilder) =>
       subcommand
         .setName("lang")
