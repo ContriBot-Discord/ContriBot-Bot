@@ -158,10 +158,9 @@ export class User {
   }
 
   addVoicePoint(duration: number, channelId: string, roles: string[]): void {
-    console.log("addVoicePoint");
-
     roles.push(channelId, this.guild.id, this.id);
 
+    // Divide by 1000 to convert in seconds, then by 60 to convert in minutes, then by 15 to convert in 15 minutes
     this.addPoints(
       this.guild.voicePoint *
         ((duration / 900000) * this.guild.getMultiplier(roles))
