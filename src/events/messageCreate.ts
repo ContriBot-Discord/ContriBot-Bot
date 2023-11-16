@@ -18,7 +18,7 @@ const event: BotEvent = {
     if (user.bot) return;
 
     // If the message comes from a blocked channel, return
-    if (DB.getGuild(guild.id).getBlockedChannels().includes(channel.id)) return;
+    if (DB.getGuild(guild.id).disabledChannels.includes(channel.id)) return;
 
     // Get the current time
     const now = Date.now();
@@ -30,11 +30,12 @@ const event: BotEvent = {
       // Check if 60 seconds have passed since the user's last message
       if (now - messageCooldowns.get(user.id)! >= cooldown) {
         // Add points to the user
-        DB.getGuild(guild.id).getUser(user.id).addPoints(1);
+        DB.getGuild(guild.id).getUser(user.id).addPoints(DB.getGuild(guild.id).messagePoint);
         // Update the timestamp in the cache
         messageCooldowns.set(user.id, now);
       }
     } else {
+      DB.getGuild(guild.id).getUser(user.id).addPoints(DB.getGuild(guild.id).messagePoint);
       // If the user doesn't have a timestamp in the cache, add it
       messageCooldowns.set(user.id, now);
     }
