@@ -101,6 +101,16 @@ export const configShowEmbed = function (
       }),
       inline: true,
     })
+    .addFields({
+      name:
+        "<:shiny_orange_staff:1174461570437361684> " +
+        i18next.t("config:show.settings.name"),
+      value: i18next.t("config:show.settings.value", {
+        lang: DB.getGuild(guild_id).lang,
+        pointName: DB.getGuild(guild_id).pointName,
+      }),
+      inline: true,
+    })
     .setThumbnail(iconURL)
     .setColor("#ff8e4d")
     .setTimestamp();

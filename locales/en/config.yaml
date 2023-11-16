@@ -4,15 +4,15 @@ default:
 show:
   description: "Here is your server's config"
   pointsCfg:
-    name: "{{pointName}} earned by action:"
+    name: "{{pointName}} earned by action:        ‎"
     value: "Send message: **{{message}}**\n
       Voice channel: **{{voice}}**/15 minutes\n
       Disboard Bump: **{{bump}}**\n
       Nitro Boost: **{{nitroBoost}}**"
-  other:
-    name: "Others:"
-    value: "Points name: **{{pointname}}**\n
-      Server language: **{{lang}}**"
+  settings:
+    name: "Settings:"
+    value: "Server language: **{{lang}}**\n
+    Points name: **{{pointName}}**\n"
 
 lang:
   description: "The guild language is now: English" # Please, remplace "English" with the actual language this string is translated to
