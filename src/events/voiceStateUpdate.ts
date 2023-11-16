@@ -35,7 +35,6 @@ const event: BotEvent = {
         user.addVoicePoint(
           voiceDuration,
           oldState.channel!.id,
-          oldState.guild.id,
           oldState.member!.roles.cache.map((role) => role.id)
         );
       } else if (
@@ -51,7 +50,6 @@ const event: BotEvent = {
         user.addVoicePoint(
           voiceDuration,
           oldState.channel!.id,
-          oldState.guild.id,
           oldState.member!.roles.cache.map((role) => role.id)
         );
 
@@ -70,7 +68,6 @@ const event: BotEvent = {
         user.addVoicePoint(
           voiceDuration,
           oldState.channel!.id,
-          oldState.guild.id,
           oldState.member!.roles.cache.map((role) => role.id)
         );
       }

@@ -90,19 +90,23 @@ export class User {
   setPoints(amount: number, scope: string = "both"): void {
     // Set points to user
     if (scope === "both" || scope === "storePoints") this.storePoints = amount;
-    if (scope === "both" || scope === "leaderboardPoints") this.leaderboardPoints = amount;
+    if (scope === "both" || scope === "leaderboardPoints")
+      this.leaderboardPoints = amount;
     this.update();
   }
 
   addPoints(amount: number = 1, scope: string = "both"): void {
     // Add points to user
     if (scope === "both" || scope === "storePoints") this.storePoints += amount;
-    if (scope === "both" || scope === "leaderboardPoints") this.leaderboardPoints += amount;
+    if (scope === "both" || scope === "leaderboardPoints")
+      this.leaderboardPoints += amount;
     this.update();
   }
 
   getContribPoint(scope: string = "storePoints"): number {
-    return scope === "leaderboardPoints" ? this.leaderboardPoints : this.storePoints;
+    return scope === "leaderboardPoints"
+      ? this.leaderboardPoints
+      : this.storePoints;
   }
 
   buyItem(item: ShopItem): void {
@@ -153,7 +157,13 @@ export class User {
       : this.getItemsByDate(date).filter((item) => item.id === id);
   }
 
-  addVoicePoint(duration: number, channelId: string, guildId:string, roles:string[]): void {
-      this.addPoints(Math.floor(this.guild.voicePoint * (duration/15)));
-    }
+  addVoicePoint(duration: number, channelId: string, roles: string[]): void {
+    console.log("addVoicePoint");
+
+    roles.push(channelId, this.guild.id, this.id);
+
+    this.addPoints(
+      this.guild.voicePoint * (duration / 15) * this.guild.getMultiplier(roles)
+    );
+  }
 }
