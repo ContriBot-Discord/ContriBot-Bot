@@ -2,7 +2,6 @@
 
 default:
   title: "**{{command_name}}** command" # For instance: **Add** command
-
 leaderboard:
   title: "Leaderboard [{{index}}]"
   description: "Here is the leaderboard"
@@ -49,30 +48,6 @@ whois:
     Our main objective was to create a useful, fully configurable & documented and powerful Discord Bot, with all essential features free, and translated the most languages as possible.\n\n
     We've decided to develop this bot in TypeScript while using Discord.JS\n\n
     If you have any questions, do not hesitate to ask it on our [Discord Server](https://discord.gg/wMHa7XHkNj) !"
-
-config:
-  title: "Config"
-  description: "Here is your server's config"
-  pointsCfg:
-    name: "{{pointName}} earned by action:"
-    value: "Send message: **{{message}}**\n
-      Voice channel: **{{vocal}}**/15 minutes\n
-      Disboard Bump: **{{bump}}**\n
-      Nitro Boost: **{{nitroBoost}}**"
-
-  other:
-    name: "Others:"
-    value: "Points name: **{{pointname}}**\n
-      Server language: **{{lang}}**"
-lang:
-  title: "Language set !"
-  description: "The guild language is now: English" # Please, remplace "English" with the actual language this string is translated to
-pointname:
-  title: "Point name set !"
-  description: "Guild points are now called : **{{pointName}}**"
-actionpoint:
-  title: "Basic points set !"
-  description: "The base points for the action {{action}} are now {{point}} {{pointName}}."
 
 ping:
   description: "🏓 Pong!\n
