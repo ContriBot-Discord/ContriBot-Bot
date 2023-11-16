@@ -12,7 +12,7 @@ export default function (userId:string, scope:string = "both", lang:string): Emb
     return new EmbedBuilder()
         .addFields({
             name: "<:shiny_orange_moderator:1163759368853004298>" + i18next.t("embeds:default.title", {command_name:"reset"}),
-            value: `<:shiny_orange_bar:1163759934702374942>`.repeat(9),
+            value: `<:shiny_orange_bar:1163759934702374942>`.repeat(10)
         })
         .setColor("#ff8e4d")
         .setTimestamp()

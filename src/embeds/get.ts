@@ -15,7 +15,7 @@ export default function getContribPoint(memberId: string, amount: number, scope:
         },
         {
             name: " ",
-            value: `<:lineviolett:1163753428317638696>`.repeat(9),
+            value: `<:lineviolett:1163753428317638696>`.repeat(10)
         },
         {
             name: " ",

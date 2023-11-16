@@ -10,7 +10,7 @@ export default function (lang: string) : EmbedBuilder {
         .addFields(
             {
                 name:"<:shinypurpledev:1172885854616834119> " + i18next.t("embeds:whois.title"),
-                value:"<:lineviolett:1163753428317638696>".repeat(6)
+                value:"<:lineviolett:1163753428317638696>".repeat(10)
             },
             {
                 name:" ",

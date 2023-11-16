@@ -8,7 +8,7 @@ export default function (pageNumber:number, totalPages:number, userFields: {name
     return new EmbedBuilder()
         .addFields({
                 name: "<:shinypurplestar:1163585447201607781> " + i18next.t("embeds:leaderboard.title", {index: pageNumber}),
-                value: `<:lineviolett:1163753428317638696>`.repeat(6),
+                value: `<:lineviolett:1163753428317638696>`.repeat(10)
             })
         .setColor("#aa54e1")
         .setFooter({text: i18next.t("embeds:leaderboard.footer.text", {pageNumber: pageNumber, totalPages: totalPages})})
