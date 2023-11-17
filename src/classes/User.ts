@@ -8,6 +8,8 @@ export class User {
   id: string;
   storePoints: number;
   leaderboardPoints: number;
+  messagesSent: number;
+  voiceDuration: number;
   inventory: UserItem[];
   readonly #db: mysql.Connection;
   voiceJoinedAt: Date | null;
@@ -17,6 +19,8 @@ export class User {
     id: string,
     storePoints: number = 0,
     leaderboardPoints: number = 0,
+    messagesSent: number = 0,
+    voiceDuration: number = 0,
     db: mysql.Connection
   ) {
     this.#db = db;
@@ -24,6 +28,8 @@ export class User {
     this.id = id;
     this.storePoints = storePoints;
     this.leaderboardPoints = leaderboardPoints;
+    this.messagesSent = messagesSent;
+    this.voiceDuration = voiceDuration;
     this.inventory = this.fetchInventory();
     this.voiceJoinedAt = null;
   }
@@ -63,8 +69,15 @@ export class User {
   create(): void {
     // Register user in database
     this.#db.query<RowDataPacket[]>(
-      "INSERT INTO USER (user_id, guild_id, store_points, leaderboard_points) VALUES (?, ?, ?, ?)",
-      [this.id, this.guild.id, this.storePoints, this.leaderboardPoints],
+      "INSERT INTO USER (user_id, guild_id, store_points, leaderboard_points, messages_sent, voice_duration) VALUES (?, ?, ?, ?, ?, ?)",
+      [
+        this.id,
+        this.guild.id,
+        this.storePoints,
+        this.leaderboardPoints,
+        this.messagesSent,
+        this.voiceDuration,
+      ],
 
       (err) => {
         if (err) throw err;
@@ -78,8 +91,15 @@ export class User {
 
     // If the user exists in the database, it gets updated. If not, it gets created
     this.#db.query(
-      "UPDATE USER SET store_points = ?, leaderboard_points = ? WHERE user_id = ? AND guild_id = ?",
-      [this.storePoints, this.leaderboardPoints, this.id, this.guild.id],
+      "UPDATE USER SET store_points = ?, leaderboard_points = ?, messages_sent = ?, voice_duration = ? WHERE user_id = ? AND guild_id = ?",
+      [
+        this.storePoints,
+        this.leaderboardPoints,
+        this.messagesSent,
+        this.voiceDuration,
+        this.id,
+        this.guild.id,
+      ],
 
       (err) => {
         if (err) throw err;
@@ -103,10 +123,10 @@ export class User {
     this.update();
   }
 
-  getContribPoint(scope: string = "storePoints"): number {
-    return scope === "leaderboardPoints"
-      ? this.leaderboardPoints
-      : this.storePoints;
+  getPoints(scope: string = "storePoints"): number {
+    return Math.floor(
+      scope === "leaderboardPoints" ? this.leaderboardPoints : this.storePoints
+    );
   }
 
   buyItem(item: ShopItem): void {
@@ -161,9 +181,19 @@ export class User {
     roles.push(channelId, this.guild.id, this.id);
 
     // Divide by 1000 to convert in seconds, then by 60 to convert in minutes, then by 15 to convert in 15 minutes
-    this.addPoints(
-      this.guild.voicePoint *
-        ((duration / 900000) * this.guild.getMultiplier(roles))
-    );
+    const points: number =
+      (duration / 900000) * this.guild.getMultiplier(roles);
+
+    this.voiceDuration += duration;
+    this.addPoints(this.guild.voicePoint * points);
+  }
+
+  addMessagePoint(channelId: string, roles: string[]): void {
+    roles.push(channelId, this.guild.id, this.id);
+
+    const points: number = 1 * this.guild.getMultiplier(roles);
+
+    this.messagesSent += 1;
+    this.addPoints(points);
   }
 }

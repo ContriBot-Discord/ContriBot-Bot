@@ -16,9 +16,8 @@ export const command: SlashCommand = {
     .setDescription("Gets contribution points of a user")
     .addUserOption((option: SlashCommandUserOption) =>
       option
-        .setName("membre")
+        .setName("member")
         .setDescription("Member you want to see contribution points of")
-        .setRequired(true)
     )
     .addStringOption((option) =>
       option
@@ -40,13 +39,13 @@ export const command: SlashCommand = {
     ),
 
   async execute(interaction: CommandInteraction<CacheType>) {
-    const memberId = interaction.options.getUser("membre")!.id;
+    const userId = interaction.options.getUser("member")?.id || interaction.user.id;
     const scope = interaction.options.get("scope")?.value as string;
     const guild = DB.getGuild(interaction.guildId!);
-    const amount = guild.getUser(memberId).getContribPoint(scope);
+    const amount = guild.getUser(userId).getPoints(scope);
 
     const embed = getEmbed(
-      memberId,
+      userId,
       amount,
       scope,
       guild.lang,

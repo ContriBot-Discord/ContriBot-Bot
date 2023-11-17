@@ -27,7 +27,7 @@ export const command: SlashCommand = {
 
     const fields: {name:string, value:string}[] = [];
 
-    users.sort((a, b) => b.getContribPoint("leaderboardPoints") - a.getContribPoint("leaderboardPoints"));
+    users.sort((a, b) => b.getPoints("leaderboardPoints") - a.getPoints("leaderboardPoints"));
 
     // Add the first 10 users to the embed
     for (let i = 0; i < 9; i++) {
