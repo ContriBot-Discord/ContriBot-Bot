@@ -71,6 +71,7 @@ export const actionPointEmbed = function (
 
 export const channelEmbed = function (
   channelId: string,
+  pointName: string,
   value: string,
   lang: string
 ) {
@@ -78,8 +79,10 @@ export const channelEmbed = function (
 
   const description: string =
     value === "enable"
-      ? i18next.t("config:channel.description.enable", { channelId: channelId })
-      : i18next.t("config:channel.description.disable", { channelId: channelId });
+      ? i18next.t("config:channel.description.enable", { channelId: channelId, pointName: pointName })
+      : i18next.t("config:channel.description.disable", {
+          channelId: channelId, pointName: pointName
+        });
 
   return new EmbedBuilder()
     .addFields({
@@ -104,6 +107,19 @@ export const showEmbed = function (
   lang: string
 ) {
   i18next.changeLanguage(lang);
+
+  const disabledChannels = DB.getGuild(guild_id).disabledChannels;
+  let disabledChannelsText = `<#${disabledChannels.join(">, <#")}>`;
+
+  // Check if the length exceeds 220 characters
+  if (disabledChannelsText.length > 220) {
+    // Display only the first few channels and calculate the remaining count
+    const visibleChannels = disabledChannels.slice(0, 5); // Adjust the number as needed
+    const remainingChannelsCount = disabledChannels.length - visibleChannels.length;
+
+    // Update the value to include visible channels and "and x others channels"
+    disabledChannelsText = `<#${visibleChannels.join(">, <#")}> and ${remainingChannelsCount} others channels`;
+  }
 
   return new EmbedBuilder()
     .addFields({
@@ -139,6 +155,12 @@ export const showEmbed = function (
       }),
       inline: true,
     })
+    .addFields([
+      {
+        name: i18next.t("config:show.channels.name"),
+        value: disabledChannelsText,
+      },
+    ])
     .setThumbnail(iconURL)
     .setColor("#ff8e4d")
     .setTimestamp();

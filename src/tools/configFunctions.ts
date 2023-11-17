@@ -62,6 +62,7 @@ export const channel = async function disableChannel(
 
   const embed = channelEmbed(
     channel,
+    DB.getGuild(interaction.guildId!).pointName,
     value,
     DB.getGuild(interaction.guildId!).lang
   );

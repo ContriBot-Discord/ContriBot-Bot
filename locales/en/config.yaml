@@ -11,11 +11,13 @@ show:
       Nitro Boost: **{{nitroBoost}}**"
   settings:
     name: "Settings:"
-    value: "Guild language: English\n
+    value: "Guild language: **English**\n
     Points name: **{{pointName}}**\n" # Please, remplace "English" with the actual language this string is translated to
+  channels:
+    name: "Channels disabled:"
 
 lang:
-  description: "The guild language is now: English" # Please, remplace "English" with the actual language this string is translated to
+  description: "The guild language is now: **English**" # Please, remplace "English" with the actual language this string is translated to
 
 pointname:
   description: "Guild points are now called : **{{pointName}}**"
@@ -25,5 +27,5 @@ actionpoint:
 
 channel:
   description:
-    disable: "The channel <#{{channelId}}> is now disabled for message points."
-    enable: "The channel <#{{channelId}}> is now enabled for message points."
+    disable: "Channel <#{{channelId}}> does not give {{pointName}} anymore."
+    enable: "Channel <#{{channelId}}> now gives {{pointName}}."
