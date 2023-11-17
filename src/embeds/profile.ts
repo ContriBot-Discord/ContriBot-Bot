@@ -13,6 +13,8 @@ export default function (
 ): EmbedBuilder {
   i18next.changeLanguage(lang);
 
+  const { hours, minutes, seconds } = formatDuration(voiceDuration);
+
   return new EmbedBuilder()
     .addFields({
       name:
@@ -30,7 +32,9 @@ export default function (
         i18next.t(`embeds:profile.stats.name`),
       value: i18next.t(`embeds:profile.stats.value`, {
         messagesSent: messagesSent,
-        voiceDuration: formatDuration(voiceDuration),
+        hours: hours,
+        minutes: minutes,
+        seconds: seconds,
       }),
       inline: true,
     })
@@ -67,25 +71,5 @@ function formatDuration(milliseconds: number) {
   const minutes: number = Math.floor(seconds / 60);
   seconds %= 60;
 
-  // Build the string representation
-  const parts: string[] = [];
-  if (hours > 0) {
-    parts.push(`${hours} ${hours === 1 ? "hour" : "hours"}`);
-  }
-  if (minutes > 0) {
-    parts.push(`${minutes} ${minutes === 1 ? "minute" : "minutes"}`);
-  }
-  if (seconds > 0) {
-    parts.push(`${seconds} ${seconds === 1 ? "second" : "seconds"}`);
-  }
-
-  // Join the parts with commas and 'and'
-  if (parts.length === 0) {
-    return "0 seconds";
-  } else if (parts.length === 1) {
-    return parts[0];
-  } else {
-    const lastPart = parts.pop();
-    return parts.join(", ") + " and " + lastPart;
-  }
+  return { hours, minutes, seconds };
 }

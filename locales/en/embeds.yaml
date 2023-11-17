@@ -45,7 +45,7 @@ profile:
   stats:
     name: "Stats :"
     value: "Messages sent: **{{messagesSent}}**\n
-      Time spent in VC: **{{voiceDuration}}**"
+      Time spent in VC: **{{hours}}h {{minutes}}m {{seconds}}s**"
   points:
     name: "{{pointName}} :             ‎"
     value: "store {{pointName}}: **{{storePoints}}**\n
