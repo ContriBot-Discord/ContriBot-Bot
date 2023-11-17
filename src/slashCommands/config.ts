@@ -58,7 +58,7 @@ export const command: SlashCommand = {
               { name: "Message", value: "message" },
               { name: "Voice", value: "voice" },
               { name: "Bump", value: "bump" },
-              { name: "Nitro boost", value: "boost" }
+              { name: "Nitro boost", value: "nitroBoost" }
             )
             .setRequired(true)
         )

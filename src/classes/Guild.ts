@@ -75,6 +75,8 @@ export class Guild {
               user.user_id,
               user.store_points,
               user.leaderboard_points,
+              user.messages_sent,
+              user.voice_duration,
               this.#db
             )
           );
@@ -96,7 +98,7 @@ export class Guild {
   createUser(id: string): User {
     // Create a guild in the database
     // Since Database is not configured yet, return a new guild
-    let user = new User(this, id, 0, 0, this.#db);
+    let user = new User(this, id, 0, 0, 0, 0, this.#db);
 
     // Insert a new row in the database
     user.create();
@@ -139,11 +141,12 @@ export class Guild {
         req = "UPDATE USER SET store_points = 0 WHERE guild_id = ?";
         break;
       case "leaderboardPoints":
-        req = "UPDATE USER SET leaderboard_points = 0 WHERE guild_id = ?";
+        req =
+          "UPDATE USER SET leaderboard_points = 0 WHERE guild_id = ?";
         break;
       default:
         req =
-          "UPDATE USER SET store_points = 0, leaderboard_points = 0  WHERE guild_id = ?";
+          "UPDATE USER SET store_points = 0, leaderboard_points = 0 WHERE guild_id = ?";
         break;
     }
 
@@ -154,9 +157,12 @@ export class Guild {
 
     // We now update the cache
     this.users.forEach((user) => {
-      if (scope === "both" || scope === "storePoints") user.storePoints = 0;
-      if (scope === "both" || scope === "leaderboardPoints")
+      if (scope === "both" || scope === "storePoints") {
+        user.storePoints = 0;
+      }
+      if (scope === "both" || scope === "leaderboardPoints") {
         user.leaderboardPoints = 0;
+      }
     });
   }
 
@@ -342,13 +348,12 @@ export class Guild {
       case "bump":
         this.setBumpPoint(point);
         break;
-      case "boost":
-        this.setBoostPoint(point);
+      case "nitroBoost":
+        this.setNitroBoostPoint(point);
         break;
       default:
         break;
     }
-
   }
 
   setMessagePoint(point: number): void {
@@ -387,7 +392,7 @@ export class Guild {
     );
   }
 
-  setBoostPoint(point: number): void {
+  setNitroBoostPoint(point: number): void {
     this.boostPoint = point;
 
     this.#db.query<RowDataPacket[]>(

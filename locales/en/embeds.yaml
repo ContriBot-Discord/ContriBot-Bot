@@ -44,8 +44,8 @@ profile:
   description: "Here is the profile of <@{{userid}}>"
   stats:
     name: "Stats :"
-    value: "Message points: **{{messagePoint}}**\n
-      Voice points: **{{voicePoint}}**"
+    value: "Messages sent: **{{messagesSent}}**\n
+      Time spent in VC: **{{voiceDuration}}**"
   points:
     name: "{{pointName}} :        ‎"
     value: "store {{pointName}}: **{{storePoints}}**\n
