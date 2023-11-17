@@ -166,4 +166,10 @@ export class User {
         ((duration / 900000) * this.guild.getMultiplier(roles))
     );
   }
+
+  addMessagePoint(channelId: string, roles: string[]): void {
+    roles.push(channelId, this.guild.id, this.id);
+
+    this.addPoints(this.guild.getMultiplier(roles));
+  }
 }

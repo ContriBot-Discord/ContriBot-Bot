@@ -30,12 +30,12 @@ const event: BotEvent = {
       // Check if 60 seconds have passed since the user's last message
       if (now - messageCooldowns.get(user.id)! >= cooldown) {
         // Add points to the user
-        DB.getGuild(guild.id).getUser(user.id).addPoints(DB.getGuild(guild.id).messagePoint);
+        DB.getGuild(guild.id).getUser(user.id).addMessagePoint(channel.id, message.member!.roles.cache.map((role) => role.id));
         // Update the timestamp in the cache
         messageCooldowns.set(user.id, now);
       }
     } else {
-      DB.getGuild(guild.id).getUser(user.id).addPoints(DB.getGuild(guild.id).messagePoint);
+      DB.getGuild(guild.id).getUser(user.id).addMessagePoint(channel.id, message.member!.roles.cache.map((role) => role.id));
       // If the user doesn't have a timestamp in the cache, add it
       messageCooldowns.set(user.id, now);
     }
