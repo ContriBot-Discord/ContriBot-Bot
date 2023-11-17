@@ -91,7 +91,7 @@ export class User {
 
     // If the user exists in the database, it gets updated. If not, it gets created
     this.#db.query(
-      "UPDATE USER SET store_points = ?, leaderboard_points = ?, messages_sent = ?, voice_duration = ?, WHERE user_id = ? AND guild_id = ?",
+      "UPDATE USER SET store_points = ?, leaderboard_points = ?, messages_sent = ?, voice_duration = ? WHERE user_id = ? AND guild_id = ?",
       [
         this.storePoints,
         this.leaderboardPoints,

@@ -28,6 +28,8 @@ export const command: SlashCommand = {
       guild.pointName,
       user.storePoints,
       user.leaderboardPoints,
+      user.messagesSent,
+      user.voiceDuration,
       userAvatar
     );
 

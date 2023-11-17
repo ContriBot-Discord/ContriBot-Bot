@@ -47,7 +47,7 @@ profile:
     value: "Messages sent: **{{messagesSent}}**\n
       Time spent in VC: **{{voiceDuration}}**"
   points:
-    name: "{{pointName}} :        ‎"
+    name: "{{pointName}} :             ‎"
     value: "store {{pointName}}: **{{storePoints}}**\n
       leaderboard {{pointName}}: **{{leaderboardPoints}}**"
 
