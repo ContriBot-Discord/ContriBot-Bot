@@ -1,12 +1,13 @@
 import { Guild } from "./Guild";
 
 import mysql from "mysql2";
+import {ResultSetHeader} from "mysql2";
 
 export class ShopItem {
   price: number;
   name: string;
   description: string;
-  id: string;
+  id: number | null | undefined;
   guild: Guild;
   max_quantity: number;
   action: number;
@@ -20,7 +21,7 @@ export class ShopItem {
     price: number,
     name: string,
     description: string,
-    id: string,
+    id: number | null | undefined,
     guild: Guild,
     max_quantity: number,
     action: number,
@@ -68,10 +69,9 @@ export class ShopItem {
 
   create(): void {
     // Insert a new row in the database
-    this.#db.query(
-      "INSERT INTO SHOP (item_id, guild_id, price, label, description, max_quantity, action, available, available_after, available_before, restock_duration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    this.#db.query<ResultSetHeader>(
+      "INSERT INTO SHOP (guild_id, price, label, description, max_quantity, action, available, available_after, available_before, restock_duration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
-        this.id,
         this.guild.id,
         this.price,
         this.name,
@@ -83,8 +83,10 @@ export class ShopItem {
         this.availableUntil,
         this.restockDuration,
       ],
-      (err) => {
+      (err, result) => {
         if (err) throw err;
+        this.id = result.insertId;
+
       }
     );
   }
