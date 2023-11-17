@@ -42,7 +42,7 @@ export const command: SlashCommand = {
     const userId = interaction.options.getUser("member")?.id || interaction.user.id;
     const scope = interaction.options.get("scope")?.value as string;
     const guild = DB.getGuild(interaction.guildId!);
-    const amount = guild.getUser(userId).getContribPoint(scope);
+    const amount = guild.getUser(userId).getPoints(scope);
 
     const embed = getEmbed(
       userId,

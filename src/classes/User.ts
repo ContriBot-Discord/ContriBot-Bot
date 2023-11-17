@@ -123,7 +123,7 @@ export class User {
     this.update();
   }
 
-  getContribPoint(scope: string = "storePoints"): number {
+  getPoints(scope: string = "storePoints"): number {
     return Math.floor(
       scope === "leaderboardPoints" ? this.leaderboardPoints : this.storePoints
     );

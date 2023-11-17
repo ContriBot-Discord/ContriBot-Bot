@@ -1,7 +1,7 @@
 import { EmbedBuilder } from "discord.js";
 import i18next from "i18next";
 
-export default function getContribPoint(
+export default function(
   memberId: string,
   amount: number,
   scope: string = "storePoints",
