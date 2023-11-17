@@ -3,7 +3,7 @@ import { EmbedBuilder } from "discord.js";
 import i18next from "i18next";
 import { DB } from "..";
 
-export const configLangEmbed = function (lang: string): EmbedBuilder {
+export const langEmbed = function (lang: string): EmbedBuilder {
   i18next.changeLanguage(lang);
 
   return new EmbedBuilder()
@@ -21,7 +21,7 @@ export const configLangEmbed = function (lang: string): EmbedBuilder {
     .setTimestamp();
 };
 
-export const configPointNameEmbed = function (
+export const pointNameEmbed = function (
   pointName: string,
   lang: string
 ): EmbedBuilder {
@@ -42,7 +42,7 @@ export const configPointNameEmbed = function (
     .setTimestamp();
 };
 
-export const configActionPointEmbed = function (
+export const actionPointEmbed = function (
   action: string,
   point: number,
   pointName: string,
@@ -69,7 +69,36 @@ export const configActionPointEmbed = function (
     .setTimestamp();
 };
 
-export const configShowEmbed = function (
+export const channelEmbed = function (
+  channelId: string,
+  value: string,
+  lang: string
+) {
+  i18next.changeLanguage(lang);
+
+  const description: string =
+    value === "enable"
+      ? i18next.t("config:channel.description.enable", { channelId: channelId })
+      : i18next.t("config:channel.description.disable", { channelId: channelId });
+
+  return new EmbedBuilder()
+    .addFields({
+      name:
+        `<:shiny_orange_moderator:1163759368853004298>` +
+        i18next.t("config:default.title", {
+          command_name: "config channel",
+        }),
+      value: `<:shiny_orange_bar:1163759934702374942>`.repeat(8),
+    })
+    .addFields({
+      name: description,
+      value: ` `,
+    })
+    .setColor("#ff8e4d")
+    .setTimestamp();
+};
+
+export const showEmbed = function (
   guild_id: string,
   iconURL: string,
   lang: string

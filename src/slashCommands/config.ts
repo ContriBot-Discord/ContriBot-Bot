@@ -8,7 +8,7 @@ import {
 } from "discord.js";
 import { SlashCommand } from "@/types";
 
-import { lang, pointName, actionPoint, show } from "@/tools/configFunctions";
+import { lang, pointName, actionPoint, channel, show } from "@/tools/configFunctions";
 
 import { CommandInteractionOptionResolver } from "discord.js";
 
@@ -71,6 +71,27 @@ export const command: SlashCommand = {
     )
     .addSubcommand((subcommand: SlashCommandSubcommandBuilder) =>
       subcommand
+        .setName("channel")
+        .setDescription("Disable or enable a channel for message points.")
+        .addStringOption((option: SlashCommandStringOption) =>
+          option
+            .setName("channel_id")
+            .setDescription("Give the id of the channel you want to disable")
+            .setRequired(true)
+        )
+        .addStringOption((option: SlashCommandStringOption) =>
+          option
+            .setName("value")
+            .setDescription("Disable or enable the channel")
+            .addChoices(
+              { name: "Disable", value: "disable" },
+              { name: "Enable", value: "enable" }
+            )
+            .setRequired(true)
+        )
+    )
+    .addSubcommand((subcommand: SlashCommandSubcommandBuilder) =>
+      subcommand
         .setName("show")
         .setDescription("Show the current configuration.")
     ),
@@ -88,6 +109,9 @@ export const command: SlashCommand = {
         break;
       case "actionpoint":
         await actionPoint(interaction);
+        break;
+      case "channel":
+        await channel(interaction);
         break;
       default:
         await show(interaction);

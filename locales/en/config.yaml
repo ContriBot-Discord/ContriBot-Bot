@@ -22,3 +22,8 @@ pointname:
 
 actionpoint:
   description: "The base points for the action [{{action}}] are now [{{point}}] {{pointName}}."
+
+channel:
+  description:
+    disable: "The channel <#{{channelId}}> is now disabled for message points."
+    enable: "The channel <#{{channelId}}> is now enabled for message points."

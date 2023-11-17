@@ -141,8 +141,7 @@ export class Guild {
         req = "UPDATE USER SET store_points = 0 WHERE guild_id = ?";
         break;
       case "leaderboardPoints":
-        req =
-          "UPDATE USER SET leaderboard_points = 0 WHERE guild_id = ?";
+        req = "UPDATE USER SET leaderboard_points = 0 WHERE guild_id = ?";
         break;
       default:
         req =
@@ -268,6 +267,10 @@ export class Guild {
   }
 
   addDisabledChannel(channelId: string) {
+    if (this.disabledChannels.includes(channelId)) {
+      return;
+    }
+
     this.disabledChannels.push(channelId);
 
     this.#db.query<RowDataPacket[]>(

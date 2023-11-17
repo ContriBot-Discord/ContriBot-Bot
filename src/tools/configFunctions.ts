@@ -2,10 +2,11 @@ import { CommandInteraction } from "discord.js";
 
 import { DB } from "..";
 import {
-  configShowEmbed,
-  configLangEmbed,
-  configPointNameEmbed,
-  configActionPointEmbed,
+  showEmbed,
+  langEmbed,
+  pointNameEmbed,
+  actionPointEmbed,
+  channelEmbed,
 } from "@/embeds/config";
 
 export const lang = async function lang(
@@ -13,7 +14,7 @@ export const lang = async function lang(
 ) {
   const lang = interaction.options.get("language")?.value as string;
 
-  const embed = configLangEmbed(lang);
+  const embed = langEmbed(lang);
 
   DB.getGuild(interaction.guildId!).setLang(lang);
 
@@ -25,7 +26,10 @@ export const pointName = async function pointName(
 ) {
   const pointName = interaction.options.get("pointname")?.value as string;
 
-  const embed = configPointNameEmbed(pointName, DB.getGuild(interaction.guildId!).lang);
+  const embed = pointNameEmbed(
+    pointName,
+    DB.getGuild(interaction.guildId!).lang
+  );
 
   DB.getGuild(interaction.guildId!).setPointName(pointName);
 
@@ -38,7 +42,7 @@ export const actionPoint = async function actionPoint(
   const action = interaction.options.get("action")?.value as string;
   const point = interaction.options.get("points")?.value as number;
 
-  const embed = configActionPointEmbed(
+  const embed = actionPointEmbed(
     action,
     point,
     DB.getGuild(interaction.guildId!).pointName,
@@ -50,12 +54,31 @@ export const actionPoint = async function actionPoint(
   await interaction.reply({ embeds: [embed] });
 };
 
+export const channel = async function disableChannel(
+  interaction: CommandInteraction<import("discord.js").CacheType>
+) {
+  const channel = interaction.options.get("channel_id")?.value as string;
+  const value = interaction.options.get("value")?.value as string;
+
+  const embed = channelEmbed(
+    channel,
+    value,
+    DB.getGuild(interaction.guildId!).lang
+  );
+
+  value === "disable"
+    ? DB.getGuild(interaction.guildId!).addDisabledChannel(channel)
+    : DB.getGuild(interaction.guildId!).removeDisabledChannel(channel);
+
+  await interaction.reply({ embeds: [embed] });
+};
+
 export const show = async function show(
   interaction: CommandInteraction<import("discord.js").CacheType>
 ) {
   const guild = DB.getGuild(interaction.guildId!);
 
-  const embed = configShowEmbed(
+  const embed = showEmbed(
     interaction.guildId!,
     interaction.guild!.iconURL() as string,
     DB.getGuild(interaction.guildId!).lang
