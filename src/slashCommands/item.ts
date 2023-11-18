@@ -191,6 +191,18 @@ export const command: SlashCommand = {
                             .setMinValue(1)
                     )
             )
+      )
+      .addSubcommand((group) =>
+          group
+              .setName('delete')
+              .setDescription('Delete an item')
+              .addStringOption(
+                    (option) =>
+                        option
+                            .setName('id')
+                            .setDescription('The id of the item to delete')
+                            .setRequired(true)
+              )
       ),
   async execute(interaction: CommandInteraction) {
       let subcommand : CommandInteractionOptionResolver | string = (
