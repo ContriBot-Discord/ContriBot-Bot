@@ -22,6 +22,15 @@ module.exports = async (client: Client) => {
   const rest = new REST({ version: "10" }).setToken(process.env.TOKEN);
 
   try {
+    // Get all commands
+    const commands: any = await rest.get(Routes.applicationCommands(process.env.CLIENT_ID));
+
+    // Delete all commands
+    for (const command of commands) {
+      await rest.delete(Routes.applicationCommand(process.env.CLIENT_ID, command.id));
+    }
+
+    // Add new commands
     if (process.env.GUILD_ID) {
       await rest.put(
         Routes.applicationGuildCommands(
@@ -31,7 +40,6 @@ module.exports = async (client: Client) => {
         { body: body }
       );
       console.log("⚡ Successfully reloaded application (/) commands.");
-      return;
     } else {
       await rest.put(Routes.applicationCommands(process.env.CLIENT_ID), {
         body: body,
