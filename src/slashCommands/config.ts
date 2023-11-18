@@ -1,3 +1,5 @@
+import { SlashCommand } from "@/types";
+
 import {
   SlashCommandBuilder,
   CommandInteraction,
@@ -6,12 +8,10 @@ import {
   SlashCommandNumberOption,
   PermissionFlagsBits,
   SlashCommandChannelOption,
+  CommandInteractionOptionResolver,
 } from "discord.js";
-import { SlashCommand } from "@/types";
 
 import { lang, pointName, actionPoint, channel, show } from "@/tools/configFunctions";
-
-import { CommandInteractionOptionResolver } from "discord.js";
 
 export const command: SlashCommand = {
   name: "config",
