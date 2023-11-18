@@ -5,6 +5,7 @@ import {
   SlashCommandStringOption,
   SlashCommandNumberOption,
   PermissionFlagsBits,
+  SlashCommandChannelOption,
 } from "discord.js";
 import { SlashCommand } from "@/types";
 
@@ -73,9 +74,9 @@ export const command: SlashCommand = {
       subcommand
         .setName("channel")
         .setDescription("Disable or enable a channel for message points.")
-        .addStringOption((option: SlashCommandStringOption) =>
+        .addChannelOption((option: SlashCommandChannelOption) =>
           option
-            .setName("channel_id")
+            .setName("channel")
             .setDescription("Give the id of the channel you want to disable")
             .setRequired(true)
         )
