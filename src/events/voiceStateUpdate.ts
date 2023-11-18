@@ -6,6 +6,9 @@ import {Guild} from "@/classes/Guild";
 
 function register(user: User, channel: VoiceBasedChannel, guild: Guild) {
 
+  // If the user comes from a blocked channel, return
+  if (guild.disabledChannels.includes(channel.id)) return;
+
   user.voiceJoinedAt = new Date();
 
   // We are searching for new eligible members in the voice channel that were not registered before because there were alone in the voice channel

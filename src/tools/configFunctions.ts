@@ -1,4 +1,4 @@
-import { CommandInteraction } from "discord.js";
+import { Channel, CommandInteraction } from "discord.js";
 
 import { DB } from "..";
 import {
@@ -25,6 +25,15 @@ export const pointName = async function pointName(
   interaction: CommandInteraction<import("discord.js").CacheType>
 ) {
   const pointName = interaction.options.get("pointname")?.value as string;
+
+  //If pointName is longer than 12 characters, return an error message
+  if (pointName.length > 12) {
+    await interaction.reply({
+      content: "The point name must be 12 characters or less.",
+      ephemeral: true,
+    });
+    return;
+  }
 
   const embed = pointNameEmbed(
     pointName,
@@ -57,19 +66,19 @@ export const actionPoint = async function actionPoint(
 export const channel = async function disableChannel(
   interaction: CommandInteraction<import("discord.js").CacheType>
 ) {
-  const channel = interaction.options.get("channel_id")?.value as string;
+  const channel = interaction.options.get("channel")?.channel as Channel;
   const value = interaction.options.get("value")?.value as string;
 
   const embed = channelEmbed(
-    channel,
+    channel.id,
     DB.getGuild(interaction.guildId!).pointName,
     value,
     DB.getGuild(interaction.guildId!).lang
   );
 
   value === "disable"
-    ? DB.getGuild(interaction.guildId!).addDisabledChannel(channel)
-    : DB.getGuild(interaction.guildId!).removeDisabledChannel(channel);
+    ? DB.getGuild(interaction.guildId!).addDisabledChannel(channel.id)
+    : DB.getGuild(interaction.guildId!).removeDisabledChannel(channel.id);
 
   await interaction.reply({ embeds: [embed] });
 };

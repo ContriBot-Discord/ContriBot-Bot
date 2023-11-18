@@ -1,3 +1,5 @@
+import { SlashCommand } from "@/types";
+
 import {
   SlashCommandBuilder,
   CommandInteraction,
@@ -5,12 +7,11 @@ import {
   SlashCommandStringOption,
   SlashCommandNumberOption,
   PermissionFlagsBits,
+  SlashCommandChannelOption,
+  CommandInteractionOptionResolver,
 } from "discord.js";
-import { SlashCommand } from "@/types";
 
 import { lang, pointName, actionPoint, channel, show } from "@/tools/configFunctions";
-
-import { CommandInteractionOptionResolver } from "discord.js";
 
 export const command: SlashCommand = {
   name: "config",
@@ -73,9 +74,9 @@ export const command: SlashCommand = {
       subcommand
         .setName("channel")
         .setDescription("Disable or enable a channel for message points.")
-        .addStringOption((option: SlashCommandStringOption) =>
+        .addChannelOption((option: SlashCommandChannelOption) =>
           option
-            .setName("channel_id")
+            .setName("channel")
             .setDescription("Give the id of the channel you want to disable")
             .setRequired(true)
         )

@@ -1,7 +1,6 @@
-import { pointName } from "@/tools/configFunctions";
 import { EmbedBuilder } from "discord.js";
 
-import i18n from "i18next";
+import i18next from "i18next";
 
 export default function (
   userId: string,
@@ -11,7 +10,7 @@ export default function (
   scope: string = "both",
   pointName: string
 ) {
-  i18n.changeLanguage(lang);
+  i18next.changeLanguage(lang);
 
   let fieldName: string;
 
@@ -29,7 +28,7 @@ export default function (
 
   return new EmbedBuilder()
     .addFields({
-      name: `<:shiny_orange_moderator:1163759368853004298> ${i18n.t(
+      name: `<:shiny_orange_moderator:1163759368853004298> ${i18next.t(
         "embeds:default.title",
         { command_name: "add" }
       )}`,
@@ -37,7 +36,7 @@ export default function (
     })
     .addFields({
       name: " ",
-      value: i18n.t(fieldName, {
+      value: i18next.t(fieldName, {
         userid: userId,
         quantity: amount,
         pointsname: "points",
