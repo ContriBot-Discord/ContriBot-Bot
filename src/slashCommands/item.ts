@@ -12,7 +12,7 @@ export const command: SlashCommand = {
     .setDescription("Item command group.")
       .addSubcommandGroup((group) =>
         group
-              .setName('new')
+              .setName('create')
               .setDescription('Create a new item')
               .addSubcommand((command: SlashCommandSubcommandBuilder) =>
                   command
@@ -212,20 +212,23 @@ export const command: SlashCommand = {
             )
       ),
   async execute(interaction: CommandInteraction) {
-      const subcommand = (
+      let subcommand : CommandInteractionOptionResolver | string = (
           interaction.options as CommandInteractionOptionResolver
-      ).getSubcommand();
+      );
 
-    switch (subcommand) {
-      case "new":
-          await interaction.reply("Toujours WIP, faut être patient");
-        break;
-      case "edit":
-        await interaction.reply("Toujours WIP, faut être patient");
-        break;
-      case "remove":
-          await interaction.reply("Toujours WIP, faut être patient");
-        break;
-    }
-  },
-};
+      // Retrieve the subcommand (either the subcommand or the subcommand group)
+      subcommand =  subcommand.getSubcommandGroup() ? subcommand.getSubcommandGroup()! : subcommand.getSubcommand()!;
+
+      switch (subcommand) {
+          case "create":
+              await interaction.reply("Toujours WIP, faut être patient");
+              break;
+          case "edit":
+              await interaction.reply("Toujours WIP, faut être patient");
+              break;
+          case "delete":
+              await interaction.reply("Toujours WIP, faut être patient");
+              break;
+        }
+      },
+    };
