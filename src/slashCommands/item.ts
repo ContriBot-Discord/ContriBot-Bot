@@ -4,6 +4,43 @@ import {
     SlashCommandSubcommandBuilder, CommandInteractionOptionResolver,
 } from "discord.js";
 import { SlashCommand } from "@/types";
+import {DB} from "@/index";
+import {ShopItem} from "@/classes/ShopItem";
+
+const create = function (interaction: CommandInteraction) {
+
+    const guild = DB.getGuild(interaction.guild!.id);
+
+    let subcommand : CommandInteractionOptionResolver | string = (
+        interaction.options as CommandInteractionOptionResolver
+    );
+
+    // Loading parameters
+    switch (subcommand.getSubcommand()) {
+        case "role":
+            const role = subcommand.getRole("role", true);
+            const description = subcommand.getString("description", true);
+            const price = subcommand.getNumber("price", true);
+            const quantity = subcommand.getNumber("quantity", false);
+            const after = subcommand.getString("after", false);
+            const before = subcommand.getString("before", false);
+
+            const item = guild.createShopItem(
+                `<@&${role!.id}>`,
+                description,
+                price,
+                quantity ? quantity : -1,
+                0,
+                true,
+    after ? new Date(after) : null,
+    before ? new Date(before) : null
+            );
+            break;
+    }
+
+
+}
+
 
 export const command: SlashCommand = {
   name: "item",
@@ -45,21 +82,7 @@ export const command: SlashCommand = {
                                     .setDescription('Quantity of available roles')
                                     .setRequired(false)
                                     .setMinValue(1)
-                      )
-                      .addStringOption(
-                            (option) =>
-                                option
-                                    .setName('after')
-                                    .setDescription('Make the role available in the shop after a certain date (YYYY-MM-DD HH:MM:SS)')
-                                    .setRequired(false)
-                      )
-                      .addStringOption(
-                            (option) =>
-                                option
-                                    .setName('before')
-                                    .setDescription('Make the role available in the shop before a certain date (YYYY-MM-DD HH:MM:SS)')
-                                    .setRequired(false)
-                      )
+                        )
                       )
             .addSubcommand((command: SlashCommandSubcommandBuilder) =>
                 command
@@ -112,20 +135,6 @@ export const command: SlashCommand = {
                                 .setRequired(false)
                                 .setMinValue(1)
                     )
-                    .addStringOption(
-                        (option) =>
-                            option
-                                .setName('after')
-                                .setDescription('Make the role available in the shop after a certain date (YYYY-MM-DD HH:MM:SS)')
-                                .setRequired(false)
-                    )
-                    .addStringOption(
-                        (option) =>
-                            option
-                                .setName('before')
-                                .setDescription('Make the role available in the shop before a certain date (YYYY-MM-DD HH:MM:SS)')
-                                .setRequired(false)
-                    )
               )
             .addSubcommand((command: SlashCommandSubcommandBuilder) =>
                 command
@@ -150,20 +159,6 @@ export const command: SlashCommand = {
                             .setRequired(true)
                             .setMinValue(0)
                     )
-                    .addStringOption(
-                        (option) =>
-                            option
-                                .setName('after')
-                                .setDescription('Make the role available in the shop after a certain date (YYYY-MM-DD HH:MM:SS)')
-                                .setRequired(false)
-                    )
-                    .addStringOption(
-                        (option) =>
-                            option
-                                .setName('before')
-                                .setDescription('Make the role available in the shop before a certain date (YYYY-MM-DD HH:MM:SS)')
-                                .setRequired(false)
-                    )
             )
             .addSubcommand((command: SlashCommandSubcommandBuilder) =>
                 command
@@ -187,20 +182,6 @@ export const command: SlashCommand = {
                             .setDescription('Price of the item')
                             .setRequired(true)
                             .setMinValue(0)
-                    )
-                    .addStringOption(
-                        (option) =>
-                            option
-                                .setName('after')
-                                .setDescription('Make the role available in the shop after a certain date (YYYY-MM-DD HH:MM:SS)')
-                                .setRequired(false)
-                    )
-                    .addStringOption(
-                        (option) =>
-                            option
-                                .setName('before')
-                                .setDescription('Make the role available in the shop before a certain date (YYYY-MM-DD HH:MM:SS)')
-                                .setRequired(false)
                     )
                     .addNumberOption( (option) =>
                         option
