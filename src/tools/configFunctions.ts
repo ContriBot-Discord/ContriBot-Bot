@@ -26,6 +26,15 @@ export const pointName = async function pointName(
 ) {
   const pointName = interaction.options.get("pointname")?.value as string;
 
+  //If pointName is longer than 12 characters, return an error message
+  if (pointName.length > 12) {
+    await interaction.reply({
+      content: "The point name must be 12 characters or less.",
+      ephemeral: true,
+    });
+    return;
+  }
+
   const embed = pointNameEmbed(
     pointName,
     DB.getGuild(interaction.guildId!).lang
