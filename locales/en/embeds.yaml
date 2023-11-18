@@ -52,10 +52,39 @@ profile:
       leaderboard {{pointName}}: **{{leaderboardPoints}}**"
 
 help:
+  title: "Help [{{index}}]"
   description: "Here is the list of all commands"
-  fields:
-    name: "{{commandName}}"
-    value: "{{commandDescription}}"
+  user :
+    profile:
+      value: "Using this command you can see interesting member's statistics as well as their {{pointName}}."
+    leaderboard:
+      value: "Using this command you can see the leaderboard of {{pointName}}."
+    whois:
+      value: "Using this command you can see information about the bot and the developers."
+    ping:
+      value: "Using this command you can see the bot's ping."
+  admin:
+    description: "Here is the list of all admin commands, you can use them by adding `admin` before the command name."
+    add:
+      value: "Using this command you can add {{pointName}} to a member."
+    remove:
+      value: "Using this command you can remove {{pointName}} from a member."
+    reset:
+      value: "Using this command you can reset {{pointName}} of a member."
+    wipe:
+      value: "Using this command you can reset {{pointName}} of the entire guild."
+  config:
+    description: "Here is the list of all config commands, you can use them by adding `/config` before the command name."
+    show:
+      value: "Using this command you can see the current configuration of the bot."
+    lang:
+      value: "Using this command you can change the bot's language."
+    pointname:
+      value: "Using this command you can change the bot's {{pointName}} name."
+    action:
+      value: "You can modify the number of points that users will receive for each action."
+    channel:
+      value: "Enable or disable points rewards in a channel (voice chat and text chat)."
 
 whois:
   title: "Who are we ?"
