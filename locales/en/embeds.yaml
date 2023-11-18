@@ -51,6 +51,12 @@ profile:
     value: "store {{pointName}}: **{{storePoints}}**\n
       leaderboard {{pointName}}: **{{leaderboardPoints}}**"
 
+help:
+  description: "Here is the list of all commands"
+  fields:
+    name: "{{commandName}}"
+    value: "{{commandDescription}}"
+
 whois:
   title: "Who are we ?"
   description:

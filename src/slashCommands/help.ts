@@ -1,6 +1,6 @@
 import { SlashCommand } from "@/types";
 
-import { CacheType, CommandInteraction, SlashCommandBuilder } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, CacheType, CommandInteraction, SlashCommandBuilder } from "discord.js";
 
 import helpEmbed from "@/embeds/help";
 
@@ -13,7 +13,21 @@ export const command: SlashCommand = {
     .setDescription("Show the help menu."),
   async execute(interaction: CommandInteraction<CacheType>) {
     const guild = DB.getGuild(interaction.guildId!);
+
     const embed = helpEmbed(guild.lang, guild.pointName);
-    interaction.reply({ embeds: [embed] });
+
+    const button = new ActionRowBuilder<ButtonBuilder>()
+      .addComponents(
+        new ButtonBuilder()
+          .setCustomId("Hprevious")
+          .setLabel("◀︎")
+          .setStyle(1)
+          .setDisabled(true)
+      )
+      .addComponents(
+        new ButtonBuilder().setCustomId("Hnext").setLabel("▶").setStyle(1)
+      )
+
+    interaction.reply({ embeds: [embed], components: [button] });
   },
 };

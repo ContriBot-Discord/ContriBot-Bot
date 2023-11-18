@@ -50,16 +50,16 @@ export const command: SlashCommand = {
     const button = new ActionRowBuilder<ButtonBuilder>()
       .addComponents(
         new ButtonBuilder()
-          .setCustomId("previous")
+          .setCustomId("LBprevious")
           .setLabel("◀︎")
           .setStyle(1)
           .setDisabled(true)
       )
       .addComponents(
-        new ButtonBuilder().setCustomId("next").setLabel("▶").setStyle(1)
+        new ButtonBuilder().setCustomId("LBnext").setLabel("▶").setStyle(1)
       )
       .addComponents(
-        new ButtonBuilder().setCustomId("refresh").setLabel("↻").setStyle(1)
+        new ButtonBuilder().setCustomId("LBrefresh").setLabel("↻").setStyle(1)
       );
 
     // If there are less than 10 users, disable the "next" button

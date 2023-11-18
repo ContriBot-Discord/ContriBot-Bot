@@ -40,9 +40,9 @@ const event: BotEvent = {
         // If the button is not one of the three buttons, we stop the function since it's not related to the leaderboard
         if (
             !(
-                interaction.customId === "previous" ||
-                interaction.customId === "next" ||
-                interaction.customId === "refresh"
+                interaction.customId === "LBprevious" ||
+                interaction.customId === "LBnext" ||
+                interaction.customId === "LBrefresh"
             )
         )
             return;
@@ -66,11 +66,11 @@ const event: BotEvent = {
         let fields: { name: string, value: string }[];
 
         // We get the list of users depending on the button pressed
-        if (interaction.customId === "previous") {
+        if (interaction.customId === "LBprevious") {
 
             fields = getUserList((actualPageInt - 1) * 10, users, guild.lang, guild.pointName);
 
-        } else if (interaction.customId === "next") {
+        } else if (interaction.customId === "LBnext") {
 
             fields = getUserList(actualPageInt * 10, users, guild.lang, guild.pointName);
 
@@ -82,13 +82,13 @@ const event: BotEvent = {
         // we initialize the buttons, and make them disabled if needed
         const button = new ActionRowBuilder<ButtonBuilder>()
             .addComponents(
-                new ButtonBuilder().setCustomId("previous").setLabel("◀︎").setStyle(1)
+                new ButtonBuilder().setCustomId("LBprevious").setLabel("◀︎").setStyle(1)
             )
             .addComponents(
-                new ButtonBuilder().setCustomId("next").setLabel("▶").setStyle(1)
+                new ButtonBuilder().setCustomId("LBnext").setLabel("▶").setStyle(1)
             )
             .addComponents(
-                new ButtonBuilder().setCustomId("refresh").setLabel("↻").setStyle(1)
+                new ButtonBuilder().setCustomId("LBrefresh").setLabel("↻").setStyle(1)
             );
 
         // If the page is 1, we disable the "previous" button
