@@ -184,14 +184,14 @@ export class Guild {
       (err, result) => {
         if (err) throw err;
 
-        result.forEach((item: any) => {
+        result.forEach((item: RowDataPacket) => {
           shop.push(
             new ShopItem(
                 this.#db,
                 item.price,
-                item.name,
+                item.label,
                 item.description,
-                item.item_id,
+                item.id,
                 this,
                 item.max_quantity,
                 item.action,
