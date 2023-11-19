@@ -12,7 +12,7 @@ export interface BotEvent {
 
 export interface SlashCommand {
   name: string;
-  data: SlashCommandBuilder | any;
+  data: Data;
   execute: (interaction: CommandInteraction) => Promise<void>;
 }
 
