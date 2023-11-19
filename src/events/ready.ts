@@ -8,6 +8,8 @@ import fetchVoice from "@/tools/voiceFetcher"
 
 import profilePicChooser from "@/tools/profilePicChooser";
 
+import DiscordAnalytics from "discord-analytics/discordjs";
+
 const event: BotEvent = {
   name: Events.ClientReady,
   once: true,
@@ -18,6 +20,21 @@ const event: BotEvent = {
     console.log(`🎤 Fetched voice users`)
 
     profilePicChooser(client.user!);
+
+    const analytics = new DiscordAnalytics({
+      client: client,
+      eventsToTrack: {
+        trackGuilds: true,
+        trackGuildsLocale: true,
+        trackInteractions: true,
+        trackUserCount: true,
+        trackUserLanguage: true
+      },
+      apiToken: process.env.DISCORD_ANALYTICS_TOKEN!,
+      sharded: false
+    });
+
+    analytics.trackEvents();
 
     console.log(`💪 Logged in as ${client.user?.tag}`);
   },
