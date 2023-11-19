@@ -52,3 +52,6 @@ whois:
 ping:
   description: "🏓 Pong!\n
     📡 Ping: {{ping}}ms" # ping of the bot (number)
+
+shop:
+  title: "Shop [{{index}}]"

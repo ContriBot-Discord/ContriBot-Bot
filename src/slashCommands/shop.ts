@@ -13,7 +13,7 @@ export const command: SlashCommand = {
     const guild = DB.getGuild(interaction.guildId!);
     const items = guild.shop;
 
-    const embed = shopEmbed(guild.lang, items.slice(0, 10), 0);
+    const embed = shopEmbed(guild.lang, guild.pointName, items.slice(0, 10), 0);
 
     await interaction.reply({ embeds: [embed] });
   },

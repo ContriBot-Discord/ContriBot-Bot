@@ -1,22 +1,30 @@
-import {ShopItem} from "@/classes/ShopItem";
-import {EmbedBuilder} from "discord.js";
+import { ShopItem } from "@/classes/ShopItem";
+import { EmbedBuilder } from "discord.js";
+import i18next from "i18next";
 
-export default function (lang: string, items: ShopItem[], index: number){
+export default function (
+  lang: string,
+  pointName: string,
+  items: ShopItem[],
+  index: number
+) {
+  i18next.changeLanguage(lang);
 
-    const fields = items.map((item) => {
+  const fields = items.map((item) => {
+    return {
+      name: item.name + " - " + item.price + " " + pointName,
+      value: item.description,
+    };
+  });
 
-        return {
-            name: item.name + " - " + item.price + " points",
-            value: item.description,
-        }
-
-    });
-
-    return new EmbedBuilder()
-        .addFields({
-            name: `<:shiny_orange_moderator:1163759368853004298>Shop - ${index + 1}`,
-            value: `<:shiny_orange_bar:1163759934702374942>`.repeat(8),
-        })
-        .addFields(fields)
-
+  return new EmbedBuilder()
+    .addFields({
+      name:
+        "<:shiny_purple_star:1163585447201607781>" +
+        i18next.t("embeds:shop.title", { index: index + 1 }),
+      value: `<:lineviolett:1163753428317638696>`.repeat(8),
+    })
+    .addFields(fields)
+    .setColor("#aa54e1")
+    .setTimestamp();
 }
