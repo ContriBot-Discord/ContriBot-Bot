@@ -4,12 +4,12 @@ import langEmbed from "@/embeds/config/lang";
 import pointNameEmbed from "@/embeds/config/pointName";
 import showEmbed from "@/embeds/config/show";
 
-import { Channel, CommandInteraction } from "discord.js";
+import { CacheType, Channel, CommandInteraction } from "discord.js";
 
 import { DB } from "..";
 
 export const lang = async function lang(
-  interaction: CommandInteraction<import("discord.js").CacheType>
+  interaction: CommandInteraction<CacheType>
 ) {
   const lang = interaction.options.get("language")?.value as string;
 

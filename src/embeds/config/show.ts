@@ -1,5 +1,4 @@
 import { EmbedBuilder } from "discord.js";
-
 import i18next from "i18next";
 import { DB } from "../..";
 
@@ -7,19 +6,34 @@ export default function (guild_id: string, iconURL: string, lang: string) {
   i18next.changeLanguage(lang);
 
   const disabledChannels = DB.getGuild(guild_id).disabledChannels;
-  let disabledChannelsText = `<#${disabledChannels.join(">, <#")}>`;
 
-  // Check if the length exceeds 220 characters
-  if (disabledChannelsText.length > 220) {
-    // Display only the first few channels and calculate the remaining count
-    const visibleChannels = disabledChannels.slice(0, 5); // Adjust the number as needed
-    const remainingChannelsCount =
-      disabledChannels.length - visibleChannels.length;
+  let disabledChannelsText;
+  if (disabledChannels.length > 0) {
+    disabledChannelsText = `<#${disabledChannels.join(">, <#")}>`;
 
-    // Update the value to include visible channels and "and x others channels"
-    disabledChannelsText = `<#${visibleChannels.join(
-      ">, <#"
-    )}> and ${remainingChannelsCount} others channels`;
+    // Check if the length exceeds 200 characters
+    if (disabledChannelsText.length > 200) {
+      let visibleChannels = disabledChannels.slice(); // Copy all channels
+
+      // Trim channels until the total length fits within 200 characters
+      while (
+        visibleChannels.join(", ").length > 200 &&
+        visibleChannels.length > 1
+      ) {
+        visibleChannels.pop(); // Remove the last channel
+      }
+
+      const remainingChannelsCount =
+        disabledChannels.length - visibleChannels.length;
+
+      // Update the value to include visible channels and "and x others channels"
+      disabledChannelsText = `<#${visibleChannels.join(
+        ">, <#"
+      )}> ` + i18next.t("config:show.channels.andXOthers", { count: remainingChannelsCount });
+    }
+  } else {
+    // Display "no channels" if there are no channels
+    disabledChannelsText = i18next.t('config:show.channels.noChannels');
   }
 
   return new EmbedBuilder()
