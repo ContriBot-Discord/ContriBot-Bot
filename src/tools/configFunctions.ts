@@ -85,8 +85,6 @@ export const channel = async function disableChannel(
 export const show = async function show(
   interaction: CommandInteraction<import("discord.js").CacheType>
 ) {
-  const guild = DB.getGuild(interaction.guildId!);
-
   const embed = showEmbed(
     interaction.guildId!,
     interaction.guild!.iconURL() as string,
