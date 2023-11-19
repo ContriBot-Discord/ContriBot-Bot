@@ -45,7 +45,7 @@ export class User {
       (err, result) => {
         if (err) throw err;
 
-        result.forEach((item: any) => {
+        result.forEach((item: RowDataPacket) => {
           items.push(
             new UserItem(
               this,

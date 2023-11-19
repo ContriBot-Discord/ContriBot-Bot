@@ -11,7 +11,13 @@ import {
   CommandInteractionOptionResolver,
 } from "discord.js";
 
-import { lang, pointName, actionPoint, channel, show } from "@/tools/configFunctions";
+import {
+  lang,
+  pointName,
+  actionPoint,
+  channel,
+  show,
+} from "@/tools/configFunctions";
 
 export const command: SlashCommand = {
   name: "config",
@@ -57,9 +63,9 @@ export const command: SlashCommand = {
             )
             .addChoices(
               { name: "Message", value: "message" },
-              { name: "Voice", value: "voice" },
-              { name: "Bump", value: "bump" },
-              { name: "Nitro boost", value: "nitroBoost" }
+              { name: "Voice", value: "voice" }
+              //{ name: "Bump", value: "bump" },
+              //{ name: "Nitro boost", value: "nitroBoost" }
             )
             .setRequired(true)
         )

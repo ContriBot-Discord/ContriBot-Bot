@@ -1,16 +1,15 @@
-import { Channel, CommandInteraction } from "discord.js";
+import actionPointEmbed from "@/embeds/config/actionPoint";
+import channelEmbed from "@/embeds/config/channel";
+import langEmbed from "@/embeds/config/lang";
+import pointNameEmbed from "@/embeds/config/pointName";
+import showEmbed from "@/embeds/config/show";
+
+import { CacheType, Channel, CommandInteraction } from "discord.js";
 
 import { DB } from "..";
-import {
-  showEmbed,
-  langEmbed,
-  pointNameEmbed,
-  actionPointEmbed,
-  channelEmbed,
-} from "@/embeds/config";
 
 export const lang = async function lang(
-  interaction: CommandInteraction<import("discord.js").CacheType>
+  interaction: CommandInteraction<CacheType>
 ) {
   const lang = interaction.options.get("language")?.value as string;
 
@@ -86,8 +85,6 @@ export const channel = async function disableChannel(
 export const show = async function show(
   interaction: CommandInteraction<import("discord.js").CacheType>
 ) {
-  const guild = DB.getGuild(interaction.guildId!);
-
   const embed = showEmbed(
     interaction.guildId!,
     interaction.guild!.iconURL() as string,

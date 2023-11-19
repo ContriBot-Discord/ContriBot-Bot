@@ -68,7 +68,7 @@ export class Guild {
       (err, result) => {
         if (err) throw err;
 
-        result.forEach((user: any) => {
+        result.forEach((user: RowDataPacket) => {
           users.push(
             new User(
               this,
@@ -175,7 +175,7 @@ export class Guild {
       (err, result) => {
         if (err) throw err;
 
-        result.forEach((item: any) => {
+        result.forEach((item: RowDataPacket) => {
           shop.push(
             new ShopItem(
               item.price,
@@ -257,7 +257,7 @@ export class Guild {
       (err, result) => {
         if (err) throw err;
 
-        result.forEach((channel: any) => {
+        result.forEach((channel: RowDataPacket) => {
           disabledChannels.push(channel.channel_id);
         });
       }
@@ -306,7 +306,7 @@ export class Guild {
       (err, result) => {
         if (err) throw err;
 
-        result.forEach((booster: any) => {
+        result.forEach((booster: RowDataPacket) => {
           boosters.push(
             new Boost(
               this.#db,

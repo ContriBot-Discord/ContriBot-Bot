@@ -6,15 +6,17 @@ show:
   pointsCfg:
     name: "{{pointName}} earned by action:        ‎"
     value: "Send message: **{{message}}**\n
-      Voice channel: **{{voice}}**/15 minutes\n
-      Disboard Bump: **{{bump}}**\n
-      Nitro Boost: **{{nitroBoost}}**"
+      Voice channel: **{{voice}}**/15 minutes\n"
+      #Disboard Bump: **{{bump}}**\n
+      #Nitro Boost: **{{nitroBoost}}**"
   settings:
     name: "Settings:"
     value: "Guild language: **English**\n
     Points name: **{{pointName}}**\n" # Please, remplace "English" with the actual language this string is translated to
   channels:
     name: "Channels disabled:"
+    noChannels: "No channels disabled"
+    andXOthers: "and {{remainingChannelsCount}} others"
 
 lang:
   description: "The guild language is now: **English**" # Please, remplace "English" with the actual language this string is translated to

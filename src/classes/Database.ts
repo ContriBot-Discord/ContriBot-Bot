@@ -34,7 +34,7 @@ export class Database {
     this.#db.query<RowDataPacket[]>("SELECT * FROM GUILD", (err, result) => {
       if (err) throw err;
       // For each guild in the database, create a new Guild object
-      result.forEach((guild: any) => {
+      result.forEach((guild: RowDataPacket) => {
         guilds.push(
           new Guild(
             guild.guild_id,
