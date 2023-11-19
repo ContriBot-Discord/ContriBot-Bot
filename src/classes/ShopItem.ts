@@ -5,7 +5,7 @@ import {ResultSetHeader} from "mysql2";
 
 export class ShopItem {
   price: number;
-  name: string;
+  label: string;
   description: string;
   id: number | null | undefined;
   guild: Guild;
@@ -17,7 +17,7 @@ export class ShopItem {
   constructor(
     db: mysql.Connection,
     price: number,
-    name: string,
+    label: string,
     description: string,
     id: number | null | undefined,
     guild: Guild,
@@ -27,7 +27,7 @@ export class ShopItem {
   ) {
     this.#db = db;
     this.price = price;
-    this.name = name;
+    this.label = label;
     this.description = description;
     this.id = id;
     this.guild = guild;
@@ -42,7 +42,7 @@ export class ShopItem {
       "UPDATE SHOP SET price = ?, label = ?, description = ?, max_quantity = ?, action = ?, available = ? WHERE item_id = ?",
       [
         this.price,
-        this.name,
+        this.label,
         this.description,
         this.max_quantity,
         this.action,
@@ -62,7 +62,7 @@ export class ShopItem {
       [
         this.guild.id,
         this.price,
-        this.name,
+        this.label,
         this.description,
         this.max_quantity,
         this.action,
