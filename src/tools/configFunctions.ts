@@ -1,13 +1,12 @@
+import actionPointEmbed from "@/embeds/config/actionPoint";
+import channelEmbed from "@/embeds/config/channel";
+import langEmbed from "@/embeds/config/lang";
+import pointNameEmbed from "@/embeds/config/pointName";
+import showEmbed from "@/embeds/config/show";
+
 import { Channel, CommandInteraction } from "discord.js";
 
 import { DB } from "..";
-import {
-  showEmbed,
-  langEmbed,
-  pointNameEmbed,
-  actionPointEmbed,
-  channelEmbed,
-} from "@/embeds/config";
 
 export const lang = async function lang(
   interaction: CommandInteraction<import("discord.js").CacheType>

@@ -1,4 +1,7 @@
-import { addEmbed, removeEmbed, resetEmbed, wipeEmbed } from "@/embeds/admin";
+import addEmbed from "../embeds/admin/add";
+import removeEmbed from "../embeds/admin/remove";
+import resetEmbed from "../embeds/admin/reset";
+import wipeEmbed from "../embeds/admin/wipe";
 
 import { CacheType, CommandInteraction } from "discord.js";
 import { DB } from "..";
