@@ -39,7 +39,7 @@ export class ShopItem {
   update(): void {
     // Update the item in the database
     this.#db.query(
-      "UPDATE SHOP SET price = ?, label = ?, description = ?, max_quantity = ?, action = ?, available = ?, available_after = ?, available_before = ? WHERE item_id = ?",
+      "UPDATE SHOP SET price = ?, label = ?, description = ?, max_quantity = ?, action = ?, available = ? WHERE item_id = ?",
       [
         this.price,
         this.name,
@@ -58,7 +58,7 @@ export class ShopItem {
   create(): void {
     // Insert a new row in the database
     this.#db.query<ResultSetHeader>(
-      "INSERT INTO SHOP (guild_id, price, label, description, max_quantity, action, available, available_after, available_before) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO SHOP (guild_id, price, label, description, max_quantity, action, available) VALUES (?, ?, ?, ?, ?, ?, ?)",
       [
         this.guild.id,
         this.price,

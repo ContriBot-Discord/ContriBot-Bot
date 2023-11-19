@@ -6,33 +6,10 @@ import {
 } from "discord.js";
 import { SlashCommand } from "@/types";
 import { DB } from "@/index";
+
 import { ShopItem } from "@/classes/ShopItem";
 
-const create = function (interaction: CommandInteraction) {
-  const guild = DB.getGuild(interaction.guild!.id);
-
-  let subcommand: CommandInteractionOptionResolver | string =
-    interaction.options as CommandInteractionOptionResolver;
-
-  // Loading parameters
-  switch (subcommand.getSubcommand()) {
-    case "role":
-      const role = subcommand.getRole("role", true);
-      const description = subcommand.getString("description", true);
-      const price = subcommand.getNumber("price", true);
-      const quantity = subcommand.getNumber("quantity", false);
-
-      const item = guild.createShopItem(
-        `<@&${role!.id}>`,
-        description,
-        price,
-        quantity ? quantity : -1,
-        0,
-        true,
-      );
-      break;
-  }
-};
+import { create } from "@/tools/shopFunctions";
 
 export const command: SlashCommand = {
   name: "item",
@@ -204,7 +181,7 @@ export const command: SlashCommand = {
 
     switch (subcommand) {
       case "create":
-        await interaction.reply("Toujours WIP, faut être patient");
+        create(interaction);
         break;
       case "edit":
         await interaction.reply("Toujours WIP, faut être patient");
