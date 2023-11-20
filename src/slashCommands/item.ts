@@ -96,7 +96,7 @@ export const command: SlashCommand = {
               option
                 .setName("user")
                 .setDescription(
-                  "Target of the boost (leave empty for server boost or let the user choose)"
+                  "User's target of the boot (leave empty to let the user choose or if not applicable)"
                 )
                 .setRequired(false)
             )
