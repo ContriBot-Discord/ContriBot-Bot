@@ -64,10 +64,10 @@ export const command: SlashCommand = {
                 .setDescription("Type of the boost")
                 .setRequired(true)
                 .addChoices(
-                  { name: "Channel", value: "channel" },
-                  { name: "Server", value: "server" },
-                  { name: "User", value: "user" },
-                  { name: "Role", value: "role" }
+                    { name: "Server", value: "1" },
+                  { name: "Channel", value: "2" },
+                  { name: "Role", value: "3" },
+                  { name: "User", value: "4" },
                 )
             )
             .addNumberOption((option) =>
@@ -84,14 +84,41 @@ export const command: SlashCommand = {
                 .setRequired(true)
                 .setMinValue(0)
             )
-            .addMentionableOption((option) =>
+
+              .addStringOption((option) =>
+                option
+                    .setName("duration")
+                    .setDescription("Duration of the boost (HHhMM format)")
+                    .setRequired(true)
+                    )
+
+            .addUserOption((option) =>
               option
-                .setName("target")
+                .setName("user")
                 .setDescription(
                   "Target of the boost (leave empty for server boost or let the user choose)"
                 )
                 .setRequired(false)
             )
+
+            .addRoleOption((option) =>
+                option
+                    .setName("role")
+                    .setDescription(
+                    "Role's target of the boot (leave empty to let the user choose or if not applicable)"
+                    )
+                    .setRequired(false)
+                )
+
+              .addChannelOption((option) =>
+                option
+                    .setName("channel")
+                    .setDescription(
+                    "Channel's target of the boot (leave empty to let the user choose or if not applicable)"
+                    )
+                    .setRequired(false)
+                )
+
             .addNumberOption((option) =>
               option
                 .setName("quantity")
