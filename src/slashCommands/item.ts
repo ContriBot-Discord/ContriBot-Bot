@@ -5,9 +5,6 @@ import {
   CommandInteractionOptionResolver,
 } from "discord.js";
 import { SlashCommand } from "@/types";
-import { DB } from "@/index";
-
-import { ShopItem } from "@/classes/ShopItem";
 
 import { create } from "@/tools/shopFunctions";
 
