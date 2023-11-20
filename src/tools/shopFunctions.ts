@@ -6,25 +6,24 @@ import {
 import { DB } from "..";
 import {ShopItem} from "@/classes/ShopItem";
 
-function createItem: ShopItem(label: string, description: string, price: number, quantity: number, action: number,
-                    available: boolean, applied_id: string | null, boost: number | null, boost_type: string | null,
-                    textId: string | null) {
+function createItem(guildId: string, label: string, description: string, price: number, quantity: number, action: number,
+                    available: boolean, applied_id: string | null, boost: number | null, boost_type: number | null, boost_duration: Date | null): ShopItem {
 
+    const guild = DB.getGuild(guildId);
+
+    return guild.createShopItem(label, description, price, quantity, action, available, applied_id, boost, boost_type, boost_duration);
 }
 
 
 
-export const create = async function create(
+export const create = function create(
   interaction: CommandInteraction<import("discord.js").CacheType>
-) {
-  const guild = DB.getGuild(interaction.guild!.id);
+){
 
   let subcommand: CommandInteractionOptionResolver | string =
     interaction.options as CommandInteractionOptionResolver;
 
   let success = true;
-
-  let item: ShopItem;
 
   // Variable initialization
     let label: string;
@@ -35,8 +34,8 @@ export const create = async function create(
     let available: boolean;
     let applied_id: string | null;
     let boost: number | null;
-    let boost_type: string | null;
-    let textId: string | null;
+    let boost_type: number | null;
+    let duration: Date | null;
 
 
   // Loading parameters
@@ -62,17 +61,62 @@ export const create = async function create(
           action = 1;
           available = true;
 
+          const string_duration = subcommand.getString("duration", true); // format: HHhMM or MM or HHh
 
-          const mentionable = subcommand.getMentionable("target", false)
+          // Check if the duration is valid
+          const duration_regex = new RegExp("^[0-9]{1,2}h[0-9]{1,2}$|^[0-9]{1,2}$|^[0-9]{1,2}h$");
+          if (!duration_regex.test(string_duration)) {
+              success = false;
+              break;
+          }
 
-          if (mentionable === null || mentionable instanceof GuildMember || mentionable instanceof Role || mentionable instanceof User) {
-              success = true;
+          // Convert the duration to a Date object
+          const duration_array = string_duration.split("h");
 
-              applied_id = mentionable ? mentionable.id : null;
-              boost = subcommand.getNumber("boost", true);
-              boost_type = subcommand.getString("boost_type", true);
+          duration = new Date(0);
 
-          } else success = false;
+            if (duration_array.length == 1) {
+                // Only minutes
+                duration.setMinutes(+duration_array[0]);
+            } else if (duration_array.length == 2) {
+
+                // Hours and minutes
+                duration.setHours(+duration_array[0]);
+                duration.setMinutes(+duration_array[1]);
+            }
+
+          const stringDate = duration.getHours().toString().padStart(2, '0') + "h" + duration.getMinutes().toString().padStart(2, '0'); + "m";
+
+          boost = subcommand.getNumber("multiplicator", true);
+          // What a fancy way to convert a string to a number. Thank you a lot NodeJS 👍.
+          boost_type = + subcommand.getString("type", true);
+
+            switch (boost_type) {
+                case 1:
+                    label = `${stringDate} x${boost} Server boost`;
+                    break;
+                case 2:
+                    applied_id = subcommand.getChannel("channel", false) ? subcommand.getChannel("channel", false)!.id : null;
+
+                    label = applied_id ? `${stringDate} x${boost} Channel boost for <#${applied_id}>` : `${stringDate} x${boost} Channel boost`;
+                    break;
+
+                case 3:
+                    applied_id = subcommand.getRole("role", false) ? subcommand.getRole("role", false)!.id : null;
+
+                    label = applied_id ? `${stringDate} x${boost} Role boost for <@&${applied_id}>` : `${stringDate} x${boost} Role boost`;
+                    break;
+
+                case 4:
+                    applied_id = subcommand.getUser("user", false) ? subcommand.getUser("user", false)!.id : null;
+
+                    label = applied_id ? `${stringDate} x${boost} User boost for <@${applied_id}>` : `${stringDate} x${boost} User boost`;
+                    break;
+
+                default:
+                    success = false;
+                    break;
+            }
 
           break;
 
@@ -87,7 +131,6 @@ export const create = async function create(
           applied_id = null;
           boost = null;
           boost_type = null;
-          textId = subcommand.getString("text_id", true);
           break;
 
       case "other":
@@ -101,7 +144,6 @@ export const create = async function create(
           applied_id = null;
           boost = null;
           boost_type = null;
-          textId = null;
           break;
 
       default:
@@ -110,14 +152,12 @@ export const create = async function create(
   }
       if (success) {
 
-          const item = createItem(label!, description!, price!, quantity!, action!, available!, applied_id!, boost!, boost_type!, textId!)
+          const item = createItem(interaction.guildId!, label!, description!, price!, quantity!, action!, available!, applied_id!, boost!, boost_type!, duration!)
 
-          // item.create()
-          await interaction.reply(`Item ${item.id} created with success!`);
+          console.log(item.id);
+          interaction.reply(`Item ${item.id} created with success!`);
+
       } else {
-            await interaction.reply(`Error while creating item!`);
+            interaction.reply(`Error while creating item!`);
       }
-
-
-  }
 };
