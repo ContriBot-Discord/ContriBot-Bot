@@ -106,4 +106,20 @@ export class ShopItem {
       }
     );
   }
+
+  addText(text: string[]): void {
+      // Add a list of text to the table TEXT
+
+      const values = text.map((t) => [this.id, this.guild.id, t]);
+
+
+      this.#db.query(
+          "INSERT INTO TEXT (text_id, guild_id, value) VALUES ?",
+          [values],
+          (err) => {
+              if (err) throw err;
+          });
+
+  }
+
 }
