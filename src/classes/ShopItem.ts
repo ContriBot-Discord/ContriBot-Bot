@@ -92,7 +92,7 @@ export class ShopItem {
       (err, result) => {
         if (err) throw err;
         this.id = result.insertId;
-      }
+      },
     );
   }
 

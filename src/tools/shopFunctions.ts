@@ -16,9 +16,10 @@ function createItem(guildId: string, label: string, description: string, price: 
 
 
 
-export const create = function create(
+export const create = async function create(
   interaction: CommandInteraction<import("discord.js").CacheType>
 ){
+
 
   let subcommand: CommandInteractionOptionResolver | string =
     interaction.options as CommandInteractionOptionResolver;
@@ -154,10 +155,10 @@ export const create = function create(
 
           const item = createItem(interaction.guildId!, label!, description!, price!, quantity!, action!, available!, applied_id!, boost!, boost_type!, duration!)
 
-          console.log(item.id);
-          interaction.reply(`Item ${item.id} created with success!`);
+
+          await interaction.reply(`Item ${item.id} created with success!`);
 
       } else {
-            interaction.reply(`Error while creating item!`);
+            await interaction.reply(`Error while creating item!`);
       }
 };
