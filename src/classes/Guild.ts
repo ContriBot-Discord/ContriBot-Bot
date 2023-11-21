@@ -172,6 +172,7 @@ export class Guild {
     // Once created, we add the shop item to the guilds array
     this.shop.push(shopItem);
 
+
     return shopItem;
   }
 

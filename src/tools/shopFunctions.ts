@@ -118,7 +118,6 @@ export const create = async function create(
                     success = false;
                     break;
             }
-
           break;
 
       case "text":
@@ -153,10 +152,10 @@ export const create = async function create(
   }
       if (success) {
 
-          const item = createItem(interaction.guildId!, label!, description!, price!, quantity!, action!, available!, applied_id!, boost!, boost_type!, duration!)
+          createItem(interaction.guildId!, label!, description!, price!, quantity!, action!, available!, applied_id!, boost!, boost_type!, duration!)
 
 
-          await interaction.reply(`Item ${item.id} created with success!`);
+          await interaction.reply(`Item created with success!`);
 
       } else {
             await interaction.reply(`Error while creating item!`);

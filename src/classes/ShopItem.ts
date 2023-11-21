@@ -72,7 +72,7 @@ export class ShopItem {
 
   }
 
-  create(): void {
+  create() {
     // Insert a new row in the database
     this.#db.query<ResultSetHeader>(
         "INSERT INTO SHOP (price, label, description, guild_id, max_quantity, action, available, applied_id, multiplier, boost_type, boost_duration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
