@@ -11,7 +11,7 @@ export default function (lang: string): EmbedBuilder {
                 name:
                     "<:shiny_red_bug:1176622435899019355> " +
                     "Error",
-                value: "<:lineviolett:1163753428317638696>".repeat(8),
+                value: "<:shiny_red_bar:1176625383211282483>".repeat(8),
             },
             {
                 name: " ",
