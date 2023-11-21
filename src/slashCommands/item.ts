@@ -205,7 +205,7 @@ export const command: SlashCommand = {
 
     switch (subcommand) {
       case "create":
-        create(interaction);
+        await create(interaction);
         break;
       case "edit":
         await interaction.reply("Toujours WIP, faut être patient");
