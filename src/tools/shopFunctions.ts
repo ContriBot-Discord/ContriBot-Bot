@@ -3,7 +3,7 @@ import {
     CommandInteractionOptionResolver, GuildMember, Role, User,
 } from "discord.js";
 
-import { DB } from "..";
+import {DB} from "..";
 import {ShopItem} from "@/classes/ShopItem";
 import Error from "@/embeds/item/create/error";
 
@@ -16,18 +16,19 @@ function createItem(guildId: string, label: string, description: string, price: 
 }
 
 
-
 export const create = async function create(
-  interaction: CommandInteraction<import("discord.js").CacheType>
-){
+    interaction: CommandInteraction<import("discord.js").CacheType>
+) {
 
 
-  let subcommand: CommandInteractionOptionResolver | string =
-    interaction.options as CommandInteractionOptionResolver;
+    const guild = DB.getGuild(interaction.guildId!);
 
-  let success = true;
+    let subcommand: CommandInteractionOptionResolver | string =
+        interaction.options as CommandInteractionOptionResolver;
 
-  // Variable initialization
+    let success = true;
+
+    // Variable initialization
     let label: string;
     let description: string;
     let price: number;
@@ -40,42 +41,42 @@ export const create = async function create(
     let duration: Date | null;
 
 
-  // Loading parameters
-  switch (subcommand.getSubcommand()) {
-      case "role":
-          label = "<@&" + subcommand.getRole("role", true).id + ">";
-          description = subcommand.getString("description", true);
-          price = subcommand.getNumber("price", true);
-          quantity = subcommand.getNumber("quantity", false) ?
-              subcommand.getNumber("quantity", false)! : -1;
-          action = 0;
-          available = true;
-          applied_id = subcommand.getRole("role", true).id;
-          break;
+    // Loading parameters
+    switch (subcommand.getSubcommand()) {
+        case "role":
+            label = "<@&" + subcommand.getRole("role", true).id + ">";
+            description = subcommand.getString("description", true);
+            price = subcommand.getNumber("price", true);
+            quantity = subcommand.getNumber("quantity", false) ?
+                subcommand.getNumber("quantity", false)! : -1;
+            action = 0;
+            available = true;
+            applied_id = subcommand.getRole("role", true).id;
+            break;
 
 
-      case "boost":
-          //label = subcommand.getString("name", true);
-          description = subcommand.getString("description", true);
-          price = subcommand.getNumber("price", true);
-          quantity = subcommand.getNumber("quantity", false) ?
-              subcommand.getNumber("quantity", false)! : -1
-          action = 1;
-          available = true;
+        case "boost":
+            //label = subcommand.getString("name", true);
+            description = subcommand.getString("description", true);
+            price = subcommand.getNumber("price", true);
+            quantity = subcommand.getNumber("quantity", false) ?
+                subcommand.getNumber("quantity", false)! : -1
+            action = 1;
+            available = true;
 
-          const string_duration = subcommand.getString("duration", true); // format: HHhMM or MM or HHh
+            const string_duration = subcommand.getString("duration", true); // format: HHhMM or MM or HHh
 
-          // Check if the duration is valid
-          const duration_regex = new RegExp("^[0-9]{1,2}h[0-9]{1,2}$|^[0-9]{1,2}$|^[0-9]{1,2}h$");
-          if (!duration_regex.test(string_duration)) {
-              success = false;
-              break;
-          }
+            // Check if the duration is valid
+            const duration_regex = new RegExp("^[0-9]{1,2}h[0-9]{1,2}$|^[0-9]{1,2}$|^[0-9]{1,2}h$");
+            if (!duration_regex.test(string_duration)) {
+                success = false;
+                break;
+            }
 
-          // Convert the duration to a Date object
-          const duration_array = string_duration.split("h");
+            // Convert the duration to a Date object
+            const duration_array = string_duration.split("h");
 
-          duration = new Date(0);
+            duration = new Date(0);
 
             if (duration_array.length == 1) {
                 // Only minutes
@@ -87,11 +88,12 @@ export const create = async function create(
                 duration.setMinutes(+duration_array[1]);
             }
 
-          const stringDate = duration.getHours().toString().padStart(2, '0') + "h" + duration.getMinutes().toString().padStart(2, '0'); + "m";
+            const stringDate = duration.getHours().toString().padStart(2, '0') + "h" + duration.getMinutes().toString().padStart(2, '0');
+            +"m";
 
-          boost = subcommand.getNumber("multiplicator", true);
-          // What a fancy way to convert a string to a number. Thank you a lot NodeJS 👍.
-          boost_type = + subcommand.getString("type", true);
+            boost = subcommand.getNumber("multiplicator", true);
+            // What a fancy way to convert a string to a number. Thank you a lot NodeJS 👍.
+            boost_type = +subcommand.getString("type", true);
 
             switch (boost_type) {
                 case 1:
@@ -119,44 +121,44 @@ export const create = async function create(
                     success = false;
                     break;
             }
-          break;
+            break;
 
-      case "text":
-          label = subcommand.getString("name", true);
-          description = subcommand.getString("description", true);
-          price = subcommand.getNumber("price", true);
-          quantity = subcommand.getNumber("quantity", false) ?
-              subcommand.getNumber("quantity", false)! : -1
-          action = 2;
-          available = true;
-          applied_id = null;
-          boost = null;
-          boost_type = null;
-          break;
+        case "text":
+            label = subcommand.getString("name", true);
+            description = subcommand.getString("description", true);
+            price = subcommand.getNumber("price", true);
+            quantity = subcommand.getNumber("quantity", false) ?
+                subcommand.getNumber("quantity", false)! : -1
+            action = 2;
+            available = true;
+            applied_id = null;
+            boost = null;
+            boost_type = null;
+            break;
 
-      case "other":
-          label = subcommand.getString("name", true);
-          description = subcommand.getString("description", true);
-          price = subcommand.getNumber("price", true);
-          quantity = subcommand.getNumber("quantity", false) ?
-              subcommand.getNumber("quantity", false)! : -1
-          action = 3;
-          available = true;
-          applied_id = null;
-          boost = null;
-          boost_type = null;
-          break;
+        case "other":
+            label = subcommand.getString("name", true);
+            description = subcommand.getString("description", true);
+            price = subcommand.getNumber("price", true);
+            quantity = subcommand.getNumber("quantity", false) ?
+                subcommand.getNumber("quantity", false)! : -1
+            action = 3;
+            available = true;
+            applied_id = null;
+            boost = null;
+            boost_type = null;
+            break;
 
-      default:
-          break;
+        default:
+            break;
 
-  }
-      if (success) {
+    }
+    if (success) {
 
-          createItem(interaction.guildId!, label!, description!, price!, quantity!, action!, available!, applied_id!, boost!, boost_type!, duration!)
+        createItem(interaction.guildId!, label!, description!, price!, quantity!, action!, available!, applied_id!, boost!, boost_type!, duration!)
 
 
-          await interaction.reply(`Item created with success!`);
+        await interaction.reply(`Item created with success!`);
 
     } else {
         await interaction.reply({embeds: [Error(guild.lang)]});
