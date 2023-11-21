@@ -5,6 +5,7 @@ import {
 
 import { DB } from "..";
 import {ShopItem} from "@/classes/ShopItem";
+import Error from "@/embeds/item/create/error";
 
 function createItem(guildId: string, label: string, description: string, price: number, quantity: number, action: number,
                     available: boolean, applied_id: string | null, boost: number | null, boost_type: number | null, boost_duration: Date | null): ShopItem {
@@ -157,7 +158,7 @@ export const create = async function create(
 
           await interaction.reply(`Item created with success!`);
 
-      } else {
-            await interaction.reply(`Error while creating item!`);
-      }
+    } else {
+        await interaction.reply({embeds: [Error(guild.lang)]});
+    }
 };
