@@ -153,6 +153,11 @@ export const create = async function create(
             break;
 
     }
+
+    if (label!.length > 30 || description!.length > 150) {
+        success = false;
+    }
+
     if (success) {
 
         createItem(interaction.guildId!, label!, description!, price!, quantity!, action!, available!, applied_id!, boost!, boost_type!, duration!)
