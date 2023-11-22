@@ -6,7 +6,8 @@ import {
 } from "discord.js";
 import { SlashCommand } from "@/types";
 
-import { create } from "@/tools/shopFunctions";
+import { create } from "@/tools/shopFunctions/create";
+import { edit } from "@/tools/shopFunctions/edit";
 
 export const command: SlashCommand = {
   name: "item",
@@ -183,6 +184,23 @@ export const command: SlashCommand = {
             )
         )
     )
+      .addSubcommandGroup((group) =>
+          group
+              .setName("edit")
+              .setDescription("Edit an item")
+              .addSubcommand((command: SlashCommandSubcommandBuilder) =>
+                      command
+                          .setName("text")
+                          .setDescription("Add string to a Text item shop")
+                          .addNumberOption((option) =>
+                                option
+                                    .setName("id")
+                                    .setDescription("The id of the item to edit")
+                                    .setRequired(true)
+                                    .setMinValue(0)
+                            )
+              )
+      )
     .addSubcommand((group) =>
       group
         .setName("delete")
@@ -208,7 +226,7 @@ export const command: SlashCommand = {
         await create(interaction);
         break;
       case "edit":
-        await interaction.reply("Toujours WIP, faut être patient");
+        await edit(interaction);
         break;
       case "delete":
         await interaction.reply("Toujours WIP, faut être patient");
