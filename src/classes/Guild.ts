@@ -193,7 +193,7 @@ export class Guild {
                 item.price,
                 item.label,
                 item.description,
-                item.id,
+                item.item_id,
                 this,
                 item.max_quantity,
                 item.action,
@@ -415,4 +415,9 @@ export class Guild {
       }
     );
   }
+
+    getShopItem(id: number | string): ShopItem | null {
+        console.log(this.shop);
+        return (this.shop.find(item => item.id == id) || null);
+    }
 }
