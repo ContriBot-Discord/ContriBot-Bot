@@ -6,9 +6,16 @@ import {
   CacheType,
   CommandInteraction,
   SlashCommandBuilder,
+  StringSelectMenuBuilder,
+  StringSelectMenuOptionBuilder,
 } from "discord.js";
 
-import { userHelpEmbed, adminHelpEmbed, configHelpEmbed } from "@/embeds/help";
+import {
+  userHelpEmbed,
+  adminHelpEmbed,
+  configHelpEmbed,
+  helpEmbed,
+} from "@/embeds/help";
 
 import { DB } from "..";
 
@@ -41,7 +48,29 @@ export const command: SlashCommand = {
         new ButtonBuilder().setCustomId("Hnext").setLabel("▶").setStyle(1)
       );
 
-    let embed = userHelpEmbed(guild.lang, guild.pointName);
+    const select = new StringSelectMenuBuilder()
+      .setCustomId("Hselect")
+      .setPlaceholder("Select the type of help you want")
+      .addOptions([
+        new StringSelectMenuOptionBuilder()
+          .setLabel("User")
+          .setDescription("Show the user help menu.")
+          .setValue("user"),
+        new StringSelectMenuOptionBuilder()
+          .setLabel("Admin")
+          .setDescription("Show the admin help menu.")
+          .setValue("admin"),
+        new StringSelectMenuOptionBuilder()
+          .setLabel("Config")
+          .setDescription("Show the config help menu.")
+          .setValue("config"),
+      ]);
+
+    const row = new ActionRowBuilder().addComponents(select);
+
+    let embed = helpEmbed(guild.lang);
+
+    let flag: boolean = true;
 
     switch (type) {
       case "admin":
@@ -51,11 +80,16 @@ export const command: SlashCommand = {
         button.components[1].setDisabled(true);
         embed = configHelpEmbed(guild.lang, guild.pointName);
         break;
-      default:
+      case "user":
         button.components[0].setDisabled(true);
+        embed = userHelpEmbed(guild.lang, guild.pointName);
+        break;
+      default:
+        flag = false;
         break;
     }
 
-    interaction.reply({ embeds: [embed], components: [button] });
+    if (flag) interaction.reply({ embeds: [embed], components: [button, row as any] });
+    else interaction.reply({ embeds: [embed], components: [row as any] });
   },
 };

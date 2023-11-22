@@ -16,7 +16,7 @@
   "devDependencies": {
     "@types/i18n": "^0.13.7",
     "@types/node": "^20.8.4",
-    "@types/node-schedule": "^2.1.2",
+    "@types/node-schedule": "^2.1.4",
     "@types/validator": "^13.11.2",
     "typescript": "^5.2.2"
   },

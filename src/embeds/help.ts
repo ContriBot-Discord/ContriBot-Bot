@@ -2,6 +2,33 @@ import { EmbedBuilder } from "discord.js";
 
 import i18next from "i18next";
 
+export const helpEmbed = function (lang: string) {
+  i18next.changeLanguage(lang);
+
+  return new EmbedBuilder()
+    .addFields({
+      name:
+        `<:shiny_purple_bughunter:1174454832275390504>` +
+        i18next.t(`embeds:default.title`, { command_name: "Help" }),
+      value: `<:shiny_purple_bar:1163753428317638696>`.repeat(8),
+    })
+    .addFields({
+      name: " ",
+      value: i18next.t(`embeds:help.description2`),
+    })
+    .addFields({
+      name: " ",
+      value:
+        i18next.t(`embeds:help.categories.user`) +
+        "\n" +
+        i18next.t(`embeds:help.categories.admin`) +
+        "\n" +
+        i18next.t(`embeds:help.categories.config`),
+    })
+    .setColor("#aa54e1")
+    .setTimestamp();
+};
+
 export const userHelpEmbed = function (lang: string, pointName: string) {
   i18next.changeLanguage(lang);
 
@@ -14,7 +41,9 @@ export const userHelpEmbed = function (lang: string, pointName: string) {
     })
     .addFields({
       name: "/profile (member)",
-      value: i18next.t(`embeds:help.user.profile.value`, { pointName: pointName }),
+      value: i18next.t(`embeds:help.user.profile.value`, {
+        pointName: pointName,
+      }),
     })
     .addFields({
       name: "/leaderboard",
