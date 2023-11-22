@@ -3,7 +3,7 @@ import {
     CommandInteractionOptionResolver, GuildMember, Role, User,
 } from "discord.js";
 
-import {DB} from "..";
+import {DB} from "@/index";
 import {ShopItem} from "@/classes/ShopItem";
 import Error from "@/embeds/item/create/error";
 
