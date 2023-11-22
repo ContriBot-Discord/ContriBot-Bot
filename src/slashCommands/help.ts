@@ -18,6 +18,7 @@ import {
 } from "@/embeds/help";
 
 import { DB } from "..";
+import { getEmoji } from "@/constants";
 
 export const command: SlashCommand = {
   name: "help",
@@ -55,14 +56,17 @@ export const command: SlashCommand = {
         new StringSelectMenuOptionBuilder()
           .setLabel("User")
           .setDescription("Show the user help menu.")
+          .setEmoji(getEmoji("pink_person")!.value)
           .setValue("user"),
         new StringSelectMenuOptionBuilder()
           .setLabel("Admin")
           .setDescription("Show the admin help menu.")
+          .setEmoji(getEmoji("orange_shield")!.value)
           .setValue("admin"),
         new StringSelectMenuOptionBuilder()
           .setLabel("Config")
           .setDescription("Show the config help menu.")
+          .setEmoji(getEmoji("orange_hammer")!.value)
           .setValue("config"),
       ]);
 
@@ -89,7 +93,8 @@ export const command: SlashCommand = {
         break;
     }
 
-    if (flag) interaction.reply({ embeds: [embed], components: [button, row as any] });
+    if (flag)
+      interaction.reply({ embeds: [embed], components: [button, row as any] });
     else interaction.reply({ embeds: [embed], components: [row as any] });
   },
 };

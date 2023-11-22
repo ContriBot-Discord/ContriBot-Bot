@@ -44,6 +44,10 @@ const emojies = [
     value: "<:pink_book:1176930956196716544> ",
   },
   {
+    name: "pink_leaderboard",
+    value: "<:pink_leaderboard:1176957469881278594> ",
+  },
+  {
     name: "pink_basket",
     value: "<:pink_basket:1176930953613025320> ",
   },
