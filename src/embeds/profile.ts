@@ -1,5 +1,7 @@
 import { EmbedBuilder } from "discord.js";
 import i18next from "i18next";
+import { getColor, getEmoji} from "../constants";
+import { ColorResolvable } from "discord.js";
 
 export default function (
   lang: string,
@@ -18,9 +20,9 @@ export default function (
   return new EmbedBuilder()
     .addFields({
       name:
-        `<:shiny_purple_bughunter:1174454832275390504>` +
+        getEmoji("pink_person")!.value +
         i18next.t(`embeds:default.title`, { command_name: "profile" }),
-      value: `<:shiny_purple_bar:1163753428317638696>`.repeat(8),
+      value: getEmoji("pink_line")!.value,
     })
     .addFields({
       name: ` `,
@@ -28,7 +30,7 @@ export default function (
     })
     .addFields({
       name:
-        `<:shiny_purple_link:1174454835978960946> ` +
+        getEmoji("pink_stats")!.value +
         i18next.t(`embeds:profile.stats.name`),
       value: i18next.t(`embeds:profile.stats.value`, {
         messagesSent: messagesSent,
@@ -40,7 +42,7 @@ export default function (
     })
     .addFields({
       name:
-        `<:shiny_purple_star:1163585447201607781> ` +
+        getEmoji("pink_star")!.value +
         i18next.t(`embeds:profile.points.name`, {
           pointName: pointName,
         }),
@@ -52,7 +54,7 @@ export default function (
       inline: true,
     })
     .setThumbnail(userAvatar)
-    .setColor("#aa54e1")
+    .setColor(getColor("PINK")!.hex as ColorResolvable)
     .setTimestamp();
 }
 

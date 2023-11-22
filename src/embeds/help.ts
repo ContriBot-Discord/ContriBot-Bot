@@ -2,15 +2,18 @@ import { EmbedBuilder } from "discord.js";
 
 import i18next from "i18next";
 
+import { getColor, getEmoji } from "../constants";
+import { ColorResolvable } from "discord.js";
+
 export const helpEmbed = function (lang: string) {
   i18next.changeLanguage(lang);
 
   return new EmbedBuilder()
     .addFields({
       name:
-        `<:shiny_purple_bughunter:1174454832275390504>` +
+        getEmoji("pink_book")!.value +
         i18next.t(`embeds:default.title`, { command_name: "Help" }),
-      value: `<:shiny_purple_bar:1163753428317638696>`.repeat(8),
+      value: getEmoji("pink_line")!.value,
     })
     .addFields({
       name: " ",
@@ -19,13 +22,16 @@ export const helpEmbed = function (lang: string) {
     .addFields({
       name: " ",
       value:
+        getEmoji("pink_person")!.value +
         i18next.t(`embeds:help.categories.user`) +
         "\n" +
+        getEmoji("orange_shield")!.value +
         i18next.t(`embeds:help.categories.admin`) +
         "\n" +
+        getEmoji("orange_hammer")!.value +
         i18next.t(`embeds:help.categories.config`),
     })
-    .setColor("#aa54e1")
+    .setColor(getColor("PINK")!.hex as ColorResolvable)
     .setTimestamp();
 };
 
@@ -35,9 +41,9 @@ export const userHelpEmbed = function (lang: string, pointName: string) {
   return new EmbedBuilder()
     .addFields({
       name:
-        `<:shiny_purple_bughunter:1174454832275390504>` +
+        getEmoji("pink_person")!.value +
         i18next.t(`embeds:help.title`, { index: "User" }),
-      value: `<:shiny_purple_bar:1163753428317638696>`.repeat(8),
+      value: getEmoji("pink_line")!.value,
     })
     .addFields({
       name: "/profile (member)",
@@ -59,7 +65,7 @@ export const userHelpEmbed = function (lang: string, pointName: string) {
       name: "/ping",
       value: i18next.t(`embeds:help.user.ping.value`),
     })
-    .setColor("#aa54e1")
+    .setColor(getColor("PINK")!.hex as ColorResolvable)
     .setTimestamp();
 };
 
@@ -69,9 +75,9 @@ export const adminHelpEmbed = function (lang: string, pointName: string) {
   return new EmbedBuilder()
     .addFields({
       name:
-        `<:shiny_orange_moderator:1163759368853004298>` +
+        getEmoji("orange_shield")!.value +
         i18next.t(`embeds:help.title`, { index: "Admin" }),
-      value: `<:shiny_orange_bar:1163759934702374942>`.repeat(8),
+      value: getEmoji("orange_line")!.value,
     })
     .addFields({
       name: " ",
@@ -99,7 +105,7 @@ export const adminHelpEmbed = function (lang: string, pointName: string) {
         pointName: pointName,
       }),
     })
-    .setColor("#ff8e4d")
+    .setColor(getColor("ORANGE")!.hex as ColorResolvable)
     .setTimestamp();
 };
 
@@ -109,9 +115,9 @@ export const configHelpEmbed = function (lang: string, pointName: string) {
   return new EmbedBuilder()
     .addFields({
       name:
-        `<:shiny_orange_moderator:1163759368853004298>` +
+        getEmoji("orange_hammer")!.value +
         i18next.t(`embeds:help.title`, { index: "Config" }),
-      value: `<:shiny_orange_bar:1163759934702374942>`.repeat(8),
+      value: getEmoji("orange_line")!.value,
     })
     .addFields({
       name: " ",
@@ -147,6 +153,6 @@ export const configHelpEmbed = function (lang: string, pointName: string) {
         pointName: pointName,
       }),
     })
-    .setColor("#ff8e4d")
+    .setColor(getColor("ORANGE")!.hex as ColorResolvable)
     .setTimestamp();
 };

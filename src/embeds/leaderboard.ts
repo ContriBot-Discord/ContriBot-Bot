@@ -1,5 +1,7 @@
 import { EmbedBuilder } from "discord.js";
 import i18next from "i18next";
+import { getColor, getEmoji} from "../constants";
+import { ColorResolvable } from "discord.js";
 
 export default function (
   pageNumber: number,
@@ -12,9 +14,9 @@ export default function (
   return new EmbedBuilder()
     .addFields({
       name:
-        "<:shinypurplestar:1163585447201607781> " +
+        getEmoji("pink_leaderboard")!.value +
         i18next.t("embeds:leaderboard.title", { index: pageNumber }),
-      value: `<:lineviolett:1163753428317638696>`.repeat(8),
+      value: getEmoji("pink_line")!.value,
     })
     .setFooter({
       text: i18next.t("embeds:leaderboard.footer.text", {
@@ -23,6 +25,6 @@ export default function (
       }),
     })
     .addFields(userFields)
-    .setColor("#aa54e1")
+    .setColor(getColor("PINK")!.hex as ColorResolvable)
     .setTimestamp();
 }

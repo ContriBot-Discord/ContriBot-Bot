@@ -1,5 +1,7 @@
 import { EmbedBuilder } from "discord.js";
 import i18next from "i18next";
+import { getColor, getEmoji} from "../constants";
+import { ColorResolvable } from "discord.js";
 
 export default function (lang: string): EmbedBuilder {
   i18next.changeLanguage(lang);
@@ -8,15 +10,15 @@ export default function (lang: string): EmbedBuilder {
     .addFields(
       {
         name:
-          "<:shinypurpledev:1172885854616834119> " +
+          getEmoji("blue_dev")!.value +
           i18next.t("embeds:whois.title"),
-        value: "<:lineviolett:1163753428317638696>".repeat(8),
+        value: getEmoji("blue_line")!.value,
       },
       {
         name: " ",
         value: i18next.t("embeds:whois.description"),
       }
     )
-    .setColor("#ab54e1")
+    .setColor(getColor("BLUE")!.hex as ColorResolvable)
     .setTimestamp();
 }

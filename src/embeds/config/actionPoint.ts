@@ -2,6 +2,9 @@ import { EmbedBuilder } from "discord.js";
 
 import i18next from "i18next";
 
+import { getColor, getEmoji} from "../../constants";
+import { ColorResolvable } from "discord.js";
+
 export default function (
   action: string,
   point: number,
@@ -13,9 +16,9 @@ export default function (
   return new EmbedBuilder()
     .addFields({
       name:
-        `<:shiny_orange_moderator:1163759368853004298>` +
+        getEmoji("orange_hammer")!.value +
         i18next.t(`config:default.title`, { command_name: "config add" }),
-      value: `<:shiny_orange_bar:1163759934702374942>`.repeat(8),
+      value: getEmoji("orange_line")!.value,
     })
     .addFields({
       name: i18next.t(`config:actionpoint.description`, {
@@ -25,6 +28,6 @@ export default function (
       }),
       value: ` `,
     })
-    .setColor("#ff8e4d")
+    .setColor(getColor("ORANGE")!.hex as ColorResolvable)
     .setTimestamp();
 }

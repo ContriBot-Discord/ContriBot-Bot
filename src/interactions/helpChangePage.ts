@@ -10,6 +10,8 @@ import {
 import { userHelpEmbed, adminHelpEmbed, configHelpEmbed } from "@/embeds/help";
 import { DB } from "..";
 
+import { getEmoji } from "../constants";
+
 const event: BotEvent = {
   name: Events.InteractionCreate,
   once: false,
@@ -34,21 +36,24 @@ const event: BotEvent = {
         new ButtonBuilder().setCustomId("Hnext").setLabel("▶").setStyle(1)
       );
 
-      const select = new StringSelectMenuBuilder()
+    const select = new StringSelectMenuBuilder()
       .setCustomId("Hselect")
       .setPlaceholder("Select the type of help you want")
       .addOptions([
         new StringSelectMenuOptionBuilder()
           .setLabel("User")
           .setDescription("Show the user help menu.")
+          .setEmoji(getEmoji("pink_person")!.value)
           .setValue("user"),
         new StringSelectMenuOptionBuilder()
           .setLabel("Admin")
           .setDescription("Show the admin help menu.")
+          .setEmoji(getEmoji("orange_shield")!.value)
           .setValue("admin"),
         new StringSelectMenuOptionBuilder()
           .setLabel("Config")
           .setDescription("Show the config help menu.")
+          .setEmoji(getEmoji("orange_hammer")!.value)
           .setValue("config"),
       ]);
 

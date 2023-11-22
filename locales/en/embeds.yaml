@@ -57,9 +57,9 @@ help:
   description2: "This bot uses slash commands `\\`.\n
     Select a category to see the commands list."
   categories:
-    user: "<:shiny_purple_star:1163585447201607781> User"
-    admin: "<:shiny_orange_moderator:1163759368853004298> Admin"
-    config: "<:shiny_orange_staff:1174461570437361684> Config"
+    user: "User"
+    admin: "Admin"
+    config: "Config"
   user :
     profile:
       value: "Using this command you can see interesting member's statistics as well as their {{pointName}}."

@@ -2,6 +2,9 @@ import { EmbedBuilder } from "discord.js";
 import i18next from "i18next";
 import { DB } from "../..";
 
+import { getColor, getEmoji } from "../../constants";
+import { ColorResolvable } from "discord.js";
+
 export default function (guild_id: string, iconURL: string, lang: string) {
   i18next.changeLanguage(lang);
 
@@ -27,21 +30,23 @@ export default function (guild_id: string, iconURL: string, lang: string) {
         disabledChannels.length - visibleChannels.length;
 
       // Update the value to include visible channels and "and x others channels"
-      disabledChannelsText = `<#${visibleChannels.join(
-        ">, <#"
-      )}> ` + i18next.t("config:show.channels.andXOthers", { count: remainingChannelsCount });
+      disabledChannelsText =
+        `<#${visibleChannels.join(">, <#")}> ` +
+        i18next.t("config:show.channels.andXOthers", {
+          count: remainingChannelsCount,
+        });
     }
   } else {
     // Display "no channels" if there are no channels
-    disabledChannelsText = i18next.t('config:show.channels.noChannels');
+    disabledChannelsText = i18next.t("config:show.channels.noChannels");
   }
 
   return new EmbedBuilder()
     .addFields({
       name:
-        `<:shiny_orange_moderator:1163759368853004298>` +
+        getEmoji("orange_hammer")!.value +
         i18next.t("config:default.title", { command_name: "config show" }),
-      value: `<:shiny_orange_bar:1163759934702374942>`.repeat(8),
+      value: getEmoji("orange_line")!.value,
     })
     .addFields({
       name: i18next.t("config:show.description"),
@@ -49,7 +54,7 @@ export default function (guild_id: string, iconURL: string, lang: string) {
     })
     .addFields({
       name:
-        `<:shiny_orange_star:1174461572459020408> ` +
+        getEmoji("orange_star")!.value +
         i18next.t("config:show.pointsCfg.name", {
           pointName: DB.getGuild(guild_id).pointName,
         }),
@@ -63,7 +68,7 @@ export default function (guild_id: string, iconURL: string, lang: string) {
     })
     .addFields({
       name:
-        "<:shiny_orange_staff:1174461570437361684> " +
+        getEmoji("orange_settings")!.value +
         i18next.t("config:show.settings.name"),
       value: i18next.t("config:show.settings.value", {
         pointName: DB.getGuild(guild_id).pointName,
@@ -72,11 +77,13 @@ export default function (guild_id: string, iconURL: string, lang: string) {
     })
     .addFields([
       {
-        name: i18next.t("config:show.channels.name"),
+        name:
+          getEmoji("orange_hashtag")!.value +
+          i18next.t("config:show.channels.name"),
         value: disabledChannelsText,
       },
     ])
     .setThumbnail(iconURL)
-    .setColor("#ff8e4d")
+    .setColor(getColor("ORANGE")!.hex as ColorResolvable)
     .setTimestamp();
 }
