@@ -48,7 +48,7 @@ export class ShopItem {
     this.multiplier = multiplier;                  // Boost multiplier (if action = 1)
     this.boost_type = boost_type;        // Boost type (1 = server, 2 = channel, 3 = role, 4 = user)
     this.boost_duration = boost_duration;// Boost duration (if action = 1)
-    this.texts = (action === 2) ? this.fetchTexts() : null; // List of texts (if action = 2
+    this.texts = (action == 2) ? this.fetchTexts() : null; // List of texts (if action = 2
   }
 
   update(): void {
@@ -113,20 +113,20 @@ export class ShopItem {
   addText(text: string[]): void {
       // Add a list of text to the table TEXT
 
-        // Insert the texts in the database
-        text.forEach((value) => {
-            this.#db.query(
-                "INSERT INTO TEXT (text_id, guild_id, value) VALUES (?, ?, ?)",
-                [this.id, this.guild.id, value],
+        // Insert the texts in the database in bulk
+        this.#db.query(
+            "INSERT INTO TEXT (text_id, guild_id, value) VALUES ?",
+            [text.map((value) => [this.id, this.guild.id, value])], // For each string in `text`, create an array [this.id, this.guild.id, value]
 
-                (err) => {
-                    if (err) throw err;
-                    // Add the text to the list
-                    this.texts?.push(new Text(this.#db, this, false, value));
-                }
-            );
-        });
+            (err) => {
+                if (err) throw err;
 
+                // Update the list of texts
+                text.forEach((value) => {
+                    this.texts!.push(new Text(this.#db, this, false, value));
+                });
+            }
+        );
   }
 
   fetchTexts(): Text[] {

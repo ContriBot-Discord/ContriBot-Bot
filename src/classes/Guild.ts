@@ -417,7 +417,6 @@ export class Guild {
   }
 
     getShopItem(id: number | string): ShopItem | null {
-        console.log(this.shop);
         return (this.shop.find(item => item.id == id) || null);
     }
 }
