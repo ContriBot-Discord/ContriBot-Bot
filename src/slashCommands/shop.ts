@@ -53,7 +53,7 @@ export const command: SlashCommand = {
 
         fields.push({
           name: ` `,
-          value: `${emoji}**${item.label}** - ${item.price} ${guild.pointName}\n${item.description}`,
+          value: `${emoji}**${item.label}** - ${item.price} ${guild.pointName}\n> ${item.description}`,
         });
 
         // if the item is a role, add the name of the role instead of id
