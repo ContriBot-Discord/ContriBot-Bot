@@ -1,7 +1,8 @@
 import { Guild } from "./Guild";
 
 import mysql from "mysql2";
-import {ResultSetHeader} from "mysql2";
+import {ResultSetHeader, RowDataPacket} from "mysql2";
+import {Text} from "@/classes/Text";
 
 export class ShopItem {
   price: number;
@@ -17,6 +18,7 @@ export class ShopItem {
   multiplier: number | null;
   boost_type: number | null;
   boost_duration: Date | null;
+  texts: Text[] | null;
 
   constructor(
     db: mysql.Connection,
@@ -46,6 +48,7 @@ export class ShopItem {
     this.multiplier = multiplier;                  // Boost multiplier (if action = 1)
     this.boost_type = boost_type;        // Boost type (1 = server, 2 = channel, 3 = role, 4 = user)
     this.boost_duration = boost_duration;// Boost duration (if action = 1)
+    this.texts = (action === 2) ? this.fetchTexts() : null; // List of texts (if action = 2
   }
 
   update(): void {
@@ -110,16 +113,53 @@ export class ShopItem {
   addText(text: string[]): void {
       // Add a list of text to the table TEXT
 
-      const values = text.map((t) => [this.id, this.guild.id, t]);
+        // Insert the texts in the database
+        text.forEach((value) => {
+            this.#db.query(
+                "INSERT INTO TEXT (text_id, guild_id, value) VALUES (?, ?, ?)",
+                [this.id, this.guild.id, value],
 
+                (err) => {
+                    if (err) throw err;
+                    // Add the text to the list
+                    this.texts?.push(new Text(this.#db, this, false, value));
+                }
+            );
+        });
 
-      this.#db.query(
-          "INSERT INTO TEXT (text_id, guild_id, value) VALUES ?",
-          [values],
-          (err) => {
-              if (err) throw err;
-          });
+  }
 
+  fetchTexts(): Text[] {
+        const texts: Text[] = []
+
+        // Fetch the texts from the database
+        this.#db.query<RowDataPacket[]>(
+            "SELECT * FROM TEXT WHERE text_id = ? AND guild_id = ?",
+            [this.id, this.guild.id],
+
+            (err, results) => {
+                if (err) throw err;
+                results.forEach((row) => {
+                    texts.push(new Text(this.#db, this, row.used, row.value));
+                });
+            }
+        );
+        return texts;
+  }
+
+  getUnusedTexts(): Text[] | null {
+      // Allow to assign a text to a user
+
+        if (this.texts === null) return null;
+
+        const usedTexts: Text[] = [];
+
+        this.texts.forEach((text) => {
+            if (!text.used) usedTexts.push(text);
+        });
+
+        // If the list is empty (= no texts available), return null
+        return usedTexts.length ? usedTexts : null;
   }
 
 }
