@@ -24,7 +24,7 @@ export class Text{
                 this.item.guild.id,
                 this.content
             ],
-            (err: mysql.QueryError | null, results: mysql.ResultSetHeader) => {
+            (err: mysql.QueryError | null) => {
                 if (err) throw err;
                 this.used = used;
             }
