@@ -27,9 +27,26 @@ function getItemList(
     const item = itemList[i];
 
     if (item) {
+      let emoji: string;
+
+      switch (item.action) {
+        case 0:
+          emoji = "<:pink_at:1177169806202507314>";
+          break;
+        case 1:
+          emoji = "<:pink_flask:1177169807972503572>";
+          break;
+        case 2:
+          emoji = "<:pink_text:1177169814284935198>";
+          break;
+        default:
+          emoji = "<:pink_object:1177169811420221451>";
+          break;
+      }
+
       fields.push({
         name: ` `,
-        value: `**${item.label}** - ${item.price} ${pointName}\n${item.description}`,
+        value: `${emoji}**${item.label}** - ${item.price} ${pointName}\n${item.description}`,
       });
     }
   }
@@ -54,9 +71,10 @@ const event: BotEvent = {
     await interaction.deferUpdate();
 
     // We get the actual page number. Used to know which items to display
-    const actualPageInt: number = parseInt(
-      interaction.message.embeds[0].footer!.text!.split(" ")[1].split("/")[0]
-    ) - 1;
+    const actualPageInt: number =
+      parseInt(
+        interaction.message.embeds[0].footer!.text!.split(" ")[1].split("/")[0]
+      ) - 1;
 
     const guild = DB.getGuild(interaction.guildId!);
     let items = [...guild.shop];
@@ -91,14 +109,19 @@ const event: BotEvent = {
       );
 
     // If the page is 1, we disable the "previous" button
-    if ((actualPageInt) === 1) button.components[0].setDisabled(true);
+    if (actualPageInt === 1) button.components[0].setDisabled(true);
 
     // If the page is the last one, we disable the "next" button
-    if ((actualPageInt) === Math.ceil(guild.shop.length / 5))
+    if (actualPageInt === Math.ceil(guild.shop.length / 5))
       button.components[1].setDisabled(true);
 
     // We now do generate the embed with all the data we got
-    const embed = shop(guild.lang, Math.ceil(guild.shop.length / 5), (actualPageInt), fields);
+    const embed = shop(
+      guild.lang,
+      Math.ceil(guild.shop.length / 5),
+      actualPageInt,
+      fields
+    );
 
     // editReply is required since we used deferUpdate
     await interaction.editReply({ embeds: [embed], components: [button] });
