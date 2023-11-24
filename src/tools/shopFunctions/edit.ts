@@ -9,7 +9,7 @@ import {
 
 import {DB} from "@/index";
 import {ShopItem} from "@/classes/ShopItem";
-import notFound from "@/builders/embeds/item/edit/notFound";
+import notFound from "@/builders/embeds/errors/itemNotFound";
 
 async function showTextModal(interaction: CommandInteraction, item: ShopItem) {
 

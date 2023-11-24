@@ -1,7 +1,7 @@
 import {BotEvent} from "@/types";
 import {Events, Interaction} from "discord.js";
 import {DB} from "@/index";
-import Error from "@/builders/embeds/item/edit/notFound";
+import Error from "@/builders/embeds/errors/itemNotFound";
 import Sucess from "@/builders/embeds/item/edit/text";
 
 
