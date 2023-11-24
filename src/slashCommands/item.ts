@@ -190,16 +190,56 @@ export const command: SlashCommand = {
               .setDescription("Edit an item")
               .addSubcommand((command: SlashCommandSubcommandBuilder) =>
                       command
-                          .setName("text")
-                          .setDescription("Add string to a Text item shop")
+                          .setName("name")
+                          .setDescription("Edit the name of an item shop")
                           .addNumberOption((option) =>
-                                option
-                                    .setName("id")
-                                    .setDescription("The id of the item to edit")
-                                    .setRequired(true)
-                                    .setMinValue(0)
-                            )
+                                  option
+                                      .setName("id")
+                                      .setDescription("The id of the item to edit")
+                                      .setRequired(true)
+                                      .setMinValue(0)
+                              )
+                          .addStringOption((option) =>
+                                    option
+                                        .setName("name")
+                                        .setDescription("The new name of the item")
+                                        .setRequired(true)
+                                )
               )
+              .addSubcommand((command: SlashCommandSubcommandBuilder) =>
+                        command
+                            .setName("description")
+                            .setDescription("Edit the description of an item shop")
+                            .addNumberOption((option) =>
+                                    option
+                                        .setName("id")
+                                        .setDescription("The id of the item to edit")
+                                        .setRequired(true)
+                                        .setMinValue(0)
+                                )
+                            .addStringOption((option) =>
+                                        option
+                                            .setName("description")
+                                            .setDescription("The new description of the item")
+                                            .setRequired(true)
+                                    )
+                )
+
+              .addSubcommand((command: SlashCommandSubcommandBuilder) =>
+                  command
+                      .setName("text")
+                      .setDescription("Add string to a Text item shop")
+                      .addNumberOption((option) =>
+                          option
+                              .setName("id")
+                              .setDescription("The id of the item to edit")
+                              .setRequired(true)
+                              .setMinValue(0)
+                      )
+
+              )
+
+
       )
     .addSubcommand((group) =>
       group
