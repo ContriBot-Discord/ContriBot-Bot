@@ -6,8 +6,6 @@ import {
   CacheType,
   CommandInteraction,
   SlashCommandBuilder,
-  StringSelectMenuBuilder,
-  StringSelectMenuOptionBuilder,
 } from "discord.js";
 
 import {
@@ -17,8 +15,9 @@ import {
   helpEmbed,
 } from "@/builders/embeds/help";
 
+import helpSelect from "@/builders/selects/helpSelect";
+
 import { DB } from "..";
-import { getEmoji } from "@/constants";
 
 export const command: SlashCommand = {
   name: "help",
@@ -49,29 +48,6 @@ export const command: SlashCommand = {
         new ButtonBuilder().setCustomId("Hnext").setLabel("▶").setStyle(1)
       );
 
-    const select = new StringSelectMenuBuilder()
-      .setCustomId("Hselect")
-      .setPlaceholder("Select the type of help you want")
-      .addOptions([
-        new StringSelectMenuOptionBuilder()
-          .setLabel("User")
-          .setDescription("Show the user help menu.")
-          .setEmoji(getEmoji("pink_person")!.value)
-          .setValue("user"),
-        new StringSelectMenuOptionBuilder()
-          .setLabel("Admin")
-          .setDescription("Show the admin help menu.")
-          .setEmoji(getEmoji("orange_shield")!.value)
-          .setValue("admin"),
-        new StringSelectMenuOptionBuilder()
-          .setLabel("Config")
-          .setDescription("Show the config help menu.")
-          .setEmoji(getEmoji("orange_hammer")!.value)
-          .setValue("config"),
-      ]);
-
-    const row = new ActionRowBuilder().addComponents(select);
-
     let embed = helpEmbed(guild.lang);
 
     let flag: boolean = true;
@@ -94,7 +70,7 @@ export const command: SlashCommand = {
     }
 
     if (flag)
-      interaction.reply({ embeds: [embed], components: [button, row as any] });
-    else interaction.reply({ embeds: [embed], components: [row as any] });
+      interaction.reply({ embeds: [embed], components: [button, helpSelect() as any] });
+    else interaction.reply({ embeds: [embed], components: [helpSelect() as any] });
   },
 };

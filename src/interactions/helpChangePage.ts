@@ -4,13 +4,14 @@ import {
   ButtonBuilder,
   Events,
   Interaction,
-  StringSelectMenuBuilder,
-  StringSelectMenuOptionBuilder,
 } from "discord.js";
-import { userHelpEmbed, adminHelpEmbed, configHelpEmbed } from "@/builders/embeds/help";
+import {
+  userHelpEmbed,
+  adminHelpEmbed,
+  configHelpEmbed,
+} from "@/builders/embeds/help";
+import helpSelect from "@/builders/selects/helpSelect";
 import { DB } from "..";
-
-import { getEmoji } from "../constants";
 
 const event: BotEvent = {
   name: Events.InteractionCreate,
@@ -36,29 +37,6 @@ const event: BotEvent = {
         new ButtonBuilder().setCustomId("Hnext").setLabel("▶").setStyle(1)
       );
 
-    const select = new StringSelectMenuBuilder()
-      .setCustomId("Hselect")
-      .setPlaceholder("Select the type of help you want")
-      .addOptions([
-        new StringSelectMenuOptionBuilder()
-          .setLabel("User")
-          .setDescription("Show the user help menu.")
-          .setEmoji(getEmoji("pink_person")!.value)
-          .setValue("user"),
-        new StringSelectMenuOptionBuilder()
-          .setLabel("Admin")
-          .setDescription("Show the admin help menu.")
-          .setEmoji(getEmoji("orange_shield")!.value)
-          .setValue("admin"),
-        new StringSelectMenuOptionBuilder()
-          .setLabel("Config")
-          .setDescription("Show the config help menu.")
-          .setEmoji(getEmoji("orange_hammer")!.value)
-          .setValue("config"),
-      ]);
-
-    const row = new ActionRowBuilder().addComponents(select);
-
     // Differing the response allow us to have up to 15 minutes to edit the message, instead of 3 seconds
     await interaction.deferUpdate();
 
@@ -73,14 +51,14 @@ const event: BotEvent = {
         case "Config":
           interaction.editReply({
             embeds: [adminHelpEmbed(guild.lang, guild.pointName)],
-            components: [button, row as any],
+            components: [button, helpSelect() as any],
           });
           break;
         default:
           button.components[0].setDisabled(true);
           interaction.editReply({
             embeds: [userHelpEmbed(guild.lang, guild.pointName)],
-            components: [button, row as any],
+            components: [button, helpSelect() as any],
           });
           break;
       }
@@ -89,14 +67,14 @@ const event: BotEvent = {
         case "User":
           interaction.editReply({
             embeds: [adminHelpEmbed(guild.lang, guild.pointName)],
-            components: [button, row as any],
+            components: [button, helpSelect() as any],
           });
           break;
         default:
           button.components[1].setDisabled(true);
           interaction.editReply({
             embeds: [configHelpEmbed(guild.lang, guild.pointName)],
-            components: [button, row as any],
+            components: [button, helpSelect() as any],
           });
           break;
       }
