@@ -4,7 +4,6 @@ import {
   CacheType,
   ActionRowBuilder,
   ButtonBuilder,
-  roleMention,
 } from "discord.js";
 import { SlashCommand } from "@/types";
 import { DB } from "@/index";

@@ -1,6 +1,6 @@
 import {
     CommandInteraction,
-    CommandInteractionOptionResolver, GuildMember, Role, User,
+    CommandInteractionOptionResolver
 } from "discord.js";
 
 import {DB} from "@/index";
