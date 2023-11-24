@@ -9,8 +9,13 @@ import {
 
 import {DB} from "@/index";
 import {ShopItem} from "@/classes/ShopItem";
+// Success
+import nameSucess from "@/builders/embeds/item/edit/name";
+
+// Errors
 import notFound from "@/builders/embeds/errors/itemNotFound";
 import incompatible from "@/builders/embeds/errors/itemIncompatible"
+import tooLong from "@/builders/embeds/errors/itemStringTooLong";
 
 async function showTextModal(interaction: CommandInteraction, item: ShopItem) {
 
@@ -46,18 +51,58 @@ export const edit = async function edit(
     let subcommand: CommandInteractionOptionResolver | string =
         interaction.options as CommandInteractionOptionResolver;
 
+    const item = guild.getShopItem(subcommand.getNumber("id", true));
 
-    switch (subcommand.getSubcommand()){
-        case "text":
-            const item = guild.getShopItem(subcommand.getNumber("id", true));
+    if (item === null) {
+        await interaction.reply({
+            embeds: [notFound(guild.lang)],
+            ephemeral: true})}
+    else{switch (subcommand.getSubcommand()) {
 
-            if (item === null) {
+                case "text":
+                    if (item.action == 2) {  // If the item is a Text
+                        await interaction.reply(
+                    {
+                            embeds: [incompatible(guild.lang)]
+                            })}
+                    else
+                    {await showTextModal(interaction, item);}
+        break;
+
+    case "name":
+
+        const label = subcommand.getString("name", true);
+
+        if (label.length > 30) {
+            await interaction.reply({
+                embeds: [tooLong(guild.lang, "name", label.length, 30)],
+                ephemeral: true})
+        } else {
+            const old_label = item.label;
+            item.label = label;
+            item.update();
+            await interaction.reply({
+                embeds: [nameSucess(guild.lang, old_label, label)]
+            })
+        }
+
+        break;
+
+    case "description":
+            const description = subcommand.getString("description", true);
+
+            if (description.length > 100) {
                 await interaction.reply({
-                    embeds: [notFound(guild.lang)],
-                    ephemeral: true,
-                });
+                    embeds: [tooLong(guild.lang, "description", description.length, 100)],
+                    ephemeral: true})
             } else {
-                await showTextModal(interaction, item);
+                item.description = description;
+                item.update();
+                await interaction.reply({
+                    embeds: [nameSucess(guild.lang, item.description, description)]
+                })
             }
+            break;
+    }
     }
 };
