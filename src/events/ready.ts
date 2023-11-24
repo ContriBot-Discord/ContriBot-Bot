@@ -21,20 +21,25 @@ const event: BotEvent = {
 
     profilePicChooser(client.user!);
 
-    const analytics = new DiscordAnalytics({
-      client: client,
-      eventsToTrack: {
-        trackGuilds: true,
-        trackGuildsLocale: true,
-        trackInteractions: true,
-        trackUserCount: true,
-        trackUserLanguage: true
-      },
-      apiToken: process.env.DISCORD_ANALYTICS_TOKEN!,
-      sharded: false
-    });
+    if (process.env.DEBUG === "false") {
 
-    analytics.trackEvents();
+      const analytics = new DiscordAnalytics({
+        client: client,
+        eventsToTrack: {
+          trackGuilds: true,
+          trackGuildsLocale: true,
+          trackInteractions: true,
+          trackUserCount: true,
+          trackUserLanguage: true
+        },
+        apiToken: process.env.DISCORD_ANALYTICS_TOKEN!,
+        sharded: false
+      });
+
+      analytics.trackEvents();
+
+    }
+
 
     console.log(`💪 Logged in as ${client.user?.tag}`);
   },
