@@ -1,16 +1,12 @@
 import { BotEvent } from "@/types";
-import {
-  ActionRowBuilder,
-  ButtonBuilder,
-  Events,
-  Interaction,
-} from "discord.js";
+import { Events, Interaction } from "discord.js";
 import {
   userHelpEmbed,
   adminHelpEmbed,
   configHelpEmbed,
 } from "@/builders/embeds/help";
 import helpSelect from "@/builders/selects/helpSelect";
+import helpButton from "@/builders/buttons/helpButton";
 import { DB } from "..";
 
 const event: BotEvent = {
@@ -29,13 +25,7 @@ const event: BotEvent = {
 
     const guild = DB.getGuild(interaction.guildId!);
 
-    const button = new ActionRowBuilder<ButtonBuilder>()
-      .addComponents(
-        new ButtonBuilder().setCustomId("Hprevious").setLabel("◀︎").setStyle(1)
-      )
-      .addComponents(
-        new ButtonBuilder().setCustomId("Hnext").setLabel("▶").setStyle(1)
-      );
+    const button = helpButton();
 
     // Differing the response allow us to have up to 15 minutes to edit the message, instead of 3 seconds
     await interaction.deferUpdate();
@@ -51,14 +41,14 @@ const event: BotEvent = {
         case "Config":
           interaction.editReply({
             embeds: [adminHelpEmbed(guild.lang, guild.pointName)],
-            components: [button, helpSelect() as any],
+            components: [button, helpSelect()],
           });
           break;
         default:
           button.components[0].setDisabled(true);
           interaction.editReply({
             embeds: [userHelpEmbed(guild.lang, guild.pointName)],
-            components: [button, helpSelect() as any],
+            components: [button, helpSelect()],
           });
           break;
       }
@@ -67,14 +57,14 @@ const event: BotEvent = {
         case "User":
           interaction.editReply({
             embeds: [adminHelpEmbed(guild.lang, guild.pointName)],
-            components: [button, helpSelect() as any],
+            components: [button, helpSelect()],
           });
           break;
         default:
           button.components[1].setDisabled(true);
           interaction.editReply({
             embeds: [configHelpEmbed(guild.lang, guild.pointName)],
-            components: [button, helpSelect() as any],
+            components: [button, helpSelect()],
           });
           break;
       }

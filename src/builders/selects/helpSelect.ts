@@ -1,13 +1,12 @@
 import { getEmoji } from "@/constants";
 import {
   ActionRowBuilder,
-  AnyComponentBuilder,
   StringSelectMenuBuilder,
   StringSelectMenuOptionBuilder,
 } from "discord.js";
 
-export default function (): ActionRowBuilder<AnyComponentBuilder> {
-  return new ActionRowBuilder().addComponents(
+export default function (): ActionRowBuilder<StringSelectMenuBuilder> {
+  return new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
     new StringSelectMenuBuilder()
       .setCustomId("Hselect")
       .setPlaceholder("Select the type of help you want")

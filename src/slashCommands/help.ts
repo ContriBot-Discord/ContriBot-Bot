@@ -1,8 +1,6 @@
 import { SlashCommand } from "@/types";
 
 import {
-  ActionRowBuilder,
-  ButtonBuilder,
   CacheType,
   CommandInteraction,
   SlashCommandBuilder,
@@ -18,6 +16,7 @@ import {
 import helpSelect from "@/builders/selects/helpSelect";
 
 import { DB } from "..";
+import helpButton from "@/builders/buttons/helpButton";
 
 export const command: SlashCommand = {
   name: "help",
@@ -40,13 +39,7 @@ export const command: SlashCommand = {
 
     const type = interaction.options.get("type")?.value as string;
 
-    const button = new ActionRowBuilder<ButtonBuilder>()
-      .addComponents(
-        new ButtonBuilder().setCustomId("Hprevious").setLabel("◀︎").setStyle(1)
-      )
-      .addComponents(
-        new ButtonBuilder().setCustomId("Hnext").setLabel("▶").setStyle(1)
-      );
+    const button = helpButton();
 
     let embed = helpEmbed(guild.lang);
 
@@ -70,7 +63,7 @@ export const command: SlashCommand = {
     }
 
     if (flag)
-      interaction.reply({ embeds: [embed], components: [button, helpSelect() as any] });
-    else interaction.reply({ embeds: [embed], components: [helpSelect() as any] });
+      interaction.reply({ embeds: [embed], components: [button, helpSelect()] });
+    else interaction.reply({ embeds: [embed], components: [helpSelect()] });
   },
 };
