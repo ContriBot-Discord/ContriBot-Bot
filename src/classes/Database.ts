@@ -25,7 +25,6 @@ export class Database {
 
     this.guilds = this.fetchGuilds();
   }
-
   fetchGuilds(): Guild[] {
     // Fetch all the guilds from the database
     let guilds: Guild[] = [];

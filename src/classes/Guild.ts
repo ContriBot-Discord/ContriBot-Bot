@@ -165,6 +165,22 @@ export class Guild {
     });
   }
 
+  createShopItem(name: string, description: string, price: number, maxQuantity: number, action: number, available: boolean,
+                 applied_id: string | null, boost: number | null, boost_type: number | null, boost_duration: Date | null): ShopItem {
+    // Create a shop item in the database
+    // Since Database is not configured yet, return a new shop item
+    let shopItem = new ShopItem(this.#db, price, name, description, null, this, maxQuantity, action, available, applied_id, boost, boost_type, boost_duration);
+
+    // Insert a new row in the database
+    shopItem.create();
+
+    // Once created, we add the shop item to the guilds array
+    this.shop.push(shopItem);
+
+
+    return shopItem;
+  }
+
   fetchShop(): ShopItem[] {
     // Fetch all shop items from database
     const shop: ShopItem[] = [];
@@ -178,18 +194,19 @@ export class Guild {
         result.forEach((item: RowDataPacket) => {
           shop.push(
             new ShopItem(
-              item.price,
-              item.name,
-              item.description,
-              item.id,
-              this,
-              item.max_quantity,
-              item.action,
-              item.available,
-              item.available_after,
-              item.available_before,
-              item.restock_duration,
-              this.#db
+                this.#db,
+                item.price,
+                item.label,
+                item.description,
+                item.item_id,
+                this,
+                item.max_quantity,
+                item.action,
+                item.available,
+                item.applied_id,
+                item.boost,
+                item.boost_type,
+                item.boost_duration
             )
           );
         });
@@ -406,4 +423,8 @@ export class Guild {
       }
     );
   }
+
+    getShopItem(id: number | string): ShopItem | null {
+        return (this.shop.find(item => item.id == id) || null);
+    }
 }

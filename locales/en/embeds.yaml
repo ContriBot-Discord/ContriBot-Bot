@@ -3,7 +3,7 @@
 default:
   title: "**{{command_name}}** command"
 leaderboard:
-  title: "Leaderboard [{{index}}]"
+  title: "**Leaderboard** [{{index}}]"
   description: "Here is the leaderboard"
   fields:
     name: "Top {{index}}"
@@ -104,3 +104,8 @@ whois:
 ping:
   description: "🏓 Pong!\n
     📡 Ping: {{ping}}ms" # ping of the bot (number)
+
+shop:
+  title: "**Shop** [{{index}}]"
+  footer:
+    text: "Page {{pageNumber}}/{{totalPages}}"

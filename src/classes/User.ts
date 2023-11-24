@@ -151,7 +151,7 @@ export class User {
     const userItem = new UserItem(
       this,
       itemId!.toString(),
-      item.name,
+      item.label,
       item.description,
       new Date(),
       false,

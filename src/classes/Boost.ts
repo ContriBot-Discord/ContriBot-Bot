@@ -5,7 +5,7 @@ export class Boost {
     readonly #db: mysql.Connection;
     #after_timestamp: Date | null | undefined; // Only if recurrent is true
     #before_timestamp: Date | null | undefined; // Only if recurrent is true
-    uid: number | null;
+    id: number | null;
     guild: Guild;
     boostType: number;
     appliedId: string;
@@ -17,7 +17,7 @@ export class Boost {
 
     constructor(
         db: mysql.Connection,
-        uid: number | null,
+        id: number | null,
         guild: Guild,
         boostType: number,
         appliedId: string,
@@ -28,7 +28,7 @@ export class Boost {
         renewEvery?: Date | null
     ) {
         this.#db = db;
-        this.uid = uid;
+        this.id = id;
         this.guild = guild;
         this.boostType = boostType;
         this.appliedId = appliedId;
@@ -51,7 +51,7 @@ export class Boost {
                 if (err) throw err;
 
                 // We are updating the uid of the boost to the one given by the database
-                this.uid = result.insertId;
+                this.id = result.insertId;
             }
         );
     }
@@ -59,7 +59,7 @@ export class Boost {
     update() {
         this.#db.execute(
             "UPDATE BOOST SET boost_type = ?, boosted_id = ?, multiplier = ?, starting_at = ?, ending_at = ?, execute_every = ?, recurrent = ? WHERE boost_id = ?",
-            [this.boostType, this.appliedId, this.multiplier, this.startAt, this.endAt, this.renewEvery, this.uid, this.recurrent],
+            [this.boostType, this.appliedId, this.multiplier, this.startAt, this.endAt, this.renewEvery, this.id, this.recurrent],
             (err) => {
                 if (err) throw err;
             }
@@ -69,7 +69,7 @@ export class Boost {
     delete(){
 
         this.#db.execute(
-            "DELETE FROM BOOST WHERE boost_id = ?", [this.uid], (err) => {
+            "DELETE FROM BOOST WHERE boost_id = ?", [this.id], (err) => {
                 if (err) throw err;
             });
     }
