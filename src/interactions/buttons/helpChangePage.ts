@@ -7,7 +7,7 @@ import {
 } from "@/builders/embeds/help";
 import helpSelect from "@/builders/selects/helpSelect";
 import helpButton from "@/builders/buttons/helpButton";
-import { DB } from "..";
+import { DB } from "../..";
 
 const event: BotEvent = {
   name: Events.InteractionCreate,
