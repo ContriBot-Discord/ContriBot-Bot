@@ -7,7 +7,7 @@ import {
 import { SlashCommand } from "@/types";
 
 import { DB } from "@/index";
-import leaderboard from "@/embeds/leaderboard";
+import leaderboard from "@/builders/embeds/leaderboard";
 import i18next from "i18next";
 
 export const command: SlashCommand = {

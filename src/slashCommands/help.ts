@@ -15,7 +15,7 @@ import {
   adminHelpEmbed,
   configHelpEmbed,
   helpEmbed,
-} from "@/embeds/help";
+} from "@/builders/embeds/help";
 
 import { DB } from "..";
 import { getEmoji } from "@/constants";

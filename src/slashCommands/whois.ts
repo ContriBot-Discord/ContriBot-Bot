@@ -5,7 +5,7 @@ import {
 } from "discord.js";
 import { SlashCommand } from "@/types";
 
-import whoisEmbed from "@/embeds/whois";
+import whoisEmbed from "@/builders/embeds/whois";
 
 import { DB } from "@/index";
 

@@ -7,7 +7,7 @@ import {
   StringSelectMenuBuilder,
   StringSelectMenuOptionBuilder,
 } from "discord.js";
-import { userHelpEmbed, adminHelpEmbed, configHelpEmbed } from "@/embeds/help";
+import { userHelpEmbed, adminHelpEmbed, configHelpEmbed } from "@/builders/embeds/help";
 import { DB } from "..";
 
 import { getEmoji } from "../constants";

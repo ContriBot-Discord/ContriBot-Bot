@@ -3,7 +3,7 @@ import { SlashCommand } from "@/types";
 
 import { DB } from "@/index";
 
-import pingEmbed from "@/embeds/ping";
+import pingEmbed from "@/builders/embeds/ping";
 
 export const command: SlashCommand = {
   name: "ping",

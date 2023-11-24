@@ -2,37 +2,46 @@ import { EmbedBuilder } from "discord.js";
 
 import i18next from "i18next";
 
-import { getColor, getEmoji } from "../../constants";
+import { getColor, getEmoji } from "../../../constants";
 import { ColorResolvable } from "discord.js";
 
 export default function (
   userId: string,
   amount: number,
   memberId: string,
-  scope: string = "both",
   lang: string,
+  scope: string = "both",
   pointName: string
 ) {
   i18next.changeLanguage(lang);
 
-  let translation = "embeds:remove.description.both";
-  if (scope === "leaderboardPoints")
-    translation = "embeds:remove.description.leaderboardPoints";
-  else if (scope === "storePoints")
-    translation = "embeds:remove.description.storePoints";
+  let fieldName: string;
+
+  switch (scope) {
+    case "storePoints":
+      fieldName = "embeds:add.description.storePoints";
+      break;
+    case "leaderboardPoints":
+      fieldName = "embeds:add.description.leaderboardPoints";
+      break;
+    default:
+      fieldName = "embeds:add.description.both";
+      break;
+  }
 
   return new EmbedBuilder()
     .addFields({
       name:
         getEmoji("orange_shield")!.value +
-        i18next.t("embeds:default.title", { command_name: "admin remove" }),
+        i18next.t("embeds:default.title", { command_name: "admin add" }),
       value: getEmoji("orange_line")!.value,
     })
     .addFields({
       name: " ",
-      value: i18next.t(translation, {
+      value: i18next.t(fieldName, {
         userid: userId,
         quantity: amount,
+        pointsname: "points",
         memberid: memberId,
         pointName: pointName,
       }),

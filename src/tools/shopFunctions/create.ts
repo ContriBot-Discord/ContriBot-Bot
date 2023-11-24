@@ -5,7 +5,7 @@ import {
 
 import {DB} from "@/index";
 import {ShopItem} from "@/classes/ShopItem";
-import Error from "@/embeds/item/create/error";
+import Error from "@/builders/embeds/item/create/error";
 
 function createItem(guildId: string, label: string, description: string, price: number, quantity: number, action: number,
                     available: boolean, applied_id: string | null, boost: number | null, boost_type: number | null, boost_duration: Date | null): ShopItem {

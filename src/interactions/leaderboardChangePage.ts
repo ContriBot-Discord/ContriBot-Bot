@@ -8,7 +8,7 @@ import {
 
 import { DB } from "@/index";
 import { User } from "@/classes/User";
-import leaderboard from "@/embeds/leaderboard";
+import leaderboard from "@/builders/embeds/leaderboard";
 
 import i18next from "i18next";
 
