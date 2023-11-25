@@ -5,7 +5,7 @@ import {
   Interaction,
 } from "discord.js";
 
-import { userHelpEmbed, adminHelpEmbed, configHelpEmbed } from "@/builders/embeds/help";
+import { userHelpEmbed, adminHelpEmbed, configHelpEmbed } from "@embeds/help";
 
 import helpSelect from "@/builders/selects/help";
 

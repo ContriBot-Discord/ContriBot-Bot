@@ -4,7 +4,7 @@ import {
   userHelpEmbed,
   adminHelpEmbed,
   configHelpEmbed,
-} from "@/builders/embeds/help";
+} from "@embeds/help";
 import helpSelect from "@/builders/selects/help";
 import helpButton from "@/builders/buttons/help";
 import { DB } from "@/index";

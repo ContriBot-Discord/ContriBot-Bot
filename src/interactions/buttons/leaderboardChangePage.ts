@@ -2,7 +2,7 @@ import { BotEvent } from "@/types";
 import { Events, Interaction } from "discord.js";
 
 import { DB } from "@/index";
-import leaderboardEmbed from "@/builders/embeds/leaderboard";
+import leaderboardEmbed from "@embeds/leaderboard";
 
 import leaderboardButton from "@/builders/buttons/leaderboard";
 

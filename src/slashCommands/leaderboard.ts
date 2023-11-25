@@ -2,7 +2,7 @@ import { SlashCommandBuilder, CommandInteraction } from "discord.js";
 import { SlashCommand } from "@/types";
 
 import { DB } from "@/index";
-import leaderboardEmbed from "@/builders/embeds/leaderboard";
+import leaderboardEmbed from "@embeds/leaderboard";
 import leaderboardButton from "@/builders/buttons/leaderboard";
 
 export const command: SlashCommand = {

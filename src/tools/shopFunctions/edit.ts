@@ -10,12 +10,12 @@ import {
 import {DB} from "@/index";
 import {ShopItem} from "@/classes/ShopItem";
 // Success
-import nameSucess from "@/builders/embeds/item/edit/name";
+import nameSucess from "@embeds/item/edit/name";
 
 // Errors
-import notFound from "@/builders/embeds/errors/itemNotFound";
-import incompatible from "@/builders/embeds/errors/itemIncompatible"
-import tooLong from "@/builders/embeds/errors/itemStringTooLong";
+import notFound from "@embeds/errors/itemNotFound";
+import incompatible from "@embeds/errors/itemIncompatible"
+import tooLong from "@embeds/errors/itemStringTooLong";
 
 async function showTextModal(interaction: CommandInteraction, item: ShopItem) {
 

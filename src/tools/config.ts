@@ -1,8 +1,8 @@
-import actionPointEmbed from "@/builders/embeds/config/actionPoint";
-import channelEmbed from "@/builders/embeds/config/channel";
-import langEmbed from "@/builders/embeds/config/lang";
-import pointNameEmbed from "@/builders/embeds/config/pointName";
-import showEmbed from "@/builders/embeds/config/show";
+import actionPointEmbed from "@embeds/config/actionPoint";
+import channelEmbed from "@embeds/config/channel";
+import langEmbed from "@embeds/config/lang";
+import pointNameEmbed from "@embeds/config/pointName";
+import showEmbed from "@embeds/config/show";
 
 import { CacheType, Channel, CommandInteraction } from "discord.js";
 

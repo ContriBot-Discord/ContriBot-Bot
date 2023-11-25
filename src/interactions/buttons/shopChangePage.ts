@@ -8,7 +8,7 @@ import {
 
 import { DB } from "@/index";
 import { ShopItem } from "@/classes/ShopItem";
-import shop from "@/builders/embeds/shop";
+import shop from "@embeds/shop";
 
 import i18next from "i18next";
 import { getEmoji } from "@/constants";

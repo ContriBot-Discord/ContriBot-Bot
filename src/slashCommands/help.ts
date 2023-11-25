@@ -11,7 +11,7 @@ import {
   adminHelpEmbed,
   configHelpEmbed,
   helpEmbed,
-} from "@/builders/embeds/help";
+} from "@embeds/help";
 
 import helpSelect from "@/builders/selects/help";
 

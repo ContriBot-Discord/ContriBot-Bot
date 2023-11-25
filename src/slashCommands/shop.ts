@@ -7,7 +7,7 @@ import {
 } from "discord.js";
 import { SlashCommand } from "@/types";
 import { DB } from "@/index";
-import shopEmbed from "@/builders/embeds/shop";
+import shopEmbed from "@embeds/shop";
 import i18next from "i18next";
 import { getEmoji } from "@/constants";
 
