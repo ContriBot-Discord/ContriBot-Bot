@@ -14,17 +14,17 @@ export default function (): ActionRowBuilder<StringSelectMenuBuilder> {
         new StringSelectMenuOptionBuilder()
           .setLabel("User")
           .setDescription("Show the user help menu.")
-          .setEmoji(getEmoji("pink_person")!.value)
+          .setEmoji(getEmoji("pink_person"))
           .setValue("user"),
         new StringSelectMenuOptionBuilder()
           .setLabel("Admin")
           .setDescription("Show the admin help menu.")
-          .setEmoji(getEmoji("orange_shield")!.value)
+          .setEmoji(getEmoji("orange_shield"))
           .setValue("admin"),
         new StringSelectMenuOptionBuilder()
           .setLabel("Config")
           .setDescription("Show the config help menu.")
-          .setEmoji(getEmoji("orange_hammer")!.value)
+          .setEmoji(getEmoji("orange_hammer"))
           .setValue("config"),
       ])
   );

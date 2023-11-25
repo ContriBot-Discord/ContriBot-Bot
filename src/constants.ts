@@ -52,6 +52,22 @@ const emojies = [
     value: "<:pink_basket:1176930953613025320> ",
   },
   {
+    name: "pink_shop",
+    value: "<:pink_shop:1176930961863225424>",
+  },
+  {
+    name: "pink_flask",
+    value: "<:pink_flask:1177169807972503572>",
+  },
+  {
+    name: "pink_at",
+    value: "<:pink_at:1177169806202507314>",
+  },
+  {
+    name: "pink_object",
+    value: "<:pink_object:1177169811420221451>"
+  },
+  {
     name: "orange_stats",
     value: "<:orange_stats:1176931091496583238> ",
   },
@@ -91,6 +107,10 @@ const emojies = [
     name: "orange_book",
     value: "<:orange_book:1176931072949366834> ",
   },
+  {
+    name: "orange_shop",
+    value: "<:orange_shop:1176931087298084874>"
+  }
 ];
 
 const colors = [
@@ -121,5 +141,5 @@ export const getColor = (name: string) => {
 };
 
 export const getEmoji = (name: string) => {
-  return emojies.find((emoji) => emoji.name === name);
+  return emojies.find((emoji) => emoji.name === name)!.value;
 };

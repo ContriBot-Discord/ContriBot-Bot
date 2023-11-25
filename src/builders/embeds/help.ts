@@ -11,9 +11,9 @@ export const helpEmbed = function (lang: string) {
   return new EmbedBuilder()
     .addFields({
       name:
-        getEmoji("pink_book")!.value +
+        getEmoji("pink_book") +
         i18next.t(`embeds:default.title`, { command_name: "Help" }),
-      value: getEmoji("pink_line")!.value,
+      value: getEmoji("pink_line"),
     })
     .addFields({
       name: " ",
@@ -22,13 +22,13 @@ export const helpEmbed = function (lang: string) {
     .addFields({
       name: " ",
       value:
-        getEmoji("pink_person")!.value +
+        getEmoji("pink_person") +
         i18next.t(`embeds:help.categories.user`) +
         "\n" +
-        getEmoji("orange_shield")!.value +
+        getEmoji("orange_shield") +
         i18next.t(`embeds:help.categories.admin`) +
         "\n" +
-        getEmoji("orange_hammer")!.value +
+        getEmoji("orange_hammer") +
         i18next.t(`embeds:help.categories.config`),
     })
     .setColor(getColor("PINK")!.hex as ColorResolvable)
@@ -41,9 +41,9 @@ export const userHelpEmbed = function (lang: string, pointName: string) {
   return new EmbedBuilder()
     .addFields({
       name:
-        getEmoji("pink_person")!.value +
+        getEmoji("pink_person") +
         i18next.t(`embeds:help.title`, { index: "User" }),
-      value: getEmoji("pink_line")!.value,
+      value: getEmoji("pink_line"),
     })
     .addFields({
       name: "/profile (member)",
@@ -75,9 +75,9 @@ export const adminHelpEmbed = function (lang: string, pointName: string) {
   return new EmbedBuilder()
     .addFields({
       name:
-        getEmoji("orange_shield")!.value +
+        getEmoji("orange_shield") +
         i18next.t(`embeds:help.title`, { index: "Admin" }),
-      value: getEmoji("orange_line")!.value,
+      value: getEmoji("orange_line"),
     })
     .addFields({
       name: " ",
@@ -115,9 +115,9 @@ export const configHelpEmbed = function (lang: string, pointName: string) {
   return new EmbedBuilder()
     .addFields({
       name:
-        getEmoji("orange_hammer")!.value +
+        getEmoji("orange_hammer") +
         i18next.t(`embeds:help.title`, { index: "Config" }),
-      value: getEmoji("orange_line")!.value,
+      value: getEmoji("orange_line"),
     })
     .addFields({
       name: " ",

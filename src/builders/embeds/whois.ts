@@ -10,9 +10,9 @@ export default function (lang: string): EmbedBuilder {
     .addFields(
       {
         name:
-          getEmoji("blue_dev")!.value +
+          getEmoji("blue_dev") +
           i18next.t("embeds:whois.title"),
-        value: getEmoji("blue_line")!.value,
+        value: getEmoji("blue_line"),
       },
       {
         name: " ",

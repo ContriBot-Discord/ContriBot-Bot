@@ -16,9 +16,9 @@ export default function (
   return new EmbedBuilder()
     .addFields({
       name:
-        getEmoji("orange_hammer")!.value +
+        getEmoji("orange_hammer") +
         i18next.t(`config:default.title`, { command_name: "config add" }),
-      value: getEmoji("orange_line")!.value,
+      value: getEmoji("orange_line"),
     })
     .addFields({
       name: i18next.t(`config:actionpoint.description`, {

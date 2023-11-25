@@ -24,9 +24,9 @@ export default function (
   return new EmbedBuilder()
     .addFields({
       name:
-        getEmoji("orange_shield")!.value +
+        getEmoji("orange_shield") +
         i18next.t("embeds:default.title", { command_name: "admin remove" }),
-      value: getEmoji("orange_line")!.value,
+      value: getEmoji("orange_line"),
     })
     .addFields({
       name: " ",

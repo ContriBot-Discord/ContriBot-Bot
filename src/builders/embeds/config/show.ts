@@ -44,9 +44,9 @@ export default function (guild_id: string, iconURL: string, lang: string) {
   return new EmbedBuilder()
     .addFields({
       name:
-        getEmoji("orange_hammer")!.value +
+        getEmoji("orange_hammer") +
         i18next.t("config:default.title", { command_name: "config show" }),
-      value: getEmoji("orange_line")!.value,
+      value: getEmoji("orange_line"),
     })
     .addFields({
       name: i18next.t("config:show.description"),
@@ -54,7 +54,7 @@ export default function (guild_id: string, iconURL: string, lang: string) {
     })
     .addFields({
       name:
-        getEmoji("orange_star")!.value +
+        getEmoji("orange_star") +
         i18next.t("config:show.pointsCfg.name", {
           pointName: DB.getGuild(guild_id).pointName,
         }),
@@ -68,7 +68,7 @@ export default function (guild_id: string, iconURL: string, lang: string) {
     })
     .addFields({
       name:
-        getEmoji("orange_settings")!.value +
+        getEmoji("orange_settings") +
         i18next.t("config:show.settings.name"),
       value: i18next.t("config:show.settings.value", {
         pointName: DB.getGuild(guild_id).pointName,
@@ -78,7 +78,7 @@ export default function (guild_id: string, iconURL: string, lang: string) {
     .addFields([
       {
         name:
-          getEmoji("orange_hashtag")!.value +
+          getEmoji("orange_hashtag") +
           i18next.t("config:show.channels.name"),
         value: disabledChannelsText,
       },

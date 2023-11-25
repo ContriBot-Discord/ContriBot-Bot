@@ -20,9 +20,9 @@ export default function (
   return new EmbedBuilder()
     .addFields({
       name:
-        getEmoji("pink_person")!.value +
+        getEmoji("pink_person") +
         i18next.t(`embeds:default.title`, { command_name: "profile" }),
-      value: getEmoji("pink_line")!.value,
+      value: getEmoji("pink_line"),
     })
     .addFields({
       name: ` `,
@@ -30,7 +30,7 @@ export default function (
     })
     .addFields({
       name:
-        getEmoji("pink_stats")!.value +
+        getEmoji("pink_stats") +
         i18next.t(`embeds:profile.stats.name`),
       value: i18next.t(`embeds:profile.stats.value`, {
         messagesSent: messagesSent,
@@ -42,7 +42,7 @@ export default function (
     })
     .addFields({
       name:
-        getEmoji("pink_star")!.value +
+        getEmoji("pink_star") +
         i18next.t(`embeds:profile.points.name`, {
           pointName: pointName,
         }),

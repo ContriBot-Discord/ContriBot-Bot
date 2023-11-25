@@ -17,9 +17,9 @@ export default function (
   return new EmbedBuilder()
     .addFields({
       name:
-        getEmoji("pink_leaderboard")!.value +
+        getEmoji("pink_leaderboard") +
         i18next.t("embeds:leaderboard.title", { index: pageNumber }),
-      value: getEmoji("pink_line")!.value,
+      value: getEmoji("pink_line"),
     })
     .setFooter({
       text: i18next.t("embeds:leaderboard.footer.text", {
