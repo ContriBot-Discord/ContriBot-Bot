@@ -12,7 +12,7 @@ export default function (lang: string, field_name: string, length: number, max_l
                 name:
                     getEmoji("red_bug") +
                     "Waw, I can't read that much !",
-                value: getEmoji("red_line"),
+                value: getEmoji("red_line").repeat(10),
             },
             {
                 name: " ",

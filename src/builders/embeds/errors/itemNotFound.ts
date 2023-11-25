@@ -12,7 +12,7 @@ export default function (lang: string): EmbedBuilder {
                 name:
                     getEmoji("red_bug") +
                     "Sorry, I can't find this item !",
-                value: getEmoji("red_line"),
+                value: getEmoji("red_line").repeat(10),
             },
             {
                 name: " ",
