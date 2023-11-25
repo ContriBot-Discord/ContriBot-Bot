@@ -8,6 +8,7 @@ import { SlashCommand } from "@/types";
 
 import { create } from "@/tools/shopFunctions/create";
 import { edit } from "@/tools/shopFunctions/edit";
+import { deleteItem } from "@/tools/shopFunctions/itemDelete";
 
 export const command: SlashCommand = {
   name: "item",
@@ -238,18 +239,17 @@ export const command: SlashCommand = {
                       )
 
               )
-
-
       )
     .addSubcommand((group) =>
       group
         .setName("delete")
         .setDescription("Delete an item")
-        .addStringOption((option) =>
+        .addNumberOption((option) =>
           option
             .setName("id")
             .setDescription("The id of the item to delete")
             .setRequired(true)
+            .setMinValue(0)
         )
     ),
   async execute(interaction: CommandInteraction) {
@@ -269,7 +269,7 @@ export const command: SlashCommand = {
         await edit(interaction);
         break;
       case "delete":
-        await interaction.reply("Toujours WIP, faut être patient");
+          await deleteItem(interaction);
         break;
     }
   },

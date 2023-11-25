@@ -60,7 +60,7 @@ export const edit = async function edit(
     else{switch (subcommand.getSubcommand()) {
 
                 case "text":
-                    if (item.action !== 2) {  // If the item is a Text
+                    if (item.action !== 2) {  // If the item is not a Text
                         await interaction.reply(
                     {
                             embeds: [incompatible(guild.lang)]
