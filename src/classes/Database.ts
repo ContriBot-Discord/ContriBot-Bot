@@ -90,4 +90,11 @@ export class Database {
 
     return guild;
   }
+
+  registerError(id: string, errorName: string, errorMessage: string, errorStack: string | null, errorCause: {} | null, context: unknown){
+        this.#db.query(`INSERT INTO ERROR (error_id, error_name, error_message, error_stack, error_cause, context) VALUE (?, ?, ?, ?, ?, ?)`, [id, errorName, errorMessage, errorStack, JSON.stringify(errorCause), context], (err) => {
+            if (err) throw err;
+        })
+
+    }
 }
