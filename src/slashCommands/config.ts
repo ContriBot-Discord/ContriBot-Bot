@@ -17,7 +17,7 @@ import {
   actionPoint,
   channel,
   show,
-} from "@/tools/configFunctions";
+} from "@/tools/config";
 
 export const command: SlashCommand = {
   name: "config",

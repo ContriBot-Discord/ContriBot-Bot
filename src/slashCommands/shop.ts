@@ -9,6 +9,7 @@ import { SlashCommand } from "@/types";
 import { DB } from "@/index";
 import shopEmbed from "@/builders/embeds/shop";
 import i18next from "i18next";
+import { getEmoji } from "@/constants";
 
 export const command: SlashCommand = {
   name: "shop",
@@ -37,16 +38,16 @@ export const command: SlashCommand = {
 
         switch (item.action) {
           case 0:
-            emoji = "<:pink_at:1177169806202507314>";
+            emoji = getEmoji("pink_at");
             break;
           case 1:
-            emoji = "<:pink_flask:1177169807972503572>";
+            emoji = getEmoji("pink_flask");
             break;
           case 2:
-            emoji = "<:pink_text:1177169814284935198>";
+            emoji = getEmoji("pink_text");
             break;
           default:
-            emoji = "<:pink_object:1177169811420221451>";
+            emoji = getEmoji("pink_object");
             break;
         }
 

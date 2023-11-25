@@ -5,8 +5,8 @@ import {
   adminHelpEmbed,
   configHelpEmbed,
 } from "@/builders/embeds/help";
-import helpSelect from "@/builders/selects/helpSelect";
-import helpButton from "@/builders/buttons/helpButton";
+import helpSelect from "@/builders/selects/help";
+import helpButton from "@/builders/buttons/help";
 import { DB } from "../..";
 
 const event: BotEvent = {
