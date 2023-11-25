@@ -9,7 +9,6 @@ import * as dotenv from "dotenv";
 import i18next from 'i18next';
 import Backend, {FsBackendOptions} from 'i18next-fs-backend';
 
-
 import { Database } from "@/classes/Database";
 
 dotenv.config();
