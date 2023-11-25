@@ -1,3 +1,4 @@
+import { getEmoji } from "@/constants";
 import {EmbedBuilder} from "discord.js";
 import i18next from "i18next";
 
@@ -7,8 +8,8 @@ export default function (lang: string, old_name: string, new_name: string){
     return new EmbedBuilder()
         .setColor("#F69255")
         .addFields({
-                name: `<:orange_shop:1176931087298084874> Successful item rename`,
-                value: `<:orange_line:1176931079979028530>`.repeat(10)
+                name: getEmoji("orange_shop") + `Successful item rename`,
+                value: getEmoji("orange_line")
             },
             {
                 name: " ",

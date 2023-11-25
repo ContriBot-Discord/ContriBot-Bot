@@ -64,6 +64,10 @@ const emojies = [
     value: "<:pink_at:1177169806202507314>",
   },
   {
+    name: "pink_text",
+    value: "<:pink_text:1177169814284935198>",
+  },
+  {
     name: "pink_object",
     value: "<:pink_object:1177169811420221451>"
   },

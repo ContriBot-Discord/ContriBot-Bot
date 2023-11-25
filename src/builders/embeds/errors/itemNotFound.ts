@@ -1,3 +1,4 @@
+import { getEmoji } from "@/constants";
 import { EmbedBuilder } from "discord.js";
 import i18next from "i18next";
 
@@ -9,9 +10,9 @@ export default function (lang: string): EmbedBuilder {
         .addFields(
             {
                 name:
-                    "<:red_bug:1176930931139936336> " +
+                    getEmoji("red_bug") +
                     "Sorry, I can't find this item !",
-                value: "<:red_line:1176930932838629489>".repeat(11),
+                value: getEmoji("red_line"),
             },
             {
                 name: " ",

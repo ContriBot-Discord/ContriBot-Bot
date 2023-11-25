@@ -15,7 +15,7 @@ export default function (
       getEmoji("pink_shop") +
         i18next.t("embeds:shop.title", { index: index + 1 }) +
         "\n" +
-        getEmoji("purple_line")
+        getEmoji("pink_line")
     )
     .addFields(itemFields)
     .setFooter({
