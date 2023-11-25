@@ -2,7 +2,7 @@ import { EmbedBuilder } from "discord.js";
 
 import i18next from "i18next";
 
-import { getColor, getEmoji} from "../../../constants";
+import { getColor, getEmoji} from "@/constants";
 import { ColorResolvable } from "discord.js";
 
 export default function (

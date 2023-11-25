@@ -1,8 +1,8 @@
 import { EmbedBuilder } from "discord.js";
 import i18next from "i18next";
-import { DB } from "../../..";
+import { DB } from "@/index";
 
-import { getColor, getEmoji } from "../../../constants";
+import { getColor, getEmoji } from "@/constants";
 import { ColorResolvable } from "discord.js";
 
 export default function (guild_id: string, iconURL: string, lang: string) {

@@ -1,10 +1,10 @@
-import addEmbed from "../builders/embeds/admin/add";
-import removeEmbed from "../builders/embeds/admin/remove";
-import resetEmbed from "../builders/embeds/admin/reset";
-import wipeEmbed from "../builders/embeds/admin/wipe";
+import addEmbed from "@/builders/embeds/admin/add";
+import removeEmbed from "@/builders/embeds/admin/remove";
+import resetEmbed from "@/builders/embeds/admin/reset";
+import wipeEmbed from "@/builders/embeds/admin/wipe";
 
 import { CacheType, CommandInteraction } from "discord.js";
-import { DB } from "..";
+import { DB } from "@/index";
 
 export const add = async function add(
   interaction: CommandInteraction<CacheType>

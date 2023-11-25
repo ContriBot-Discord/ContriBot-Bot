@@ -6,7 +6,7 @@ import showEmbed from "@/builders/embeds/config/show";
 
 import { CacheType, Channel, CommandInteraction } from "discord.js";
 
-import { DB } from "..";
+import { DB } from "@/index";
 
 export const lang = async function lang(
   interaction: CommandInteraction<CacheType>

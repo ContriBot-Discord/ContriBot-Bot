@@ -9,7 +9,7 @@ import { userHelpEmbed, adminHelpEmbed, configHelpEmbed } from "@/builders/embed
 
 import helpSelect from "@/builders/selects/help";
 
-import { DB } from "../..";
+import { DB } from "@/index";
 import helpButton from "@/builders/buttons/help";
 
 const event: BotEvent = {

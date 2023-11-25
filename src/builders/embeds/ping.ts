@@ -1,6 +1,6 @@
 import { EmbedBuilder } from "discord.js";
 import i18next from "i18next";
-import { getColor } from "../../constants";
+import { getColor } from "@/constants";
 import { ColorResolvable } from "discord.js";
 
 export default function (ms: number, lang: string) {

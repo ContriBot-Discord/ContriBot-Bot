@@ -15,7 +15,7 @@ import {
 
 import helpSelect from "@/builders/selects/help";
 
-import { DB } from "..";
+import { DB } from "@/index";
 import helpButton from "@/builders/buttons/help";
 
 export const command: SlashCommand = {
