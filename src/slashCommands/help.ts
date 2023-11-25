@@ -13,10 +13,10 @@ import {
   helpEmbed,
 } from "@/builders/embeds/help";
 
-import helpSelect from "@/builders/selects/helpSelect";
+import helpSelect from "@/builders/selects/help";
 
 import { DB } from "..";
-import helpButton from "@/builders/buttons/helpButton";
+import helpButton from "@/builders/buttons/help";
 
 export const command: SlashCommand = {
   name: "help",

@@ -10,7 +10,7 @@ import {
   SlashCommandUserOption,
 } from "discord.js";
 
-import { add, remove, reset, wipe } from "@/tools/adminFunctions";
+import { add, remove, reset, wipe } from "@/tools/admin";
 
 export const command: SlashCommand = {
   name: "admin",

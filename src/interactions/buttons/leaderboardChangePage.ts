@@ -1,50 +1,10 @@
 import { BotEvent } from "@/types";
-import {
-  ActionRowBuilder,
-  ButtonBuilder,
-  Events,
-  Interaction,
-} from "discord.js";
+import { Events, Interaction } from "discord.js";
 
 import { DB } from "@/index";
-import { User } from "@/classes/User";
-import leaderboard from "@/builders/embeds/leaderboard";
+import leaderboardEmbed from "@/builders/embeds/leaderboard";
 
-import i18next from "i18next";
-
-function getUserList(
-  startingFrom: number,
-  userList: User[],
-  lang: string,
-  pointName: string
-): { name: string; value: string }[] {
-  i18next.changeLanguage(lang);
-
-  const fields: { name: string; value: string }[] = [];
-
-  // We add the n + 10 first users to the embed. If there are less than 10 users, we stop the loop.
-  for (
-    let i = startingFrom;
-    i < startingFrom + 10 || i < userList.length;
-    i++
-  ) {
-    const user = userList[i];
-
-    if (user) {
-      fields.push({
-        name: ` `,
-        value:
-          `**#${i + 1} ·** ` +
-          i18next.t("embeds:leaderboard.fields.value", {
-            userid: user.id,
-            quantity: user.leaderboardPoints,
-            pointName: pointName,
-          }),
-      });
-    }
-  }
-  return fields;
-}
+import leaderboardButton from "@/builders/buttons/leaderboard";
 
 const event: BotEvent = {
   name: Events.InteractionCreate,
@@ -66,68 +26,42 @@ const event: BotEvent = {
     await interaction.deferUpdate();
 
     // We get the actual page number. Used to know which users to display
-    const actualPageInt: number = parseInt(
+    let actualPageInt: number = parseInt(
       interaction.message.embeds[0].footer!.text!.split(" ")[1].split("/")[0]
     );
 
     // We sort the users by their total points
     const guild = DB.getGuild(interaction.guildId!);
-    let users = [...guild.users];
-    users.sort((a: User, b: User) => b.leaderboardPoints - a.leaderboardPoints);
 
-    // We initialize the fields variable so it can be edited in the if statements
-    let fields: { name: string; value: string }[];
+    const users = [...guild.users];
 
     // We get the list of users depending on the button pressed
     if (interaction.customId === "LBprevious") {
-      fields = getUserList(
-        (actualPageInt - 1) * 10,
-        users,
-        guild.lang,
-        guild.pointName
-      );
+      actualPageInt -= 1;
     } else if (interaction.customId === "LBnext") {
-      fields = getUserList(
-        actualPageInt * 10,
-        users,
-        guild.lang,
-        guild.pointName
-      );
-    } else {
-      // In case the button is "refresh"
-      fields = getUserList(
-        (actualPageInt - 1) * 10,
-        users,
-        guild.lang,
-        guild.pointName
-      );
+      actualPageInt += 1;
     }
 
     // we initialize the buttons, and make them disabled if needed
-    const button = new ActionRowBuilder<ButtonBuilder>()
-      .addComponents(
-        new ButtonBuilder().setCustomId("LBprevious").setLabel("◀︎").setStyle(1)
-      )
-      .addComponents(
-        new ButtonBuilder().setCustomId("LBnext").setLabel("▶").setStyle(1)
-      )
-      .addComponents(
-        new ButtonBuilder().setCustomId("LBrefresh").setLabel("↻").setStyle(1)
-      );
+    const button = leaderboardButton();
 
     // If the page is 1, we disable the "previous" button
-    if (actualPageInt === 1) button.components[0].setDisabled(true);
+    actualPageInt === 1
+      ? button.components[0].setDisabled(true)
+      : button.components[0].setDisabled(false);
 
     // If the page is the last one, we disable the "next" button
-    if (actualPageInt === Math.ceil(guild.users.length / 10))
-      button.components[1].setDisabled(true);
+    actualPageInt === Math.ceil(guild.users.length / 10)
+      ? button.components[1].setDisabled(true)
+      : button.components[1].setDisabled(false);
 
     // We now do generate the embed with all the data we got
-    const embed = leaderboard(
+    const embed = leaderboardEmbed(
       actualPageInt,
       Math.ceil(guild.users.length / 10),
-      fields,
-      guild.lang
+      users,
+      guild.lang,
+      guild.pointName
     );
 
     // editReply is required since we used deferUpdate
