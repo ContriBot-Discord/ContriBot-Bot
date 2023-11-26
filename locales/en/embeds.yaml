@@ -1,111 +1,161 @@
-# This file contains all strings related to commands.
-
 default:
-  title: "**{{command_name}}** command"
-leaderboard:
-  title: "**Leaderboard** [{{index}}]"
-  description: "Here is the leaderboard"
-  fields:
-    name: "Top {{index}}"
-    value: "<@{{userid}}> with {{quantity}} {{pointName}}"
-  footer:
-    text: "Page {{pageNumber}}/{{totalPages}}"
+  title: '**{{command_name}}** command'
 
 add:
   description:
-    both: "<@{{userid}}> added {{quantity}} {{pointName}} to <@{{memberid}}>"
-    storePoints: "<@{{userid}}> added {{quantity}} store {{pointName}} to <@{{memberid}}>"
     leaderboardPoints: "<@{{userid}}> added {{quantity}} leaderboard {{pointName}} to <@{{memberid}}>"
-
-remove:
-  description:
-    both: "<@{{userid}}> removed {{quantity}} {{pointName}} from <@{{memberid}}>"
-    storePoints: "<@{{userid}}> removed {{quantity}} store {{pointName}} from <@{{memberid}}>"
-    leaderboardPoints: "<@{{userid}}> removed {{quantity}} leaderboard {{pointName}} from <@{{memberid}}>"
+    storePoints: "<@{{userid}}> added {{quantity}} store {{pointName}} to <@{{memberid}}>"
+    both: "<@{{userid}}> added {{quantity}} {{pointName}} to <@{{memberid}}>"
 
 get:
   description:
-    storePoints: "<@{{userid}}> has **{{amount}}** store {{pointName}}."
     leaderboardPoints: "<@{{userid}}> has **{{amount}}** leaderboard {{pointName}}."
+    storePoints: "<@{{userid}}> has **{{amount}}** store {{pointName}}."
 
-reset:
+remove:
   description:
-    both: "<@{{userid}}>'s {{pointName}} have been fully reset"
-    leaderboardPoints: "<@{{userid}}>'s leaderboard {{pointName}} have been reset."
-    storePoints: "<@{{userid}}>'s leaderboard {{pointName}} have been reset."
+    leaderboardPoints: "<@{{userid}}> removed {{quantity}} leaderboard {{pointName}} from <@{{memberid}}>"
+    storePoints: "<@{{userid}}> removed {{quantity}} store {{pointName}} from <@{{memberid}}>"
+    both: "<@{{userid}}> removed {{quantity}} {{pointName}} from <@{{memberid}}>"
+
+
+item:
+  create:
+    description: "Yaaay ! You just created {{itemName}} with success !"
+    title: "Item created !"
+
+  edit:
+    price:
+      description: '{{itemName}} now costs {{price}} {{pointName}}, what a deal !'
+      title: "Successfully edited the price"
+
+    name:
+      description: "I've renamed {{oldName}} to {{newName}} with the remaining correction tape I had!"
+      title: "Successfully renamed the item"
+
+    description:
+      description: "I've updated the description of {{itemName}}. This one is way better !"
+      title: "Successfully edited the description"
+
+    text:
+      ignored: "{{ignored}} strings were ignored because they were empty."
+      description: "Successfully added {{strings}} strings to the item, for a total of {{total}} strings."
+      title: "Successful text addition"
+
+    stock:
+      description: "Yay! You just set {{itemName}} quantities to {{quantity}} ! Where can I buy one ?"
+      title: "Successfully added stock"
+
+  delete:
+    title: "Successfully deleted the item"
+    description: 'Successfully deleted {{itemName}} (with id: `{{itemId}}`). Hopefully,
+      it was recyclable !'
+
+shop:
+  title: '**Shop** [{{index}}]'
+  footer:
+    text: "Page {{pageNumber}}/{{totalPages}}"
+
+ping:
+  description: "🏓 Pong!\n
+               📡 Ping: {{ping}}ms"
+
+profile:
+  stats:
+    name: 'Stats :'
+    value: "Messages sent: **{{messagesSent}}**\n
+           Time spent in VC: **{{hours}}h {{minutes}}m {{seconds}}s**"
+
+  description: "Here is the profile of <@{{userid}}>"
+  points:
+    name: '{{pointName}} :'
+    value: "store {{pointName}}: **{{storePoints}}**\n\n
+            leaderboard {{pointName}}: **{{leaderboardPoints}}**"
 
 wipe:
   description:
-    both: "Guild's {{pointName}} have been fully reset"
     leaderboardPoints: "Guild's leaderboard {{pointName}} have been reset."
     storePoints: "Guild's store {{pointName}} have been reset."
+    both: "Guild's {{pointName}} have been fully reset"
 
-profile:
-  description: "Here is the profile of <@{{userid}}>"
-  stats:
-    name: "Stats :"
-    value: "Messages sent: **{{messagesSent}}**\n
-      Time spent in VC: **{{hours}}h {{minutes}}m {{seconds}}s**"
-  points:
-    name: "{{pointName}} :             ‎"
-    value: "store {{pointName}}: **{{storePoints}}**\n
-      leaderboard {{pointName}}: **{{leaderboardPoints}}**"
 
 help:
-  title: "Help [{{index}}]"
   description: "Here is the list of all commands"
-  description2: "This bot uses slash commands `\\`.\n
-    Select a category to see the commands list."
+
+  admin:
+    add:
+      value: "Using this command you can add {{pointName}} to a member."
+    wipe:
+      value: "Using this command you can reset {{pointName}} of the entire guild."
+    description: "Here is the list of all admin commands, you can use them by adding `admin` before the command name."
+    reset:
+      value: "Using this command you can reset {{pointName}} of a member."
+    remove:
+      value: "Using this command you can remove {{pointName}} from a member."
+
   categories:
-    user: "User"
     admin: "Admin"
+    user: "User"
     config: "Config"
-  user :
-    profile:
-      value: "Using this command you can see interesting member's statistics as well as their {{pointName}}."
+
+  title: "Help [{{index}}]"
+
+  description2: "This bot uses slash commands. \n\n
+  
+                 Select a category to see the commands list."
+  user:
     leaderboard:
       value: "Using this command you can see the leaderboard of {{pointName}}."
     whois:
       value: "Using this command you can see information about the bot and the developers."
     ping:
       value: "Using this command you can see the bot's ping."
-  admin:
-    description: "Here is the list of all admin commands, you can use them by adding `admin` before the command name."
-    add:
-      value: "Using this command you can add {{pointName}} to a member."
-    remove:
-      value: "Using this command you can remove {{pointName}} from a member."
-    reset:
-      value: "Using this command you can reset {{pointName}} of a member."
-    wipe:
-      value: "Using this command you can reset {{pointName}} of the entire guild."
+    profile:
+      value: "Using this command you can see interesting member's statistics as well as their {{pointName}}."
+
   config:
-    description: "Here is the list of all config commands, you can use them by adding `/config` before the command name."
-    show:
-      value: "Using this command you can see the current configuration of the bot."
-    lang:
-      value: "Using this command you can change the bot's language."
     pointname:
       value: "Using this command you can change the bot's {{pointName}} name."
-    action:
-      value: "You can modify the number of points that users will receive for each action."
+    show:
+      value: "Using this command you can see the current configuration of the bot."
     channel:
       value: "Enable or disable points rewards in a channel (voice chat and text chat)."
+    description: "Here is the list of all config commands, you can use them by adding `/config` before the command name."
+    action:
+      value: "You can modify the number of points that users will receive for each action."
+    lang:
+      value: "Using this command you can change the bot's language."
 
-whois:
-  title: "Who are we ?"
-  description:
-    "ContriBot is a student project, made by [EAnathos](https://eanathos.com) &  [Voltis](https://voltis.me) at [Laval](https://maps.app.goo.gl/umYo5wYmG7eGwLWx5) in France.\n\n
-    This project has been started in early October 2023, while trying to find a Discord bot that would allow us to manage our training's minecraft server community.\n\n
-    Our main objective was to create a useful, fully configurable, documented and powerful Discord Bot, with all essential features free, and translated the most languages as possible.\n\n
-    We've decided to develop this bot in TypeScript while using Discord.JS\n\n
-    If you have any questions, do not hesitate to ask it on our [Discord Server](https://discord.gg/wMHa7XHkNj) !"
 
-ping:
-  description: "🏓 Pong!\n
-    📡 Ping: {{ping}}ms" # ping of the bot (number)
 
-shop:
-  title: "**Shop** [{{index}}]"
+leaderboard:
+  title: '**Leaderboard** [{{index}}]'
+  description: "Here is the leaderboard"
+
+  fields:
+    name: "Top {{index}}"
+    value: "<@{{userid}}> with {{quantity}} {{pointName}}"
+
   footer:
     text: "Page {{pageNumber}}/{{totalPages}}"
+
+
+whois:
+  description: "
+    ContriBot is a student project, made by [EAnathos](https://eanathos.com) &  [Voltis](https://voltis.me) at [Laval](https://maps.app.goo.gl/umYo5wYmG7eGwLWx5) in France.\n\n
+
+    This project has been started in early October 2023, while trying to find a Discord bot that would allow us to manage our training's minecraft server community.\n\n
+
+    Our main objective was to create a useful, fully configurable, documented and powerful Discord Bot, with all essential features free, and translated the most languages as possible.\n\n
+
+    We've decided to develop this bot in TypeScript while using Discord.JS\n\n
+
+    If you have any questions, do not hesitate to ask it on our [Discord Server](https://discord.gg/wMHa7XHkNj) !"
+  title: "Who are we ?"
+
+
+reset:
+  description:
+    leaderboardPoints: "<@{{userid}}>'s leaderboard {{pointName}} have been reset."
+    storePoints: "<@{{userid}}>'s leaderboard {{pointName}} have been reset."
+    both: "<@{{userid}}>'s {{pointName}} have been fully reset"

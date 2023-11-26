@@ -1,8 +1,8 @@
-internalError: "An internal error has occurred. Please try again later or contact us. Internal error code: `{{code}}`" # Default error message for internal errors.
-
-goBack: "You can't go back" # May occur when trying to load a page of an Embed that doesn't exist
-goForward: "You can't go forward" # May occur when trying to load a page of an Embed that doesn't exist
-
-noPerms: "I do not have enough permissions to do this. Please make sure i have all of the following permissions on this server: {{perms}}" # Raised when the bot does nat enough perms to perform an action. perms can be a list of perms, or a single permission.
-cantDm: "I am sorry, I'm unable do DM you. Please make sure you have DMs enabled." # Raised when the bot can't DM the user invoking the event.
-cantDmUser: "I am sorry, I am unable to send a DM to that user. The most probable cause is that the user has DMs disabled." # Raised when the bot can't DM the user it is supposed to.
+goBack: "You can't go back"
+cantDmUser: "I am sorry, I am unable to send a DM to that user. The most probable cause is that the user has DMs disabled."
+cantDm: "I am sorry, I'm unable do DM you. Please make sure you have DMs enabled."
+internalError: "An internal error has occurred. Please try again later or contact
+  us. Internal error code: `{{code}}`"
+goForward: "You can't go forward"
+noPerms: "I do not have enough permissions to do this. Please make sure i have all
+  of the following permissions on this server: {{perms}}"

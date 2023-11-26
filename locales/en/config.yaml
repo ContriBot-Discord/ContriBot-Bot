@@ -1,33 +1,28 @@
 default:
-  title: "**{{command_name}}** command"
-
-show:
-  description: "Here is your server's config"
-  pointsCfg:
-    name: "{{pointName}} earned by action:        ‎"
-    value: "Send message: **{{message}}**\n
-      Voice channel: **{{voice}}**/15 minutes\n"
-      #Disboard Bump: **{{bump}}**\n
-      #Nitro Boost: **{{nitroBoost}}**"
-  settings:
-    name: "Settings:"
-    value: "Guild language: **English**\n
-    Points name: **{{pointName}}**\n" # Please, remplace "English" with the actual language this string is translated to
-  channels:
-    name: "Channels disabled:"
-    noChannels: "No channels disabled"
-    andXOthers: "and {{remainingChannelsCount}} others"
-
-lang:
-  description: "The guild language is now: **English**" # Please, remplace "English" with the actual language this string is translated to
+  title: '**{{command_name}}** command'
 
 pointname:
-  description: "Guild points are now called : **{{pointName}}**"
-
-actionpoint:
-  description: "The base points for the action [{{action}}] are now [{{point}}] {{pointName}}."
-
+  description: 'Guild points are now called : **{{pointName}}**'
+show:
+  settings:
+    name: 'Settings:'
+    value: "Guild language: **English**
+            Points name: **{{pointName}}**"
+  channels:
+    andXOthers: 'and {{remainingChannelsCount}} others'
+    name: 'Channels disabled:'
+    noChannels: 'No channels disabled'
+  description: "Here is your server's config"
+  pointsCfg:
+    name: '{{pointName}} earned by action:        ‎'
+    value: "Send message: **{{message}}**
+            Voice channel: **{{voice}}**/15 minutes"
 channel:
   description:
     disable: "Channel <#{{channelId}}> does not give {{pointName}} anymore."
     enable: "Channel <#{{channelId}}> now gives {{pointName}}."
+actionpoint:
+  description: "The base points for the action [{{action}}] are now [{{point}}] {{pointName}}."
+
+lang:
+  description: 'The guild language is now: **English**'
