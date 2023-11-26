@@ -12,7 +12,6 @@ export const buyShopButtons = function (
   const buttons = new ActionRowBuilder<ButtonBuilder>();
 
   for (let i: number = startingFrom; i < startingFrom + 5; i++) {
-    console.log(i);
     const item = itemList[i];
 
     if (item) {
@@ -30,8 +29,6 @@ export const buyShopButtons = function (
       );
     }
   }
-
-  console.log("stop");
 
   return buttons;
 };
