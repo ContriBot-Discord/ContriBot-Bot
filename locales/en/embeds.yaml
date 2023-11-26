@@ -18,35 +18,28 @@ remove:
     storePoints: "<@{{userid}}> removed {{quantity}} store {{pointName}} from <@{{memberid}}>"
     both: "<@{{userid}}> removed {{quantity}} {{pointName}} from <@{{memberid}}>"
 
-
 item:
   create:
     description: "Yaaay ! You just created {{itemName}} with success !"
     title: "Item created !"
-
   edit:
     price:
       description: '{{itemName}} now costs {{price}} {{pointName}}, what a deal !'
       title: "Successfully edited the price"
-
     name:
-      description: "I've renamed {{oldName}} to {{newName}} with the remaining correction tape I had!"
       title: "Successfully renamed the item"
-
+      description: "I've renamed {{oldName}} to {{newName}} with the remaining correction tape I had!"
     description:
-      description: "I've updated the description of {{itemName}}. This one is way better !"
       title: "Successfully edited the description"
-
+      description: "I've updated the description of {{itemName}}. This one is way better !"
     text:
-      ignored: "{{ignored}} strings were ignored because they were empty."
-      description: "Successfully added {{strings}} strings to the item, for a total of {{total}} strings."
       title: "Successful text addition"
-
+      description: "Successfully added {{strings}} strings to the item, for a total of {{total}} strings."
+      ignored: "{{ignored}} strings were ignored because they were empty."
     stock:
-      description: "Yay! You just set {{itemName}} quantities to {{quantity}} ! Where can I buy one ?"
       title: "Successfully added stock"
+      description: "Yay! You just set {{itemName}} quantities to {{quantity}} ! Where can I buy one ?"
       infinite: "Yay! You just set {{itemName}} quantities to unlimited ! Where can I buy one ?"
-
   delete:
     title: "Successfully deleted the item"
     description: 'Successfully deleted {{itemName}} (with id: `{{itemId}}`). Hopefully,
@@ -62,15 +55,14 @@ ping:
                📡 Ping: {{ping}}ms"
 
 profile:
+  description: "Here is the profile of <@{{userid}}>"
   stats:
     name: 'Stats :'
     value: "Messages sent: **{{messagesSent}}**\n
            Time spent in VC: **{{hours}}h {{minutes}}m {{seconds}}s**"
-
-  description: "Here is the profile of <@{{userid}}>"
   points:
     name: '{{pointName}} :'
-    value: "store {{pointName}}: **{{storePoints}}**\n\n
+    value: "store {{pointName}}: **{{storePoints}}**\n
             leaderboard {{pointName}}: **{{leaderboardPoints}}**"
 
 wipe:
@@ -79,10 +71,15 @@ wipe:
     storePoints: "Guild's store {{pointName}} have been reset."
     both: "Guild's {{pointName}} have been fully reset"
 
-
 help:
+  title: "Help [{{index}}]"
   description: "Here is the list of all commands"
-
+  description2: "This bot uses slash commands. \n
+                 Select a category to see the commands list."
+  categories:
+    admin: "Admin"
+    user: "User"
+    config: "Config"
   admin:
     add:
       value: "Using this command you can add {{pointName}} to a member."
@@ -93,17 +90,6 @@ help:
       value: "Using this command you can reset {{pointName}} of a member."
     remove:
       value: "Using this command you can remove {{pointName}} from a member."
-
-  categories:
-    admin: "Admin"
-    user: "User"
-    config: "Config"
-
-  title: "Help [{{index}}]"
-
-  description2: "This bot uses slash commands. \n\n
-  
-                 Select a category to see the commands list."
   user:
     leaderboard:
       value: "Using this command you can see the leaderboard of {{pointName}}."
@@ -113,7 +99,6 @@ help:
       value: "Using this command you can see the bot's ping."
     profile:
       value: "Using this command you can see interesting member's statistics as well as their {{pointName}}."
-
   config:
     pointname:
       value: "Using this command you can change the bot's {{pointName}} name."
@@ -127,33 +112,23 @@ help:
     lang:
       value: "Using this command you can change the bot's language."
 
-
-
 leaderboard:
   title: '**Leaderboard** [{{index}}]'
   description: "Here is the leaderboard"
-
   fields:
     name: "Top {{index}}"
     value: "<@{{userid}}> with {{quantity}} {{pointName}}"
-
   footer:
     text: "Page {{pageNumber}}/{{totalPages}}"
 
-
 whois:
-  description: "
-    ContriBot is a student project, made by [EAnathos](https://eanathos.com) &  [Voltis](https://voltis.me) at [Laval](https://maps.app.goo.gl/umYo5wYmG7eGwLWx5) in France.\n\n
-
-    This project has been started in early October 2023, while trying to find a Discord bot that would allow us to manage our training's minecraft server community.\n\n
-
-    Our main objective was to create a useful, fully configurable, documented and powerful Discord Bot, with all essential features free, and translated the most languages as possible.\n\n
-
-    We've decided to develop this bot in TypeScript while using Discord.JS\n\n
-
-    If you have any questions, do not hesitate to ask it on our [Discord Server](https://discord.gg/wMHa7XHkNj) !"
   title: "Who are we ?"
-
+  description: "
+    ContriBot is a student project, made by [EAnathos](https://eanathos.com) &  [Voltis](https://voltis.me) at [Laval](https://maps.app.goo.gl/umYo5wYmG7eGwLWx5) in France.\n
+    This project has been started in early October 2023, while trying to find a Discord bot that would allow us to manage our training's minecraft server community.\n
+    Our main objective was to create a useful, fully configurable, documented and powerful Discord Bot, with all essential features free, and translated the most languages as possible.\n\n
+    We've decided to develop this bot in TypeScript while using Discord.JS\n
+    If you have any questions, do not hesitate to ask it on our [Discord Server](https://discord.gg/wMHa7XHkNj) !"
 
 reset:
   description:

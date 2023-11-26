@@ -4,23 +4,25 @@ default:
 pointname:
   description: 'Guild points are now called : **{{pointName}}**'
 show:
+  description: "Here is your server's config"
+  pointsCfg:
+    name: '{{pointName}} earned by action:        ‎'
+    value: "Send message: **{{message}}**\n
+            Voice channel: **{{voice}}**/15 minutes"
   settings:
     name: 'Settings:'
-    value: "Guild language: **English**
+    value: "Guild language: **English**\n
             Points name: **{{pointName}}**"
   channels:
     andXOthers: 'and {{remainingChannelsCount}} others'
     name: 'Channels disabled:'
     noChannels: 'No channels disabled'
-  description: "Here is your server's config"
-  pointsCfg:
-    name: '{{pointName}} earned by action:        ‎'
-    value: "Send message: **{{message}}**
-            Voice channel: **{{voice}}**/15 minutes"
+
 channel:
   description:
     disable: "Channel <#{{channelId}}> does not give {{pointName}} anymore."
     enable: "Channel <#{{channelId}}> now gives {{pointName}}."
+
 actionpoint:
   description: "The base points for the action [{{action}}] are now [{{point}}] {{pointName}}."
 
