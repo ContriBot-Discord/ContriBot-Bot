@@ -53,23 +53,23 @@ const emojies = [
   },
   {
     name: "pink_shop",
-    value: "<:pink_shop:1176930961863225424>",
+    value: "<:pink_shop:1176930961863225424> ",
   },
   {
     name: "pink_flask",
-    value: "<:pink_flask:1177169807972503572>",
+    value: "<:pink_flask:1177169807972503572> ",
   },
   {
     name: "pink_at",
-    value: "<:pink_at:1177169806202507314>",
+    value: "<:pink_at:1177169806202507314> ",
   },
   {
     name: "pink_text",
-    value: "<:pink_text:1177169814284935198>",
+    value: "<:pink_text:1177169814284935198> ",
   },
   {
     name: "pink_object",
-    value: "<:pink_object:1177169811420221451>"
+    value: "<:pink_object:1177169811420221451> "
   },
   {
     name: "orange_stats",
@@ -113,7 +113,7 @@ const emojies = [
   },
   {
     name: "orange_shop",
-    value: "<:orange_shop:1176931087298084874>"
+    value: "<:orange_shop:1176931087298084874> "
   }
 ];
 
