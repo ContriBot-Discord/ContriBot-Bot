@@ -14,7 +14,7 @@ export default function (lang: string, itemId: string, itemName: number): EmbedB
             },
             {
                 name: " ",
-                value: i18next.t("embeds:item.delete.success", {itemId: itemId, itemName: itemName})
+                value: i18next.t("embeds:item.delete.description", {itemId: itemId, itemName: itemName})
             });
 
 }

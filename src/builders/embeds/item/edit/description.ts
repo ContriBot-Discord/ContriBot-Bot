@@ -7,11 +7,11 @@ export default function (lang: string, itemName: string){
     return new EmbedBuilder()
         .setColor("#F69255")
         .addFields({
-                name: getEmoji("orange_shop") + i18next.t('embeds:item.edit.description.title.title'),
+                name: getEmoji("orange_shop") + i18next.t('embeds:item.edit.description.title'),
                 value: getEmoji("orange_line").repeat(12)
             },
             {
                 name: " ",
-                value: i18next.t('embeds:item.edit.description.title.description', {itemName: itemName})
+                value: i18next.t('embeds:item.edit.description.description', {itemName: itemName})
             });
 }

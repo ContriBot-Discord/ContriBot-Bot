@@ -11,12 +11,12 @@ export default function (lang: string): EmbedBuilder {
             {
                 name:
                     getEmoji("red_bug") +
-                    "Whoops, I just caught a bug !",
+                    i18next.t("errors:item.fieldsTooLong.title"),
                 value: getEmoji("red_line").repeat(10),
             },
             {
                 name: " ",
-                value: "An error occurred.\n\nPlease, remember that the `label` field has to be less than 30 characters long and the `description` field has to be less than 150 characters long !\n\nIf you think this is a bug, please report it on the [support server](https://discord.gg/pw88gWrY5d) !"
+                value: i18next.t("errors:item.fieldsTooLong.description")
             }
         )
         .setColor("#dd4040")

@@ -16,7 +16,7 @@ export default function (lang: string): EmbedBuilder {
             },
             {
                 name: " ",
-                value: "Sorry, I can't find this item !\n\nIf you think this is a bug, please report it on the [support server](https://discord.gg/pw88gWrY5d) !"
+                value: "Sorry, I can't find this item !\n\nIf you believe this is a bug, please report it on the [support server](https://discord.gg/pw88gWrY5d) !"
             }
         )
         .setColor("#dd4040")

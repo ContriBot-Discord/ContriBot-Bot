@@ -5,7 +5,7 @@ import i18next from "i18next";
 export default function (lang: string, quantity: number, itemName: string){
     i18next.changeLanguage(lang);
 
-    const strQuantity: string = (quantity == -1) ? 'embeds:item.edit.stock.infinite' : 'embeds:item.edit.stock.quantity';
+    const strQuantity: string = (quantity == -1) ? 'embeds:item.edit.stock.infinite' : 'embeds:item.edit.stock.description';
 
     return new EmbedBuilder()
         .setColor("#F69255")

@@ -11,12 +11,12 @@ export default function (lang: string, field_name: string, length: number, max_l
             {
                 name:
                     getEmoji("red_bug") +
-                    "Waw, I can't read that much !",
+                    i18next.t("errors:item.fieldsTooLong.title"),
                 value: getEmoji("red_line"),
             },
             {
                 name: " ",
-                value: `Sorry, the field \`${field_name}\` you tried to edit is too long (${length}/${max_length} max characters)!\n\nIf you think this is a bug, please report it on the [support server](https://discord.gg/pw88gWrY5d) !`
+                value: i18next.t("errors:item.fieldsTooLong.description", {field_name: field_name, length: length, max_length: max_length})
             }
         )
         .setColor("#dd4040")

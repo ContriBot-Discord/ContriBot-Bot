@@ -11,12 +11,12 @@ export default function (lang: string): EmbedBuilder {
             {
                 name:
                     getEmoji("red_bug") +
-                    "Whoops, I can't do that !",
+                    i18next.t("errors:item.incompatible.title"),
                 value: getEmoji("red_line").repeat(10),
             },
             {
                 name: " ",
-                value: "Sadly, I cannot perform that operation on that type of item. Make sure to have read the [documentation](https://docs.contribot.app)"
+                value: i18next.t("errors:item.incompatible.description")
             }
         )
         .setColor("#dd4040")
