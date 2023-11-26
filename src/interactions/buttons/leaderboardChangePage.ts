@@ -30,7 +30,6 @@ const event: BotEvent = {
       interaction.message.embeds[0].footer!.text!.split(" ")[1].split("/")[0]
     );
 
-    // We sort the users by their total points
     const guild = DB.getGuild(interaction.guildId!);
 
     const users = [...guild.users];

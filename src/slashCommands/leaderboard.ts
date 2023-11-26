@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, CommandInteraction } from "discord.js";
+import { SlashCommandBuilder, CommandInteraction, ActionRowBuilder, ButtonBuilder } from "discord.js";
 import { SlashCommand } from "@/types";
 
 import { DB } from "@/index";
@@ -26,7 +26,7 @@ export const command: SlashCommand = {
       guild.pointName
     );
 
-    const button = leaderboardButton();
+    const button: ActionRowBuilder<ButtonBuilder> = leaderboardButton();
 
     // If there are less than 10 users, disable the "next" button
     button.components[0].setDisabled(true);

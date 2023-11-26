@@ -1,58 +1,12 @@
 import { BotEvent } from "@/types";
 import {
-  ActionRowBuilder,
-  ButtonBuilder,
   Events,
   Interaction,
 } from "discord.js";
 
 import { DB } from "@/index";
-import { ShopItem } from "@/classes/ShopItem";
 import shop from "@embeds/shop";
-
-import i18next from "i18next";
-import { getEmoji } from "@/constants";
-
-function getItemList(
-  startingFrom: number,
-  itemList: ShopItem[],
-  lang: string,
-  pointName: string
-): { name: string; value: string }[] {
-  i18next.changeLanguage(lang);
-
-  const fields: { name: string; value: string }[] = [];
-
-  // We add the n + 5 first items to the embed. If there are less than 5 items, we stop the loop.
-  for (let i = startingFrom; i < startingFrom + 5 || i < itemList.length; i++) {
-    const item = itemList[i];
-
-    if (item) {
-      let emoji: string;
-
-      switch (item.action) {
-        case 0:
-          emoji = getEmoji("pink_at");
-          break;
-        case 1:
-          emoji = getEmoji("pink_flask");
-          break;
-        case 2:
-          emoji = getEmoji("pink_text");
-          break;
-        default:
-          emoji = getEmoji("pink_object");
-          break;
-      }
-
-      fields.push({
-        name: ` `,
-        value: `${emoji}**${item.label}** - ${item.price} ${pointName}\n${item.description}`,
-      });
-    }
-  }
-  return fields;
-}
+import { pageShopButtons } from "@/builders/buttons/shop";
 
 const event: BotEvent = {
   name: Events.InteractionCreate,
@@ -72,60 +26,40 @@ const event: BotEvent = {
     await interaction.deferUpdate();
 
     // We get the actual page number. Used to know which items to display
-    const actualPageInt: number =
-      parseInt(
-        interaction.message.embeds[0].footer!.text!.split(" ")[1].split("/")[0]
-      ) - 1;
+    let actualPageInt: number = parseInt(
+      interaction.message.embeds[0].footer!.text!.split(" ")[1].split("/")[0]
+    );
 
     const guild = DB.getGuild(interaction.guildId!);
+
     let items = [...guild.shop];
 
-    // We initialize the fields variable so it can be edited in the if statements
-    let fields: { name: string; value: string }[] = [];
-
     // We get the list of items depending on the button pressed
-    if (interaction.customId === "Sprevious") {
-      fields = getItemList(
-        (actualPageInt - 1) * 5,
-        items,
-        guild.lang,
-        guild.pointName
-      );
-    } else if (interaction.customId === "Snext") {
-      fields = getItemList(
-        (actualPageInt + 1) * 5,
-        items,
-        guild.lang,
-        guild.pointName
-      );
-    }
+    actualPageInt = interaction.customId === "Sprevious" ? actualPageInt - 1 : actualPageInt + 1;
 
-    // we initialize the buttons, and make them disabled if needed
-    const button = new ActionRowBuilder<ButtonBuilder>()
-      .addComponents(
-        new ButtonBuilder().setCustomId("Sprevious").setLabel("◀︎").setStyle(1)
-      )
-      .addComponents(
-        new ButtonBuilder().setCustomId("Snext").setLabel("▶").setStyle(1)
-      );
-
+    const pageButtons = pageShopButtons();
+    
     // If the page is 1, we disable the "previous" button
-    if (actualPageInt === 1) button.components[0].setDisabled(true);
+    actualPageInt === 1
+      ? pageButtons.components[0].setDisabled(true)
+      : pageButtons.components[0].setDisabled(false);
 
     // If the page is the last one, we disable the "next" button
-    if (actualPageInt === Math.ceil(guild.shop.length / 5))
-      button.components[1].setDisabled(true);
+    actualPageInt === Math.ceil(guild.shop.length / 5)
+      ? pageButtons.components[1].setDisabled(true)
+      : pageButtons.components[1].setDisabled(false);
 
     // We now do generate the embed with all the data we got
     const embed = shop(
-      guild.lang,
-      Math.ceil(guild.shop.length / 5),
       actualPageInt,
-      fields
+      Math.ceil(guild.shop.length / 5),
+      items,
+      guild.lang,
+      guild.pointName
     );
 
     // editReply is required since we used deferUpdate
-    await interaction.editReply({ embeds: [embed], components: [button] });
+    await interaction.editReply({ embeds: [embed], components: [pageButtons] });
   },
 };
 
