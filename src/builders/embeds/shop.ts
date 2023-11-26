@@ -2,7 +2,7 @@ import { ShopItem } from "@/classes/ShopItem";
 import { getColor, getEmoji } from "@/constants";
 import { ColorResolvable, EmbedBuilder } from "discord.js";
 import i18next from "i18next";
-import { getItemsField } from "@/tools/shopFunctions/getItems";
+import { getItemsField } from "@/tools/shopFunctions/embeds";
 
 export default function (
   pageNumber: number,

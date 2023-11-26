@@ -18,29 +18,27 @@ export const getItemsField = function getItemsField(
     const item = itemList[i];
 
     if (item) {
-      let emoji: string;
-
-      switch (item.action) {
-        case 0:
-          emoji = getEmoji("pink_at");
-          break;
-        case 1:
-          emoji = getEmoji("pink_flask");
-          break;
-        case 2:
-          emoji = getEmoji("pink_text");
-          break;
-        default:
-          emoji = getEmoji("pink_object");
-          break;
-      }
 
       fields.push({
         name: ` `,
-        value: `${emoji}**${item.label}** - ${item.price} ${pointName}\n> ${item.description}`,
+        value: `${getItemEmoji(item.action)}**${item.label}** - ${item.price} ${pointName}\n> ${item.description}`,
       });
     }
   }
 
   return fields;
 };
+
+
+export const getItemEmoji = function getItemEmoji(action: number): string {
+  switch (action) {
+    case 0:
+      return getEmoji("pink_at");
+    case 1:
+      return getEmoji("pink_flask");
+    case 2:
+      return getEmoji("pink_text");
+    default:
+      return getEmoji("pink_object");
+  }
+}

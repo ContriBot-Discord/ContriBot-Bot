@@ -6,7 +6,7 @@ import {
 import { SlashCommand } from "@/types";
 import { DB } from "@/index";
 import shopEmbed from "@embeds/shop";
-import { pageShopButtons } from "@/builders/buttons/shop";
+import { buyShopButtons, pageShopButtons } from "@/builders/buttons/shop";
 
 export const command: SlashCommand = {
   name: "shop",
@@ -28,23 +28,7 @@ export const command: SlashCommand = {
       guild.pointName
     );
 
-    //const buyButton = new ActionRowBuilder<ButtonBuilder>()
-
-        // if the item is a role, add the name of the role instead of id
-        /*
-        if (item.action == 0) {
-          const roleId = item.label.match(/<@&(\d+)>/)![1];
-          item.label = interaction.guild?.roles.cache.get(roleId)?.name!;
-        }
-
-        buyButton.addComponents(
-          new ButtonBuilder()
-            .setCustomId(`buy-${item.id}`)
-            .setLabel(item.label)
-            .setEmoji(emoji)
-            .setStyle(3)
-        );
-        */
+    const buyButtons = buyShopButtons(1, items, interaction.guild?.roles.cache!);
 
     const pageButtons = pageShopButtons();
 
@@ -54,7 +38,7 @@ export const command: SlashCommand = {
 
     await interaction.reply({
       embeds: [embed],
-      components: [pageButtons],
+      components: [buyButtons, pageButtons],
     });
   },
 };

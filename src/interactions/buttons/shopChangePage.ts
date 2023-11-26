@@ -6,7 +6,7 @@ import {
 
 import { DB } from "@/index";
 import shop from "@embeds/shop";
-import { pageShopButtons } from "@/builders/buttons/shop";
+import { buyShopButtons, pageShopButtons } from "@/builders/buttons/shop";
 
 const event: BotEvent = {
   name: Events.InteractionCreate,
@@ -37,6 +37,8 @@ const event: BotEvent = {
     // We get the list of items depending on the button pressed
     actualPageInt = interaction.customId === "Sprevious" ? actualPageInt - 1 : actualPageInt + 1;
 
+    const buyButtons = buyShopButtons(actualPageInt, items, interaction.guild?.roles.cache!);
+
     const pageButtons = pageShopButtons();
     
     // If the page is 1, we disable the "previous" button
@@ -59,7 +61,7 @@ const event: BotEvent = {
     );
 
     // editReply is required since we used deferUpdate
-    await interaction.editReply({ embeds: [embed], components: [pageButtons] });
+    await interaction.editReply({ embeds: [embed], components: [buyButtons, pageButtons] });
   },
 };
 
