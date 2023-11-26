@@ -45,6 +45,7 @@ item:
     stock:
       description: "Yay! You just set {{itemName}} quantities to {{quantity}} ! Where can I buy one ?"
       title: "Successfully added stock"
+      infinite: "Yay! You just set {{itemName}} quantities to unlimited ! Where can I buy one ?"
 
   delete:
     title: "Successfully deleted the item"

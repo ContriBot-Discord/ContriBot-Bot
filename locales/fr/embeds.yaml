@@ -1,55 +1,85 @@
-#This file contains all strings related to commands.
 default:
-  title: "Commande **{{command_name}}**" #For instance: **Add** command
+  title: 'Commande **{{command_name}}**'
+add:
+  description:
+    leaderboardPoints: "<@{{userid}}> a ajouté {{quantity}} {{pointName}} de classement à <@{{memberid}}>"
+    storePoints: "<@{{userid}}> a ajouté {{quantity}} {{pointName}} de boutique à <@{{memberid}}>"
+    both: "<@{{userid}}> a ajouté {{quantity}} {{pointName}} à <@{{memberid}}>"
+get:
+  description:
+    leaderboardPoints: "<@{{userid}}> a **{{amount}}** {{pointName}} de classement."
+    storePoints: "<@{{userid}}> a **{{amount}}** de boutique {{pointName}}."
+remove:
+  description:
+    leaderboardPoints: "<@{{userid}}> a retiré {{quantity}} {{pointName}} de classement à <@{{memberid}}>"
+    storePoints: "<@{{userid}}> a retiré {{quantity}} {{pointName}} de boutique à <@{{memberid}}>"
+    both: "<@{{userid}}> a retiré {{quantity}} {{pointName}} à <@{{memberid}}>"
+shop:
+  title: '**Boutique** [{{index}}]'
+  footer:
+    text: "Page {{pageNumber}}/{{totalPages}}"
+ping:
+  description: "🏓 Pong!\n 📡 Ping: {{ping}}ms"
+profile:
+  stats:
+    name: 'Stats :'
+    value: "Messages envoyés : **{{messagesSent}}**\n Temps passé en vocal : **{{hours}}h {{minutes}}m {{seconds}}s**"
+  description: "Voici le profil de <@{{userid}}>"
+wipe:
+  description:
+    leaderboardPoints: "Le classement de {{pointName}} du serveur a été réinitialisé."
+    storePoints: "Le magasin de {{pointName}} du serveur a été réinitialisé."
+    both: "Les {{pointName}} du serveur ont entièrement été réinitialisés"
+help:
+  description: "Voici la liste de toutes les commandes"
+  admin:
+    add:
+      value: "En utilisant cette commande, vous pouvez ajouter des {{pointName}} à un membre."
+    wipe:
+      value: "En utilisant cette commande, vous pouvez réinitialiser les {{pointName}} de l'intégralité du serveur."
+    description: "Voici la liste de toutes les commandes admin, vous pouvez les utiliser en ajoutant `admin` avant le nom de la commande."
+    reset:
+      value: "En utilisant cette commande, vous pouvez réinitialiser les {{pointName}} d'un membre."
+    remove:
+      value: "En utilisant cette commande, vous pouvez supprimer les {{pointName}} d'un membre."
+  categories:
+    admin: "Admin"
+    user: "Utilisateur"
+    config: "Configuration"
+  title: "Aide [{{index}}]"
+  user:
+    leaderboard:
+      value: "En utilisant cette commande, vous pouvez voir le classement de {{pointName}}."
+    whois:
+      value: "En utilisant cette commande, vous pouvez voir des informations sur le bot et ses développeurs."
+    ping:
+      value: "En utilisant cette commande, vous pouvez voir la latence du bot."
+    profile:
+      value: "En utilisant cette commande, vous pouvez voir les statistiques intéressantes des membres ainsi que leur {{pointName}}."
+  config:
+    pointname:
+      value: "En utilisant cette commande, vous pouvez changer le nom des {{pointName}} du bot."
+    show:
+      value: "En utilisant cette commande, vous pouvez voir la configuration actuelle du bot."
+    channel:
+      value: "Active ou désactive les récompenses de points dans un salon (vocal et textuel)."
+    description: "Voici la liste de toutes les commandes de configuration, vous pouvez les utiliser en ajoutant `/config` avant le nom de la commande."
+    action:
+      value: "Vous pouvez modifier le nombre de points que les utilisateurs recevront pour chaque action effectuée."
+    lang:
+      value: "En utilisant cette commande, vous pouvez changer la langue du bot."
 leaderboard:
-  title: "Classement [{{index}}]"
+  title: '**Classement** [{{index}}]'
   description: "Voici le classement"
   fields:
     name: "Top {{index}}"
-    value: "<@{{userid}}> avec {{quantity}} {{pointsname}}"
+    value: "<@{{userid}}> avec {{quantity}} {{pointName}}"
   footer:
     text: "Page {{pageNumber}}/{{totalPages}}"
-add:
-  description:
-    both: "<@{{userid}}> a ajouté {{quantity}} {{pointsname}} à <@{{memberid}}>"
-    storePoints: "<@{{userid}}> a ajouté {{quantity}} {{pointsname}} de boutique à <@{{memberid}}>"
-    leaderboardPoints: "<@{{userid}}> a ajouté {{quantity}} {{pointsname}} de classement à <@{{memberid}}>"
-remove:
-  description:
-    both: "<@{{userid}}> a retiré {{quantity}} {{pointsname}} à <@{{memberid}}>"
-    storePoints: "<@{{userid}}> a supprimé {{quantity}} {{pointsname}} de boutique de <@{{memberid}}>"
-    leaderboardPoints: "<@{{userid}}> a supprimé {{quantity}} {{pointsname}} de classement de <@{{memberid}}>"
-get:
-  description:
-    storePoints: '<@{{userid}}> a **{{amount}}** {{pointname}} de boutique.'
-    leaderboardPoints: '<@{{userid}}> a **{{amount}}** {{pointname}} de classement.'
-reset:
-  description:
-    both: "Les {{pointsname}} de {{userid}} ont été complètement réinitialisés"
-    leaderboardPoints: "Les {{pointsname}} de classement de {{userid}} ont été complètement réinitialisés"
-    storePoints: "Les {{pointsname}} de boutique de {{userid}} ont été complètement réinitialisés"
-wipe:
-  description:
-    both: "Les {{pointsname}} du serveur ont été complètement réinitialisés"
-    leaderboardPoints: "Les {{pointsname}} de classement du serveur ont été complètement réinitialisés"
-    storePoints: "Les {{pointsname}} de boutique du serveur ont été complètement réinitialisés"
 whois:
   title: "Qui sommes-nous?"
-  description: "ContriBot est un projet étudiant, crée par [EAnathos](https://eanathos.com) &  [Voltis](https://voltis.me) à [Laval](https://maps.app.goo.gl/umYo5wYmG7eGwLWx5), en France.\n\n Ce projet a débuté début octobre 2023, alors que nous cherchions un bot Discord qui nous permettrait de gérer la communauté du serveur Minecraft de notre formation.\n\n Notre principal objectif est de créer un Bot utile, entièrement configurable et documenté, puissant et complet, avec toutes les fonctionnalités essentielles gratuites et traduit dans le plus de langues possibles\n\n Nous avons décidé de développer ce bot en TypeScript, en utilisant DiscordJS\n\nSi vous avez des questions, n'hésitez pas à venir nous voir sur notre [serveur Discord](https://discord.gg/wMHa7XHkNj) !"
-config:
-  title: 'Configuration'
-  description: "Voici la configuration de votre serveur"
-  pointsCfg:
-    name: "Façons de gagner des points :"
-    value: "Envoyer un message : **{{message}}**\n Ajouter une réaction à un message : **{{react}}**\n Passer du temps dans un salon vocal : **{{voice}}**/15 minutes\n Bump Discord : **{{bump}}**"
-  other:
-    name: "Divers :"
-    value: "Nom des points : **{{pointsname}}**\n Langue du serveur : **{{lang}}**"
-lang:
-  title: "Langage mis à jour !"
-  description: "La langue du serveur est maintenant : français" #Please, remplace "English" with the actual language this string is translated to
-pointname:
-  title: "Nom des points mis à jour !"
-  description: "Le nom des points est maintenant : {{pointname}}"
-ping:
-  description: "🏓 Pong!\n 📡 Ping: {{ping}}ms" #ping of the bot (number)
+reset:
+  description:
+    leaderboardPoints: "Les {{pointName}} de classement de <@{{userid}}> ont bien été réinitialisés."
+    storePoints: "Les {{pointName}} de classement de <@{{userid}}> ont bien été réinitialisés."
+    both: "Les {{pointName}} de <@{{userid}}> ont bien été entièrement réinitialisés"
