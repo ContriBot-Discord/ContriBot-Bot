@@ -25,7 +25,6 @@ const event: BotEvent = {
             });
         } else {
             let strings: string[] = interaction.fields.getTextInputValue("texts").split("\n"); // Get every line of the text input
-            console.log(strings)
             const count = strings.length;
 
             // Removing any empty string from the array
