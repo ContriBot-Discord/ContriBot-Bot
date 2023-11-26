@@ -5,14 +5,16 @@ import i18next from "i18next";
 export default function (lang: string, strings: number, ignored: number, total: number){
     i18next.changeLanguage(lang);
 
+    const ingored = ignored > 0 ? i18next.t('embeds:item.edit.text.ignored', {ignored: ignored}): "";
+
     return new EmbedBuilder()
         .setColor("#F69255")
         .addFields({
-                name: getEmoji("orange_shop") + `Successful string addition`,
+                name: getEmoji("orange_shop") + i18next.t("commands.item.edit.text.title"),
                 value: getEmoji("orange_line")
             },
             {
                 name: " ",
-                value: `Successfully added ${strings} strings to the item, for a total of ${total} strings.\n\n${ignored} strings were ignored because they were empty.`
+                value: i18next.t("embeds:item.edit.text.description", {strings: strings, total: total}) + ingored
             });
 }

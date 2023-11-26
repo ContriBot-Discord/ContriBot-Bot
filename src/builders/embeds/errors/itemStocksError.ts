@@ -11,12 +11,12 @@ export default function (lang: string): EmbedBuilder {
             {
                 name:
                     getEmoji("red_bug") +
-                    "Sorry, I can't find this item !",
+                    "Sorry, this is not a valid stock !",
                 value: getEmoji("red_line"),
             },
             {
                 name: " ",
-                value: "Sorry, I can't find this item !\n\nIf you think this is a bug, please report it on the [support server](https://discord.gg/pw88gWrY5d) !"
+                value: "The stock you tried to edit is not valid ! It must be a integer, with a minimum value of -1 (for unlimited)\n\nIf you think this is a bug, please report it on the [support server](https://discord.gg/pw88gWrY5d) !"
             }
         )
         .setColor("#dd4040")

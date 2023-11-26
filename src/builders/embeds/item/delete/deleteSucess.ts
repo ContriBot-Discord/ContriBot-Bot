@@ -9,12 +9,12 @@ export default function (lang: string, itemId: string, itemName: number): EmbedB
     return new EmbedBuilder()
         .setColor("#F69255")
         .addFields({
-                name: getEmoji("orange_shop") + `Successful item delete`,
+                name: getEmoji("orange_shop") + i18next.t("embeds:item.delete.title"),
                 value: getEmoji("orange_line")
             },
             {
                 name: " ",
-                value: `Successfully deleted ${itemName} (id: \`${itemId}\`). Hopefully, it was recyclable !`
+                value: i18next.t("embeds:item.delete.success", {itemId: itemId, itemName: itemName})
             });
 
 }

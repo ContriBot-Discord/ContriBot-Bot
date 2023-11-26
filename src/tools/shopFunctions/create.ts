@@ -5,6 +5,7 @@ import {
 
 import {DB} from "@/index";
 import {ShopItem} from "@/classes/ShopItem";
+import Success from "@embeds/item/create/create";
 import Error from "@embeds/errors/itemCreate";
 
 function createItem(guildId: string, label: string, description: string, price: number, quantity: number, action: number,
@@ -163,7 +164,7 @@ export const create = async function create(
         createItem(interaction.guildId!, label!, description!, price!, quantity!, action!, available!, applied_id!, boost!, boost_type!, duration!)
 
 
-        await interaction.reply(`Item created with success!`);
+        await interaction.reply({embeds: [Success(guild.lang, label!)]});
 
     } else {
         await interaction.reply({embeds: [Error(guild.lang)]});

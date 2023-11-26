@@ -11,12 +11,12 @@ export default function (lang: string): EmbedBuilder {
             {
                 name:
                     getEmoji("red_bug") +
-                    "Sorry, I can't find this item !",
+                    "Sorry, I can't accept that !",
                 value: getEmoji("red_line"),
             },
             {
                 name: " ",
-                value: "Sorry, I can't find this item !\n\nIf you think this is a bug, please report it on the [support server](https://discord.gg/pw88gWrY5d) !"
+                value: "Even if it is very nice of you, I can't accept negative prices !\n\nIf you think this is a bug, please report it on the [support server](https://discord.gg/pw88gWrY5d) !"
             }
         )
         .setColor("#dd4040")

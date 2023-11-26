@@ -10,12 +10,17 @@ import {
 import {DB} from "@/index";
 import {ShopItem} from "@/classes/ShopItem";
 // Success
-import nameSucess from "@embeds/item/edit/name";
+import nameSuccess from "@embeds/item/edit/name";
+import descriptionSuccess from "@embeds/item/edit/description";
+import priceSuccess from "@embeds/item/edit/price";
+import stocksSuccess from "@embeds/item/edit/stocks";
 
 // Errors
 import notFound from "@embeds/errors/itemNotFound";
 import incompatible from "@embeds/errors/itemIncompatible"
 import tooLong from "@embeds/errors/itemStringTooLong";
+import negativePrice from "@embeds/errors/itemNegativePrice";
+import stockError from "@embeds/errors/itemStocksError";
 
 async function showTextModal(interaction: CommandInteraction, item: ShopItem) {
 
@@ -82,27 +87,61 @@ export const edit = async function edit(
             item.label = label;
             item.update();
             await interaction.reply({
-                embeds: [nameSucess(guild.lang, old_label, label)]
+                embeds: [nameSuccess(guild.lang, old_label, label)]
             })
         }
 
         break;
 
     case "description":
-            const description = subcommand.getString("description", true);
+        const description = subcommand.getString("description", true);
 
-            if (description.length > 100) {
+        if (description.length > 100) {
+            await interaction.reply({
+                embeds: [tooLong(guild.lang, "description", description.length, 100)],
+                ephemeral: true})
+        } else {
+            item.description = description;
+            item.update();
+            await interaction.reply({
+                embeds: [descriptionSuccess(guild.lang, item.description)]
+            })
+        }
+        break;
+
+    case "price":
+
+        const price = subcommand.getNumber("price", true);
+
+        if (price < 0) {
+            await interaction.reply({
+                embeds: [negativePrice(guild.lang)],
+                ephemeral: true})
+        } else {
+            item.price = price;
+            item.update();
+            await interaction.reply({
+                embeds: [priceSuccess(guild.lang, item.label, item.price, guild.pointName)]
+            })
+        }
+        break;
+    case "stocks":
+
+            const stocks = subcommand.getNumber("stocks", true);
+
+            if (stocks < -1) {
                 await interaction.reply({
-                    embeds: [tooLong(guild.lang, "description", description.length, 100)],
+                    embeds: [stockError(guild.lang)],
                     ephemeral: true})
             } else {
-                item.description = description;
+                item.max_quantity = stocks;
                 item.update();
                 await interaction.reply({
-                    embeds: [nameSucess(guild.lang, item.description, description)]
+                    embeds: [stocksSuccess(guild.lang, item.max_quantity, item.label, )]
                 })
             }
             break;
+
     }
     }
 };
