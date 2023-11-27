@@ -1,12 +1,10 @@
 import { BotEvent } from "@/types";
-import {
-  Events,
-  Interaction,
-} from "discord.js";
+import { Events, Interaction } from "discord.js";
 
 import { DB } from "@/index";
-import shop from "@embeds/shop";
-import { buyShopButtons, pageShopButtons } from "@/builders/buttons/shop";
+import shop from "@/builders/embeds/shop";
+import interactShopButtons from "@/builders/buttons/interactShop";
+import pageShopButtons from "@/builders/buttons/pageShop";
 
 const event: BotEvent = {
   name: Events.InteractionCreate,
@@ -17,7 +15,8 @@ const event: BotEvent = {
     // If the button is not one of the buttons, we stop the function since it's not related to the shop
     if (
       !(
-        interaction.customId === "Sprevious" || interaction.customId === "Snext"
+        interaction.customId.includes("Sprevious") ||
+        interaction.customId.includes("Snext")
       )
     )
       return;
@@ -35,12 +34,13 @@ const event: BotEvent = {
     let items = [...guild.shop];
 
     // We get the list of items depending on the button pressed
-    actualPageInt = interaction.customId === "Sprevious" ? actualPageInt - 1 : actualPageInt + 1;
+    actualPageInt = interaction.customId.includes("Sprevious")
+      ? actualPageInt - 1
+      : actualPageInt + 1;
 
-    const buyButtons = buyShopButtons(actualPageInt, items, interaction.guild?.roles.cache!);
+    // U is for user, A is for admin
+    const pageButtons = interaction.customId.startsWith("U") ? pageShopButtons("shop") : pageShopButtons("admin");
 
-    const pageButtons = pageShopButtons();
-    
     // If the page is 1, we disable the "previous" button
     actualPageInt === 1
       ? pageButtons.components[0].setDisabled(true)
@@ -61,7 +61,40 @@ const event: BotEvent = {
     );
 
     // editReply is required since we used deferUpdate
-    await interaction.editReply({ embeds: [embed], components: [buyButtons, pageButtons] });
+    // U is for user, A is for admin
+    if (interaction.customId.startsWith("U")) {
+      await interaction.editReply({
+        embeds: [embed],
+        components: [
+          interactShopButtons(
+            actualPageInt,
+            items,
+            interaction.guild?.roles.cache!,
+            "buy"
+          ),
+          pageButtons,
+        ],
+      });
+    } else {
+      await interaction.editReply({
+        embeds: [embed],
+        components: [
+          interactShopButtons(
+            actualPageInt,
+            items,
+            interaction.guild?.roles.cache!,
+            "edit"
+          ),
+          interactShopButtons(
+            actualPageInt,
+            items,
+            interaction.guild?.roles.cache!,
+            "delete"
+          ),
+          pageButtons,
+        ],
+      });
+    }
   },
 };
 

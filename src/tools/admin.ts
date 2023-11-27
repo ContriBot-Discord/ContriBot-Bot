@@ -2,6 +2,10 @@ import addEmbed from "@embeds/admin/add";
 import removeEmbed from "@embeds/admin/remove";
 import resetEmbed from "@embeds/admin/reset";
 import wipeEmbed from "@embeds/admin/wipe";
+import shopEmbed from "@/builders/embeds/shop";
+
+import pageShopButtons from "@/builders/buttons/pageShop";
+import interactShopButtons from "@/builders/buttons/interactShop";
 
 import { CacheType, CommandInteraction } from "discord.js";
 import { DB } from "@/index";
@@ -77,4 +81,37 @@ export const wipe = async function wipe(
   guild.resetPoints();
 
   await interaction.reply({ embeds: [embed] });
+};
+
+export const shop = async function shop(
+  interaction: CommandInteraction<CacheType>
+) {
+  const guild = DB.getGuild(interaction.guildId!);
+
+  // Copied list of the guild items
+  let items = [...guild.shop];
+
+  const embed = shopEmbed(
+    1,
+    Math.ceil(guild.shop.length / 5),
+    items,
+    guild.lang,
+    guild.pointName
+  );
+
+  const pageButtons = pageShopButtons("admin");
+
+  // If there are less than 5 items, disable the "next" button
+  if (guild.shop.length <= 5) pageButtons.components[1].setDisabled(true);
+  pageButtons.components[0].setDisabled(true);
+
+  await interaction.reply({
+    embeds: [embed],
+    components: [
+      interactShopButtons(1, items, interaction.guild?.roles.cache!, "edit"),
+      interactShopButtons(1, items, interaction.guild?.roles.cache!, "delete"),
+      pageButtons,
+    ],
+    ephemeral: true,
+  });
 };

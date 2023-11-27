@@ -10,7 +10,7 @@ import {
   SlashCommandUserOption,
 } from "discord.js";
 
-import { add, remove, reset, wipe } from "@/tools/admin";
+import { add, remove, reset, wipe, shop } from "@/tools/admin";
 
 export const command: SlashCommand = {
   name: "admin",
@@ -159,6 +159,9 @@ export const command: SlashCommand = {
               }
             )
         )
+    )
+    .addSubcommand((subcommand: SlashCommandSubcommandBuilder) =>
+      subcommand.setName("shop").setDescription("Admin panel for the shop.")
     ),
   async execute(interaction: CommandInteraction) {
     const subcommand = (
@@ -175,9 +178,14 @@ export const command: SlashCommand = {
       case "reset":
         await reset(interaction);
         break;
-      default:
+      case "wipe":
         await wipe(interaction);
         break;
+      case "shop":
+        await shop(interaction);
+        break;
+      default:
+        interaction.reply({ content: "Unknown subcommand.", ephemeral: true });
     }
   },
 };

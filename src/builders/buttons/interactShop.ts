@@ -2,10 +2,11 @@ import { ShopItem } from "@/classes/ShopItem";
 import { getItemEmoji } from "@/tools/shopFunctions/embeds";
 import { ActionRowBuilder, ButtonBuilder, Collection, Role } from "discord.js";
 
-export const buyShopButtons = function (
+export default function (
   startingFrom: number,
   itemList: ShopItem[],
-  roles: Collection<string, Role>
+  roles: Collection<string, Role>,
+  scope: string
 ): ActionRowBuilder<ButtonBuilder> {
   startingFrom = (startingFrom - 1) * 5;
 
@@ -13,6 +14,19 @@ export const buyShopButtons = function (
 
   for (let i: number = startingFrom; i < startingFrom + 5; i++) {
     const item = itemList[i];
+
+    let style: number;
+
+    switch (scope) {
+      case "buy":
+        style = 3;
+        break;
+      case "edit":
+        style = 2;
+        break;
+      default:
+        style = 4;
+    }
 
     if (item) {
       const label: string =
@@ -22,27 +36,13 @@ export const buyShopButtons = function (
 
       buttons.addComponents(
         new ButtonBuilder()
-          .setCustomId(`buy-${item.id}`)
+          .setCustomId(scope + `-${item.id}`)
           .setLabel(label)
           .setEmoji(getItemEmoji(item.action))
-          .setStyle(3)
+          .setStyle(style)
       );
     }
   }
 
   return buttons;
-};
-
-export const pageShopButtons = function (): ActionRowBuilder<ButtonBuilder> {
-  return new ActionRowBuilder<ButtonBuilder>()
-    .addComponents(
-      new ButtonBuilder()
-        .setCustomId("Sprevious")
-        .setLabel("◀︎")
-        .setStyle(1)
-        .setDisabled(true)
-    )
-    .addComponents(
-      new ButtonBuilder().setCustomId("Snext").setLabel("▶").setStyle(1)
-    );
-};
+}

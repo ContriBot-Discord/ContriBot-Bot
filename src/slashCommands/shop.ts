@@ -1,12 +1,9 @@
-import {
-  SlashCommandBuilder,
-  CommandInteraction,
-  CacheType,
-} from "discord.js";
+import { SlashCommandBuilder, CommandInteraction, CacheType } from "discord.js";
 import { SlashCommand } from "@/types";
 import { DB } from "@/index";
-import shopEmbed from "@embeds/shop";
-import { buyShopButtons, pageShopButtons } from "@/builders/buttons/shop";
+import shopEmbed from "@/builders/embeds/shop";
+import interactShopButtons from "@/builders/buttons/interactShop";
+import pageShopButtons from "@/builders/buttons/pageShop";
 
 export const command: SlashCommand = {
   name: "shop",
@@ -28,9 +25,7 @@ export const command: SlashCommand = {
       guild.pointName
     );
 
-    const buyButtons = buyShopButtons(1, items, interaction.guild?.roles.cache!);
-
-    const pageButtons = pageShopButtons();
+    const pageButtons = pageShopButtons("shop");
 
     // If there are less than 5 items, disable the "next" button
     if (guild.shop.length <= 5) pageButtons.components[1].setDisabled(true);
@@ -38,7 +33,10 @@ export const command: SlashCommand = {
 
     await interaction.reply({
       embeds: [embed],
-      components: [buyButtons, pageButtons],
+      components: [
+        interactShopButtons(1, items, interaction.guild?.roles.cache!, "buy"),
+        pageButtons,
+      ],
     });
   },
 };
