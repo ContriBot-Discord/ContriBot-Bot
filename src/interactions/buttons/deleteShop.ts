@@ -24,7 +24,7 @@ const event: BotEvent = {
     } else {
       item.delete();
       await interaction.reply({
-        embeds: [deleteSucess(guild.lang, item.label, item.id!)],
+        embeds: [deleteSucess(guild.lang, item.id, item.label)],
       });
     }
   },
