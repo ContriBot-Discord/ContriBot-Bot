@@ -16,8 +16,6 @@ const event: BotEvent = {
 
     const item = guild.getShopItem(interaction.customId.split("-")[1]);
 
-    console.log(item)
-
     if (item === null) {
       await interaction.reply({
         embeds: [itemNotFound(guild.lang)],
