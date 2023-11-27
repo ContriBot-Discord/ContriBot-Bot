@@ -8,7 +8,6 @@ import { SlashCommand } from "@/types";
 
 import { create } from "@/tools/shopFunctions/create";
 import { edit } from "@/tools/shopFunctions/edit";
-import { deleteItem } from "@/tools/shopFunctions/itemDelete";
 
 export const command: SlashCommand = {
   name: "item",
@@ -66,10 +65,10 @@ export const command: SlashCommand = {
                 .setDescription("Type of the boost")
                 .setRequired(true)
                 .addChoices(
-                    { name: "Server", value: "1" },
+                  { name: "Server", value: "1" },
                   { name: "Channel", value: "2" },
                   { name: "Role", value: "3" },
-                  { name: "User", value: "4" },
+                  { name: "User", value: "4" }
                 )
             )
             .addNumberOption((option) =>
@@ -87,12 +86,12 @@ export const command: SlashCommand = {
                 .setMinValue(0)
             )
 
-              .addStringOption((option) =>
-                option
-                    .setName("duration")
-                    .setDescription("Duration of the boost (HHhMM format)")
-                    .setRequired(true)
-                    )
+            .addStringOption((option) =>
+              option
+                .setName("duration")
+                .setDescription("Duration of the boost (HHhMM format)")
+                .setRequired(true)
+            )
 
             .addUserOption((option) =>
               option
@@ -104,22 +103,22 @@ export const command: SlashCommand = {
             )
 
             .addRoleOption((option) =>
-                option
-                    .setName("role")
-                    .setDescription(
-                    "Role's target of the boot (leave empty to let the user choose or if not applicable)"
-                    )
-                    .setRequired(false)
+              option
+                .setName("role")
+                .setDescription(
+                  "Role's target of the boot (leave empty to let the user choose or if not applicable)"
                 )
+                .setRequired(false)
+            )
 
-              .addChannelOption((option) =>
-                option
-                    .setName("channel")
-                    .setDescription(
-                    "Channel's target of the boot (leave empty to let the user choose or if not applicable)"
-                    )
-                    .setRequired(false)
+            .addChannelOption((option) =>
+              option
+                .setName("channel")
+                .setDescription(
+                  "Channel's target of the boot (leave empty to let the user choose or if not applicable)"
                 )
+                .setRequired(false)
+            )
 
             .addNumberOption((option) =>
               option
@@ -185,71 +184,58 @@ export const command: SlashCommand = {
             )
         )
     )
-      .addSubcommandGroup((group) =>
-          group
-              .setName("edit")
-              .setDescription("Edit an item")
-              .addSubcommand((command: SlashCommandSubcommandBuilder) =>
-                      command
-                          .setName("name")
-                          .setDescription("Edit the name of an item shop")
-                          .addNumberOption((option) =>
-                                  option
-                                      .setName("id")
-                                      .setDescription("The id of the item to edit")
-                                      .setRequired(true)
-                                      .setMinValue(0)
-                              )
-                          .addStringOption((option) =>
-                                    option
-                                        .setName("name")
-                                        .setDescription("The new name of the item")
-                                        .setRequired(true)
-                                )
-              )
-              .addSubcommand((command: SlashCommandSubcommandBuilder) =>
-                        command
-                            .setName("description")
-                            .setDescription("Edit the description of an item shop")
-                            .addNumberOption((option) =>
-                                    option
-                                        .setName("id")
-                                        .setDescription("The id of the item to edit")
-                                        .setRequired(true)
-                                        .setMinValue(0)
-                                )
-                            .addStringOption((option) =>
-                                        option
-                                            .setName("description")
-                                            .setDescription("The new description of the item")
-                                            .setRequired(true)
-                                    )
-                )
-
-              .addSubcommand((command: SlashCommandSubcommandBuilder) =>
-                  command
-                      .setName("text")
-                      .setDescription("Add string to a Text item shop")
-                      .addNumberOption((option) =>
-                          option
-                              .setName("id")
-                              .setDescription("The id of the item to edit")
-                              .setRequired(true)
-                              .setMinValue(0)
-                      )
-
-              )
-      )
-    .addSubcommand((group) =>
+    .addSubcommandGroup((group) =>
       group
-        .setName("delete")
-        .setDescription("Delete an item")
-        .addNumberOption((option) =>
-          option
-            .setName("id")
-            .setDescription("The id of the item to delete")
-            .setRequired(true)
-            .setMinValue(0)
+        .setName("edit")
+        .setDescription("Edit an item")
+        .addSubcommand((command: SlashCommandSubcommandBuilder) =>
+          command
+            .setName("name")
+            .setDescription("Edit the name of an item shop")
+            .addNumberOption((option) =>
+              option
+                .setName("id")
+                .setDescription("The id of the item to edit")
+                .setRequired(true)
+                .setMinValue(0)
+            )
+            .addStringOption((option) =>
+              option
+                .setName("name")
+                .setDescription("The new name of the item")
+                .setRequired(true)
+            )
+        )
+        .addSubcommand((command: SlashCommandSubcommandBuilder) =>
+          command
+            .setName("description")
+            .setDescription("Edit the description of an item shop")
+            .addNumberOption((option) =>
+              option
+                .setName("id")
+                .setDescription("The id of the item to edit")
+                .setRequired(true)
+                .setMinValue(0)
+            )
+            .addStringOption((option) =>
+              option
+                .setName("description")
+                .setDescription("The new description of the item")
+                .setRequired(true)
+            )
+        )
+
+        .addSubcommand((command: SlashCommandSubcommandBuilder) =>
+          command
+            .setName("text")
+            .setDescription("Add string to a Text item shop")
+            .addNumberOption((option) =>
+              option
+                .setName("id")
+                .setDescription("The id of the item to edit")
+                .setRequired(true)
+                .setMinValue(0)
+            )
         )
     ),
   async execute(interaction: CommandInteraction) {
@@ -267,9 +253,6 @@ export const command: SlashCommand = {
         break;
       case "edit":
         await edit(interaction);
-        break;
-      case "delete":
-          await deleteItem(interaction);
         break;
     }
   },
