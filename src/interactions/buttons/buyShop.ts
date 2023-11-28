@@ -21,7 +21,7 @@ const event: BotEvent = {
         ephemeral: true,
       });
     } else {
-      //Faut coder ici Voltis
+      // TODO: Code the truc
     }
   },
 };
