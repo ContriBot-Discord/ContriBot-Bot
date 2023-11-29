@@ -17,12 +17,13 @@ export class Text{
 
     use(used: boolean = true): void {
         this.#db.query(
-            "UPDATE TEXT SET used = ? WHERE text_id = ? AND guild_id = ? AND value = ? LIMIT 1",
+            "UPDATE TEXT SET used = ? WHERE text_id = ? AND guild_id = ? AND value = ? AND used = ? LIMIT 1",
             [
                 used,
                 this.item.id,
                 this.item.guild.id,
-                this.content
+                this.content,
+                !used
             ],
             (err: mysql.QueryError | null) => {
                 if (err) throw err;
@@ -30,7 +31,5 @@ export class Text{
             }
         );
     }
-
-
 
 }
