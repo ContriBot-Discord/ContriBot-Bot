@@ -2,6 +2,16 @@ import itemNotFound from "@/builders/embeds/errors/itemNotFound";
 import { DB } from "@/index";
 import { BotEvent } from "@/types";
 import { Events, Interaction } from "discord.js";
+import { ShopItem } from "@/classes/ShopItem";
+
+
+function stockCheck(item: ShopItem) {
+  if (item.action == 2){    // Text object are handled differently
+    return item.texts?.length! > 0;
+  } else {
+    return item.max_quantity! > 0;
+  }
+}
 
 const event: BotEvent = {
   name: Events.InteractionCreate,
@@ -20,14 +30,25 @@ const event: BotEvent = {
 
     const item = guild.getShopItem(interaction.customId.split("-")[1]);
 
-    // TODO: Check if the user has enough money to buy the item OR if the item is available
-
     if (item === null) {
       await interaction.reply({
         embeds: [itemNotFound(guild.lang)],
         ephemeral: true,
       });
-    } else {
+    }
+    else if (!stockCheck(item)) {
+      await interaction.reply({
+        content: "Item not available!",
+        ephemeral: true,
+      });
+    }
+    else if (user!.storePoints < item.price) {
+      await interaction.reply({
+        content: "Not enough money!",
+        ephemeral: true,
+      });
+    }
+     else {
 
       // TODO: Complete the switch statement
       switch (item.action){
@@ -64,7 +85,7 @@ const event: BotEvent = {
           break;
 
         case 2: // text
-          break;
+
 
         case 3: // custom/object
           break;
