@@ -85,7 +85,20 @@ const event: BotEvent = {
           break;
 
         case 2: // text
-
+          const text = item.getUnusedTexts()![0]; // No need to check if empty,
+          try {                                         // stockCheck() already did it
+            await member.send({
+              content: text.content,
+            });
+            text.use();
+            success = true;
+          } catch (error) {
+            await interaction.reply({
+              content: "Error while sending the text! Purchase cancelled.",
+              ephemeral: true,
+            });
+          }
+          break;
 
         case 3: // custom/object
           break;
