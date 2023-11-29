@@ -191,9 +191,14 @@ export class User {
   addMessagePoint(channelId: string, roles: string[]): void {
     roles.push(channelId, this.guild.id, this.id);
 
-    const points: number = 1 * this.guild.getMultiplier(roles);
+    const points: number = this.guild.getMultiplier(roles);
 
     this.messagesSent += 1;
     this.addPoints(points);
+  }
+
+  addItem(item: ShopItem): void {
+    // TODO: Register item in database + use UserItem class
+    item;
   }
 }

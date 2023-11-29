@@ -3,6 +3,7 @@ import { Guild } from "./Guild";
 import mysql from "mysql2";
 import {ResultSetHeader, RowDataPacket} from "mysql2";
 import {Text} from "@/classes/Text";
+import {User} from "@/classes/User";
 
 export class ShopItem {
   price: number;
@@ -163,5 +164,15 @@ export class ShopItem {
         // If the list is empty (= no texts available), return null
         return usedTexts.length ? usedTexts : null;
   }
+
+    buy(user: User): void {
+        // Remove quantity from the item
+        this.max_quantity -= 1;
+        this.update();
+
+        // Add the item to the user's inventory
+        user.storePoints -= this.price;
+        user.addItem(this);
+    }
 
 }
