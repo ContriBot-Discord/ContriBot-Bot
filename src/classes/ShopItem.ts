@@ -168,8 +168,7 @@ export class ShopItem {
     buy(user: User): void {
         // Remove quantity from the item
 
-        // TODO: not updating stocks if item is 2/text
-        this.max_quantity -= 1;
+        if (this.action != -2) this.max_quantity -= 1;
         this.update();
 
         // Add the item to the user's inventory
