@@ -222,10 +222,10 @@ export class Guild {
       date = new Date(0);
     }
 
-    return this.globalInventory.filter((item) => item.boughtAt >= date!);
+    return this.globalInventory.filter((item) => item.purchaseDate >= date!);
   }
 
-  getItemById(id: string, date: undefined | Date = undefined): UserItem[] {
+  getItemById(id: number, date: undefined | Date = undefined): UserItem[] {
     // Return a list, bought before a date (default: Ignore date) with specific id
 
     // if date is undefined, we set it to the 1st January 1970
