@@ -1,75 +1,90 @@
-import { User } from "./User";
-import mysql from "mysql2";
+import mysql, {ResultSetHeader} from "mysql2";
+import {Guild} from "@/classes/Guild";
+import {User} from "@/classes/User";
+import {ShopItem} from "@/classes/ShopItem";
 
-// Represents an item in the inventory of a user.
-// The id is the unique_item_id in the database
 export class UserItem {
-  user: User;
-  id: string;
-  name: string;
-  description: string;
-  boughtAt: Date;
-  refunded: boolean;
-  refundedAt: Date;
-  used: boolean;
-  usedAt: Date;
-  #db: mysql.Connection;
+    readonly #db: mysql.Connection;
+    id: number | null;
+    user: User;
+    guild: Guild;
+    item: ShopItem;
+    itemName: string;
+    purchaseDate: Date;
+    purchasePrice: number;
+    used: boolean;
+    refunded: boolean;
+    itemType: number;
+    textValue: string | null;
+    boostMultiplier: number | null;
+    boostDuration: Date | null;
+    boostType: number | null;
+    appliedId: string | null;
 
-  constructor(
-    user: User,
-    id: string,
-    name: string,
-    description: string,
-    boughtAt: Date,
-    refunded: boolean = false,
-    refundedAt: Date = new Date(),
-    used: boolean = false,
-    usedAt: Date = new Date(),
-    db: mysql.Connection
-  ) {
-    this.#db = db;
-    this.user = user;
-    this.id = id;
-    this.name = name;
-    this.description = description;
-    this.boughtAt = boughtAt;
-    this.refunded = refunded;
-    this.refundedAt = refundedAt;
-    this.used = used;
-    this.usedAt = usedAt;
-  }
-
-  update(): void {
-    this.#db.query(
-      "UPDATE INVENTORY SET refunded = ?, refunded_at = ?, used = ?, used_at = ? WHERE unique_item_id = ?",
-      [this.refunded, this.refundedAt, this.used, this.usedAt, this.id],
-      (err) => {
-        if (err) throw err;
-      }
-    );
-  }
-
-  use(): void {
-    // Check if item is already used
-    if (this.used) {
-      throw new Error("UserItem is already used");
-    } else {
-      this.used = true;
-      this.usedAt = new Date();
-
-      this.update();
+    constructor(
+        db: mysql.Connection,
+        id: number | null,
+        user: User,
+        guild: Guild,
+        item: ShopItem,
+        itemName: string,
+        purchaseDate: Date,
+        purchasePrice: number,
+        used: boolean,
+        refunded: boolean,
+        itemType: number,
+        textValue: string | null,
+        boostMultiplier: number | null,
+        boostDuration: Date | null,
+        boostType: number | null,
+        appliedId: string | null
+    ) {
+        this.#db = db;
+        this.id = id;
+        this.user = user;
+        this.guild = guild;
+        this.item = item;
+        this.itemName = itemName;
+        this.purchaseDate = purchaseDate;
+        this.purchasePrice = purchasePrice;
+        this.used = used;
+        this.refunded = refunded;
+        this.itemType = itemType;
+        this.textValue = textValue;
+        this.boostMultiplier = boostMultiplier;
+        this.boostDuration = boostDuration;
+        this.boostType = boostType;
+        this.appliedId = appliedId;
     }
-  }
 
-  refund(): void {
-    // Check if item is already refunded
-    if (this.refunded) {
-      throw new Error("UserItem is already refunded");
-    } else {
-      this.refunded = true;
-      this.refundedAt = new Date();
+    create(callback?: (id: number) => void) {
+        this.#db.execute<ResultSetHeader>(
+            "INSERT INTO INVENTORY (user_id, guild_id, item_id, item_name, purchase_date, purchase_price, used, refunded, item_type, text_value, boost_multiplier, boost_duration, boost_type, applied_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            [this.user.id, this.guild.id, this.item.id, this.itemName, this.purchaseDate, this.purchasePrice, this.used, this.refunded, this.itemType, this.textValue, this.boostMultiplier, this.boostDuration, this.boostType, this.appliedId],
+            (err, result) => {
+                if (err) throw err;
 
-      this.update();
+                this.id = result.insertId;
+                if (callback) callback(result.insertId);
+            }
+        );
     }
-  }
+
+    update() {
+        this.#db.execute(
+            "UPDATE INVENTORY SET user_id = ?, guild_id = ?, item_id = ?, item_name = ?, purchase_date = ?, purchase_price = ?, used = ?, refunded = ?, item_type = ?, text_value = ?, boost_multiplier = ?, boost_duration = ?, boost_type = ?, applied_id = ? WHERE id = ?",
+            [this.user.id, this.guild.id, this.item.id, this.itemName, this.purchaseDate, this.purchasePrice, this.used, this.refunded, this.itemType, this.textValue, this.boostMultiplier, this.boostDuration, this.boostType, this.appliedId, this.id],
+            (err) => {
+                if (err) throw err;
+            }
+        );
+    }
+
+    delete() {
+        this.#db.execute(
+            "DELETE FROM INVENTORY WHERE id = ?", [this.id], (err) => {
+                if (err) throw err;
+            }
+        );
+    }
 }
