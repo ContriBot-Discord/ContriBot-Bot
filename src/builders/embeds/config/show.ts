@@ -42,47 +42,56 @@ export default function (guild_id: string, iconURL: string, lang: string) {
   }
 
   return new EmbedBuilder()
-    .addFields({
-      name:
-        getEmoji("orange_hammer") +
-        i18next.t("config:default.title", { command_name: "config show" }),
-      value: getEmoji("orange_line"),
-    })
-    .addFields({
-      name: i18next.t("config:show.description"),
-      value: ` `,
-    })
-    .addFields({
-      name:
-        getEmoji("orange_star") +
-        i18next.t("config:show.pointsCfg.name", {
-          pointName: DB.getGuild(guild_id).pointName,
-        }),
-      value: i18next.t("config:show.pointsCfg.value", {
-        message: DB.getGuild(guild_id).messagePoint,
-        voice: DB.getGuild(guild_id).voicePoint,
-        bump: DB.getGuild(guild_id).bumpPoint,
-        nitroBoost: DB.getGuild(guild_id).boostPoint,
-      }),
-      inline: true,
-    })
-    .addFields({
-      name:
-        getEmoji("orange_settings") +
-        i18next.t("config:show.settings.name"),
-      value: i18next.t("config:show.settings.value", {
-        pointName: DB.getGuild(guild_id).pointName,
-      }),
-      inline: true,
-    })
-    .addFields([
+    .addFields(
       {
         name:
-          getEmoji("orange_hashtag") +
-          i18next.t("config:show.channels.name"),
-        value: disabledChannelsText,
+          getEmoji("orange_hammer") +
+          i18next.t("config:default.title", { command_name: "config show" }),
+        value: getEmoji("orange_line"),
       },
-    ])
+      {
+        name: i18next.t("config:show.description"),
+        value: ` `,
+      },
+      {
+        name:
+          getEmoji("orange_star") +
+          i18next.t("config:show.pointsCfg.name", {
+            pointName: DB.getGuild(guild_id).pointName,
+          }),
+        value: i18next.t("config:show.pointsCfg.value", {
+          message: DB.getGuild(guild_id).messagePoint,
+          voice: DB.getGuild(guild_id).voicePoint,
+          bump: DB.getGuild(guild_id).bumpPoint,
+          nitroBoost: DB.getGuild(guild_id).boostPoint,
+        }),
+        inline: true,
+      },
+      {
+        name:
+          getEmoji("orange_settings") + i18next.t("config:show.settings.name"),
+        value: i18next.t("config:show.settings.value", {
+          pointName: DB.getGuild(guild_id).pointName,
+        }),
+        inline: true,
+      },
+      {
+        name: " ",
+        value: " ",
+      },
+      {
+        name:
+          getEmoji("orange_hashtag") + i18next.t("config:show.channels.name"),
+        value: disabledChannelsText,
+        inline: true,
+      },
+      {
+        name:
+          getEmoji("orange_hashtag") + i18next.t("config:show.logChannel.name"),
+        value: `<#${DB.getGuild(guild_id).logChannel}>`,
+        inline: true,
+      }
+    )
     .setThumbnail(iconURL)
     .setColor(getColor("ORANGE")!.hex as ColorResolvable)
     .setTimestamp();
