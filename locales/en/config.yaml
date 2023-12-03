@@ -28,3 +28,6 @@ actionpoint:
 
 lang:
   description: 'The guild language is now: **English**'
+
+logchannel:
+  description: "The log channel is now <#{{channelId}}>"

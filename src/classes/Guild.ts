@@ -169,18 +169,41 @@ export class Guild {
     });
   }
 
-  createShopItem(name: string, description: string, price: number, maxQuantity: number, action: number, available: boolean,
-                 applied_id: string | null, boost: number | null, boost_type: number | null, boost_duration: Date | null): ShopItem {
+  createShopItem(
+    name: string,
+    description: string,
+    price: number,
+    maxQuantity: number,
+    action: number,
+    available: boolean,
+    applied_id: string | null,
+    boost: number | null,
+    boost_type: number | null,
+    boost_duration: Date | null
+  ): ShopItem {
     // Create a shop item in the database
     // Since Database is not configured yet, return a new shop item
-    let shopItem = new ShopItem(this.#db, price, name, description, null, this, maxQuantity, action, available, applied_id, boost, boost_type, boost_duration);
+    let shopItem = new ShopItem(
+      this.#db,
+      price,
+      name,
+      description,
+      null,
+      this,
+      maxQuantity,
+      action,
+      available,
+      applied_id,
+      boost,
+      boost_type,
+      boost_duration
+    );
 
     // Insert a new row in the database
     shopItem.create();
 
     // Once created, we add the shop item to the guilds array
     this.shop.push(shopItem);
-
 
     return shopItem;
   }
@@ -198,19 +221,19 @@ export class Guild {
         result.forEach((item: RowDataPacket) => {
           shop.push(
             new ShopItem(
-                this.#db,
-                item.price,
-                item.label,
-                item.description,
-                item.item_id,
-                this,
-                item.max_quantity,
-                item.action,
-                item.available,
-                item.applied_id,
-                item.boost,
-                item.boost_type,
-                item.boost_duration
+              this.#db,
+              item.price,
+              item.label,
+              item.description,
+              item.item_id,
+              this,
+              item.max_quantity,
+              item.action,
+              item.available,
+              item.applied_id,
+              item.boost,
+              item.boost_type,
+              item.boost_duration
             )
           );
         });
@@ -250,6 +273,18 @@ export class Guild {
     this.#db.query<RowDataPacket[]>(
       "UPDATE GUILD SET lang = ? WHERE guild_id = ?",
       [lang, this.id],
+      (err) => {
+        if (err) throw err;
+      }
+    );
+  }
+
+  setLogChannel(channelId: string) {
+    this.logChannel = channelId;
+
+    this.#db.query<RowDataPacket[]>(
+      "UPDATE GUILD SET log_channel = ? WHERE guild_id = ?",
+      [channelId, this.id],
       (err) => {
         if (err) throw err;
       }
@@ -428,7 +463,7 @@ export class Guild {
     );
   }
 
-    getShopItem(id: number | string): ShopItem | null {
-        return (this.shop.find(item => item.id == id) || null);
-    }
+  getShopItem(id: number | string): ShopItem | null {
+    return this.shop.find((item) => item.id == id) || null;
+  }
 }
