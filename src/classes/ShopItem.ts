@@ -4,6 +4,7 @@ import mysql from "mysql2";
 import {ResultSetHeader, RowDataPacket} from "mysql2";
 import {Text} from "@/classes/Text";
 import {User} from "@/classes/User";
+import {UserItem} from "@/classes/UserItem";
 
 export class ShopItem {
   price: number;
@@ -165,7 +166,7 @@ export class ShopItem {
         return usedTexts.length ? usedTexts : null;
   }
 
-    buy(user: User): void {
+    buy(user: User, callback? : (userItem: UserItem) => void): UserItem {
         // Remove quantity from the item
 
         if (this.action != -2) this.max_quantity -= 1;
@@ -173,7 +174,8 @@ export class ShopItem {
 
         // Add the item to the user's inventory
         user.storePoints -= this.price;
-        user.addItem(this);
-    }
 
+        // Create the item, and call the callback function if given
+        return user.addItem(this, callback);
+    }
 }

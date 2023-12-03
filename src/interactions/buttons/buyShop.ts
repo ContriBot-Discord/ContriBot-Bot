@@ -3,6 +3,7 @@ import { DB } from "@/index";
 import { BotEvent } from "@/types";
 import { Events, Interaction } from "discord.js";
 import { ShopItem } from "@/classes/ShopItem";
+import {UserItem} from "@/classes/UserItem";
 
 
 function stockCheck(item: ShopItem) {
@@ -23,7 +24,6 @@ const event: BotEvent = {
 
     const guild = DB.getGuild(interaction.guildId!);
     const user = guild.getUser(interaction.user.id);
-    let success = false;
 
     // Using this instead of `interaction.member` because `interaction.member` is not well typed
     const member = await interaction.guild!.members.fetch(interaction.user.id);
@@ -49,8 +49,6 @@ const event: BotEvent = {
       });
     }
      else {
-
-      // TODO: Complete the switch statement
       switch (item.action){
 
         case 0: // role
@@ -71,7 +69,13 @@ const event: BotEvent = {
                     content: "Role added!",
                     ephemeral: true,
                   });
-                  success = true;
+
+                  item.buy(user, (userItem: UserItem) => {
+                    userItem.appliedId = role.id;
+                    userItem.used = true;
+                    userItem.update();
+                    }
+                  );
 
                 } catch (error) {
                   await interaction.reply({
@@ -82,16 +86,39 @@ const event: BotEvent = {
               }
               break;
         case 1: // boost
+
+          await interaction.reply({
+            content: "Boost added!",
+            ephemeral: true,
+          });
+
+          item.buy(user, (userItem: UserItem) => {
+            userItem.appliedId = item.applied_id;
+            userItem.boostMultiplier = item.multiplier;
+            userItem.boostDuration = item.boost_duration;
+            userItem.boostType = item.boost_type;
+            userItem.update()
+          });
+
           break;
 
         case 2: // text
           const text = item.getUnusedTexts()![0]; // No need to check if empty,
           try {                                         // stockCheck() already did it
+
+            // TODO: Create a new embed with the text
             await member.send({
               content: text.content,
             });
             text.use();
-            success = true;
+
+            item.buy(user, (userItem: UserItem) => {
+              userItem.textValue = text.content;
+              userItem.used = true;
+              userItem.update();
+            });
+
+
           } catch (error) {
             await interaction.reply({
               content: "Error while sending the text! Purchase cancelled.",
@@ -101,15 +128,23 @@ const event: BotEvent = {
           break;
 
         case 3: // custom/object
+
+          await interaction.reply({
+            content: "Item added!",
+            ephemeral: true,
+          });
+
+          item.buy(user, (userItem: UserItem) => {
+            userItem.appliedId = item.applied_id;
+            userItem.used = true;
+            userItem.update();
+          });
+
           break;
 
         default:
           break;
       }
-      // TODO : Add the item to the user's inventory
-        if (success) {
-            item.buy(user);
-        }
     }
   },
 };

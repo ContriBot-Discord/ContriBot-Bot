@@ -57,7 +57,7 @@ export class UserItem {
         this.appliedId = appliedId;
     }
 
-    create(callback?: (id: number) => void) {
+    create(callback?: (userItem: UserItem) => void) {
         this.#db.execute<ResultSetHeader>(
             "INSERT INTO INVENTORY (user_id, guild_id, item_id, item_name, purchase_date, purchase_price, used, refunded, item_type, text_value, boost_multiplier, boost_duration, boost_type, applied_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             [this.user.id, this.guild.id, this.item.id, this.itemName, this.purchaseDate, this.purchasePrice, this.used, this.refunded, this.itemType, this.textValue, this.boostMultiplier, this.boostDuration, this.boostType, this.appliedId],
@@ -65,7 +65,7 @@ export class UserItem {
                 if (err) throw err;
 
                 this.id = result.insertId;
-                if (callback) callback(result.insertId);
+                if (callback) callback(this);
             }
         );
     }

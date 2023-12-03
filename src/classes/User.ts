@@ -167,9 +167,8 @@ export class User {
     this.addPoints(points);
   }
 
-  addItem(item: ShopItem): void {
-    // TODO: Register item in database + use UserItem class
-
+  addItem(item: ShopItem, callback? : (userItem: UserItem) => void): UserItem {
+    // Callback invoked when the item is registered in the database
     const userItem = new UserItem(
         this.#db,
         null,
@@ -189,8 +188,9 @@ export class User {
         null
         );
 
-    userItem.create();
+    userItem.create(callback);
     this.inventory.push(userItem);
 
+    return userItem;
   }
 }
