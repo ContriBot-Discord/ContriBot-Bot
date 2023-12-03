@@ -16,6 +16,7 @@ export class Guild {
   specialPoint: number;
   allTimePoint: number;
   pointName: string;
+  logChannel: string;
   users: User[];
   shop: ShopItem[];
   globalInventory: UserItem[];
@@ -35,6 +36,7 @@ export class Guild {
     specialPoint: number,
     allTimePoint: number,
     pointName: string,
+    logChannel: string,
     db: mysql.Connection
   ) {
     this.#db = db;
@@ -49,6 +51,7 @@ export class Guild {
     this.specialPoint = specialPoint;
     this.allTimePoint = allTimePoint;
     this.pointName = pointName;
+    this.logChannel = logChannel;
     this.shop = this.fetchShop();
     this.users = this.fetchUsers();
     // Represent a list with all the items bought by all the users
@@ -112,7 +115,7 @@ export class Guild {
   create(): void {
     // Insert a new row in the database
     this.#db.query<RowDataPacket[]>(
-      "INSERT INTO GUILD (guild_id, message_point, voice_point, bump_point, boost_point, daily_point, weekly_point, special_point, all_time_point, point_name, lang) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO GUILD (guild_id, message_point, voice_point, bump_point, boost_point, daily_point, weekly_point, special_point, all_time_point, point_name, lang, log_channel) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         this.id,
         this.messagePoint,
@@ -125,6 +128,7 @@ export class Guild {
         this.allTimePoint,
         this.pointName,
         this.lang,
+        this.logChannel,
       ],
       (err) => {
         if (err) throw err;

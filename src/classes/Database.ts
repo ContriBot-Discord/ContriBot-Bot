@@ -47,6 +47,7 @@ export class Database {
             guild.special_point,
             guild.all_time_point,
             guild.point_name,
+            guild.log_channel,
             this.#db
           )
         );
@@ -79,6 +80,7 @@ export class Database {
       30,
       50,
       "points",
+      "0",
       this.#db
     );
 
