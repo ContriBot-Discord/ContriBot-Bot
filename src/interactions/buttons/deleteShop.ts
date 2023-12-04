@@ -8,6 +8,8 @@ const event: BotEvent = {
   name: Events.InteractionCreate,
   once: false,
   async execute(interaction: Interaction) {
+    if (!DB.isReady) return;
+
     if (!interaction.isButton()) return;
 
     if (!interaction.customId.startsWith("delete")) return;

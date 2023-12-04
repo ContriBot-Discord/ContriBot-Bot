@@ -8,6 +8,9 @@ const event: BotEvent = {
   name: Events.InteractionCreate,
   once: false,
   async execute(interaction: Interaction) {
+    // Checking if the DB is ready
+    if (!DB.isReady) return;
+
     if (!interaction.isChatInputCommand()) return;
 
     const command = interaction.client.slashCommands.get(

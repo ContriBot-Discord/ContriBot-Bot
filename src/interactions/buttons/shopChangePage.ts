@@ -10,6 +10,8 @@ const event: BotEvent = {
   name: Events.InteractionCreate,
   once: false,
   async execute(interaction: Interaction) {
+    if (!DB.isReady) return;
+
     if (!interaction.isButton()) return;
 
     // If the button is not one of the buttons, we stop the function since it's not related to the shop

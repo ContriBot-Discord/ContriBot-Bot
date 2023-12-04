@@ -3,6 +3,7 @@ import mysql, { RowDataPacket } from "mysql2";
 
 export class Database {
   guilds: Guild[];
+  isReady: boolean = false;
   readonly #db: mysql.Connection;
 
   constructor() {
@@ -54,6 +55,7 @@ export class Database {
       });
     });
 
+    this.isReady = true;
     return guilds;
   }
 

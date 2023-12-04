@@ -16,6 +16,8 @@ const event: BotEvent = {
   name: Events.InteractionCreate,
   once: false,
   async execute(interaction: Interaction) {
+    if (!DB.isReady) return;
+
     if (!interaction.isStringSelectMenu()) return;
 
     if (interaction.customId !== "Hselect") return;
