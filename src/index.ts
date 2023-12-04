@@ -33,6 +33,9 @@ i18next.use(Backend).init<FsBackendOptions>({
   backend: {
     loadPath:  './locales/{{lng}}/{{ns}}.yaml', // Path to translation files
   },
+  interpolation: {
+        escapeValue: false, // Prevent i18next from escaping characters like `@` or `<`
+  }
 });
 
 export const DB = new Database();
