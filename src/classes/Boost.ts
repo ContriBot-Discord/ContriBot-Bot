@@ -120,4 +120,24 @@ export class Boost {
             else return 1;
         }
     }
+
+    isActive(): boolean {
+        if (!this.recurrent) {
+            // If we are between the time when the boost starts and the time when the boost ends
+            return this.startAt.getTime() < new Date().getTime() && this.endAt.getTime() > new Date().getTime();
+
+            // If our boost is recurrent
+        } else {
+
+            // We are checking if we are after the time when the boost ends.
+            // In that case, we need to update the timestamps
+            if ( this.#before_timestamp!.getTime() < new Date().getTime()) {
+                this.updateTimestamps();
+            }
+
+            // If we are between the time when the boost starts and the time when the boost ends
+            return this.#after_timestamp!.getTime() < new Date().getTime() && this.#before_timestamp!.getTime() > new Date().getTime();
+        }
+    }
+
 }
