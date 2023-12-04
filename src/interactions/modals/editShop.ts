@@ -9,7 +9,7 @@ const event: BotEvent = {
   async execute(interaction: Interaction) {
     if (!interaction.isModalSubmit()) return;
 
-    if (!interaction.customId.startsWith("roleEditModal")) return;
+    if (!interaction.customId.endsWith("EditModal")) return;
 
     const guild = DB.getGuild(interaction.guildId!);
 
@@ -23,6 +23,15 @@ const event: BotEvent = {
     } else {
       switch (item.action) {
         case 0: // role
+          if (
+            interaction.guild?.roles.cache.has(
+              interaction.fields.getTextInputValue("roleEditRole")
+            )
+          ) {
+            interaction.reply({ content: "Role not found", ephemeral: true });
+            return;
+          }
+
           item.label = `<@&${interaction.fields.getTextInputValue(
             "roleEditRole"
           )}>`;
