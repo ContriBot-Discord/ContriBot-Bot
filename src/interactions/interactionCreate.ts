@@ -20,10 +20,9 @@ const event: BotEvent = {
     if (!command) return;
 
     // Try to execute the command
-    //try {
+    try {
       await command.execute(interaction);
 
-      try{
     // If an unhandled error occurs, we log it and send a message to the user
     } catch (err) {
 
