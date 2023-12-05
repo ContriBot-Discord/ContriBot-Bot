@@ -2,6 +2,7 @@ import mysql, {ResultSetHeader} from "mysql2";
 import {Guild} from "@/classes/Guild";
 import {User} from "@/classes/User";
 import {ShopItem} from "@/classes/ShopItem";
+import {Boost} from "@/classes/Boost";
 
 export class UserItem {
     readonly #db: mysql.Connection;
@@ -32,7 +33,7 @@ export class UserItem {
         purchasePrice: number,
         used: boolean,
         refunded: boolean,
-        itemType: number,
+        itemType: number,  // Action of the item (0: role, 1: boost, 2: text, 3: custom)
         textValue: string | null,
         boostMultiplier: number | null,
         boostDuration: Date | null,
@@ -86,5 +87,19 @@ export class UserItem {
                 if (err) throw err;
             }
         );
+    }
+
+    toBoost(): Boost {
+        return new Boost(
+            this.#db,
+            this.id,
+            this.guild,
+            this.boostType!,
+            this.appliedId!,
+            this.boostMultiplier!,
+            this.purchaseDate,
+            new Date(this.boostDuration!.getTime() + this.purchaseDate.getTime()),
+            false
+        )
     }
 }

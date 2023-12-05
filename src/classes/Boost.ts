@@ -3,8 +3,8 @@ import {Guild} from "@/classes/Guild";
 
 export class Boost {
     readonly #db: mysql.Connection;
-    #after_timestamp: Date | null | undefined; // Only if recurrent is true
-    #before_timestamp: Date | null | undefined; // Only if recurrent is true
+    #after_timestamp: Date | null; // Only if recurrent is true
+    #before_timestamp: Date | null; // Only if recurrent is true
     id: number | null;
     guild: Guild;
     boostType: number;
@@ -13,7 +13,7 @@ export class Boost {
     startAt: Date;
     endAt: Date;
     recurrent: boolean;
-    renewEvery: Date | null | undefined; // Only if recurrent is true
+    renewEvery: Date | null; // Only if recurrent is true
 
     constructor(
         db: mysql.Connection,
@@ -25,7 +25,9 @@ export class Boost {
         startAt: Date,
         endAt: Date,
         recurrent: boolean,
-        renewEvery?: Date | null
+        renewEvery: Date | null = null,
+        after_timestamp: Date | null = null,
+        before_timestamp: Date | null = null
     ) {
         this.#db = db;
         this.id = id;
@@ -37,6 +39,8 @@ export class Boost {
         this.endAt = endAt;
         this.recurrent = recurrent;
         this.renewEvery = renewEvery;
+        this.#after_timestamp = after_timestamp;
+        this.#before_timestamp = before_timestamp;
 
         if (this.recurrent) {
             this.updateTimestamps()

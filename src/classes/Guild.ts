@@ -231,7 +231,7 @@ export class Guild {
               item.action,
               item.available,
               item.applied_id,
-              item.boost,
+              item.multiplier,
               item.boost_type,
               item.boost_duration
             )
@@ -475,7 +475,7 @@ export class Guild {
 
     if (activeBoost) {
       // If there is an active boost, we combine them the time left of the both boosts
-      activeBoost.endAt = activeBoost.endAt = new Date(
+      activeBoost.endAt = new Date(
           // We are adding the both time left of the boosts
           // Then, removing the actual time to the two boosts
           activeBoost.endAt.getTime() + boost.endAt.getTime() - 2 * Date.now()
@@ -486,6 +486,9 @@ export class Guild {
       return true;
     }
     else {
+
+
+
       // If there is no active boost, we create it
       boost.create();
       this.boosts.push(boost);

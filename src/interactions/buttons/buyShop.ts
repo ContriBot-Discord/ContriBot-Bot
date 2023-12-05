@@ -10,7 +10,7 @@ function stockCheck(item: ShopItem) {
   if (item.action == 2){    // Text object are handled differently
     return item.texts?.length! > 0;
   } else {
-    return item.max_quantity! > 0;
+    return item.max_quantity! != 0;
   }
 }
 
@@ -38,12 +38,14 @@ const event: BotEvent = {
         ephemeral: true,
       });
     }
+
     else if (!stockCheck(item)) {
       await interaction.reply({
         content: "Item not available!",
         ephemeral: true,
       });
     }
+
     else if (user!.storePoints < item.price) {
       await interaction.reply({
         content: "Not enough money!",
@@ -99,9 +101,9 @@ const event: BotEvent = {
             userItem.boostMultiplier = item.multiplier;
             userItem.boostDuration = item.boost_duration;
             userItem.boostType = item.boost_type;
+
             userItem.update()
           });
-
           break;
 
         case 2: // text
