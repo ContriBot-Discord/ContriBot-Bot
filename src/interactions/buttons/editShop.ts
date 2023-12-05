@@ -2,7 +2,12 @@ import itemNotFound from "@/builders/embeds/errors/itemNotFound";
 import { DB } from "@/index";
 import { BotEvent } from "@/types";
 import { Events, Interaction } from "discord.js";
-import { roleEditModal } from "@/builders/modals/shop";
+import {
+  boostEditModal,
+  roleEditModal,
+  textEditModal,
+  customEditModal,
+} from "@/builders/modals/shop";
 
 const event: BotEvent = {
   name: Events.InteractionCreate,
@@ -27,10 +32,13 @@ const event: BotEvent = {
           roleEditModal(interaction, item);
           break;
         case 1: // boost
+          boostEditModal(interaction, item);
           break;
         case 2: // text
+          textEditModal(interaction, item);
           break;
         case 3: // custom
+          customEditModal(interaction, item);
           break;
         default:
           //TODO add error message
