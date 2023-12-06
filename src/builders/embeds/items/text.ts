@@ -12,19 +12,18 @@ export default function (
 
   const ingored =
     ignored > 0
-      ? i18next.t("embeds:item.edit.text.ignored", { ignored: ignored })
+      ? i18next.t("embeds:item.text.ignored", { ignored: ignored })
       : "";
 
   return new EmbedBuilder().setColor("#F69255").addFields(
     {
-      name:
-        getEmoji("orange_shop") + i18next.t("commands.item.edit.text.title"),
+      name: getEmoji("orange_shop") + i18next.t("commands.item.text.title"),
       value: getEmoji("orange_line"),
     },
     {
       name: " ",
       value:
-        i18next.t("embeds:item.edit.text.description", {
+        i18next.t("embeds:item.text.description", {
           strings: strings,
           total: total,
         }) + ingored,

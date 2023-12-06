@@ -179,7 +179,7 @@ export class Guild {
     applied_id: string | null,
     boost: number | null,
     boost_type: number | null,
-    boost_duration: Date | null
+    boost_duration: string | null
   ): ShopItem {
     // Create a shop item in the database
     // Since Database is not configured yet, return a new shop item

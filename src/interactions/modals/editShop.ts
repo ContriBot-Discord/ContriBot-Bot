@@ -1,10 +1,10 @@
 import { DB } from "@/index";
 import { BotEvent } from "@/types";
 import { Events, Interaction } from "discord.js";
-import notFound from "@embeds/errors/itemNotFound";
-import tooLong from "@embeds/errors/itemStringTooLong";
-import negativePrice from "@embeds/errors/itemNegativePrice";
-import stockError from "@embeds/errors/itemStocksError";
+import notFound from "@/builders/embeds/errors/items/itemNotFound";
+import tooLong from "@/builders/embeds/errors/items/itemStringTooLong";
+import negativePrice from "@/builders/embeds/errors/items/itemNegativePrice";
+import stockError from "@/builders/embeds/errors/items/itemStocksError";
 
 const event: BotEvent = {
   name: Events.InteractionCreate,
@@ -63,9 +63,8 @@ const event: BotEvent = {
           item.multiplier = parseInt(
             interaction.fields.getTextInputValue("boostEditMultiplier")
           );
-          item.boost_duration = new Date(
-            interaction.fields.getTextInputValue("boostEditDuration")
-          );
+          item.boost_duration =
+            interaction.fields.getTextInputValue("boostEditDuration");
           quantity = parseInt(
             interaction.fields.getTextInputValue("boostEditStocks")
           );

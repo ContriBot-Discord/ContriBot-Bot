@@ -1,5 +1,5 @@
-import itemNotFound from "@/builders/embeds/errors/itemNotFound";
-import deleteSucess from "@/builders/embeds/item/deleteSucess";
+import itemNotFound from "@/builders/embeds/errors/items/itemNotFound";
+import deleteSucess from "@/builders/embeds/items/delete";
 import { DB } from "@/index";
 import { BotEvent } from "@/types";
 import { Events, Interaction } from "discord.js";

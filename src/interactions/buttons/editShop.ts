@@ -1,4 +1,4 @@
-import itemNotFound from "@/builders/embeds/errors/itemNotFound";
+import itemNotFound from "@/builders/embeds/errors/items/itemNotFound";
 import { DB } from "@/index";
 import { BotEvent } from "@/types";
 import { Events, Interaction } from "discord.js";

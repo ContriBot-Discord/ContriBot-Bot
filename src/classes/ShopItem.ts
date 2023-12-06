@@ -19,7 +19,7 @@ export class ShopItem {
   applied_id: string | null;
   multiplier: number | null;
   boost_type: number | null;
-  boost_duration: Date | null;
+  boost_duration: string | null;
   texts: Text[] | null;
 
   constructor(
@@ -35,7 +35,7 @@ export class ShopItem {
     applied_id: string | null,
     multiplier: number | null,
     boost_type: number | null,
-    boost_duration: Date | null
+    boost_duration: string | null
   ) {
     this.#db = db; // The DB connection object
     this.price = price; // Price of the item

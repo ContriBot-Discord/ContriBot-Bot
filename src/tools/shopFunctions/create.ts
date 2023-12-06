@@ -5,38 +5,8 @@ import {
 } from "discord.js";
 
 import { DB } from "@/index";
-import { ShopItem } from "@/classes/ShopItem";
-import Success from "@/builders/embeds/item/create";
-import Error from "@embeds/errors/itemCreate";
-
-function createItem(
-  guildId: string,
-  label: string,
-  description: string,
-  price: number,
-  quantity: number,
-  action: number,
-  available: boolean,
-  applied_id: string | null,
-  boost: number | null,
-  boost_type: number | null,
-  boost_duration: Date | null
-): ShopItem {
-  const guild = DB.getGuild(guildId);
-
-  return guild.createShopItem(
-    label,
-    description,
-    price,
-    quantity,
-    action,
-    available,
-    applied_id,
-    boost,
-    boost_type,
-    boost_duration
-  );
-}
+import Success from "@/builders/embeds/items/create";
+import Error from "@/builders/embeds/errors/items/itemCreate";
 
 export const create = async function create(
   interaction: CommandInteraction<CacheType>
@@ -58,7 +28,7 @@ export const create = async function create(
   let applied_id: string | null;
   let boost: number | null;
   let boost_type: number | null;
-  let duration: Date | null;
+  let duration: string | null;
 
   // Loading parameters
   switch (subcommand.getSubcommand()) {
@@ -82,80 +52,41 @@ export const create = async function create(
         : -1;
       action = 1;
       available = true;
-
-      const string_duration = subcommand.getString("duration", true); // format: HHhMM or MM or HHh
-
-      // Check if the duration is valid
-      const duration_regex = new RegExp(
-        "^[0-9]{1,2}h[0-9]{1,2}$|^[0-9]{1,2}$|^[0-9]{1,2}h$"
-      );
-      if (!duration_regex.test(string_duration)) {
-        success = false;
-        break;
-      }
-
-      // Convert the duration to a Date object
-      const duration_array = string_duration.split("h");
-
-      duration = new Date(0);
-
-      if (duration_array.length == 1) {
-        // Only minutes
-        duration.setMinutes(+duration_array[0]);
-      } else if (duration_array.length == 2) {
-        // Hours and minutes
-        duration.setHours(+duration_array[0]);
-        duration.setMinutes(+duration_array[1]);
-      }
-
-      const stringDate =
-        duration.getHours().toString().padStart(2, "0") +
-        "h" +
-        duration.getMinutes().toString().padStart(2, "0");
-      +"m";
-
+      duration = subcommand.getString("duration", true); // format: hh:mm:ss
       boost = subcommand.getNumber("multiplicator", true);
       // What a fancy way to convert a string to a number. Thank you a lot NodeJS 👍.
       boost_type = +subcommand.getString("type", true);
 
       switch (boost_type) {
         case 1:
-          label = `${stringDate} x${boost} Server boost`;
+          label = `${duration} x${boost} Server boost`;
           break;
-
         case 2:
           applied_id = subcommand.getChannel("channel", false)
             ? subcommand.getChannel("channel", false)!.id
             : null;
-
           label = applied_id
-            ? `${stringDate} x${boost} Channel boost for <#${applied_id}>`
-            : `${stringDate} x${boost} Channel boost`;
+            ? `${duration} x${boost} Channel boost for <#${applied_id}>`
+            : `${duration} x${boost} Channel boost`;
           break;
-
         case 3:
           applied_id = subcommand.getRole("role", false)
             ? subcommand.getRole("role", false)!.id
             : null;
-
           label = applied_id
-            ? `${stringDate} x${boost} Role boost for <@&${applied_id}>`
-            : `${stringDate} x${boost} Role boost`;
+            ? `${duration} x${boost} Role boost for <@&${applied_id}>`
+            : `${duration} x${boost} Role boost`;
           break;
-
         case 4:
           applied_id = subcommand.getUser("user", false)
             ? subcommand.getUser("user", false)!.id
             : null;
-
           label = applied_id
-            ? `${stringDate} x${boost} User boost for <@${applied_id}>`
-            : `${stringDate} x${boost} User boost`;
+            ? `${duration} x${boost} User boost for <@${applied_id}>`
+            : `${duration} x${boost} User boost`;
           break;
-
         default:
           success = false;
-
           break;
       }
       break;
@@ -197,8 +128,7 @@ export const create = async function create(
   }
 
   if (success) {
-    createItem(
-      interaction.guildId!,
+    guild.createShopItem(
       label!,
       description!,
       price!,

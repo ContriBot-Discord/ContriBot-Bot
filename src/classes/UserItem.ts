@@ -18,7 +18,7 @@ export class UserItem {
     itemType: number;
     textValue: string | null;
     boostMultiplier: number | null;
-    boostDuration: Date | null;
+    boostDuration: string | null;
     boostType: number | null;
     appliedId: string | null;
 
@@ -36,7 +36,7 @@ export class UserItem {
         itemType: number,  // Action of the item (0: role, 1: boost, 2: text, 3: custom)
         textValue: string | null,
         boostMultiplier: number | null,
-        boostDuration: Date | null,
+        boostDuration: string | null,
         boostType: number | null,
         appliedId: string | null
     ) {
@@ -98,7 +98,7 @@ export class UserItem {
             this.appliedId!,
             this.boostMultiplier!,
             this.purchaseDate,
-            new Date(this.boostDuration!.getTime() + this.purchaseDate.getTime()),
+            new Date(this.boostDuration! + this.purchaseDate.getTime()),
             false
         )
     }

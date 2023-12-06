@@ -22,11 +22,10 @@ item:
   create:
     description: "Yaaay ! You just created {{itemName}} with success !"
     title: "Item created !"
-  edit:
-    text:
-      title: "Successful text addition"
-      description: "Successfully added {{strings}} strings to the item, for a total of {{total}} strings."
-      ignored: "{{ignored}} strings were ignored because they were empty."
+  text:
+    title: "Successful text addition"
+    description: "Successfully added {{strings}} strings to the item, for a total of {{total}} strings."
+    ignored: "{{ignored}} strings were ignored because they were empty."
   delete:
     title: "Successfully deleted the item"
     description:
