@@ -9,6 +9,7 @@ import interactShopButtons from "@/builders/buttons/interactShop";
 
 import { CacheType, CommandInteraction } from "discord.js";
 import { DB } from "@/index";
+import noItems from "@/builders/embeds/errors/shop/noItems";
 
 export const add = async function add(
   interaction: CommandInteraction<CacheType>
@@ -89,7 +90,16 @@ export const shop = async function shop(
   const guild = DB.getGuild(interaction.guildId!);
 
   // Copied list of the guild items
-  let items = [...guild.shop];
+  let items = [...guild.getShopItems()];
+
+  // If there are no items, send an error message
+  if (items.length === 0) {
+    await interaction.reply({
+      embeds: [noItems(guild.lang)],
+      ephemeral: true,
+    });
+    return;
+  }
 
   const embed = shopEmbed(
     1,

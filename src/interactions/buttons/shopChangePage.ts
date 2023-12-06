@@ -5,6 +5,7 @@ import { DB } from "@/index";
 import shop from "@/builders/embeds/shop";
 import interactShopButtons from "@/builders/buttons/interactShop";
 import pageShopButtons from "@/builders/buttons/pageShop";
+import noItems from "@/builders/embeds/errors/shop/noItems";
 
 const event: BotEvent = {
   name: Events.InteractionCreate,
@@ -33,7 +34,17 @@ const event: BotEvent = {
 
     const guild = DB.getGuild(interaction.guildId!);
 
-    let items = [...guild.shop];
+    // Copied list of the guild items
+    let items = [...guild.getShopItems()];
+
+    // If there are no items, send an error message
+    if (items.length === 0) {
+      await interaction.reply({
+        embeds: [noItems(guild.lang)],
+        ephemeral: true,
+      });
+      return;
+    }
 
     // We get the list of items depending on the button pressed
     actualPageInt = interaction.customId.includes("Sprevious")
