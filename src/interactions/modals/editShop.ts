@@ -2,6 +2,9 @@ import { DB } from "@/index";
 import { BotEvent } from "@/types";
 import { Events, Interaction } from "discord.js";
 import notFound from "@embeds/errors/itemNotFound";
+import tooLong from "@embeds/errors/itemStringTooLong";
+import negativePrice from "@embeds/errors/itemNegativePrice";
+import stockError from "@embeds/errors/itemStocksError";
 
 const event: BotEvent = {
   name: Events.InteractionCreate,
@@ -21,6 +24,10 @@ const event: BotEvent = {
         ephemeral: true,
       });
     } else {
+      let label: string = "default";
+      let price: number = 0;
+      let quantity: number = -1;
+
       switch (item.action) {
         case 0: // role
           if (
@@ -28,29 +35,29 @@ const event: BotEvent = {
               interaction.fields.getTextInputValue("roleEditRole")
             )
           ) {
+            // TODO add error message
             interaction.reply({ content: "Role not found", ephemeral: true });
             return;
           }
 
-          item.label = `<@&${interaction.fields.getTextInputValue(
-            "roleEditRole"
-          )}>`;
+          label = `<@&${interaction.fields.getTextInputValue("roleEditRole")}>`;
           item.description = interaction.fields.getTextInputValue(
             "roleEditDescription"
           );
-          item.price = parseInt(
+          price = parseInt(
             interaction.fields.getTextInputValue("roleEditPrice")
           );
-          item.max_quantity = parseInt(
+          quantity = parseInt(
             interaction.fields.getTextInputValue("roleEditStocks")
           );
-          item.update();
+
           break;
         case 1: // boost
+          label = item.label;
           item.description = interaction.fields.getTextInputValue(
             "boostEditDescription"
           );
-          item.price = parseInt(
+          price = parseInt(
             interaction.fields.getTextInputValue("boostEditPrice")
           );
           item.multiplier = parseInt(
@@ -59,7 +66,7 @@ const event: BotEvent = {
           item.boost_duration = new Date(
             interaction.fields.getTextInputValue("boostEditDuration")
           );
-          item.max_quantity = parseInt(
+          quantity = parseInt(
             interaction.fields.getTextInputValue("boostEditStocks")
           );
 
@@ -78,34 +85,62 @@ const event: BotEvent = {
             console.error("Error in boostEditModal.ts: label format");
           }
 
-          item.update();
           break;
         case 2: // text
-          item.label = interaction.fields.getTextInputValue("textEditLabel");
+          label = interaction.fields.getTextInputValue("textEditLabel");
           item.description = interaction.fields.getTextInputValue(
             "textEditDescription"
           );
-          item.price = parseInt(
+          price = parseInt(
             interaction.fields.getTextInputValue("textEditPrice")
           );
+          quantity = 1;
+
           break;
         case 3: // custom
-          item.label = interaction.fields.getTextInputValue("customEditName");
+          label = interaction.fields.getTextInputValue("customEditName");
           item.description = interaction.fields.getTextInputValue(
             "customEditDescription"
           );
-          item.price = parseInt(
+          price = parseInt(
             interaction.fields.getTextInputValue("customEditPrice")
           );
-          item.max_quantity = parseInt(
+          quantity = parseInt(
             interaction.fields.getTextInputValue("customEditStocks")
           );
+
           break;
         default:
           //TODO add error message
           interaction.reply({ content: "Unknown item type", ephemeral: true });
           break;
       }
+
+      if (label.length > 30) {
+        await interaction.reply({
+          embeds: [tooLong(guild.lang, "name", label.length, 30)],
+          ephemeral: true,
+        });
+      }
+
+      if (price < 0) {
+        await interaction.reply({
+          embeds: [negativePrice(guild.lang)],
+          ephemeral: true,
+        });
+      }
+
+      if (quantity < -1) {
+        await interaction.reply({
+          embeds: [stockError(guild.lang)],
+          ephemeral: true,
+        });
+      }
+
+      item.label = label;
+      item.price = price;
+      item.max_quantity = quantity;
+      item.update();
       interaction.reply({ content: "Item edited", ephemeral: true });
     }
   },

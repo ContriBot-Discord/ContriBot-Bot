@@ -6,7 +6,7 @@ import {
 
 import { DB } from "@/index";
 import { ShopItem } from "@/classes/ShopItem";
-import Success from "@embeds/item/create/create";
+import Success from "@/builders/embeds/item/create";
 import Error from "@embeds/errors/itemCreate";
 
 function createItem(
@@ -75,89 +75,89 @@ export const create = async function create(
       break;
 
     case "boost":
-        description = subcommand.getString("description", true);
-        price = subcommand.getNumber("price", true);
-        quantity = subcommand.getNumber("quantity", false)
-            ? subcommand.getNumber("quantity", false)!
-            : -1;
-        action = 1;
-        available = true;
+      description = subcommand.getString("description", true);
+      price = subcommand.getNumber("price", true);
+      quantity = subcommand.getNumber("quantity", false)
+        ? subcommand.getNumber("quantity", false)!
+        : -1;
+      action = 1;
+      available = true;
 
-        const string_duration = subcommand.getString("duration", true); // format: HHhMM or MM or HHh
+      const string_duration = subcommand.getString("duration", true); // format: HHhMM or MM or HHh
 
-        // Check if the duration is valid
-        const duration_regex = new RegExp(
-            "^[0-9]{1,2}h[0-9]{1,2}$|^[0-9]{1,2}$|^[0-9]{1,2}h$"
-        );
-        if (!duration_regex.test(string_duration)) {
-          success = false;
+      // Check if the duration is valid
+      const duration_regex = new RegExp(
+        "^[0-9]{1,2}h[0-9]{1,2}$|^[0-9]{1,2}$|^[0-9]{1,2}h$"
+      );
+      if (!duration_regex.test(string_duration)) {
+        success = false;
+        break;
+      }
+
+      // Convert the duration to a Date object
+      const duration_array = string_duration.split("h");
+
+      duration = new Date(0);
+
+      if (duration_array.length == 1) {
+        // Only minutes
+        duration.setMinutes(+duration_array[0]);
+      } else if (duration_array.length == 2) {
+        // Hours and minutes
+        duration.setHours(+duration_array[0]);
+        duration.setMinutes(+duration_array[1]);
+      }
+
+      const stringDate =
+        duration.getHours().toString().padStart(2, "0") +
+        "h" +
+        duration.getMinutes().toString().padStart(2, "0");
+      +"m";
+
+      boost = subcommand.getNumber("multiplicator", true);
+      // What a fancy way to convert a string to a number. Thank you a lot NodeJS 👍.
+      boost_type = +subcommand.getString("type", true);
+
+      switch (boost_type) {
+        case 1:
+          label = `${stringDate} x${boost} Server boost`;
           break;
-        }
 
-        // Convert the duration to a Date object
-        const duration_array = string_duration.split("h");
+        case 2:
+          applied_id = subcommand.getChannel("channel", false)
+            ? subcommand.getChannel("channel", false)!.id
+            : null;
 
-        duration = new Date(0);
+          label = applied_id
+            ? `${stringDate} x${boost} Channel boost for <#${applied_id}>`
+            : `${stringDate} x${boost} Channel boost`;
+          break;
 
-        if (duration_array.length == 1) {
-          // Only minutes
-          duration.setMinutes(+duration_array[0]);
-        } else if (duration_array.length == 2) {
-          // Hours and minutes
-          duration.setHours(+duration_array[0]);
-          duration.setMinutes(+duration_array[1]);
-        }
+        case 3:
+          applied_id = subcommand.getRole("role", false)
+            ? subcommand.getRole("role", false)!.id
+            : null;
 
-        const stringDate =
-            duration.getHours().toString().padStart(2, "0") +
-            "h" +
-            duration.getMinutes().toString().padStart(2, "0");
-        +"m";
+          label = applied_id
+            ? `${stringDate} x${boost} Role boost for <@&${applied_id}>`
+            : `${stringDate} x${boost} Role boost`;
+          break;
 
-        boost = subcommand.getNumber("multiplicator", true);
-        // What a fancy way to convert a string to a number. Thank you a lot NodeJS 👍.
-        boost_type = +subcommand.getString("type", true);
+        case 4:
+          applied_id = subcommand.getUser("user", false)
+            ? subcommand.getUser("user", false)!.id
+            : null;
 
-        switch (boost_type) {
-          case 1:
-            label = `${stringDate} x${boost} Server boost`;
-            break;
+          label = applied_id
+            ? `${stringDate} x${boost} User boost for <@${applied_id}>`
+            : `${stringDate} x${boost} User boost`;
+          break;
 
-          case 2:
-            applied_id = subcommand.getChannel("channel", false)
-                ? subcommand.getChannel("channel", false)!.id
-                : null;
+        default:
+          success = false;
 
-            label = applied_id
-                ? `${stringDate} x${boost} Channel boost for <#${applied_id}>`
-                : `${stringDate} x${boost} Channel boost`;
-            break;
-
-          case 3:
-            applied_id = subcommand.getRole("role", false)
-                ? subcommand.getRole("role", false)!.id
-                : null;
-
-            label = applied_id
-                ? `${stringDate} x${boost} Role boost for <@&${applied_id}>`
-                : `${stringDate} x${boost} Role boost`;
-            break;
-
-          case 4:
-            applied_id = subcommand.getUser("user", false)
-                ? subcommand.getUser("user", false)!.id
-                : null;
-
-            label = applied_id
-                ? `${stringDate} x${boost} User boost for <@${applied_id}>`
-                : `${stringDate} x${boost} User boost`;
-            break;
-
-          default:
-            success = false;
-
-            break;
-        }
+          break;
+      }
       break;
 
     case "text":
