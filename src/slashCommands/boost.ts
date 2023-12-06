@@ -24,6 +24,7 @@ export const command: SlashCommand = {
     const item = user.inventory.find(item => item.id == boostId && item.itemType === 1 && !item.used);
 
     if (!item) {
+      //TODO: Error embed
       await interaction.reply({
         content: "You do not have any boosts in your inventory with the provided ID.",
         ephemeral: true,
