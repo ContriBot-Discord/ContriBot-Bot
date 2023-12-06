@@ -4,6 +4,7 @@ import { DB } from "@/index";
 import shopEmbed from "@/builders/embeds/shop";
 import interactShopButtons from "@/builders/buttons/interactShop";
 import pageShopButtons from "@/builders/buttons/pageShop";
+import noItems from "@/builders/embeds/errors/shop/noItems";
 
 export const command: SlashCommand = {
   name: "shop",
@@ -16,6 +17,15 @@ export const command: SlashCommand = {
 
     // Copied list of the guild items
     let items = [...guild.shop];
+
+    // If there are no items, send an error message
+    if (items.length === 0) {
+      await interaction.reply({
+        embeds: [noItems(guild.lang)],
+        ephemeral: true,
+      });
+      return;
+    }
 
     const embed = shopEmbed(
       1,
