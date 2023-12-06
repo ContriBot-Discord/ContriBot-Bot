@@ -33,24 +33,24 @@ export const command: SlashCommand = {
 
     const extendedBoost = guild.applyBoost(item.toBoost());
 
-    let appliedIdMenton: string | null;
+    let appliedIdMention: string | null;
 
     switch (item.boostType) {
 
         case 1: // guild
-            appliedIdMenton = `the guild`;
+            appliedIdMention = `the guild`;
             break;
 
         case 2: // channel
-            appliedIdMenton = `<#${item.appliedId}>`;
+            appliedIdMention = `<#${item.appliedId}>`;
             break;
 
         case 3: // role
-            appliedIdMenton = `<@&${item.appliedId}>`;
+            appliedIdMention = `<@&${item.appliedId}>`;
             break;
 
         case 4: // User
-            appliedIdMenton = `<@${item.appliedId}>`;
+            appliedIdMention = `<@${item.appliedId}>`;
             break;
     }
 
@@ -65,7 +65,7 @@ export const command: SlashCommand = {
         // Retrieve the applied id from the cache and mention it
 
         await interaction.reply({
-            content: `Yay ! I just spread the amazing (gluten-free) boost potion on ${appliedIdMenton!} !`,
+            content: `Yay ! I just spread the amazing (gluten-free) boost potion on ${appliedIdMention!} !`,
             ephemeral: true,
         });
     }
