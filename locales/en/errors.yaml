@@ -9,6 +9,10 @@ noPerms:
   "I do not have enough permissions to do this. Please make sure i have all
   of the following permissions on this server: {{perms}}"
 
+default:
+  title: "Whoops, I just caught a bug !"
+  description: "An error occurred.\n\nIf you think this is a bug, please report it on the [support server](https://discord.gg/pw88gWrY5d) !"
+
 item:
   fieldsTooLong:
     title: "Whoops, I just caught a bug !"

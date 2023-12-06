@@ -8,6 +8,7 @@ import {
   textEditModal,
   customEditModal,
 } from "@/builders/modals/shop";
+import defaultError from "@/builders/embeds/errors/default";
 
 const event: BotEvent = {
   name: Events.InteractionCreate,
@@ -41,8 +42,10 @@ const event: BotEvent = {
           customEditModal(interaction, item);
           break;
         default:
-          //TODO add error message
-          interaction.reply({ content: "Unknown item type", ephemeral: true });
+          interaction.reply({
+            embeds: [defaultError(guild.lang)],
+            ephemeral: true,
+          });
           break;
       }
     }
