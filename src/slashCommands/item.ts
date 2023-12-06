@@ -88,7 +88,7 @@ export const command: SlashCommand = {
             .addStringOption((option) =>
               option
                 .setName("duration")
-                .setDescription("Duration of the boost (HHhMM format)")
+                .setDescription("Duration of the boost (hh:mm:ss format)")
                 .setRequired(true)
             )
 
