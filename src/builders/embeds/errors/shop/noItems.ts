@@ -2,7 +2,6 @@ import { getEmoji } from "@/constants";
 import { EmbedBuilder } from "discord.js";
 import i18next from "i18next";
 
-// WIP
 export default function (lang: string): EmbedBuilder {
   i18next.changeLanguage(lang);
 
