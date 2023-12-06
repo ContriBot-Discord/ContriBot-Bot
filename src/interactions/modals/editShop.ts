@@ -5,6 +5,7 @@ import notFound from "@/builders/embeds/errors/items/itemNotFound";
 import tooLong from "@/builders/embeds/errors/items/itemStringTooLong";
 import negativePrice from "@/builders/embeds/errors/items/itemNegativePrice";
 import stockError from "@/builders/embeds/errors/items/itemStocksError";
+import roleNotFound from "@/builders/embeds/errors/roleNotFound";
 
 const event: BotEvent = {
   name: Events.InteractionCreate,
@@ -35,8 +36,10 @@ const event: BotEvent = {
               interaction.fields.getTextInputValue("roleEditRole")
             )
           ) {
-            // TODO add error message
-            interaction.reply({ content: "Role not found", ephemeral: true });
+            interaction.reply({
+              embeds: [roleNotFound(guild.lang)],
+              ephemeral: true,
+            });
             return;
           }
 
