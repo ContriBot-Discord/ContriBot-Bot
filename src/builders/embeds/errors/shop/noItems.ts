@@ -9,7 +9,7 @@ export default function (lang: string): EmbedBuilder {
   return new EmbedBuilder()
     .addFields(
       {
-        name: getEmoji("red_bug") + i18next.t("errors:item.noItems.title"),
+        name: getEmoji("red_bug") + i18next.t("errors:shop.noItems.title"),
         value: getEmoji("red_line"),
       },
       {

@@ -103,6 +103,7 @@ export class ShopItem {
     // Mark the item as unavailable
     // Removing the row from the database would cause problems with the foreign keys
     // An unavailable item is not displayed in the shop, but still in the inventory
+    this.available = false;
     this.#db.query(
       "UPDATE SHOP SET available = 0 WHERE item_id = ?",
       [this.id],

@@ -16,7 +16,7 @@ export const command: SlashCommand = {
     const guild = DB.getGuild(interaction.guildId!);
 
     // Copied list of the guild items
-    let items = [...guild.shop];
+    let items = [...guild.getShopItems()];
 
     // If there are no items, send an error message
     if (items.length === 0) {

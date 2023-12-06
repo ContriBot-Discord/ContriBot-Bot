@@ -467,34 +467,39 @@ export class Guild {
     return this.shop.find((item) => item.id == id) || null;
   }
 
+  getShopItems(): ShopItem[] {
+    return this.shop.filter((item) => item.available);
+  }
+
   applyBoost(boost: Boost): boolean {
     // The boolean return True if the boost was merged with another one
 
     // Searching for a boost with the same appliedId, multiplier, and that is currently active and not recurrent
-    const activeBoost = this.boosts.find((bst) => bst.appliedId === boost.appliedId && bst.multiplier === boost.multiplier && bst.isActive() && !bst.recurrent);
+    const activeBoost = this.boosts.find(
+      (bst) =>
+        bst.appliedId === boost.appliedId &&
+        bst.multiplier === boost.multiplier &&
+        bst.isActive() &&
+        !bst.recurrent
+    );
 
     if (activeBoost) {
       // If there is an active boost, we combine them the time left of the both boosts
       activeBoost.endAt = new Date(
-          // We are adding the both time left of the boosts
-          // Then, removing the actual time to the two boosts
-          activeBoost.endAt.getTime() + boost.endAt.getTime() - 2 * Date.now()
+        // We are adding the both time left of the boosts
+        // Then, removing the actual time to the two boosts
+        activeBoost.endAt.getTime() + boost.endAt.getTime() - 2 * Date.now()
       );
 
       activeBoost.update();
 
       return true;
-    }
-    else {
-
-
-
+    } else {
       // If there is no active boost, we create it
       boost.create();
       this.boosts.push(boost);
 
-        return false;
+      return false;
     }
   }
-
 }
