@@ -1,13 +1,14 @@
 import itemNotFound from "@/builders/embeds/errors/items/itemNotFound";
+import buyShopLogEmbed from "@/builders/embeds/logs/shop/buy";
 import { DB } from "@/index";
 import { BotEvent } from "@/types";
-import { Events, Interaction } from "discord.js";
+import { Events, Interaction, TextChannel } from "discord.js";
 import { ShopItem } from "@/classes/ShopItem";
-import {UserItem} from "@/classes/UserItem";
-
+import { UserItem } from "@/classes/UserItem";
 
 function stockCheck(item: ShopItem) {
-  if (item.action == 2){    // Text object are handled differently
+  if (item.action == 2) {
+    // Text object are handled differently
     return item.texts?.length! > 0;
   } else {
     return item.max_quantity! != 0;
@@ -37,60 +38,59 @@ const event: BotEvent = {
         embeds: [itemNotFound(guild.lang)],
         ephemeral: true,
       });
+      return;
     }
 
+    //TODO: Error embed
     else if (!stockCheck(item)) {
       await interaction.reply({
         content: "Item not available!",
         ephemeral: true,
       });
+      return;
     }
 
+    //TODO: Error embed
     else if (user!.storePoints < item.price) {
       await interaction.reply({
         content: "Not enough money!",
         ephemeral: true,
       });
-    }
-     else {
-      switch (item.action){
-
+      return;
+    } else {
+      switch (item.action) {
         case 0: // role
-            const role = interaction.guild!.roles.cache.get(item.applied_id!);
+          const role = interaction.guild!.roles.cache.get(item.applied_id!);
 
-              if (role === undefined) {
-                  await interaction.reply({
-                  embeds: [itemNotFound(guild.lang)],
-                  ephemeral: true,
-                  });
+          if (role === undefined) {
+            await interaction.reply({
+              embeds: [itemNotFound(guild.lang)],
+              ephemeral: true,
+            });
+          } else {
+            // Try to add the role
+            try {
+              await member!.roles.add(role);
+              await interaction.reply({
+                content: "Role added!",
+                ephemeral: true,
+              });
 
-              } else {
-
-                // Try to add the role
-                try {
-                  await member!.roles.add(role);
-                  await interaction.reply({
-                    content: "Role added!",
-                    ephemeral: true,
-                  });
-
-                  item.buy(user, (userItem: UserItem) => {
-                    userItem.appliedId = role.id;
-                    userItem.used = true;
-                    userItem.update();
-                    }
-                  );
-
-                } catch (error) {
-                  await interaction.reply({
-                    content: "Error while adding the role!",
-                    ephemeral: true,
-                  });
-                }
-              }
-              break;
+              item.buy(user, (userItem: UserItem) => {
+                userItem.appliedId = role.id;
+                userItem.used = true;
+                userItem.update();
+              });
+            } catch (error) {
+              await interaction.reply({
+                content: "Error while adding the role!",
+                ephemeral: true,
+              });
+              return;
+            }
+          }
+          break;
         case 1: // boost
-
           await interaction.reply({
             content: "Boost added!",
             ephemeral: true,
@@ -102,13 +102,14 @@ const event: BotEvent = {
             userItem.boostDuration = item.boost_duration;
             userItem.boostType = item.boost_type;
 
-            userItem.update()
+            userItem.update();
           });
           break;
 
         case 2: // text
           const text = item.getUnusedTexts()![0]; // No need to check if empty,
-          try {                                         // stockCheck() already did it
+          try {
+            // stockCheck() already did it
 
             // TODO: Create a new embed with the text
             await member.send({
@@ -121,18 +122,16 @@ const event: BotEvent = {
               userItem.used = true;
               userItem.update();
             });
-
-
           } catch (error) {
             await interaction.reply({
               content: "Error while sending the text! Purchase cancelled.",
               ephemeral: true,
             });
+            return;
           }
           break;
 
         case 3: // custom/object
-
           await interaction.reply({
             content: "Item added!",
             ephemeral: true,
@@ -145,11 +144,24 @@ const event: BotEvent = {
           });
 
           break;
-
         default:
           break;
       }
     }
+
+    (
+      interaction.client.channels.cache.get(guild.logChannel) as TextChannel
+    ).send({
+      embeds: [
+        buyShopLogEmbed(
+          guild.lang,
+          interaction.user.id,
+          item!.label,
+          item!.price,
+          guild.pointName
+        ),
+      ],
+    });
   },
 };
 
