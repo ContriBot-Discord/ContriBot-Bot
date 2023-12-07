@@ -6,7 +6,6 @@ import { getItemsField } from "@/tools/shopFunctions/embeds";
 
 export default function (
   pageNumber: number,
-  totalPages: number,
   items: ShopItem[],
   lang: string,
   pointName: string
@@ -24,7 +23,7 @@ export default function (
     .setFooter({
       text: i18next.t("embeds:shop.footer.text", {
         pageNumber: pageNumber,
-        totalPages: totalPages,
+        totalPages: Math.ceil(items.length / 5),
       }),
     })
     .setColor(getColor("PINK")!.hex as ColorResolvable)

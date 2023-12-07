@@ -103,7 +103,6 @@ export const shop = async function shop(
 
   const embed = shopEmbed(
     1,
-    Math.ceil(guild.shop.length / 5),
     items,
     guild.lang,
     guild.pointName
@@ -112,7 +111,7 @@ export const shop = async function shop(
   const pageButtons = pageShopButtons("admin");
 
   // If there are less than 5 items, disable the "next" button
-  if (guild.shop.length <= 5) pageButtons.components[1].setDisabled(true);
+  if (items.length <= 5) pageButtons.components[1].setDisabled(true);
   pageButtons.components[0].setDisabled(true);
 
   await interaction.reply({

@@ -60,14 +60,13 @@ const event: BotEvent = {
       : pageButtons.components[0].setDisabled(false);
 
     // If the page is the last one, we disable the "next" button
-    actualPageInt === Math.ceil(guild.shop.length / 5)
+    actualPageInt === Math.ceil(items.length / 5)
       ? pageButtons.components[1].setDisabled(true)
       : pageButtons.components[1].setDisabled(false);
 
     // We now do generate the embed with all the data we got
     const embed = shop(
       actualPageInt,
-      Math.ceil(guild.shop.length / 5),
       items,
       guild.lang,
       guild.pointName
