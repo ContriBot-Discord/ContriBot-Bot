@@ -27,6 +27,7 @@ const event: BotEvent = {
       item.delete();
       await interaction.reply({
         embeds: [deleteSucess(guild.lang, item.id, item.label)],
+        ephemeral: true,
       });
     }
   },
