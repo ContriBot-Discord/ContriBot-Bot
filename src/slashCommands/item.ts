@@ -2,7 +2,6 @@ import {
   SlashCommandBuilder,
   CommandInteraction,
   SlashCommandSubcommandBuilder,
-  CommandInteractionOptionResolver,
 } from "discord.js";
 import { SlashCommand } from "@/types";
 
@@ -184,21 +183,7 @@ export const command: SlashCommand = {
         )
     ),
   async execute(interaction: CommandInteraction) {
-    let subcommand: CommandInteractionOptionResolver | string =
-      interaction.options as CommandInteractionOptionResolver;
 
-    // Retrieve the subcommand (either the subcommand or the subcommand group)
-    subcommand = subcommand.getSubcommandGroup()
-      ? subcommand.getSubcommandGroup()!
-      : subcommand.getSubcommand()!;
-
-    switch (subcommand) {
-      case "create":
-        await create(interaction);
-        break;
-      default:
-        // TODO: Add error message
-        interaction.reply({ content: "Error", ephemeral: true });
-    }
+    await create(interaction);
   },
 };

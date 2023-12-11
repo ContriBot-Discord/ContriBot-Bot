@@ -8,6 +8,30 @@ import { DB } from "@/index";
 import Success from "@embeds/items/create";
 import Error from "@embeds/errors/items/itemCreate";
 
+
+function boostNamer(boost_type: number, duration: string, multiplicator:number, applied_id: string|null): string {
+  if (applied_id == null) {
+    if (boost_type == 1) {
+      return `${duration} x${multiplicator} Guild boost`
+    } else {
+      return ""
+    }
+  }
+
+  else {
+    switch (boost_type) {
+      case 2:
+        return `${duration} x${multiplicator} channel boost`
+      case 3:
+        return `${duration} x${multiplicator} role boost`
+      case 4:
+        return `${duration} x${multiplicator} user boost`
+      default:
+          return ""
+      }
+    }
+}
+
 export const create = async function create(
   interaction: CommandInteraction<CacheType>
 ) {
@@ -57,37 +81,33 @@ export const create = async function create(
       // What a fancy way to convert a string to a number. Thank you a lot NodeJS 👍.
       boost_type = +subcommand.getString("type", true);
 
-      switch (boost_type) {
-        case 1:
-          label = `${duration} x${boost} Server boost`;
-          break;
-        case 2:
-          applied_id = subcommand.getChannel("channel", false)
-            ? subcommand.getChannel("channel", false)!.id
-            : null;
-          label = applied_id
-            ? `${duration} x${boost} Channel boost for <#${applied_id}>`
-            : `${duration} x${boost} Channel boost`;
-          break;
-        case 3:
-          applied_id = subcommand.getRole("role", false)
-            ? subcommand.getRole("role", false)!.id
-            : null;
-          label = applied_id
-            ? `${duration} x${boost} Role boost for <@&${applied_id}>`
-            : `${duration} x${boost} Role boost`;
-          break;
-        case 4:
-          applied_id = subcommand.getUser("user", false)
-            ? subcommand.getUser("user", false)!.id
-            : null;
-          label = applied_id
-            ? `${duration} x${boost} User boost for <@${applied_id}>`
-            : `${duration} x${boost} User boost`;
-          break;
-        default:
-          success = false;
-          break;
+      // TODO: ATM, not having an applied_id set won't be handled.
+      // Even if it is a mess, it is build so that it can be handled easily later.
+
+
+      const applied_id_list = [ null, null,
+
+            subcommand.getChannel("channel", false)
+                ? subcommand.getChannel("channel", false)!.id
+                : null,
+
+            subcommand.getRole("role", false)
+                ? subcommand.getRole("role", false)!.id
+                : null,
+
+            subcommand.getUser("user", false)
+                ? subcommand.getUser("user", false)!.id
+                : null,
+
+      ]
+
+      applied_id = applied_id_list[boost_type!];
+
+      label = boostNamer(boost_type!, duration!, boost!, applied_id!);
+
+      if (label == "") {
+        success = false;
+        break
       }
 
       // Convert duration to a Date object
@@ -131,7 +151,8 @@ export const create = async function create(
   }
 
   if (label!.length > 50 || description!.length > 150) {
-    success = false;
+    await interaction.reply({ embeds: [Error(guild.lang)] });
+    return;
   }
 
   if (success) {
@@ -150,6 +171,7 @@ export const create = async function create(
 
     await interaction.reply({ embeds: [Success(guild.lang, label!)] });
   } else {
-    await interaction.reply({ embeds: [Error(guild.lang)] });
+    // TODO: Add a proper error message
+    await interaction.reply("Error ! Make sur everything is correct. Also, for boosts, you must specify the targeted channel, role or user.");
   }
 };
