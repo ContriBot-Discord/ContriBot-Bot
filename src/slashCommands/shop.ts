@@ -1,10 +1,10 @@
 import { SlashCommandBuilder, CommandInteraction, CacheType } from "discord.js";
 import { SlashCommand } from "@/types";
 import { DB } from "@/index";
-import shopEmbed from "@/builders/embeds/shop";
+import shopEmbed from "@embeds/shop";
 import interactShopButtons from "@/builders/buttons/interactShop";
 import pageShopButtons from "@/builders/buttons/pageShop";
-import noItems from "@/builders/embeds/errors/shop/noItems";
+import noItems from "@embeds/errors/shop/noItems";
 
 export const command: SlashCommand = {
   name: "shop",

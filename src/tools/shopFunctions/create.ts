@@ -5,8 +5,8 @@ import {
 } from "discord.js";
 
 import { DB } from "@/index";
-import Success from "@/builders/embeds/items/create";
-import Error from "@/builders/embeds/errors/items/itemCreate";
+import Success from "@embeds/items/create";
+import Error from "@embeds/errors/items/itemCreate";
 
 export const create = async function create(
   interaction: CommandInteraction<CacheType>
@@ -89,6 +89,13 @@ export const create = async function create(
           success = false;
           break;
       }
+
+      // Convert duration to a Date object
+      let durationArray = duration!.split(":");
+      let durationDate = new Date();
+      durationDate.setHours(+durationArray[0]);
+      durationDate.setMinutes(+durationArray[1]);
+      durationDate.setSeconds(+durationArray[2]);
       break;
 
     case "text":
@@ -123,7 +130,7 @@ export const create = async function create(
       break;
   }
 
-  if (label!.length > 30 || description!.length > 150) {
+  if (label!.length > 50 || description!.length > 150) {
     success = false;
   }
 
