@@ -1,8 +1,8 @@
 import {BotEvent} from "@/types";
 import {Events, Interaction} from "discord.js";
 import {DB} from "@/index";
-import Error from "@/builders/embeds/errors/items/itemNotFound";
-import Sucess from "@/builders/embeds/items/text";
+import Error from "@embeds/errors/items/itemNotFound";
+import Sucess from "@embeds/items/text";
 
 
 const event: BotEvent = {

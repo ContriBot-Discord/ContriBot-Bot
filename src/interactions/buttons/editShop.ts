@@ -1,4 +1,4 @@
-import itemNotFound from "@/builders/embeds/errors/items/itemNotFound";
+import itemNotFound from "@embeds/errors/items/itemNotFound";
 import { DB } from "@/index";
 import { BotEvent } from "@/types";
 import { Events, Interaction } from "discord.js";
@@ -8,7 +8,7 @@ import {
   textEditModal,
   customEditModal,
 } from "@/builders/modals/shop";
-import defaultError from "@/builders/embeds/errors/default";
+import defaultError from "@embeds/errors/default";
 
 const event: BotEvent = {
   name: Events.InteractionCreate,

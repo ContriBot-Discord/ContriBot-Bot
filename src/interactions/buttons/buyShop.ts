@@ -1,5 +1,5 @@
-import itemNotFound from "@/builders/embeds/errors/items/itemNotFound";
-import buyShopLogEmbed from "@/builders/embeds/logs/shop/buy";
+import itemNotFound from "@embeds/errors/items/itemNotFound";
+import buyShopLogEmbed from "@embeds/logs/shop/buy";
 import { DB } from "@/index";
 import { BotEvent } from "@/types";
 import { Events, Interaction, TextChannel } from "discord.js";

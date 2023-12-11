@@ -2,10 +2,10 @@ import { BotEvent } from "@/types";
 import { Events, Interaction } from "discord.js";
 
 import { DB } from "@/index";
-import shop from "@/builders/embeds/shop";
+import shop from "@embeds/shop";
 import interactShopButtons from "@/builders/buttons/interactShop";
 import pageShopButtons from "@/builders/buttons/pageShop";
-import noItems from "@/builders/embeds/errors/shop/noItems";
+import noItems from "@embeds/errors/shop/noItems";
 
 const event: BotEvent = {
   name: Events.InteractionCreate,

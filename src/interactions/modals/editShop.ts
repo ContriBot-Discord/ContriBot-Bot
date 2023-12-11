@@ -1,11 +1,11 @@
 import { DB } from "@/index";
 import { BotEvent } from "@/types";
 import { Events, Interaction } from "discord.js";
-import notFound from "@/builders/embeds/errors/items/itemNotFound";
-import tooLong from "@/builders/embeds/errors/items/itemStringTooLong";
-import negativePrice from "@/builders/embeds/errors/items/itemNegativePrice";
-import stockError from "@/builders/embeds/errors/items/itemStocksError";
-import roleNotFound from "@/builders/embeds/errors/roleNotFound";
+import notFound from "@embeds/errors/items/itemNotFound";
+import tooLong from "@embeds/errors/items/itemStringTooLong";
+import negativePrice from "@embeds/errors/items/itemNegativePrice";
+import stockError from "@embeds/errors/items/itemStocksError";
+import roleNotFound from "@embeds/errors/roleNotFound";
 
 const event: BotEvent = {
   name: Events.InteractionCreate,
@@ -118,9 +118,9 @@ const event: BotEvent = {
           break;
       }
 
-      if (label.length > 30) {
+      if (label.length > 50) {
         await interaction.reply({
-          embeds: [tooLong(guild.lang, "name", label.length, 30)],
+          embeds: [tooLong(guild.lang, "name", label.length, 50)],
           ephemeral: true,
         });
       }

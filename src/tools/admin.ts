@@ -2,14 +2,14 @@ import addEmbed from "@embeds/admin/add";
 import removeEmbed from "@embeds/admin/remove";
 import resetEmbed from "@embeds/admin/reset";
 import wipeEmbed from "@embeds/admin/wipe";
-import shopEmbed from "@/builders/embeds/shop";
+import shopEmbed from "@embeds/shop";
 
 import pageShopButtons from "@/builders/buttons/pageShop";
 import interactShopButtons from "@/builders/buttons/interactShop";
 
 import { CacheType, CommandInteraction } from "discord.js";
 import { DB } from "@/index";
-import noItems from "@/builders/embeds/errors/shop/noItems";
+import noItems from "@embeds/errors/shop/noItems";
 
 export const add = async function add(
   interaction: CommandInteraction<CacheType>
