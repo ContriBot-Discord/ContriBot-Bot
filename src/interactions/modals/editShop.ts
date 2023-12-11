@@ -13,7 +13,7 @@ const event: BotEvent = {
   async execute(interaction: Interaction) {
     if (!interaction.isModalSubmit()) return;
 
-    if (!interaction.customId.endsWith("EditModal")) return;
+    if (!interaction.customId.includes("EditModal")) return;
 
     const guild = DB.getGuild(interaction.guildId!);
 
@@ -36,7 +36,7 @@ const event: BotEvent = {
               interaction.fields.getTextInputValue("roleEditRole")
             )
           ) {
-            interaction.reply({
+            await interaction.reply({
               embeds: [roleNotFound(guild.lang)],
               ephemeral: true,
             });
@@ -114,7 +114,7 @@ const event: BotEvent = {
           break;
         default:
           //TODO add error message
-          interaction.reply({ content: "Unknown item type", ephemeral: true });
+          await interaction.reply({ content: "Unknown item type", ephemeral: true });
           break;
       }
 
@@ -143,7 +143,7 @@ const event: BotEvent = {
       item.price = price;
       item.max_quantity = quantity;
       item.update();
-      interaction.reply({ content: "Item edited", ephemeral: true });
+      await interaction.reply({ content: "Item edited", ephemeral: true });
     }
   },
 };
