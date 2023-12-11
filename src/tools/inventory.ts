@@ -45,6 +45,7 @@ export const getItemsField = function getUsersField(
                         pointName: pointName
                     })
                     + (item.refunded ? i18next.t("embeds:inventory.refunded") : "")
+                    + (item.used ? i18next.t("embeds:inventory.used") : "")
                     + "\n"
                     + i18next.t("embeds:inventory.id", {
                         id: item.id
