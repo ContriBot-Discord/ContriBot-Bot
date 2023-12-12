@@ -35,11 +35,22 @@ const event: BotEvent = {
         const guild = DB.getGuild(interaction.guildId!);
         const user = guild.getUser(interaction.user.id);
 
-        // Copied list of the guild items
-        let userItems = [...user.inventory];
+
+        const refunded = interaction.customId.split(" ")[1] === "true" // Fancy way to get the boolean value of the string
+        const used = interaction.customId.split(" ")[2] === "true" // Also here
+
+        // If the item is not refunded or used
+        // Or if the item is refunded and the scope allows it
+        // Or if the item is used and the scope allows it
+        const items = user.inventory.filter(item => {
+            if (!refunded && !used) return !(item.refunded || item.used);  // If we do not allow refunded & used in scope
+            if (refunded && !used) return item.refunded;                // If we only allow refunded in scope
+            if (!refunded && used) return item.used;                    // If we only allow used in scope
+            return true;                                                // If we allow both in scope
+        })
 
         // If there are no items, send an error message
-        if (userItems.length === 0) {
+        if (items.length === 0) {
             await interaction.reply({
                 embeds: [noItems(guild.lang)],
                 ephemeral: true,
@@ -55,7 +66,7 @@ const event: BotEvent = {
         }
 
         // U is for user, A is for admin
-        const pageButtons = inventoryButtons();
+        const pageButtons = inventoryButtons(refunded, used);
 
         // If the page is 1, we disable the "previous" button
         actualPageInt === 1
@@ -63,7 +74,7 @@ const event: BotEvent = {
             : pageButtons.components[0].setDisabled(false);
 
         // If the page is the last one, we disable the "next" button
-        actualPageInt === Math.ceil(userItems.length / 5)
+        actualPageInt === Math.ceil(items.length / 5)
             ? pageButtons.components[1].setDisabled(true)
             : pageButtons.components[1].setDisabled(false);
 
@@ -71,10 +82,9 @@ const event: BotEvent = {
         // We now do generate the embed with all the data we got
         const embed = Inventory(
             actualPageInt,
-            Math.ceil(userItems.length / 10),
-            userItems,
+            Math.ceil(items.length / 10),
+            items,
             guild.lang,
-            guild.pointName
         );
 
 
