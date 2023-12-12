@@ -67,6 +67,7 @@ const event: BotEvent = {
             ? pageButtons.components[1].setDisabled(true)
             : pageButtons.components[1].setDisabled(false);
 
+
         // We now do generate the embed with all the data we got
         const embed = Inventory(
             actualPageInt,

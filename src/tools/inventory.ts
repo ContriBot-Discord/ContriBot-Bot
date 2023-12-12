@@ -6,7 +6,6 @@ export const getItemsField = function getUsersField(
     startingFrom: number,
     itemList: UserItem[],
     lang: string,
-    pointName: string
 ): { name: string; value: string }[] {
     i18next.changeLanguage(lang);
 

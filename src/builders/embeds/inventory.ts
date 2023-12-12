@@ -10,7 +10,6 @@ export default function (
     totalPages: number,
     items: UserItem[],
     lang: string,
-    pointName: string,
 ): EmbedBuilder {
     i18next.changeLanguage(lang);
 
@@ -21,7 +20,7 @@ export default function (
                 i18next.t("embeds:inventory.title", { index: pageNumber }),
             value: getEmoji("pink_line"),
         })
-        .addFields(getItemsField(pageNumber, items, lang, pointName))
+        .addFields(getItemsField(pageNumber, items, lang))
         .setFooter({
             text: i18next.t("embeds:inventory.footer", {
                 pageNumber: pageNumber,
