@@ -125,8 +125,8 @@ reset:
 
 inventory:
   title: "**Inventory** [{{index}}]"
-  boughtAt: "Bought the {{date}} for {{price}} {{pointName}}"
+  boughtAt: "Bought the {{date}}"
   refunded: " (refunded)"
   used: " (used)"
   id: "Item ID: `{{id}}`"
-  text: "Page {{pageNumber}}/{{totalPages}}"
+  footer: "Page {{pageNumber}}/{{totalPages}}"

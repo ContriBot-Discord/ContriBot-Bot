@@ -41,8 +41,6 @@ export const getItemsField = function getUsersField(
                     + "\n"
                     + i18next.t("embeds:inventory.boughtAt", {
                         date: `<t:${Math.floor(item.purchaseDate.getTime() / 1000)}:F>` ,
-                        price: item.purchasePrice,
-                        pointName: pointName
                     })
                     + (item.refunded ? i18next.t("embeds:inventory.refunded") : "")
                     + (item.used ? i18next.t("embeds:inventory.used") : "")

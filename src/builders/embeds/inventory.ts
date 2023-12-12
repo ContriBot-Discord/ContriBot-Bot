@@ -23,7 +23,7 @@ export default function (
         })
         .addFields(getItemsField(pageNumber, items, lang, pointName))
         .setFooter({
-            text: i18next.t("embeds:inventory.footer.text", {
+            text: i18next.t("embeds:inventory.footer", {
                 pageNumber: pageNumber,
                 totalPages: totalPages,
             }),
