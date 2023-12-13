@@ -32,7 +32,7 @@ const event: BotEvent = {
       switch (item.action) {
         case 0: // role
           if (
-            interaction.guild?.roles.cache.has(
+            !interaction.guild?.roles.cache.has(
               interaction.fields.getTextInputValue("roleEditRole")
             )
           ) {
