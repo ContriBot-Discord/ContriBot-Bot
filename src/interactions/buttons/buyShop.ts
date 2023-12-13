@@ -120,6 +120,7 @@ const event: BotEvent = {
 
 
           } catch (error) {
+            // TODO: Create a new embed with the text
             await interaction.reply({
               content: "Error while sending the text! Purchase cancelled.",
               ephemeral: true,
@@ -128,7 +129,7 @@ const event: BotEvent = {
           break;
 
         case 3: // custom/object
-
+          // TODO: Create a new embed with the text
           await interaction.reply({
             content: "Item added!",
             ephemeral: true,
@@ -139,7 +140,6 @@ const event: BotEvent = {
             userItem.used = true;
             userItem.update();
           });
-
           break;
 
         default:
