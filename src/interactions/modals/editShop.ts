@@ -125,7 +125,7 @@ const event: BotEvent = {
         return;
       }
 
-      if (quantity < -1) {
+      if (quantity < -1 || quantity === 0) {
         await interaction.reply({
           embeds: [stockError(guild.lang)],
           ephemeral: true,

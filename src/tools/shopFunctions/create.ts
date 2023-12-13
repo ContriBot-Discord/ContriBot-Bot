@@ -172,6 +172,6 @@ export const create = async function create(
     await interaction.reply({ embeds: [Success(guild.lang, label!)] });
   } else {
     // TODO: Add a proper error message
-    await interaction.reply("Error ! Make sur everything is correct. Also, for boosts, you must specify the targeted channel, role or user.");
+    await interaction.reply("Error ! Make sure everything is correct. Also, for boosts, you must specify the targeted channel, role or user.");
   }
 };
