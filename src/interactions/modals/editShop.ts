@@ -76,7 +76,7 @@ const event: BotEvent = {
 
           break;
         case 2: // text
-          label = interaction.fields.getTextInputValue("textEditLabel");
+          label = interaction.fields.getTextInputValue("textEditName");
           item.description = interaction.fields.getTextInputValue(
             "textEditDescription"
           );
