@@ -169,7 +169,7 @@ export class ShopItem {
     buy(user: User, callback? : (userItem: UserItem) => void): UserItem {
         // Remove quantity from the item
 
-        if (this.action != -2) this.max_quantity -= 1;
+        if (this.action != 2 || this.max_quantity != -1) this.max_quantity -= 1;
         this.update();
 
         // Add the item to the user's inventory
