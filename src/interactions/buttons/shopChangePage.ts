@@ -2,14 +2,17 @@ import { BotEvent } from "@/types";
 import { Events, Interaction } from "discord.js";
 
 import { DB } from "@/index";
-import shop from "@/builders/embeds/shop";
+import shop from "@embeds/shop";
 import interactShopButtons from "@/builders/buttons/interactShop";
 import pageShopButtons from "@/builders/buttons/pageShop";
+import noItems from "@embeds/errors/shop/noItems";
 
 const event: BotEvent = {
   name: Events.InteractionCreate,
   once: false,
   async execute(interaction: Interaction) {
+    if (!DB.isReady) return;
+
     if (!interaction.isButton()) return;
 
     // If the button is not one of the buttons, we stop the function since it's not related to the shop
@@ -31,7 +34,17 @@ const event: BotEvent = {
 
     const guild = DB.getGuild(interaction.guildId!);
 
-    let items = [...guild.shop];
+    // Copied list of the guild items
+    let items = [...guild.getShopItems()];
+
+    // If there are no items, send an error message
+    if (items.length === 0) {
+      await interaction.reply({
+        embeds: [noItems(guild.lang)],
+        ephemeral: true,
+      });
+      return;
+    }
 
     // We get the list of items depending on the button pressed
     actualPageInt = interaction.customId.includes("Sprevious")
@@ -47,14 +60,13 @@ const event: BotEvent = {
       : pageButtons.components[0].setDisabled(false);
 
     // If the page is the last one, we disable the "next" button
-    actualPageInt === Math.ceil(guild.shop.length / 5)
+    actualPageInt === Math.ceil(items.length / 5)
       ? pageButtons.components[1].setDisabled(true)
       : pageButtons.components[1].setDisabled(false);
 
     // We now do generate the embed with all the data we got
     const embed = shop(
       actualPageInt,
-      Math.ceil(guild.shop.length / 5),
       items,
       guild.lang,
       guild.pointName

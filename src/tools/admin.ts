@@ -2,13 +2,14 @@ import addEmbed from "@embeds/admin/add";
 import removeEmbed from "@embeds/admin/remove";
 import resetEmbed from "@embeds/admin/reset";
 import wipeEmbed from "@embeds/admin/wipe";
-import shopEmbed from "@/builders/embeds/shop";
+import shopEmbed from "@embeds/shop";
 
 import pageShopButtons from "@/builders/buttons/pageShop";
 import interactShopButtons from "@/builders/buttons/interactShop";
 
 import { CacheType, CommandInteraction } from "discord.js";
 import { DB } from "@/index";
+import noItems from "@embeds/errors/shop/noItems";
 
 export const add = async function add(
   interaction: CommandInteraction<CacheType>
@@ -89,11 +90,19 @@ export const shop = async function shop(
   const guild = DB.getGuild(interaction.guildId!);
 
   // Copied list of the guild items
-  let items = [...guild.shop];
+  let items = [...guild.getShopItems()];
+
+  // If there are no items, send an error message
+  if (items.length === 0) {
+    await interaction.reply({
+      embeds: [noItems(guild.lang)],
+      ephemeral: true,
+    });
+    return;
+  }
 
   const embed = shopEmbed(
     1,
-    Math.ceil(guild.shop.length / 5),
     items,
     guild.lang,
     guild.pointName
@@ -102,7 +111,7 @@ export const shop = async function shop(
   const pageButtons = pageShopButtons("admin");
 
   // If there are less than 5 items, disable the "next" button
-  if (guild.shop.length <= 5) pageButtons.components[1].setDisabled(true);
+  if (items.length <= 5) pageButtons.components[1].setDisabled(true);
   pageButtons.components[0].setDisabled(true);
 
   await interaction.reply({

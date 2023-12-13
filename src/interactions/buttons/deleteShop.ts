@@ -1,5 +1,5 @@
-import itemNotFound from "@/builders/embeds/errors/itemNotFound";
-import deleteSucess from "@/builders/embeds/item/delete/deleteSucess";
+import itemNotFound from "@embeds/errors/items/itemNotFound";
+import deleteSucess from "@embeds/items/delete";
 import { DB } from "@/index";
 import { BotEvent } from "@/types";
 import { Events, Interaction } from "discord.js";
@@ -8,6 +8,8 @@ const event: BotEvent = {
   name: Events.InteractionCreate,
   once: false,
   async execute(interaction: Interaction) {
+    if (!DB.isReady) return;
+
     if (!interaction.isButton()) return;
 
     if (!interaction.customId.startsWith("delete")) return;
@@ -25,6 +27,7 @@ const event: BotEvent = {
       item.delete();
       await interaction.reply({
         embeds: [deleteSucess(guild.lang, item.id, item.label)],
+        ephemeral: true,
       });
     }
   },

@@ -1,9 +1,10 @@
 import { SlashCommandBuilder, CommandInteraction, CacheType } from "discord.js";
 import { SlashCommand } from "@/types";
 import { DB } from "@/index";
-import shopEmbed from "@/builders/embeds/shop";
+import shopEmbed from "@embeds/shop";
 import interactShopButtons from "@/builders/buttons/interactShop";
 import pageShopButtons from "@/builders/buttons/pageShop";
+import noItems from "@embeds/errors/shop/noItems";
 
 export const command: SlashCommand = {
   name: "shop",
@@ -15,11 +16,19 @@ export const command: SlashCommand = {
     const guild = DB.getGuild(interaction.guildId!);
 
     // Copied list of the guild items
-    let items = [...guild.shop];
+    let items = [...guild.getShopItems()];
+
+    // If there are no items, send an error message
+    if (items.length === 0) {
+      await interaction.reply({
+        embeds: [noItems(guild.lang)],
+        ephemeral: true,
+      });
+      return;
+    }
 
     const embed = shopEmbed(
       1,
-      Math.ceil(guild.shop.length / 5),
       items,
       guild.lang,
       guild.pointName
@@ -28,7 +37,7 @@ export const command: SlashCommand = {
     const pageButtons = pageShopButtons("shop");
 
     // If there are less than 5 items, disable the "next" button
-    if (guild.shop.length <= 5) pageButtons.components[1].setDisabled(true);
+    if (items.length <= 5) pageButtons.components[1].setDisabled(true);
     pageButtons.components[0].setDisabled(true);
 
     await interaction.reply({

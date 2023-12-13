@@ -3,6 +3,7 @@ import channelEmbed from "@embeds/config/channel";
 import langEmbed from "@embeds/config/lang";
 import pointNameEmbed from "@embeds/config/pointName";
 import showEmbed from "@embeds/config/show";
+import logChannelEmbed from "@embeds/config/logChannel";
 
 import { CacheType, Channel, CommandInteraction } from "discord.js";
 
@@ -16,6 +17,21 @@ export const lang = async function lang(
   const embed = langEmbed(lang);
 
   DB.getGuild(interaction.guildId!).setLang(lang);
+
+  await interaction.reply({ embeds: [embed] });
+};
+
+export const logChannel = async function logChannel(
+  interaction: CommandInteraction<import("discord.js").CacheType>
+) {
+  const channel = interaction.options.get("channel")?.channel as Channel;
+
+  const embed = logChannelEmbed(
+    channel.id,
+    DB.getGuild(interaction.guildId!).lang
+  );
+
+  DB.getGuild(interaction.guildId!).setLogChannel(channel.id);
 
   await interaction.reply({ embeds: [embed] });
 };

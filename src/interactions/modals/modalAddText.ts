@@ -1,14 +1,16 @@
 import {BotEvent} from "@/types";
 import {Events, Interaction} from "discord.js";
 import {DB} from "@/index";
-import Error from "@embeds/errors/itemNotFound";
-import Sucess from "@embeds/item/edit/text";
+import Error from "@embeds/errors/items/itemNotFound";
+import Sucess from "@embeds/items/text";
 
 
 const event: BotEvent = {
     name: Events.InteractionCreate,
     once: false,
     async execute(interaction: Interaction) {
+        if (!DB.isReady) return;
+
         if (!interaction.isModalSubmit() || !interaction.customId.startsWith("textModal-") ) return;
 
         const guild = DB.getGuild(interaction.guildId!);

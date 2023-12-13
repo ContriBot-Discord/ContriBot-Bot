@@ -1,5 +1,5 @@
 default:
-  title: '**{{command_name}}** command'
+  title: "**{{command_name}}** command"
 
 add:
   description:
@@ -22,48 +22,35 @@ item:
   create:
     description: "Yaaay ! You just created {{itemName}} with success !"
     title: "Item created !"
-  edit:
-    price:
-      description: '{{itemName}} now costs {{price}} {{pointName}}, what a deal !'
-      title: "Successfully edited the price"
-    name:
-      title: "Successfully renamed the item"
-      description: "I've renamed {{oldName}} to {{newName}} with the remaining correction tape I had!"
-    description:
-      title: "Successfully edited the description"
-      description: "I've updated the description of {{itemName}}. This one is way better !"
-    text:
-      title: "Successful text addition"
-      description: "Successfully added {{strings}} strings to the item, for a total of {{total}} strings."
-      ignored: "{{ignored}} strings were ignored because they were empty."
-    stock:
-      title: "Successfully added stock"
-      description: "Yay! You just set {{itemName}} quantities to {{quantity}} ! Where can I buy one ?"
-      infinite: "Yay! You just set {{itemName}} quantities to unlimited ! Where can I buy one ?"
+  text:
+    title: "Successful text addition"
+    description: "Successfully added {{strings}} strings to the item, for a total of {{total}} strings."
+    ignored: "{{ignored}} strings were ignored because they were empty."
   delete:
     title: "Successfully deleted the item"
-    description: 'Successfully deleted {{itemName}} (with id: `{{itemId}}`). Hopefully,
-      it was recyclable !'
+    description:
+      "Successfully deleted {{itemName}} (with id: `{{itemId}}`). Hopefully,
+      it was recyclable !"
 
 shop:
-  title: '**Shop** [{{index}}]'
+  title: "**Shop** [{{index}}]"
   footer:
     text: "Page {{pageNumber}}/{{totalPages}}"
 
 ping:
   description: "🏓 Pong!\n
-               📡 Ping: {{ping}}ms"
+    📡 Ping: {{ping}}ms"
 
 profile:
   description: "Here is the profile of <@{{userid}}>"
   stats:
-    name: 'Stats :'
+    name: "Stats :"
     value: "Messages sent: **{{messagesSent}}**\n
-           Time spent in VC: **{{hours}}h {{minutes}}m {{seconds}}s**"
+      Time spent in VC: **{{hours}}h {{minutes}}m {{seconds}}s**"
   points:
-    name: '{{pointName}} :'
+    name: "{{pointName}} :"
     value: "store {{pointName}}: **{{storePoints}}**\n
-            leaderboard {{pointName}}: **{{leaderboardPoints}}**"
+      leaderboard {{pointName}}: **{{leaderboardPoints}}**"
 
 wipe:
   description:
@@ -75,7 +62,7 @@ help:
   title: "Help [{{index}}]"
   description: "Here is the list of all commands"
   description2: "This bot uses slash commands. \n
-                 Select a category to see the commands list."
+    Select a category to see the commands list."
   categories:
     admin: "Admin"
     user: "User"
@@ -113,7 +100,7 @@ help:
       value: "Using this command you can change the bot's language."
 
 leaderboard:
-  title: '**Leaderboard** [{{index}}]'
+  title: "**Leaderboard** [{{index}}]"
   description: "Here is the leaderboard"
   fields:
     name: "Top {{index}}"
@@ -135,3 +122,11 @@ reset:
     leaderboardPoints: "<@{{userid}}>'s leaderboard {{pointName}} have been reset."
     storePoints: "<@{{userid}}>'s leaderboard {{pointName}} have been reset."
     both: "<@{{userid}}>'s {{pointName}} have been fully reset"
+
+inventory:
+  title: "**Inventory** [{{index}}]"
+  boughtAt: "Bought the {{date}}"
+  refunded: " (refunded)"
+  used: " (used)"
+  id: "Item ID: `{{id}}`"
+  footer: "Page {{pageNumber}}/{{totalPages}}"

@@ -1,13 +1,16 @@
 import { BotEvent } from "@/types";
 import { Events, Interaction } from "discord.js";
 import ErrorHandler from "@/tools/errors";
-import error from "@embeds/error";
+import error from "@embeds/errors/error";
 import {DB} from "@/index";
 
 const event: BotEvent = {
   name: Events.InteractionCreate,
   once: false,
   async execute(interaction: Interaction) {
+    // Checking if the DB is ready
+    if (!DB.isReady) return;
+
     if (!interaction.isChatInputCommand()) return;
 
     const command = interaction.client.slashCommands.get(
@@ -22,9 +25,10 @@ const event: BotEvent = {
 
     // If an unhandled error occurs, we log it and send a message to the user
     } catch (err) {
+
+
       // @ts-ignore required. We do know that this is an error
-      // @ts-ignore
-      const errorId = ErrorHandler(err, DB, interaction);
+        const errorId = ErrorHandler(err, DB, interaction);
 
       try{
         const guild = DB.getGuild(interaction.guildId || 'err');

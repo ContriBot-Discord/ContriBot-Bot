@@ -17,6 +17,8 @@ show:
     andXOthers: 'and {{remainingChannelsCount}} others'
     name: 'Channels disabled:'
     noChannels: 'No channels disabled'
+  logChannel:
+    name: 'Log channel:'
 
 channel:
   description:
@@ -28,3 +30,6 @@ actionpoint:
 
 lang:
   description: 'The guild language is now: **English**'
+
+logchannel:
+  description: "The log channel is now <#{{channelId}}>"

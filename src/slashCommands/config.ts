@@ -13,6 +13,7 @@ import {
 
 import {
   lang,
+  logChannel,
   pointName,
   actionPoint,
   channel,
@@ -37,6 +38,17 @@ export const command: SlashCommand = {
               { name: "English", value: "en" },
               { name: "Français", value: "fr" }
             )
+            .setRequired(true)
+        )
+    )
+    .addSubcommand((subcommand: SlashCommandSubcommandBuilder) =>
+      subcommand
+        .setName("logchannel")
+        .setDescription("Change the log channel.")
+        .addChannelOption((option: SlashCommandChannelOption) =>
+          option
+            .setName("channel")
+            .setDescription("The channel you want to set as log channel")
             .setRequired(true)
         )
     )
@@ -110,6 +122,9 @@ export const command: SlashCommand = {
     switch (subcommand) {
       case "lang":
         await lang(interaction);
+        break;
+      case "logchannel":
+        await logChannel(interaction);
         break;
       case "pointname":
         await pointName(interaction);

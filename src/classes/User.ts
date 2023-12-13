@@ -49,7 +49,7 @@ export class User {
           items.push(
             new UserItem(
               this.#db,
-              item.item_id,
+              item.id,
               this,
               this.guild,
               this.guild.getShopItem(item.item_id)!,
