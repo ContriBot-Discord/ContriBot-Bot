@@ -9,7 +9,7 @@ import Success from "@embeds/items/create";
 import Error from "@embeds/errors/items/itemCreate";
 
 
-function boostNamer(boost_type: number, duration: string, multiplicator:number, applied_id: string|null): string {
+export const boostNamer = function boostNamer(boost_type: number, duration: string, multiplicator:number, applied_id: string|null): string {
   if (applied_id == null) {
     if (boost_type == 1) {
       return `${duration} x${multiplicator} Guild boost`

@@ -6,6 +6,7 @@ import tooLong from "@embeds/errors/items/itemStringTooLong";
 import negativePrice from "@embeds/errors/items/itemNegativePrice";
 import stockError from "@embeds/errors/items/itemStocksError";
 import roleNotFound from "@embeds/errors/roleNotFound";
+import { boostNamer } from "@/tools/shopFunctions/create";
 
 const event: BotEvent = {
   name: Events.InteractionCreate,
@@ -56,7 +57,6 @@ const event: BotEvent = {
 
           break;
         case 1: // boost
-          label = item.label;
           item.description = interaction.fields.getTextInputValue(
             "boostEditDescription"
           );
@@ -72,20 +72,7 @@ const event: BotEvent = {
             interaction.fields.getTextInputValue("boostEditStocks")
           );
 
-          // TODO Change Label
-          const labelInput =
-            interaction.fields.getTextInputValue("boostEditLabel");
-          const match = labelInput.match(
-            /(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}) x(\d+) (.+)/
-          );
-
-          if (match) {
-            const [_, date, boost, text] = match;
-            item.label = `${date} x${boost} ${text}`;
-          } else {
-            // Gérer le cas où le format n'est pas correct
-            console.error("Error in boostEditModal.ts: label format");
-          }
+          label = boostNamer(item.boost_type!, item.boost_duration!, item.multiplier!, item.applied_id!);
 
           break;
         case 2: // text
@@ -114,7 +101,11 @@ const event: BotEvent = {
           break;
         default:
           //TODO add error message
-          await interaction.reply({ content: "Unknown item type", ephemeral: true });
+          await interaction.reply({
+            content: "Unknown item type",
+            ephemeral: true,
+          });
+          return;
           break;
       }
 
@@ -123,6 +114,7 @@ const event: BotEvent = {
           embeds: [tooLong(guild.lang, "name", label.length, 50)],
           ephemeral: true,
         });
+        return;
       }
 
       if (price < 0) {
@@ -130,6 +122,7 @@ const event: BotEvent = {
           embeds: [negativePrice(guild.lang)],
           ephemeral: true,
         });
+        return;
       }
 
       if (quantity < -1) {
@@ -137,6 +130,7 @@ const event: BotEvent = {
           embeds: [stockError(guild.lang)],
           ephemeral: true,
         });
+        return;
       }
 
       item.label = label;
