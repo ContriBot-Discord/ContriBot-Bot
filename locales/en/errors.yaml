@@ -42,6 +42,11 @@ item:
     title: "Waw, I can't read that much !"
     description: "Sorry, the field `{{field_name}}` you tried to edit is too long ({{length}}/{{max_length}} max characters)!\n\nIf you think this is a bug, please report it on the [support server](https://discord.gg/pw88gWrY5d) !"
 
+boost:
+  notFoundInventory:
+    title: "Sorry, I can't find this boost in your inventory !"
+    description: "You do not have any boosts in your inventory with the provided ID. Please make sure you have the correct ID and try again !\n\nIf you think this is a bug, please report it on the [support server](https://discord.gg/pw88gWrY5d) !"
+
 shop:
   noItems:
     title: "No items in this shop !"
