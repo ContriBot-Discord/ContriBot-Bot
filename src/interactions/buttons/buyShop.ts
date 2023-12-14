@@ -5,6 +5,7 @@ import {BotEvent} from "@/types";
 import {Events, Interaction, TextChannel} from "discord.js";
 import {ShopItem} from "@/classes/ShopItem";
 import {UserItem} from "@/classes/UserItem";
+import noStock from "@/builders/embeds/errors/shop/noStock";
 
 function stockCheck(item: ShopItem) {
     if (item.action == 2) {
@@ -41,10 +42,9 @@ const event: BotEvent = {
             return;
         }
 
-        //TODO: Error embed
         else if (!stockCheck(item)) {
             await interaction.reply({
-                content: "Item not available!",
+                embeds: [noStock(guild.lang)],
                 ephemeral: true,
             });
             return;
