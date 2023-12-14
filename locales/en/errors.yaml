@@ -24,7 +24,11 @@ item:
 
   notFound:
     title: "Sorry, I can't find this item !"
-    description: "Sorry, I can't find this item ! \n\n If you believe this is a bug, please report it on the [support server](https://discord.gg/pw88gWrY5d) !"
+    description: "If you believe this is a bug, please report it on the [support server](https://discord.gg/pw88gWrY5d) !"
+
+  typeNotFound:
+    title: "Sorry, I can't find this item type !"
+    description: "If you believe this is a bug, please report it on the [support server](https://discord.gg/pw88gWrY5d) !"
 
   negativePrice:
     title: "Sorry, I can't accept that !"

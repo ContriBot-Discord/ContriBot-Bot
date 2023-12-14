@@ -102,7 +102,7 @@ const event: BotEvent = {
         default:
           //TODO add error message
           await interaction.reply({
-            content: "Unknown item type",
+            embeds: [notFound(guild.lang)],
             ephemeral: true,
           });
           return;
