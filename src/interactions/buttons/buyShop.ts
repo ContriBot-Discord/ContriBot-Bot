@@ -150,6 +150,8 @@ const event: BotEvent = {
             }
         }
 
+        if (!guild.logChannel) return;
+
         await (
             interaction.client.channels.cache.get(guild.logChannel) as TextChannel
         ).send({
