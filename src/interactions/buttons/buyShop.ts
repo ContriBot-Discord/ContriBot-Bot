@@ -51,7 +51,6 @@ const event: BotEvent = {
             return;
         }
 
-        //TODO: Error embed
         else if (user!.storePoints < item.price) {
             await interaction.reply({
                 embeds: [notEnoughMoney(guild.lang)],
