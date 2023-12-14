@@ -100,7 +100,6 @@ const event: BotEvent = {
 
           break;
         default:
-          //TODO add error message
           await interaction.reply({
             embeds: [notFound(guild.lang)],
             ephemeral: true,
