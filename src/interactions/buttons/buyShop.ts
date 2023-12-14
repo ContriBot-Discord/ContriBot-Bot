@@ -6,6 +6,7 @@ import {Events, Interaction, TextChannel} from "discord.js";
 import {ShopItem} from "@/classes/ShopItem";
 import {UserItem} from "@/classes/UserItem";
 import noStock from "@/builders/embeds/errors/shop/noStock";
+import notEnoughMoney from "@/builders/embeds/errors/shop/notEnoughMoney";
 
 function stockCheck(item: ShopItem) {
     if (item.action == 2) {
@@ -53,7 +54,7 @@ const event: BotEvent = {
         //TODO: Error embed
         else if (user!.storePoints < item.price) {
             await interaction.reply({
-                content: "Not enough money!",
+                embeds: [notEnoughMoney(guild.lang)],
                 ephemeral: true,
             });
             return;

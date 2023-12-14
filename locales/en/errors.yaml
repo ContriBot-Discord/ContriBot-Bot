@@ -45,3 +45,6 @@ shop:
   noStock:
     title: "Sorry, this item is out of stock !"
     description: "If you believe this is a bug, please report it on the [support server](https://discord.gg/pw88gWrY5d) !"
+  notEnoughMoney:
+    title: "Sorry, you don't have enough money !"
+    description: "If you believe this is a bug, please report it on the [support server](https://discord.gg/pw88gWrY5d) !"
