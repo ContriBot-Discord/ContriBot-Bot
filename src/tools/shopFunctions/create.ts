@@ -6,7 +6,8 @@ import {
 
 import { DB } from "@/index";
 import Success from "@embeds/items/create";
-import Error from "@embeds/errors/items/itemCreate";
+import Error from "@/builders/embeds/errors/items/itemCreateTooLong";
+import boostCreate from "@/builders/embeds/errors/items/itemCreate";
 
 
 export const boostNamer = function boostNamer(boost_type: number, duration: string, multiplicator:number, applied_id: string|null): string {
@@ -171,7 +172,8 @@ export const create = async function create(
 
     await interaction.reply({ embeds: [Success(guild.lang, label!)] });
   } else {
-    // TODO: Add a proper error message
-    await interaction.reply("Error ! Make sure everything is correct. Also, for boosts, you must specify the targeted channel, role or user.");
+    // Catch the error
+    await interaction.reply({ embeds: [boostCreate(guild.lang)] });
+    return;
   }
 };
