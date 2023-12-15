@@ -8,7 +8,7 @@ import fetchVoice from "@/tools/voiceFetcher"
 
 import profilePicChooser from "@/tools/profilePicChooser";
 
-import DiscordAnalytics from "discord-analytics/discordjs";
+// import DiscordAnalytics from "discord-analytics/discordjs";
 
 const event: BotEvent = {
   name: Events.ClientReady,
@@ -23,20 +23,20 @@ const event: BotEvent = {
 
     if (process.env.DEBUG === "false") {
 
-      const analytics = new DiscordAnalytics({
-        client: client,
-        eventsToTrack: {
-          trackGuilds: true,
-          trackGuildsLocale: true,
-          trackInteractions: true,
-          trackUserCount: true,
-          trackUserLanguage: true
-        },
-        apiToken: process.env.DISCORD_ANALYTICS_TOKEN!,
-        sharded: false
-      });
-
-      analytics.trackEvents();
+      // const analytics = new DiscordAnalytics({
+      //   client: client,
+      //   eventsToTrack: {
+      //     trackGuilds: true,
+      //     trackGuildsLocale: true,
+      //     trackInteractions: true,
+      //     trackUserCount: true,
+      //     trackUserLanguage: true
+      //   },
+      //   apiToken: process.env.DISCORD_ANALYTICS_TOKEN!,
+      //   sharded: false
+      // });
+      //
+      // analytics.trackEvents();
 
     }
 
