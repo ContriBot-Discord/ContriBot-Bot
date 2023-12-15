@@ -27,6 +27,7 @@ const event: BotEvent = {
         embeds: [itemNotFound(guild.lang)],
         ephemeral: true,
       });
+      return;
     } else {
       switch (item.action) {
         case 0: // role

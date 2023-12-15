@@ -5,6 +5,8 @@ import {BotEvent} from "@/types";
 import {Events, Interaction, TextChannel} from "discord.js";
 import {ShopItem} from "@/classes/ShopItem";
 import {UserItem} from "@/classes/UserItem";
+import noStock from "@/builders/embeds/errors/shop/noStock";
+import notEnoughMoney from "@/builders/embeds/errors/shop/notEnoughMoney";
 
 function stockCheck(item: ShopItem) {
     if (item.action == 2) {
@@ -41,19 +43,17 @@ const event: BotEvent = {
             return;
         }
 
-        //TODO: Error embed
         else if (!stockCheck(item)) {
             await interaction.reply({
-                content: "Item not available!",
+                embeds: [noStock(guild.lang)],
                 ephemeral: true,
             });
             return;
         }
 
-        //TODO: Error embed
         else if (user!.storePoints < item.price) {
             await interaction.reply({
-                content: "Not enough money!",
+                embeds: [notEnoughMoney(guild.lang)],
                 ephemeral: true,
             });
             return;
@@ -149,6 +149,8 @@ const event: BotEvent = {
                     break;
             }
         }
+
+        if (!guild.logChannel) return;
 
         await (
             interaction.client.channels.cache.get(guild.logChannel) as TextChannel

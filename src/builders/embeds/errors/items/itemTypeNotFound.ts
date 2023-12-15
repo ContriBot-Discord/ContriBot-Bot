@@ -2,7 +2,7 @@ import { getEmoji } from "@/constants";
 import { EmbedBuilder } from "discord.js";
 import i18next from "i18next";
 
-export default function (lang: string, field_name: string, length: number, max_length: number): EmbedBuilder {
+export default function (lang: string): EmbedBuilder {
     i18next.changeLanguage(lang);
 
     return new EmbedBuilder()
@@ -10,12 +10,12 @@ export default function (lang: string, field_name: string, length: number, max_l
             {
                 name:
                     getEmoji("red_bug") +
-                    i18next.t("errors:item.fieldsTooLong.title"),
+                    i18next.t("errors:item.typeNotFound.title"),
                 value: getEmoji("red_line"),
             },
             {
                 name: " ",
-                value: i18next.t("errors:item.fieldsTooLong.description", {field_name: field_name, length: length, max_length: max_length})
+                value: i18next.t("errors:item.typeNotFound.description")
             }
         )
         .setColor("#dd4040")

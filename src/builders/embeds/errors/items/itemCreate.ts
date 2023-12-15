@@ -11,12 +11,12 @@ export default function (lang: string): EmbedBuilder {
             {
                 name:
                     getEmoji("red_bug") +
-                    i18next.t("errors:item.fieldsTooLong.title"),
+                    i18next.t("errors:boost.create.title"),
                 value: getEmoji("red_line"),
             },
             {
                 name: " ",
-                value: i18next.t("errors:item.fieldsTooLong.description") + "test"
+                value: i18next.t("errors:boost.create.description")
             }
         )
         .setColor("#dd4040")
