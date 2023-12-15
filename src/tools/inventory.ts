@@ -6,6 +6,7 @@ export const getItemsField = function getUsersField(
     startingFrom: number,
     itemList: UserItem[],
     lang: string,
+    itemPerPage: number,
 ): { name: string; value: string }[] {
     i18next.changeLanguage(lang);
 
@@ -25,8 +26,8 @@ export const getItemsField = function getUsersField(
         getEmoji("pink_object"),
     ]
 
-    // We add the n + 10 first users to the embed. If there are less than 10 users, we stop the loop.
-    for (let i: number = startingFrom; i < startingFrom + 10; i++) {
+    // We add the n + 10 first users to the embed. If there are less than 10 (or 5) items, we stop the loop.
+    for (let i: number = startingFrom; i < startingFrom + itemPerPage; i++) {
         const item = itemList[i];
 
         if (item) {
