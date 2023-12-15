@@ -16,6 +16,7 @@ export class Guild {
   specialPoint: number;
   allTimePoint: number;
   pointName: string;
+  logChannel: string;
   users: User[];
   shop: ShopItem[];
   globalInventory: UserItem[];
@@ -35,6 +36,7 @@ export class Guild {
     specialPoint: number,
     allTimePoint: number,
     pointName: string,
+    logChannel: string,
     db: mysql.Connection
   ) {
     this.#db = db;
@@ -49,6 +51,7 @@ export class Guild {
     this.specialPoint = specialPoint;
     this.allTimePoint = allTimePoint;
     this.pointName = pointName;
+    this.logChannel = logChannel;
     this.shop = this.fetchShop();
     this.users = this.fetchUsers();
     // Represent a list with all the items bought by all the users
@@ -112,7 +115,7 @@ export class Guild {
   create(): void {
     // Insert a new row in the database
     this.#db.query<RowDataPacket[]>(
-      "INSERT INTO GUILD (guild_id, message_point, voice_point, bump_point, boost_point, daily_point, weekly_point, special_point, all_time_point, point_name, lang) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO GUILD (guild_id, message_point, voice_point, bump_point, boost_point, daily_point, weekly_point, special_point, all_time_point, point_name, lang, log_channel) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         this.id,
         this.messagePoint,
@@ -125,6 +128,7 @@ export class Guild {
         this.allTimePoint,
         this.pointName,
         this.lang,
+        this.logChannel,
       ],
       (err) => {
         if (err) throw err;
@@ -165,18 +169,41 @@ export class Guild {
     });
   }
 
-  createShopItem(name: string, description: string, price: number, maxQuantity: number, action: number, available: boolean,
-                 applied_id: string | null, boost: number | null, boost_type: number | null, boost_duration: Date | null): ShopItem {
+  createShopItem(
+    name: string,
+    description: string,
+    price: number,
+    maxQuantity: number,
+    action: number,
+    available: boolean,
+    applied_id: string | null,
+    boost: number | null,
+    boost_type: number | null,
+    boost_duration: string | null
+  ): ShopItem {
     // Create a shop item in the database
     // Since Database is not configured yet, return a new shop item
-    let shopItem = new ShopItem(this.#db, price, name, description, null, this, maxQuantity, action, available, applied_id, boost, boost_type, boost_duration);
+    let shopItem = new ShopItem(
+      this.#db,
+      price,
+      name,
+      description,
+      null,
+      this,
+      maxQuantity,
+      action,
+      available,
+      applied_id,
+      boost,
+      boost_type,
+      boost_duration
+    );
 
     // Insert a new row in the database
     shopItem.create();
 
     // Once created, we add the shop item to the guilds array
     this.shop.push(shopItem);
-
 
     return shopItem;
   }
@@ -194,19 +221,19 @@ export class Guild {
         result.forEach((item: RowDataPacket) => {
           shop.push(
             new ShopItem(
-                this.#db,
-                item.price,
-                item.label,
-                item.description,
-                item.item_id,
-                this,
-                item.max_quantity,
-                item.action,
-                item.available,
-                item.applied_id,
-                item.boost,
-                item.boost_type,
-                item.boost_duration
+              this.#db,
+              item.price,
+              item.label,
+              item.description,
+              item.item_id,
+              this,
+              item.max_quantity,
+              item.action,
+              item.available,
+              item.applied_id,
+              item.multiplier,
+              item.boost_type,
+              item.boost_duration
             )
           );
         });
@@ -222,10 +249,10 @@ export class Guild {
       date = new Date(0);
     }
 
-    return this.globalInventory.filter((item) => item.boughtAt >= date!);
+    return this.globalInventory.filter((item) => item.purchaseDate >= date!);
   }
 
-  getItemById(id: string, date: undefined | Date = undefined): UserItem[] {
+  getItemById(id: number, date: undefined | Date = undefined): UserItem[] {
     // Return a list, bought before a date (default: Ignore date) with specific id
 
     // if date is undefined, we set it to the 1st January 1970
@@ -246,6 +273,18 @@ export class Guild {
     this.#db.query<RowDataPacket[]>(
       "UPDATE GUILD SET lang = ? WHERE guild_id = ?",
       [lang, this.id],
+      (err) => {
+        if (err) throw err;
+      }
+    );
+  }
+
+  setLogChannel(channelId: string) {
+    this.logChannel = channelId;
+
+    this.#db.query<RowDataPacket[]>(
+      "UPDATE GUILD SET log_channel = ? WHERE guild_id = ?",
+      [channelId, this.id],
       (err) => {
         if (err) throw err;
       }
@@ -347,7 +386,7 @@ export class Guild {
   getMultiplier(IDs: string[]): number {
     let multiplier = 1;
     this.boosts.forEach((boost) => {
-      if (IDs.includes(boost.appliedId)) {
+      if (IDs.includes(boost.appliedId) && boost.isActive()) {
         multiplier *= boost.getMultiplier();
       }
     });
@@ -424,7 +463,43 @@ export class Guild {
     );
   }
 
-    getShopItem(id: number | string): ShopItem | null {
-        return (this.shop.find(item => item.id == id) || null);
+  getShopItem(id: number | string): ShopItem | null {
+    return this.shop.find((item) => item.id == id) || null;
+  }
+
+  getShopItems(): ShopItem[] {
+    return this.shop.filter((item) => item.available);
+  }
+
+  applyBoost(boost: Boost): boolean {
+    // The boolean return True if the boost was merged with another one
+
+    // Searching for a boost with the same appliedId, multiplier, and that is currently active and not recurrent
+    const activeBoost = this.boosts.find(
+      (bst) =>
+        bst.appliedId === boost.appliedId &&
+        bst.multiplier === boost.multiplier &&
+        bst.isActive() &&
+        !bst.recurrent
+    );
+
+    if (activeBoost) {
+      // If there is an active boost, we combine them the time left of the both boosts
+      activeBoost.endAt = new Date(
+        // We are adding the both time left of the boosts
+        // Then, removing the actual time to the two boosts
+        activeBoost.endAt.getTime() + boost.endAt.getTime() - 2 * Date.now()
+      );
+
+      activeBoost.update();
+
+      return true;
+    } else {
+      // If there is no active boost, we create it
+      boost.create();
+      this.boosts.push(boost);
+
+      return false;
     }
+  }
 }

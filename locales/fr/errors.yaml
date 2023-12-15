@@ -1,6 +1,6 @@
-internalError: "Une erreur interne s'est produite. Veuillez réessayer plus tard ou nous contacter. Code d'erreur interne : `{{code}}`" #Default error message for internal errors.
-goBack: "Vous ne pouvez pas revenir en arrière" #May occur when trying to load a page of an Embed that doesn't exist
-goForward: "Vous ne pouvez pas aller plus loin" #May occur when trying to load a page of an Embed that doesn't exist
-noPerms: "Je n'ai pas les permissions suffisantes pour faire cela. Veuillez vous assurer que j'ai toutes les permissions suivantes sur ce serveur : {{perms}}" #Raised when the bot does nat enough perms to perform an action. perms can be a list of perms, or a single permission.
-cantDm: "Je suis désolé, je ne peux pas vous faire de DM. S'il vous plaît assurez-vous que vos DMs sont activés sur ce serveur." #Raised when the bot can't DM the user invoking the event.
-cantDmUser: "Je suis désolé, je ne peux pas envoyer de MP à cet utilisateur. La cause la plus probable est que l'utilisateur ait ses MPs désactivés sur ce serveur." #Raised when the bot can't DM the user it is supposed to.
+goBack: "Vous ne pouvez pas revenir en arrière"
+cantDmUser: "Je suis désolé, je ne peux pas envoyer de MP à cet utilisateur. La cause la plus probable est que l'utilisateur ait ses MPs désactivés sur ce serveur."
+cantDm: "Je suis désolé, je ne peux pas vous faire de DM. S'il vous plaît assurez-vous que vos DMs sont activés sur ce serveur."
+internalError: "Une erreur interne s'est produite. Veuillez réessayer plus tard ou nous contacter. Code d'erreur interne : `{{code}}`"
+goForward: "Vous ne pouvez pas aller plus loin"
+noPerms: "Je n'ai pas les permissions suffisantes pour faire cela. Veuillez vous assurer que j'ai toutes les permissions suivantes sur ce serveur : {{perms}}"

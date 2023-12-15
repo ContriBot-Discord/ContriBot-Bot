@@ -9,7 +9,6 @@ import * as dotenv from "dotenv";
 import i18next from 'i18next';
 import Backend, {FsBackendOptions} from 'i18next-fs-backend';
 
-
 import { Database } from "@/classes/Database";
 
 dotenv.config();
@@ -30,10 +29,13 @@ i18next.use(Backend).init<FsBackendOptions>({
   initImmediate: false, // Required to prevent i18next from trying to load translations before the bot is ready
   fallbackLng: 'en', // Fallback language (if a translation is missing)
   preload: ['en', 'fr', 'ru'], // List of languages to load translations for
-  ns: ['errors', 'embeds', 'config'], // Files to load translations from (./locales/fr/commands.yaml for instance)
+  ns: ['errors', 'embeds', 'config', 'logs'], // Files to load translations from (./locales/fr/commands.yaml for instance)
   backend: {
     loadPath:  './locales/{{lng}}/{{ns}}.yaml', // Path to translation files
   },
+  interpolation: {
+        escapeValue: false, // Prevent i18next from escaping characters like `@` or `<`
+  }
 });
 
 export const DB = new Database();

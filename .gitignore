@@ -128,3 +128,6 @@ dist
 
 # Database files
 database.sqlite
+
+# Production build files
+!src/builders/embeds/logs

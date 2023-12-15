@@ -3,6 +3,7 @@ import mysql, { RowDataPacket } from "mysql2";
 
 export class Database {
   guilds: Guild[];
+  isReady: boolean = false;
   readonly #db: mysql.Connection;
 
   constructor() {
@@ -47,12 +48,14 @@ export class Database {
             guild.special_point,
             guild.all_time_point,
             guild.point_name,
+            guild.log_channel,
             this.#db
           )
         );
       });
     });
 
+    this.isReady = true;
     return guilds;
   }
 
@@ -79,6 +82,7 @@ export class Database {
       30,
       50,
       "points",
+      "0",
       this.#db
     );
 
@@ -90,4 +94,11 @@ export class Database {
 
     return guild;
   }
+
+  registerError(id: string, errorName: string, errorMessage: string, errorStack: string | null, errorCause: {} | null, context: unknown){
+        this.#db.query(`INSERT INTO ERROR (error_id, error_name, error_message, error_stack, error_cause, context) VALUE (?, ?, ?, ?, ?, ?)`, [id, errorName, errorMessage, errorStack, JSON.stringify(errorCause), context], (err) => {
+            if (err) throw err;
+        })
+
+    }
 }

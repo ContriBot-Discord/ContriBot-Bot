@@ -3,7 +3,7 @@ import { SlashCommand } from "@/types";
 
 import { DB } from "@/index";
 
-import profileEmbed from "@/embeds/profile";
+import profileEmbed from "@embeds/profile";
 
 export const command: SlashCommand = {
   name: "profile",

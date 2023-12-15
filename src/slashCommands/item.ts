@@ -2,12 +2,10 @@ import {
   SlashCommandBuilder,
   CommandInteraction,
   SlashCommandSubcommandBuilder,
-  CommandInteractionOptionResolver,
 } from "discord.js";
 import { SlashCommand } from "@/types";
 
 import { create } from "@/tools/shopFunctions/create";
-import { edit } from "@/tools/shopFunctions/edit";
 
 export const command: SlashCommand = {
   name: "item",
@@ -65,10 +63,10 @@ export const command: SlashCommand = {
                 .setDescription("Type of the boost")
                 .setRequired(true)
                 .addChoices(
-                    { name: "Server", value: "1" },
+                  { name: "Server", value: "1" },
                   { name: "Channel", value: "2" },
                   { name: "Role", value: "3" },
-                  { name: "User", value: "4" },
+                  { name: "User", value: "4" }
                 )
             )
             .addNumberOption((option) =>
@@ -86,12 +84,12 @@ export const command: SlashCommand = {
                 .setMinValue(0)
             )
 
-              .addStringOption((option) =>
-                option
-                    .setName("duration")
-                    .setDescription("Duration of the boost (HHhMM format)")
-                    .setRequired(true)
-                    )
+            .addStringOption((option) =>
+              option
+                .setName("duration")
+                .setDescription("Duration of the boost (hh:mm:ss format)")
+                .setRequired(true)
+            )
 
             .addUserOption((option) =>
               option
@@ -103,22 +101,22 @@ export const command: SlashCommand = {
             )
 
             .addRoleOption((option) =>
-                option
-                    .setName("role")
-                    .setDescription(
-                    "Role's target of the boot (leave empty to let the user choose or if not applicable)"
-                    )
-                    .setRequired(false)
+              option
+                .setName("role")
+                .setDescription(
+                  "Role's target of the boot (leave empty to let the user choose or if not applicable)"
                 )
+                .setRequired(false)
+            )
 
-              .addChannelOption((option) =>
-                option
-                    .setName("channel")
-                    .setDescription(
-                    "Channel's target of the boot (leave empty to let the user choose or if not applicable)"
-                    )
-                    .setRequired(false)
+            .addChannelOption((option) =>
+              option
+                .setName("channel")
+                .setDescription(
+                  "Channel's target of the boot (leave empty to let the user choose or if not applicable)"
                 )
+                .setRequired(false)
+            )
 
             .addNumberOption((option) =>
               option
@@ -183,54 +181,9 @@ export const command: SlashCommand = {
                 .setMinValue(1)
             )
         )
-    )
-      .addSubcommandGroup((group) =>
-          group
-              .setName("edit")
-              .setDescription("Edit an item")
-              .addSubcommand((command: SlashCommandSubcommandBuilder) =>
-                      command
-                          .setName("text")
-                          .setDescription("Add string to a Text item shop")
-                          .addNumberOption((option) =>
-                                option
-                                    .setName("id")
-                                    .setDescription("The id of the item to edit")
-                                    .setRequired(true)
-                                    .setMinValue(0)
-                            )
-              )
-      )
-    .addSubcommand((group) =>
-      group
-        .setName("delete")
-        .setDescription("Delete an item")
-        .addStringOption((option) =>
-          option
-            .setName("id")
-            .setDescription("The id of the item to delete")
-            .setRequired(true)
-        )
     ),
   async execute(interaction: CommandInteraction) {
-    let subcommand: CommandInteractionOptionResolver | string =
-      interaction.options as CommandInteractionOptionResolver;
 
-    // Retrieve the subcommand (either the subcommand or the subcommand group)
-    subcommand = subcommand.getSubcommandGroup()
-      ? subcommand.getSubcommandGroup()!
-      : subcommand.getSubcommand()!;
-
-    switch (subcommand) {
-      case "create":
-        await create(interaction);
-        break;
-      case "edit":
-        await edit(interaction);
-        break;
-      case "delete":
-        await interaction.reply("Toujours WIP, faut être patient");
-        break;
-    }
+    await create(interaction);
   },
 };

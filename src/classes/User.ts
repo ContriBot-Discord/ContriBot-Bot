@@ -1,6 +1,6 @@
 import { Guild } from "./Guild";
 import { UserItem } from "./UserItem";
-import mysql, { RowDataPacket, ResultSetHeader } from "mysql2";
+import mysql, { RowDataPacket } from "mysql2";
 import { ShopItem } from "@/classes/ShopItem";
 
 export class User {
@@ -48,16 +48,22 @@ export class User {
         result.forEach((item: RowDataPacket) => {
           items.push(
             new UserItem(
-              this,
+              this.#db,
               item.id,
-              item.name,
-              item.description,
-              item.boughtAt,
-              item.refunded,
-              item.refundedAt,
+              this,
+              this.guild,
+              this.guild.getShopItem(item.item_id)!,
+              item.item_name,
+              item.purchase_date,
+              item.purchase_price,
               item.used,
-              item.usedAt,
-              this.#db
+              item.refunded,
+              item.item_type,
+              item.text_value,
+              item.boost_multiplier,
+              item.boost_duration,
+              item.boost_type,
+              item.applied_id
             )
           );
         });
@@ -129,52 +135,16 @@ export class User {
     );
   }
 
-  buyItem(item: ShopItem): void {
-    // All the verification should be done BEFORE calling this method.
-    // No verification is done here.
-    // Points should be removed from the user before calling this method.
-
-    let itemId;
-
-    // Create a new item in the database
-    this.#db.query<ResultSetHeader>(
-      "INSERT INTO INVENTORY (item_id, user_id, guild_id) VALUES (?, ?, ?)",
-      [item.id, this.id, this.guild.id],
-      (err, result) => {
-        if (err) throw err;
-
-        itemId = result.insertId; // We get the id of the item we just created
-      }
-    );
-
-    // Create a new UserItem object
-    const userItem = new UserItem(
-      this,
-      itemId!.toString(),
-      item.label,
-      item.description,
-      new Date(),
-      false,
-      new Date(),
-      false,
-      new Date(),
-      this.#db
-    );
-
-    // Add the item to the inventory
-    this.inventory.push(userItem);
-  }
-
   getItemsByDate(date: Date): UserItem[] {
     // Get all items bought after a date
-    return this.inventory.filter((item) => item.boughtAt >= date);
+    return this.inventory.filter((item) => item.purchaseDate >= date);
   }
 
-  getItemsById(id: string, date: undefined | Date = undefined): UserItem[] {
+  getItemsById(id: number, date: undefined |  Date = undefined): UserItem[] {
     // Get all items with a specific id
     return date === undefined
-      ? this.inventory.filter((item) => item.id === id)
-      : this.getItemsByDate(date).filter((item) => item.id === id);
+      ? this.inventory.filter((item) => item.id! === id)
+      : this.getItemsByDate(date).filter((item) => item.id! === id);
   }
 
   addVoicePoint(duration: number, channelId: string, roles: string[]): void {
@@ -191,9 +161,36 @@ export class User {
   addMessagePoint(channelId: string, roles: string[]): void {
     roles.push(channelId, this.guild.id, this.id);
 
-    const points: number = 1 * this.guild.getMultiplier(roles);
+    const points: number = this.guild.getMultiplier(roles);
 
     this.messagesSent += 1;
     this.addPoints(points);
+  }
+
+  addItem(item: ShopItem, callback? : (userItem: UserItem) => void): UserItem {
+    // Callback invoked when the item is registered in the database
+    const userItem = new UserItem(
+        this.#db,
+        null,
+        this,
+        this.guild,
+        item,
+        item.label,
+        new Date(),
+        item.price,
+        false,
+        false,
+        item.action,
+        null,
+        null,
+        null,
+        null,
+        null
+        );
+
+    userItem.create(callback);
+    this.inventory.push(userItem);
+
+    return userItem;
   }
 }

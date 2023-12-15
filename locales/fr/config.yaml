@@ -1,0 +1,22 @@
+default:
+  title: 'Commande **{{command_name}}**'
+pointname:
+  description: 'Les points du serveur sont maintenant appelés : **{{pointName}}**'
+show:
+  settings:
+    name: 'Paramètres :'
+  channels:
+    andXOthers: 'et {{remainingChannelsCount}} autres'
+    name: 'Salons désactivés :'
+    noChannels: 'Aucun salon désactivé'
+  description: "Voici la configuration de votre serveur"
+  pointsCfg:
+    name: '{{pointName}} gagné(s) par action :'
+channel:
+  description:
+    disable: "Le salon<#{{channelId}}> ne donne plus de {{pointName}} désormais."
+    enable: "Le salon <#{{channelId}}> donne désormais des {{pointName}}."
+actionpoint:
+  description: "Les points de base pour l'action [{{action}}] sont maintenant [{{point}}] {{pointName}}."
+lang:
+  description: 'La langue du serveur est désormais : **français**'

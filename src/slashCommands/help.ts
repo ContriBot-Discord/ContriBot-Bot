@@ -1,13 +1,9 @@
 import { SlashCommand } from "@/types";
 
 import {
-  ActionRowBuilder,
-  ButtonBuilder,
   CacheType,
   CommandInteraction,
   SlashCommandBuilder,
-  StringSelectMenuBuilder,
-  StringSelectMenuOptionBuilder,
 } from "discord.js";
 
 import {
@@ -15,10 +11,12 @@ import {
   adminHelpEmbed,
   configHelpEmbed,
   helpEmbed,
-} from "@/embeds/help";
+} from "@embeds/help";
 
-import { DB } from "..";
-import { getEmoji } from "@/constants";
+import helpSelect from "@/builders/selects/help";
+
+import { DB } from "@/index";
+import helpButton from "@/builders/buttons/help";
 
 export const command: SlashCommand = {
   name: "help",
@@ -41,36 +39,7 @@ export const command: SlashCommand = {
 
     const type = interaction.options.get("type")?.value as string;
 
-    const button = new ActionRowBuilder<ButtonBuilder>()
-      .addComponents(
-        new ButtonBuilder().setCustomId("Hprevious").setLabel("◀︎").setStyle(1)
-      )
-      .addComponents(
-        new ButtonBuilder().setCustomId("Hnext").setLabel("▶").setStyle(1)
-      );
-
-    const select = new StringSelectMenuBuilder()
-      .setCustomId("Hselect")
-      .setPlaceholder("Select the type of help you want")
-      .addOptions([
-        new StringSelectMenuOptionBuilder()
-          .setLabel("User")
-          .setDescription("Show the user help menu.")
-          .setEmoji(getEmoji("pink_person")!.value)
-          .setValue("user"),
-        new StringSelectMenuOptionBuilder()
-          .setLabel("Admin")
-          .setDescription("Show the admin help menu.")
-          .setEmoji(getEmoji("orange_shield")!.value)
-          .setValue("admin"),
-        new StringSelectMenuOptionBuilder()
-          .setLabel("Config")
-          .setDescription("Show the config help menu.")
-          .setEmoji(getEmoji("orange_hammer")!.value)
-          .setValue("config"),
-      ]);
-
-    const row = new ActionRowBuilder().addComponents(select);
+    const button = helpButton();
 
     let embed = helpEmbed(guild.lang);
 
@@ -94,7 +63,7 @@ export const command: SlashCommand = {
     }
 
     if (flag)
-      interaction.reply({ embeds: [embed], components: [button, row as any] });
-    else interaction.reply({ embeds: [embed], components: [row as any] });
+      interaction.reply({ embeds: [embed], components: [button, helpSelect()] });
+    else interaction.reply({ embeds: [embed], components: [helpSelect()] });
   },
 };

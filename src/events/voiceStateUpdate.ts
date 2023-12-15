@@ -31,7 +31,9 @@ function registered(dbUser: User) {
 
 function eligible(newState: VoiceState) {
 
-  const members = newState.channel!.members.filter(member => !member.user.bot)
+  if (newState.channel === null) return false;
+
+  const members = newState.channel.members.filter(member => !member.user.bot)
 
   // If the user is a bot, is muted or deaf or is not in a voice channel or is alone in the voice channel, we return false
   // Else, True will be returned
