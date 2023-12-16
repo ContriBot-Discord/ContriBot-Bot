@@ -37,7 +37,7 @@ const event: BotEvent = {
         const refunded = interaction.customId.split(" ")[1] === "true" // Fancy way to get the boolean value of the string
         const used = interaction.customId.split(" ")[2] === "true" // Also here
         const itemId = interaction.customId.split(" ")[3] // And here too !
-        console.log(interaction.customId)
+
         const item = user.inventory.find(item => {
             return item.id! === Number(itemId) && !item.refunded
         })
