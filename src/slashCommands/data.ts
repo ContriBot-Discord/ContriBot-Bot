@@ -4,16 +4,18 @@ import { SlashCommand } from "@/types";
 import { DB } from "@/index";
 
 export const command: SlashCommand = {
-    name: "rgpd",
+    name: "data",
     data: new SlashCommandBuilder()
-        .setName("rgpd")
-        .setDescription("Displays the bot's ping"),
+        .setName("data")
+        .setDescription("Get all the data I have about you"),
     execute: async (interaction: CommandInteraction<CacheType>) => {
         await interaction.deferReply({ ephemeral: true });
 
+        // TODO: Allow localisation here
+
         DB.getRgpd(interaction.user.id, (data: Record<string, any>[], nextRequest: Date) => {
             interaction.editReply({
-                content: `Here is your data. You can download it by clicking on the file below.\n The data will not be updated until <t:${nextRequest.getTime()/1000}:T>`,
+                content: `Here is all the stuff I found about you on my sticky notes all over my computer !\n This data will not be updated again until the <t:${nextRequest.getTime()/1000}:D>.`,
                 files: [
                     {
                         attachment: Buffer.from(JSON.stringify(data, null, 2)),
