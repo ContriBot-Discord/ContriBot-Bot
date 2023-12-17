@@ -2,7 +2,7 @@ import mysql, {ResultSetHeader} from "mysql2";
 import {Guild} from "@/classes/Guild";
 
 export class Boost {
-    readonly #db: mysql.Connection;
+    readonly #db: mysql.Pool;
     #after_timestamp: Date | null; // Only if recurrent is true
     #before_timestamp: Date | null; // Only if recurrent is true
     id: number | null;
@@ -16,7 +16,7 @@ export class Boost {
     renewEvery: Date | null; // Only if recurrent is true
 
     constructor(
-        db: mysql.Connection,
+        db: mysql.Pool,
         id: number | null,
         guild: Guild,
         boostType: number,

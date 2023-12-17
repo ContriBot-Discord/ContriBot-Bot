@@ -3,12 +3,12 @@ import mysql from "mysql2";
 
 export class Text{
 
-    #db: mysql.Connection;
+    #db: mysql.Pool;
     item: ShopItem;
     used: boolean
     content: string;
 
-    constructor(db: mysql.Connection, item: ShopItem, used: boolean, content: string) {
+    constructor(db: mysql.Pool, item: ShopItem, used: boolean, content: string) {
         this.#db = db;
         this.item = item;
         this.used = used;
