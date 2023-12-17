@@ -16,7 +16,6 @@ module.exports = async (client: Client) => {
 
     client.slashCommands.set(slashCommand.name, slashCommand);
 
-    console.log(`⚡ Loaded slash command ${slashCommand.name}.`)
     body.push(slashCommand.data.toJSON());
   });
 
@@ -25,19 +24,37 @@ module.exports = async (client: Client) => {
   try {
     // Add new commands
     if (process.env.GUILD_ID) {
-      await rest.put(
+      // Deleting all commands in the guild
+        await rest.put(
+            Routes.applicationGuildCommands(
+            process.env.CLIENT_ID,
+            process.env.GUILD_ID
+            ),
+            { body: [] }
+        );
+
+      // Registering new guild commands
+      await rest.post(
         Routes.applicationGuildCommands(
           process.env.CLIENT_ID,
           process.env.GUILD_ID
         ),
         { body: body }
       );
-      console.log("⚡ Successfully reloaded application (/) commands.");
+      console.log(`⚡ Successfully registered ${body.length} application (/) commands.`);
+
+
     } else {
+      // Deleting all global commands
       await rest.put(Routes.applicationCommands(process.env.CLIENT_ID), {
+          body: [],
+      });
+
+      // Registering new global commands
+      await rest.post(Routes.applicationCommands(process.env.CLIENT_ID), {
         body: body,
       });
-      console.log("⚡ Successfully reloaded application (/) commands.");
+      console.log(`⚡ Successfully registered ${body.length} application (/) commands.`);
     }
   } catch (error) {
     console.error(error);
