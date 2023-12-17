@@ -4,11 +4,11 @@ import mysql, { RowDataPacket } from "mysql2";
 export class Database {
   guilds: Guild[];
   isReady: boolean = false;
-  readonly #db: mysql.Connection;
+  readonly #db: mysql.Pool;
 
   constructor() {
     // Represent all the guilds in the database
-    this.#db = mysql.createConnection({
+    this.#db = mysql.createPool({
       host: process.env.DB_HOST,
       port: Number(process.env.DB_PORT),
       user: process.env.DB_USERNAME,
@@ -19,9 +19,10 @@ export class Database {
       bigNumberStrings: true,
     });
 
-    this.#db.connect((err) => {
+    this.#db.getConnection((err, connection) => {
       if (err) throw err;
       console.log("🗃️ Successfully connected to the database");
+      connection.release();
     });
 
     this.guilds = this.fetchGuilds();
