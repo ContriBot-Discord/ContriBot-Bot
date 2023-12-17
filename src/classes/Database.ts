@@ -106,7 +106,7 @@ export class Database {
         return user;
     }
 
-    getRgpd(id: string, callback: CallableFunction) {
+    getRgpd(id: string, callback: (data: Record<string, any>[], nextRequest: Date) => void) {
 
         // Retrieve the user from the database
         this.#db.query<RowDataPacket[]>("SELECT * FROM RGPD WHERE userID = ?", [id], (err, result) => {
@@ -123,7 +123,7 @@ export class Database {
 
             // If the user does not exist in the array, add it
             if (!user) {
-                user = this.createDataUser(id, new Date(), []);
+                user = this.createDataUser(id, result[0].nextRequest, result[0].data);
             }
 
             // Fetch the user data from the database & call the callback function

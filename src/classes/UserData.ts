@@ -23,9 +23,8 @@ export class UserData {
         );
     }
 
-    retrieveUserData(callback: CallableFunction): void {
-        // If the last request was more than a month (30 days) ago, fetch the data from the database
-        if (this.nextRequest.getTime() < Date.now() + 2592000000) {
+    retrieveUserData(callback: (data: Record<string, any>[], nextRequest: Date) => void): void {
+        if (this.nextRequest.getTime() < Date.now()) {
             this.#db.query(`
                 UPDATE RGPD
                 SET nextRequest = DATE_ADD(now(), INTERVAL 1 MONTH),
@@ -71,7 +70,7 @@ export class UserData {
                                           )
                                    FROM USER U
                                    WHERE U.user_id = '362615539773997056')
-                WHERE userID = '362615539773997056' AND nextRequest < now();
+                WHERE userID = '362615539773997056';
             `, (err) => {
                 if (err) throw err;
 
@@ -88,7 +87,7 @@ export class UserData {
             });
 
         } else {
-            callback(this.data);
+            callback(this.data, this.nextRequest);
         }
     }
 

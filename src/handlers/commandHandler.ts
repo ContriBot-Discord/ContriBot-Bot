@@ -16,20 +16,13 @@ module.exports = async (client: Client) => {
 
     client.slashCommands.set(slashCommand.name, slashCommand);
 
+    console.log(`⚡ Loaded slash command ${slashCommand.name}.`)
     body.push(slashCommand.data.toJSON());
   });
 
   const rest = new REST({ version: "10" }).setToken(process.env.TOKEN);
 
   try {
-    // Get all commands
-    const commands: any = await rest.get(Routes.applicationCommands(process.env.CLIENT_ID));
-
-    // Delete all commands
-    for (const command of commands) {
-      await rest.delete(Routes.applicationCommand(process.env.CLIENT_ID, command.id));
-    }
-
     // Add new commands
     if (process.env.GUILD_ID) {
       await rest.put(
