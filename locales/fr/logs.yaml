@@ -1,0 +1,2 @@
+default:
+  title: "**{{log_name}}** logs"
