@@ -46,11 +46,11 @@ profile:
   stats:
     name: "Stats :"
     value: "Messages sent: **{{messagesSent}}**\n
-      Time spent in VC: **{{hours}}h {{minutes}}m {{seconds}}s**"
+      Voice channels: **{{hours}}h {{minutes}}m {{seconds}}s**"
   points:
     name: "{{pointName}} :"
-    value: "store {{pointName}}: **{{storePoints}}**\n
-      leaderboard {{pointName}}: **{{leaderboardPoints}}**"
+    value: "store (spendable): **{{storePoints}}**\n
+      leaderboard (unlosable): **{{leaderboardPoints}}**"
 
 wipe:
   description:
