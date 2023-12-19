@@ -46,11 +46,11 @@ profile:
   stats:
     name: "Stats :"
     value: "Messages sent: **{{messagesSent}}**\n
-      Time spent in VC: **{{hours}}h {{minutes}}m {{seconds}}s**"
+      Voice channels: **{{hours}}h {{minutes}}m {{seconds}}s**"
   points:
     name: "{{pointName}} :"
-    value: "store {{pointName}}: **{{storePoints}}**\n
-      leaderboard {{pointName}}: **{{leaderboardPoints}}**"
+    value: "store (spendable): **{{storePoints}}**\n
+      leaderboard (unlosable): **{{leaderboardPoints}}**"
 
 wipe:
   description:
@@ -68,15 +68,16 @@ help:
     user: "User"
     config: "Config"
   admin:
+  description: "Here is the list of all admin commands, you can use them by adding `admin` before the command name."
     add:
       value: "Using this command you can add {{pointName}} to a member."
-    wipe:
-      value: "Using this command you can reset {{pointName}} of the entire guild."
-    description: "Here is the list of all admin commands, you can use them by adding `admin` before the command name."
-    reset:
-      value: "Using this command you can reset {{pointName}} of a member."
     remove:
       value: "Using this command you can remove {{pointName}} from a member."
+    reset:
+      value: "Using this command you can reset {{pointName}} of a member."
+    wipe:
+      value: "Using this command you can reset {{pointName}} of the entire guild."
+    
   user:
     leaderboard:
       value: "Using this command you can see the leaderboard of {{pointName}}."
@@ -87,13 +88,13 @@ help:
     profile:
       value: "Using this command you can see interesting member's statistics as well as their {{pointName}}."
   config:
-    pointname:
-      value: "Using this command you can change the bot's {{pointName}} name."
+    description: "Here is the list of all config commands, you can use them by adding `/config` before the command name."
     show:
       value: "Using this command you can see the current configuration of the bot."
+    pointname:
+      value: "Using this command you can change the bot's {{pointName}} name."
     channel:
       value: "Enable or disable points rewards in a channel (voice chat and text chat)."
-    description: "Here is the list of all config commands, you can use them by adding `/config` before the command name."
     action:
       value: "You can modify the number of points that users will receive for each action."
     lang:

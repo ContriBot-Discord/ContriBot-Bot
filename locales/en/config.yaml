@@ -7,7 +7,7 @@ show:
   description: "Here is your server's config"
   pointsCfg:
     name: '{{pointName}} earned by action:        ‎'
-    value: "Send message: **{{message}}**\n
+    value: "Send message: **{{message}}**/60 seconds\n
             Voice channel: **{{voice}}**/15 minutes"
   settings:
     name: 'Settings:'
