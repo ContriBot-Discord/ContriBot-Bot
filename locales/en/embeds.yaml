@@ -95,7 +95,6 @@ help:
       value: "Using this command you can change the bot's {{pointName}} name."
     channel:
       value: "Enable or disable points rewards in a channel (voice chat and text chat)."
-    
     action:
       value: "You can modify the number of points that users will receive for each action."
     lang:
