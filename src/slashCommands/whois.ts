@@ -6,6 +6,7 @@ import {
 import { SlashCommand } from "@/types";
 
 import whoisEmbed from "@embeds/whois";
+import linkButtons from "@/builders/buttons/links";
 
 import { DB } from "@/index";
 
@@ -18,7 +19,7 @@ export const command: SlashCommand = {
         await interaction.reply({
             embeds: [
                 whoisEmbed(DB.getGuild(interaction.guildId!).lang)
-            ],
+            ], components: [linkButtons()]
         });
     },
 };
