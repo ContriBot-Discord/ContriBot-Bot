@@ -1,5 +1,5 @@
 default:
-  title: 'Commande **{{command_name}}**'
+  title: "Commande **{{command_name}}**"
 add:
   description:
     leaderboardPoints: "<@{{userid}}> a ajouté {{quantity}} {{pointName}} de classement à <@{{memberid}}>"
@@ -15,23 +15,22 @@ remove:
     storePoints: "<@{{userid}}> a retiré {{quantity}} {{pointName}} de boutique à <@{{memberid}}>"
     both: "<@{{userid}}> a retiré {{quantity}} {{pointName}} à <@{{memberid}}>"
 shop:
-  title: '**Boutique** [{{index}}]'
-  footer:
-    text: "Page {{pageNumber}}/{{totalPages}}"
-ping:
-  description: "🏓 Pong!\n 📡 Ping: {{ping}}ms"
+  title: "**Boutique** [{{index}}]"
 profile:
-  stats:
-    name: 'Stats :'
-    value: "Messages envoyés : **{{messagesSent}}**\n Temps passé en vocal : **{{hours}}h {{minutes}}m {{seconds}}s**"
   description: "Voici le profil de <@{{userid}}>"
+  stats:
+    value: "Messages envoyés : **{{messagesSent}}**\n Temps passé en vocal : **{{hours}}h {{minutes}}m {{seconds}}s**"
 wipe:
   description:
     leaderboardPoints: "Le classement de {{pointName}} du serveur a été réinitialisé."
     storePoints: "Le magasin de {{pointName}} du serveur a été réinitialisé."
     both: "Les {{pointName}} du serveur ont entièrement été réinitialisés"
 help:
+  title: "Aide [{{index}}]"
   description: "Voici la liste de toutes les commandes"
+  categories:
+    user: "Utilisateur"
+    config: "Configuration"
   admin:
     add:
       value: "En utilisant cette commande, vous pouvez ajouter des {{pointName}} à un membre."
@@ -42,11 +41,6 @@ help:
       value: "En utilisant cette commande, vous pouvez réinitialiser les {{pointName}} d'un membre."
     remove:
       value: "En utilisant cette commande, vous pouvez supprimer les {{pointName}} d'un membre."
-  categories:
-    admin: "Admin"
-    user: "Utilisateur"
-    config: "Configuration"
-  title: "Aide [{{index}}]"
   user:
     leaderboard:
       value: "En utilisant cette commande, vous pouvez voir le classement de {{pointName}}."
@@ -69,13 +63,10 @@ help:
     lang:
       value: "En utilisant cette commande, vous pouvez changer la langue du bot."
 leaderboard:
-  title: '**Classement** [{{index}}]'
+  title: "**Classement** [{{index}}]"
   description: "Voici le classement"
   fields:
-    name: "Top {{index}}"
     value: "<@{{userid}}> avec {{quantity}} {{pointName}}"
-  footer:
-    text: "Page {{pageNumber}}/{{totalPages}}"
 whois:
   title: "Qui sommes-nous?"
 reset:

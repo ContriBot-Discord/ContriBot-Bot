@@ -3,15 +3,15 @@ default:
 pointname:
   description: 'Les points du serveur sont maintenant appelés : **{{pointName}}**'
 show:
+  description: "Voici la configuration de votre serveur"
+  pointsCfg:
+    name: '{{pointName}} gagné(s) par action :'
   settings:
     name: 'Paramètres :'
   channels:
     andXOthers: 'et {{remainingChannelsCount}} autres'
     name: 'Salons désactivés :'
     noChannels: 'Aucun salon désactivé'
-  description: "Voici la configuration de votre serveur"
-  pointsCfg:
-    name: '{{pointName}} gagné(s) par action :'
 channel:
   description:
     disable: "Le salon<#{{channelId}}> ne donne plus de {{pointName}} désormais."
