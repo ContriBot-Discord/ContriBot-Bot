@@ -69,9 +69,9 @@ export class UserData {
                                                   )
                                           )
                                    FROM USER U
-                                   WHERE U.user_id = '362615539773997056')
-                WHERE userID = '362615539773997056';
-            `, (err) => {
+                                   WHERE U.user_id = ?)
+                WHERE userID = ?;
+            `, [this.userID, this.userID], (err) => {
                 if (err) throw err;
 
                 this.#db.query<RowDataPacket[]>(
