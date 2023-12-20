@@ -14,12 +14,33 @@ remove:
     leaderboardPoints: "<@{{userid}}> a retiré {{quantity}} {{pointName}} de classement à <@{{memberid}}>"
     storePoints: "<@{{userid}}> a retiré {{quantity}} {{pointName}} de boutique à <@{{memberid}}>"
     both: "<@{{userid}}> a retiré {{quantity}} {{pointName}} à <@{{memberid}}>"
+item:
+  create:
+    description: "Yaaay ! Vous venez de créer {{itemName}} avec succès !"
+    title: "Article crée !"
+  text:
+    title: "Ajout de phrases réussi"
+    description: "Les phrases {{strings}} ont été ajoutées avec succès à l’objet, pour un total de {{total}} phrases."
+    ignored: "Les phrases {{ignored}} ont été ignorées car elles étaient vides."
+  delete:
+    title: "Article supprimé avec succès"
+    description:
+      ""Successfully deleted {{itemName}} (with id": '`{{itemId}}`). Heureusement,'
+      0: il était recyclable !"
 shop:
   title: "**Boutique** [{{index}}]"
+  footer:
+    text: "Page {{pageNumber}}/{{totalPages}}"
+ping:
+  description: "🏓 Pong!\n 📡 Ping: {{ping}}ms"
 profile:
   description: "Voici le profil de <@{{userid}}>"
   stats:
+    name: "Stats :"
     value: "Messages envoyés : **{{messagesSent}}**\n Temps passé en vocal : **{{hours}}h {{minutes}}m {{seconds}}s**"
+  points:
+    name: "{{pointName}} :"
+    value: "boutique (dépensable): **{{storePoints}}**\n classement (permanent) : **{{leaderboardPoints}}**"
 wipe:
   description:
     leaderboardPoints: "Le classement de {{pointName}} du serveur a été réinitialisé."
@@ -28,19 +49,21 @@ wipe:
 help:
   title: "Aide [{{index}}]"
   description: "Voici la liste de toutes les commandes"
+  description2: "Ce bot utilise les commandes slashs  `\\`.\n Sélectionnez une catégorie pour voir la liste des commandes."
   categories:
+    admin: "Admin"
     user: "Utilisateur"
     config: "Configuration"
   admin:
+    description: "Voici la liste de toutes les commandes admin, vous pouvez les utiliser en ajoutant `/admin` avant le nom de la commande."
     add:
       value: "En utilisant cette commande, vous pouvez ajouter des {{pointName}} à un membre."
-    wipe:
-      value: "En utilisant cette commande, vous pouvez réinitialiser les {{pointName}} de l'intégralité du serveur."
-    description: "Voici la liste de toutes les commandes admin, vous pouvez les utiliser en ajoutant `admin` avant le nom de la commande."
+    remove:
+      value: "En utilisant cette commande, vous pouvez retirer des {{pointName}} d'un membre."
     reset:
       value: "En utilisant cette commande, vous pouvez réinitialiser les {{pointName}} d'un membre."
-    remove:
-      value: "En utilisant cette commande, vous pouvez supprimer les {{pointName}} d'un membre."
+    wipe:
+      value: "En utilisant cette commande, vous pouvez réinitialiser les {{pointName}} de l'intégralité du serveur."
   user:
     leaderboard:
       value: "En utilisant cette commande, vous pouvez voir le classement de {{pointName}}."
@@ -51,13 +74,13 @@ help:
     profile:
       value: "En utilisant cette commande, vous pouvez voir les statistiques intéressantes des membres ainsi que leur {{pointName}}."
   config:
-    pointname:
-      value: "En utilisant cette commande, vous pouvez changer le nom des {{pointName}} du bot."
+    description: "Voici la liste de toutes les commandes de configuration, vous pouvez les utiliser en ajoutant `/config` avant le nom de la commande."
     show:
       value: "En utilisant cette commande, vous pouvez voir la configuration actuelle du bot."
+    pointname:
+      value: "En utilisant cette commande, vous pouvez changer le nom des {{pointName}} du bot."
     channel:
       value: "Active ou désactive les récompenses de points dans un salon (vocal et textuel)."
-    description: "Voici la liste de toutes les commandes de configuration, vous pouvez les utiliser en ajoutant `/config` avant le nom de la commande."
     action:
       value: "Vous pouvez modifier le nombre de points que les utilisateurs recevront pour chaque action effectuée."
     lang:
@@ -66,11 +89,22 @@ leaderboard:
   title: "**Classement** [{{index}}]"
   description: "Voici le classement"
   fields:
+    name: "Top {{index}}"
     value: "<@{{userid}}> avec {{quantity}} {{pointName}}"
+  footer:
+    text: "Page {{pageNumber}}/{{totalPages}}"
 whois:
   title: "Qui sommes-nous?"
+  description: "ContriBot est un projet étudiant, crée par [EAnathos](https://eanathos.com) &  [Voltis](https://voltis.me) à [Laval](https://maps.app.goo.gl/umYo5wYmG7eGwLWx5), en France.\n\n Ce projet a débuté début octobre 2023, alors que nous cherchions un bot Discord qui nous permettrait de gérer la communauté du serveur Minecraft de notre formation.\n\n Notre principal objectif est de créer un Bot utile, entièrement configurable et documenté, puissant et complet, avec toutes les fonctionnalités essentielles gratuites et traduit dans le plus de langues possibles\n\n Nous avons décidé de développer ce bot en TypeScript, en utilisant DiscordJS\n\nSi vous avez des questions, n'hésitez pas à venir nous voir sur notre [serveur Discord](https://discord.gg/wMHa7XHkNj) !"
 reset:
   description:
     leaderboardPoints: "Les {{pointName}} de classement de <@{{userid}}> ont bien été réinitialisés."
     storePoints: "Les {{pointName}} de classement de <@{{userid}}> ont bien été réinitialisés."
     both: "Les {{pointName}} de <@{{userid}}> ont bien été entièrement réinitialisés"
+inventory:
+  title: "**Inventaire** [{{index}}]"
+  boughtAt: "Acheté le {{date}}"
+  refunded: " (remboursé)"
+  used: " (utilisé)"
+  id: "ID de l'article: `{{id}}`"
+  footer: "Page {{pageNumber}}/{{totalPages}}"
