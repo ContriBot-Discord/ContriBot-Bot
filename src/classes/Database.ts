@@ -1,9 +1,10 @@
-import {Guild} from "./Guild";
-import mysql, {RowDataPacket} from "mysql2";
-import {UserData} from "@/classes/UserData";
+import { Guild } from "./Guild";
+import mysql, { RowDataPacket } from "mysql2";
+import { UserData } from "@/classes/UserData";
 
 export class Database {
   guilds: Guild[];
+  dataUsers: UserData[];
   isReady: boolean = false;
   readonly #db: mysql.Pool;
 
@@ -27,6 +28,7 @@ export class Database {
     });
 
     this.guilds = this.fetchGuilds();
+    this.dataUsers = [];
   }
   fetchGuilds(): Guild[] {
     // Fetch all the guilds from the database
@@ -51,82 +53,112 @@ export class Database {
             guild.all_time_point,
             guild.point_name,
             guild.log_channel,
-
-    getGuild(id: string): Guild {
-        // Get a guild from the database
-        // If the guild does not exist, create it and return it
-        let guild = this.guilds.find((guild) => guild.id == id);
-
-        return !guild ? this.createGuild(id) : guild;
-    }
-
-    createGuild(id: string): Guild {
-        // Create a guild in the database
-        // Since Database is not configured yet, return a new guild
-        let guild = new Guild(
-            id,
-            "en",
-            1,
-            5,
-            10,
-            50,
-            5,
-            10,
-            30,
-            50,
-            "points",
-            "0",
             this.#db
+          )
         );
+      });
+    });
 
-        // Register guild in database
-        guild.create();
+    this.isReady = true;
+    return guilds;
+  }
 
-        // Once created, we add the guild to the guilds array
-        this.guilds.push(guild);
+  getGuild(id: string): Guild {
+    // Get a guild from the database
+    // If the guild does not exist, create it and return it
+    let guild = this.guilds.find((guild) => guild.id == id);
 
-        return guild;
-    }
+    return !guild ? this.createGuild(id) : guild;
+  }
 
-    createDataUser(id: string, nextFetch: Date, data: Record<string, any>[]) {
-        const user = new UserData(this.#db, id, nextFetch, data);
-        this.dataUsers.push(user);
+  createGuild(id: string): Guild {
+    // Create a guild in the database
+    // Since Database is not configured yet, return a new guild
+    let guild = new Guild(
+      id,
+      "en",
+      1,
+      5,
+      10,
+      50,
+      5,
+      10,
+      30,
+      50,
+      "points",
+      "0",
+      this.#db
+    );
 
-        return user;
-    }
+    // Register guild in database
+    guild.create();
 
-    getRgpd(id: string, callback: (data: Record<string, any>[], nextRequest: Date) => void) {
+    // Once created, we add the guild to the guilds array
+    this.guilds.push(guild);
 
-        // Retrieve the user from the database
-        this.#db.query<RowDataPacket[]>("SELECT * FROM RGPD WHERE userID = ?", [id], (err, result) => {
-            if (err) throw err;
+    return guild;
+  }
 
-            // If the user does not exist, create it & register it in the database
-            if (result.length == 0) {
-                const user = this.createDataUser(id, new Date(), []);
-                user.createUserData();
-            }
+  createDataUser(id: string, nextFetch: Date, data: Record<string, any>[]) {
+    const user = new UserData(this.#db, id, nextFetch, data);
+    this.dataUsers.push(user);
 
-            // Try to get the user from the dataUsers array
-            let user = this.dataUsers.find((user) => user.userID == id);
+    return user;
+  }
 
-            // If the user does not exist in the array, add it
-            if (!user) {
-                user = this.createDataUser(id, result[0].nextRequest, result[0].data);
-            }
+  getRgpd(
+    id: string,
+    callback: (data: Record<string, any>[], nextRequest: Date) => void
+  ) {
+    // Retrieve the user from the database
+    this.#db.query<RowDataPacket[]>(
+      "SELECT * FROM RGPD WHERE userID = ?",
+      [id],
+      (err, result) => {
+        if (err) throw err;
 
-            // Fetch the user data from the database & call the callback function
-            user.retrieveUserData(callback);
-        });
+        // If the user does not exist, create it & register it in the database
+        if (result.length == 0) {
+          const user = this.createDataUser(id, new Date(), []);
+          user.createUserData();
+        }
 
-    }
+        // Try to get the user from the dataUsers array
+        let user = this.dataUsers.find((user) => user.userID == id);
 
+        // If the user does not exist in the array, add it
+        if (!user) {
+          user = this.createDataUser(id, result[0].nextRequest, result[0].data);
+        }
 
-    registerError(id: string, errorName: string, errorMessage: string, errorStack: string | null, errorCause: {} | null, context: unknown) {
-        this.#db.query(`INSERT INTO ERROR (error_id, error_name, error_message, error_stack, error_cause,
-                                           context) VALUE (?, ?, ?, ?, ?, ?)`, [id, errorName, errorMessage, errorStack, JSON.stringify(errorCause), context], (err) => {
-            if (err) throw err;
-        })
+        // Fetch the user data from the database & call the callback function
+        user.retrieveUserData(callback);
+      }
+    );
+  }
 
-    }
+  registerError(
+    id: string,
+    errorName: string,
+    errorMessage: string,
+    errorStack: string | null,
+    errorCause: {} | null,
+    context: unknown
+  ) {
+    this.#db.query(
+      `INSERT INTO ERROR (error_id, error_name, error_message, error_stack, error_cause,
+                                           context) VALUE (?, ?, ?, ?, ?, ?)`,
+      [
+        id,
+        errorName,
+        errorMessage,
+        errorStack,
+        JSON.stringify(errorCause),
+        context,
+      ],
+      (err) => {
+        if (err) throw err;
+      }
+    );
+  }
 }
