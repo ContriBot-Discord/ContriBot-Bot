@@ -3,65 +3,54 @@ import mysql, {RowDataPacket} from "mysql2";
 import {UserData} from "@/classes/UserData";
 
 export class Database {
-    guilds: Guild[];
-    dataUsers: UserData[];
-    isReady: boolean = false;
-    readonly #db: mysql.Connection;
+  guilds: Guild[];
+  isReady: boolean = false;
+  readonly #db: mysql.Pool;
 
-    constructor() {
-        // Represent all the guilds in the database
-        this.#db = mysql.createConnection({
-            host: process.env.DB_HOST,
-            port: Number(process.env.DB_PORT),
-            user: process.env.DB_USERNAME,
-            password: process.env.DB_PASSWORD,
-            database: process.env.DB_NAME,
+  constructor() {
+    // Represent all the guilds in the database
+    this.#db = mysql.createPool({
+      host: process.env.DB_HOST,
+      port: Number(process.env.DB_PORT),
+      user: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
 
-            supportBigNumbers: true,
-            bigNumberStrings: true,
-        });
+      supportBigNumbers: true,
+      bigNumberStrings: true,
+    });
 
-        this.#db.connect((err) => {
-            if (err) throw err;
-            console.log("🗃️ Successfully connected to the database");
-        });
+    this.#db.getConnection((err, connection) => {
+      if (err) throw err;
+      console.log("🗃️ Successfully connected to the database");
+      connection.release();
+    });
 
-        this.guilds = this.fetchGuilds();
-        this.dataUsers = [];
-    }
+    this.guilds = this.fetchGuilds();
+  }
+  fetchGuilds(): Guild[] {
+    // Fetch all the guilds from the database
+    let guilds: Guild[] = [];
 
-    fetchGuilds(): Guild[] {
-        // Fetch all the guilds from the database
-        let guilds: Guild[] = [];
-
-        // The .query method sends a query to the database
-        this.#db.query<RowDataPacket[]>("SELECT * FROM GUILD", (err, result) => {
-            if (err) throw err;
-            // For each guild in the database, create a new Guild object
-            result.forEach((guild: RowDataPacket) => {
-                guilds.push(
-                    new Guild(
-                        guild.guild_id,
-                        guild.lang,
-                        guild.message_point,
-                        guild.voice_point,
-                        guild.bump_point,
-                        guild.boost_point,
-                        guild.daily_point,
-                        guild.weekly_point,
-                        guild.special_point,
-                        guild.all_time_point,
-                        guild.point_name,
-                        guild.log_channel,
-                        this.#db
-                    )
-                );
-            });
-        });
-
-        this.isReady = true;
-        return guilds;
-    }
+    // The .query method sends a query to the database
+    this.#db.query<RowDataPacket[]>("SELECT * FROM GUILD", (err, result) => {
+      if (err) throw err;
+      // For each guild in the database, create a new Guild object
+      result.forEach((guild: RowDataPacket) => {
+        guilds.push(
+          new Guild(
+            guild.guild_id,
+            guild.lang,
+            guild.message_point,
+            guild.voice_point,
+            guild.bump_point,
+            guild.boost_point,
+            guild.daily_point,
+            guild.weekly_point,
+            guild.special_point,
+            guild.all_time_point,
+            guild.point_name,
+            guild.log_channel,
 
     getGuild(id: string): Guild {
         // Get a guild from the database

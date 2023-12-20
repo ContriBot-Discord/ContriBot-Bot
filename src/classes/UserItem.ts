@@ -5,7 +5,7 @@ import { ShopItem } from "@/classes/ShopItem";
 import { Boost } from "@/classes/Boost";
 
 export class UserItem {
-  readonly #db: mysql.Connection;
+  readonly #db: mysql.Pool;
   id: number | null;
   user: User;
   guild: Guild;
@@ -23,7 +23,7 @@ export class UserItem {
   appliedId: string | null;
 
   constructor(
-    db: mysql.Connection,
+    db: mysql.Pool,
     id: number | null,
     user: User,
     guild: Guild,

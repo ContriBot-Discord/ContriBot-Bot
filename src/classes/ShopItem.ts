@@ -15,7 +15,7 @@ export class ShopItem {
   max_quantity: number;
   action: number;
   available: boolean;
-  #db: mysql.Connection;
+  #db: mysql.Pool;
   applied_id: string | null;
   multiplier: number | null;
   boost_type: number | null;
@@ -23,7 +23,7 @@ export class ShopItem {
   texts: Text[] | null;
 
   constructor(
-    db: mysql.Connection,
+    db: mysql.Pool,
     price: number,
     label: string,
     description: string,

@@ -11,7 +11,7 @@ export class User {
   messagesSent: number;
   voiceDuration: number;
   inventory: UserItem[];
-  readonly #db: mysql.Connection;
+  readonly #db: mysql.Pool;
   voiceJoinedAt: Date | null;
 
   constructor(
@@ -21,7 +21,7 @@ export class User {
     leaderboardPoints: number = 0,
     messagesSent: number = 0,
     voiceDuration: number = 0,
-    db: mysql.Connection
+    db: mysql.Pool
   ) {
     this.#db = db;
     this.guild = guild;
