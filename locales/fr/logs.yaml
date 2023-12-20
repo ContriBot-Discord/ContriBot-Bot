@@ -1,0 +1,4 @@
+default:
+  title: "**{{log_name}}** logs"
+shop:
+  buy: "<@{{userId}}> a acheté {{itemName}} pour {{itemPrice}} {{pointName}}."
