@@ -28,7 +28,7 @@ const client = new Client({
 i18next.use(Backend).init<FsBackendOptions>({
   initImmediate: false, // Required to prevent i18next from trying to load translations before the bot is ready
   fallbackLng: 'en', // Fallback language (if a translation is missing)
-  preload: ['en', 'fr', 'ru'], // List of languages to load translations for
+  preload: ['en', 'fr'], // List of languages to load translations for
   ns: ['errors', 'embeds', 'config', 'logs'], // Files to load translations from (./locales/fr/commands.yaml for instance)
   backend: {
     loadPath:  './locales/{{lng}}/{{ns}}.yaml', // Path to translation files
