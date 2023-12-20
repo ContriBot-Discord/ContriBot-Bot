@@ -34,7 +34,7 @@ module.exports = async (client: Client) => {
         );
 
       // Registering new guild commands
-      await rest.post(
+      await rest.put(
         Routes.applicationGuildCommands(
           process.env.CLIENT_ID,
           process.env.GUILD_ID
@@ -51,7 +51,7 @@ module.exports = async (client: Client) => {
       });
 
       // Registering new global commands
-      await rest.post(Routes.applicationCommands(process.env.CLIENT_ID), {
+      await rest.put(Routes.applicationCommands(process.env.CLIENT_ID), {
         body: body,
       });
       console.log(`⚡ Successfully registered ${body.length} application (/) commands.`);
