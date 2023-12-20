@@ -68,7 +68,7 @@ help:
     user: "User"
     config: "Config"
   admin:
-  description: "Here is the list of all admin commands, you can use them by adding `admin` before the command name."
+    description: "Here is the list of all admin commands, you can use them by adding `admin` before the command name."
     add:
       value: "Using this command you can add {{pointName}} to a member."
     remove:
