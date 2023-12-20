@@ -21,7 +21,7 @@ export class Guild {
   shop: ShopItem[];
   globalInventory: UserItem[];
   disabledChannels: string[];
-  readonly #db: mysql.Connection;
+  readonly #db: mysql.Pool;
   private boosts: Boost[];
 
   constructor(
@@ -37,7 +37,7 @@ export class Guild {
     allTimePoint: number,
     pointName: string,
     logChannel: string,
-    db: mysql.Connection
+    db: mysql.Pool
   ) {
     this.#db = db;
     this.id = id;
