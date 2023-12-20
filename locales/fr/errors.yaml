@@ -1,4 +1,30 @@
-goBack: "Vous ne pouvez pas revenir en arrière"
-cantDmUser: "Je suis désolé, je ne peux pas envoyer de MP à cet utilisateur. La cause la plus probable est que l'utilisateur ait ses MPs désactivés sur ce serveur."
-cantDm: "Je suis désolé, je ne peux pas vous faire de DM. S'il vous plaît assurez-vous que vos DMs sont activés sur ce serveur."
+goBack: "Vous ne pouvez pas revenir en arrière."
+cantDmUser: "Je suis désolé, je ne peux pas envoyer de MP à cet utilisateur. La raison la plus probable est que l'utilisateur a ses MPs désactivés sur ce serveur."
+cantDm: "Je suis désolé, je ne peux pas vous envoyer de DM. S'il vous plaît assurez-vous que vos DMs sont activés sur ce serveur."
+internalError:
+  us. Internal error code: '`{{code}}`"'
 goForward: "Vous ne pouvez pas aller plus loin"
+noPerms:
+  of the following permissions on this server: '{{perms}}"'
+default:
+  title: "Woups, une erreur est survenue !"
+  description: "Une erreur est survenue.\n\nSi vous pensez qu'il s'agit d'un bug, veuillez le signaler sur le [serveur de support](https://discord.gg/pw88gWrY5d) !"
+roleNotFound:
+  title: "Rôle introuvable."
+  description: "Désolé, je ne trouve pas ce rôle ! \n\n Si vous pensez qu'il s'agit d'un bug, veuillez le signaler sur le [serveur de support](https://discord.gg/pw88gWrY5d) !"
+item:
+  fieldsTooLong:
+    title: "Woups, une erreur est survenue !"
+    description: "Une erreur s'est produite.\n\nN'oubliez pas que le champ `label` doit contenir moins de 30 caractères et que le champ `description` doit contenir moins de 150 caractères !\n\nSi vous pensez qu'il s'agit d'un bug, veuillez le signaler sur le [serveur de support](https://discord.gg/pw88gWrY5d) !"
+  notFound:
+    title: "Désolé, je ne peux pas trouver cet article !"
+    description: "Si vous pensez que c'est un bug, veuillez le signaler sur le [serveur de support](https://discord.gg/pw88gWrY5d) !"
+  typeNotFound:
+    title: "Désolé, je ne peux pas trouver ce type d'article !"
+    description: "Si vous pensez que c'est un bug, veuillez le signaler sur le [serveur de support](https://discord.gg/pw88gWrY5d) !"
+  negativePrice:
+    title: "Désolé, je ne peux pas accepter cela !"
+boost:
+  notFoundInventory:
+    title: "Désolé, je ne trouve pas ce boost dans votre inventaire !"
+    description: "Vous n'avez aucun boost dans votre inventaire avec l'ID fourni. Veuillez vous assurer d'avoir le bon identifiant et réessayer !\n\nSi vous pensez qu'il s'agit d'un bug, veuillez le signaler sur le [serveur de support](https://discord.gg/pw88gWrY5d) !"
