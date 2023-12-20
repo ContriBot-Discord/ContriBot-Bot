@@ -24,7 +24,27 @@ item:
     description: "Si vous pensez que c'est un bug, veuillez le signaler sur le [serveur de support](https://discord.gg/pw88gWrY5d) !"
   negativePrice:
     title: "Désolé, je ne peux pas accepter cela !"
+    description: "Même si c'est très gentil de votre part, je ne peux pas accepter de prix négatifs !\n\nSi vous pensez qu'il s'agit d'un bug, veuillez le signaler sur le [serveur d'assistance](https://discord.gg/pw88gWrY5d)"
+  stocksError:
+    title: "Désolé, ce n'est pas un stock valide !"
+    description: "Le stock que vous avez essayé de modifier n'est pas valide ! Il doit s'agir d'un nombre entier, avec une valeur minimale de -1 (pour illimité).\n\nSi vous pensez qu'il s'agit d'un bug, veuillez le signaler sur le [serveur de support](https://discord.gg/pw88gWrY5d) !"
+  stringTooLong:
+    title: "Waw, je ne peux pas lire autant !"
+    description: "Désolé, le champ `{{field_name}}` que vous avez essayé de modifier est trop long, ({{length}}/{{max_length}} caractères max) !\n\nSi vous pensez qu'il s'agit d'un bug, veuillez le signaler sur le [serveur de support](https://discord.gg/pw88gWrY5d) !"
 boost:
+  create:
+    title: "Erreur lors de la création de cet élément !"
+    description: "Assurez-vous que tout est correct. De plus, pour les boosts, vous devez spécifier le salon, le rôle ou l'utilisateur ciblé.\n\nSi vous pensez qu'il s'agit d'un bug, veuillez le signaler sur le [serveur de support](https://discord.gg/pw88gWrY5d) !"
   notFoundInventory:
     title: "Désolé, je ne trouve pas ce boost dans votre inventaire !"
     description: "Vous n'avez aucun boost dans votre inventaire avec l'ID fourni. Veuillez vous assurer d'avoir le bon identifiant et réessayer !\n\nSi vous pensez qu'il s'agit d'un bug, veuillez le signaler sur le [serveur de support](https://discord.gg/pw88gWrY5d) !"
+shop:
+  noItems:
+    title: "Aucun article dans cette boutique !"
+    description: "Cette boutique est vide ! Demandez au propriétaire d'ajouter quelques éléments !\n\nSi vous pensez qu'il s'agit d'un bug, veuillez le signaler sur le [serveur de support](https://discord.gg/pw88gWrY5d) !"
+  noStock:
+    title: "Désolé, cet article est en rupture de stock !"
+    description: "Si vous pensez que c'est un bug, veuillez le signaler sur le [serveur de support](https://discord.gg/pw88gWrY5d) !"
+  notEnoughMoney:
+    title: "Désolé, vous n'avez pas assez d'argent !"
+    description: "Si vous pensez que c'est un bug, veuillez le signaler sur le [serveur de support](https://discord.gg/pw88gWrY5d) !"
