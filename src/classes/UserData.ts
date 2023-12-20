@@ -4,9 +4,9 @@ export class UserData {
     userID: string
     nextRequest: Date
     data: Record<string, any>[];
-    #db: mysql.Connection;
+    #db: mysql.Pool;
 
-    constructor(db: mysql.Connection, userID: string, nextRequest: Date, data: Record<string, any>[]) {
+    constructor(db: mysql.Pool, userID: string, nextRequest: Date, data: Record<string, any>[]) {
         this.#db = db;
         this.userID = userID;
         this.nextRequest = nextRequest;
