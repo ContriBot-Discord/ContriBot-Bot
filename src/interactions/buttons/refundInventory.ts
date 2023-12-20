@@ -17,10 +17,7 @@ const event: BotEvent = {
 
         // If the button is not one of the buttons, we stop the function since it's not related to the shop
         if (
-            !(
-                interaction.customId.includes("INVprevious") ||
-                interaction.customId.includes("INVnext") ||
-                interaction.customId.includes("INVrefresh")
+            !(interaction.customId.includes("INVrefund")
             )
         )
             return;
@@ -39,8 +36,18 @@ const event: BotEvent = {
 
         const refunded = interaction.customId.split(" ")[1] === "true" // Fancy way to get the boolean value of the string
         const used = interaction.customId.split(" ")[2] === "true" // Also here
+        const itemId = interaction.customId.split(" ")[3] // And here too !
 
-        const admin = interaction.customId.startsWith("a")
+        const item = user.inventory.find(item => {
+            return item.id! === Number(itemId) && !item.refunded
+        })
+
+        const success = Boolean(item);
+        if (success) {
+            item!.refunded = true;
+            item!.update();
+            user.addPoints(item!.purchasePrice, "storePoints");
+        }
 
         // If the item is not refunded or used
         // Or if the item is refunded and the scope allows it
@@ -69,7 +76,8 @@ const event: BotEvent = {
         }
 
         // U is for user, A is for admin
-        const pageButtons = inventoryButtons(refunded, used);
+        const pageButtons = inventoryButtons(refunded, used, true);
+        const refundButtons = adminInventoryButtons(actualPageInt, items, interaction.guild?.roles.cache!, refunded, used);
 
         // If the page is 1, we disable the "previous" button
         actualPageInt === 1
@@ -81,13 +89,6 @@ const event: BotEvent = {
             ? pageButtons.components[1].setDisabled(true)
             : pageButtons.components[1].setDisabled(false);
 
-        const buttons = [pageButtons]
-
-        if (admin) {
-            const refundButtons = adminInventoryButtons(actualPageInt, items, interaction.guild?.roles.cache!, refunded, used);
-            buttons.push(refundButtons)
-        }
-
 
         // We now do generate the embed with all the data we got
         const embed = Inventory(
@@ -97,11 +98,10 @@ const event: BotEvent = {
             guild.lang,
         );
 
-
-            await interaction.editReply({
-                embeds: [embed],
-                components: buttons,
-            });
+        await interaction.editReply({
+            embeds: [embed],
+            components: [pageButtons, refundButtons],
+        });
     }
 };
 

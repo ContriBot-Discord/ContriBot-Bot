@@ -6,7 +6,8 @@ export default function (
     startingFrom: number,
     itemList: UserItem[],
     roles: Collection<string, Role>,
-    scope: string
+    refunded: boolean,
+    used: boolean
 ): ActionRowBuilder<ButtonBuilder> {
     startingFrom = (startingFrom - 1) * 5;
 
@@ -14,19 +15,6 @@ export default function (
 
     for (let i: number = startingFrom; i < startingFrom + 5; i++) {
         const item = itemList[i];
-
-        let style: number;
-
-        switch (scope) {
-            case "refund":
-                style = 3;
-                break;
-            case "delete":
-                style = 4;
-                break;
-            default:
-                style = 1;
-        }
 
         if (item) {
             const label: string =
@@ -36,13 +24,13 @@ export default function (
 
             buttons.addComponents(
                 new ButtonBuilder()
-                    .setCustomId(scope + `-${item.id}`)
+                    .setCustomId(`INVrefund ${refunded} ${used} ${item.id}`)
                     .setLabel(label)
                     .setEmoji(getItemEmoji(item.itemType))
-                    .setStyle(style)
+                    .setStyle(3)
+                    .setDisabled(Boolean(item.refunded))
             );
         }
     }
-
     return buttons;
 }

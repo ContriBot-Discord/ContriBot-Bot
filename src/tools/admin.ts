@@ -11,6 +11,9 @@ import { CacheType, CommandInteraction } from "discord.js";
 import { DB } from "@/index";
 import noItems from "@embeds/errors/shop/noItems";
 import inventoryEmbed from "@embeds/inventory";
+import inventoryButtons from "@/builders/buttons/inventory";
+import adminInventoryButtons from "@/builders/buttons/interactInventory";
+
 
 export const add = async function add(
   interaction: CommandInteraction<CacheType>
@@ -132,16 +135,16 @@ export const inventory = async function inventory(
 ) {
   const guild = DB.getGuild(interaction.guildId!);
   const memberId = interaction.options.getUser("member")!.id;
-  const refunded = interaction.options.get("refunded") ?? false;
-  const used = interaction.options.get("used") ?? false;
+  const refunded = !!interaction.options.get("refunded");
+  const used = !!interaction.options.get("used");
 
   const user = guild.getUser(memberId);
 
   const items = user.inventory.filter(item => {
-    if (!refunded && !used) return !(item.refunded || item.used);  // If we do not allow refunded & used in scope
-    if (refunded && !used) return item.refunded;                // If we only allow refunded in scope
-    if (!refunded && used) return item.used;                    // If we only allow used in scope
-    return true;                                                // If we allow both in scope
+    if (!refunded && !used) return !(item.refunded || item.used);   // If we do not allow refunded & used in scope
+    if (refunded && !used) return !item.used;                        // If we only allow refunded in scope
+    if (!refunded && used) return !item.refunded;                    // If we only allow used in scope
+    return true;                                                    // If we allow both in scope
   })
 
   if (items.length === 0) {
@@ -160,12 +163,20 @@ export const inventory = async function inventory(
     5
   );
 
-  const pageButtons = pageShopButtons("admin");
+  const pageButtons = inventoryButtons(refunded, used, true);
+  const adminButtons = adminInventoryButtons(1, items, interaction.guild?.roles.cache!, refunded, used);
 
   // If there are less than 5 items, disable the "next" button
   if (items.length <= 5) pageButtons.components[1].setDisabled(true);
   pageButtons.components[0].setDisabled(true);
 
-  // TODO: Add buttons to refund and remove items
-  embed;
+    await interaction.reply({
+        embeds: [embed],
+        components: [
+          pageButtons,
+          adminButtons,
+        ],
+        ephemeral: true,
+    });
+
 }
