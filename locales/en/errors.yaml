@@ -31,7 +31,7 @@ item:
 
   typeNotFound:
     title: "Sorry, I can't find this item type !"
-    description: "If you believe this is a bug, please report it on the [support server](https://discord.gg/pw88gWrY5d) !"
+    description: "We do not support items like unicorns or wumpus, however, we support roles, texts, objects and boosts"
 
   negativePrice:
     title: "Sorry, I can't accept that !"
