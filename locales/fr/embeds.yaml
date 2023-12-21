@@ -25,7 +25,8 @@ item:
   delete:
     title: "Article supprimé avec succès"
     description:
-      - il était recyclable !"
+      ""Successfully deleted {{itemName}} (with id": '`{{itemId}}`). Heureusement,'
+      0: il était recyclable !"
 shop:
   title: "**Boutique** [{{index}}]"
   footer:
