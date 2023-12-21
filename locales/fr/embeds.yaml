@@ -55,7 +55,6 @@ help:
     user: "Utilisateur"
     config: "Configuration"
   admin:
-    description: "Voici la liste de toutes les commandes admin, vous pouvez les utiliser en ajoutant `/admin` avant le nom de la commande."
     add:
       value: "En utilisant cette commande, vous pouvez ajouter des {{pointName}} à un membre."
     remove:
