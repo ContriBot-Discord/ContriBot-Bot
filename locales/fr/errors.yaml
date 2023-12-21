@@ -1,6 +1,7 @@
 default:
   title: "Woups, une erreur est survenue !"
   description: "Une erreur est survenue.\n\nSi vous pensez qu'il s'agit d'un bug, veuillez le signaler sur le [serveur de support](https://discord.gg/pw88gWrY5d) !"
+  serverReport: "Si vous pensez que c'est un bug, veuillez le signaler sur le [serveur de support](https://discord.gg/pw88gWrY5d) !"
 goBack: "Vous ne pouvez pas revenir en arrière."
 goForward: "Vous ne pouvez pas aller plus loin"
 cantDmUser: "Je suis désolé, je ne peux pas envoyer de MP à cet utilisateur. La raison la plus probable est que l'utilisateur a ses MPs désactivés sur ce serveur."
@@ -9,26 +10,42 @@ internalError:
   us. Internal error code: '`{{code}}`"'
 noPerms:
   of the following permissions on this server: '{{perms}}"'
+roleNotFound:
+  title: "Désolé, je ne trouve pas ce rôle !"
+  description: "Par contre, je peux vous offrir un café si vous voulez."
 item:
   fieldsTooLong:
     title: "Woups, une erreur est survenue !"
+    description: "S'il vous plaît, N'oubliez pas que le champ `label` doit contenir moins de 30 caractères et que le champ `description` doit contenir moins de 150 caractères !"
   notFound:
     title: "Désolé, je ne peux pas trouver cet article !"
+    description: "Il doit certainement être dans une autre dimension."
   typeNotFound:
     title: "Désolé, je ne peux pas trouver ce type d'article !"
+    description: "Nous ne prenons pas en charge des articles comme les licornes ou les wumpus, cependant, nous supportons les rôles, les textes, les objets et les boosts."
   negativePrice:
     title: "Désolé, je ne peux pas accepter cela !"
+    description: "Même si c'est très sympa de votre part, je ne peux pas accepter des prix négatifs !"
   stocksError:
     title: "Désolé, ce n'est pas un stock valide !"
+    description: "Le stock que vous avez essayé de modifier n'est pas valide ! Il doit être un entier, avec une valeur minimale de -1 (pour illimitée)."
   stringTooLong:
     title: "Waw, je ne peux pas lire autant !"
+    description: "Désolé, le champ `{{field_name}}` que vous avez essayé de modifier est trop long, ({{length}}/{{max_length}} caractères maximum) !"
 boost:
   create:
     title: "Erreur lors de la création de cet élément !"
+    description: "Assurez-vous que tout est correct. De plus, pour les boosts, vous devez spécifier le salon ciblé, le rôle ou l'utilisateur."
+  notFoundInventory:
+    title: "Désolé, je ne trouve pas ce boost !"
+    description: "Vous n'avez pas de boosts dans votre inventaire avec l'ID fourni. Assurez-vous d'avoir l'ID correct et réessayez !"
 shop:
   noItems:
     title: "Aucun article dans cette boutique !"
+    description: "Cette boutique est vide ! Demandez au propriétaire d'ajouter des articles !"
   noStock:
     title: "Désolé, cet article est en rupture de stock !"
+    description: "Peut-être que cet article est en cours de livraison, mais pour l'instant, il n'y a rien dans la boutique"
   notEnoughMoney:
     title: "Désolé, vous n'avez pas assez d'argent !"
+    description: "Faites un peu de nettoyage sur le serveur, peut-être qu'un administrateur aura pitié de vous."
