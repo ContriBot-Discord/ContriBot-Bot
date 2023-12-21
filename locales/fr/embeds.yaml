@@ -49,8 +49,7 @@ wipe:
 help:
   title: "Aide [{{index}}]"
   description: "Voici la liste de toutes les commandes"
-  description2: "Ce bot utilise les commandes slashs \n
-    Sélectionnez une catégorie pour voir la liste des commandes."
+  description2: "Ce bot utilise les commandes slashs  `\\`.\n Sélectionnez une catégorie pour voir la liste des commandes."
   categories:
     admin: "Admin"
     user: "Utilisateur"
