@@ -83,6 +83,8 @@ help:
       value: "Using this command you can see the leaderboard of {{pointName}}."
     whois:
       value: "Using this command you can see information about the bot and the developers."
+    data:
+      value: "Using this command you can see all the data that the bot has about you."
     ping:
       value: "Using this command you can see the bot's ping."
     profile:

@@ -62,6 +62,10 @@ export const userHelpEmbed = function (lang: string, pointName: string) {
       value: i18next.t(`embeds:help.user.whois.value`),
     })
     .addFields({
+      name: "/data",
+      value: i18next.t(`embeds:help.user.data.value`),
+    })
+    .addFields({
       name: "/ping",
       value: i18next.t(`embeds:help.user.ping.value`),
     })
