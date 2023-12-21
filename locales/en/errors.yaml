@@ -35,7 +35,7 @@ item:
 
   negativePrice:
     title: "Sorry, I can't accept that !"
-    description: "Even if it is very nice of you, I can't accept negative prices !\n\nIf you think this is a bug, please report it on the [support server](https://discord.gg/pw88gWrY5d) !"
+    description: "Even if it is very nice of you, I can't accept negative prices !"
 
   stocksError:
     title: "Sorry, this is not a valid stock !"
