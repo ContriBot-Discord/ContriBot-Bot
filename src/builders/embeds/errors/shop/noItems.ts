@@ -13,7 +13,10 @@ export default function (lang: string): EmbedBuilder {
       },
       {
         name: " ",
-        value: i18next.t("errors:shop.noItems.description"),
+        value:
+          i18next.t("errors:shop.noItems.description") +
+          "\n\n" +
+          i18next.t("errors:default.serverReport"),
       }
     )
     .setColor("#dd4040")
