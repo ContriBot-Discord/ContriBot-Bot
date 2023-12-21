@@ -4,19 +4,21 @@ default:
   serverReport: "If you think this is a bug, please report it on the [support server](https://discord.gg/pw88gWrY5d) !"
 
 goBack: "You can't go back"
+goForward: "You can't go forward"
+
 cantDmUser: "I am sorry, I am unable to send a DM to that user. The most probable cause is that the user has DMs disabled."
 cantDm: "I am sorry, I'm unable do DM you. Please make sure you have DMs enabled."
+
 internalError:
   "An internal error has occurred. Please try again later or contact
   us. Internal error code: `{{code}}`"
-goForward: "You can't go forward"
 noPerms:
   "I do not have enough permissions to do this. Please make sure i have all
   of the following permissions on this server: {{perms}}"
 
 roleNotFound:
-  title: "Role not found !"
-  description: "Sorry, I can't find this role !"
+  title: "Sorry, I can't find this role !"
+  description: "On the other hand, I can offer you a coffee if you want."
 
 item:
   fieldsTooLong:
