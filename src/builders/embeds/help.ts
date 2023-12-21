@@ -62,6 +62,10 @@ export const userHelpEmbed = function (lang: string, pointName: string) {
       value: i18next.t(`embeds:help.user.whois.value`),
     })
     .addFields({
+      name: "/data",
+      value: i18next.t(`embeds:help.user.data.value`),
+    })
+    .addFields({
       name: "/ping",
       value: i18next.t(`embeds:help.user.ping.value`),
     })
@@ -104,6 +108,10 @@ export const adminHelpEmbed = function (lang: string, pointName: string) {
       value: i18next.t(`embeds:help.admin.wipe.value`, {
         pointName: pointName,
       }),
+    })
+    .addFields({
+      name: "inventory (member)",
+      value: i18next.t(`embeds:help.admin.inventory.value`),
     })
     .setColor(getColor("ORANGE")!.hex as ColorResolvable)
     .setTimestamp();
