@@ -31,7 +31,7 @@ item:
 
   typeNotFound:
     title: "Sorry, I can't find this item type !"
-    description: "We do not support items like unicorns or wumpus, however, we support roles, texts, objects and boosts"
+    description: "We do not support items like unicorns or wumpus, however, we support roles, texts, objects and boosts."
 
   negativePrice:
     title: "Sorry, I can't accept that !"
@@ -39,11 +39,11 @@ item:
 
   stocksError:
     title: "Sorry, this is not a valid stock !"
-    description: "The stock you tried to edit is not valid ! It must be a integer, with a minimum value of -1 (for unlimited).\n\n"
+    description: "The stock you tried to edit is not valid ! It must be a integer, with a minimum value of -1 (for unlimited)."
 
   stringTooLong:
     title: "Waw, I can't read that much !"
-    description: "Sorry, the field `{{field_name}}` you tried to edit is too long ({{length}}/{{max_length}} max characters)!\n\nIf you think this is a bug, please report it on the [support server](https://discord.gg/pw88gWrY5d) !"
+    description: "Sorry, the field `{{field_name}}` you tried to edit is too long ({{length}}/{{max_length}} max characters)!"
 
 boost:
   create:
