@@ -48,7 +48,7 @@ item:
 boost:
   create:
     title: "Error while creating this item !"
-    description: "Make sure everything is correct. Also, for boosts, you must specify the targeted channel, role or user.\n\nIf you think this is a bug, please report it on the [support server](https://discord.gg/pw88gWrY5d) !"
+    description: "Make sure everything is correct. Also, for boosts, you must specify the targeted channel, role or user."
   notFoundInventory:
     title: "Sorry, I can't find this boost in your inventory !"
     description: "You do not have any boosts in your inventory with the provided ID. Please make sure you have the correct ID and try again !\n\nIf you think this is a bug, please report it on the [support server](https://discord.gg/pw88gWrY5d) !"
