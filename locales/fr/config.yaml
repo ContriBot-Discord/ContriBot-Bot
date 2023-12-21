@@ -3,15 +3,19 @@ default:
 pointname:
   description: 'Les points du serveur sont maintenant appelés : **{{pointName}}**'
 show:
+  description: "Voici la configuration de votre serveur"
+  pointsCfg:
+    name: '{{pointName}} gagné(s) par action :'
+    value: "Envoyer un message : **{{message}}**/60 secondes\n Salon vocal : **{{voice}}**/15 minutes"
   settings:
     name: 'Paramètres :'
+    value: "Langue du serveur : **Français**\n Nom des points : **{{pointName}}**"
   channels:
     andXOthers: 'et {{remainingChannelsCount}} autres'
     name: 'Salons désactivés :'
     noChannels: 'Aucun salon désactivé'
-  description: "Voici la configuration de votre serveur"
-  pointsCfg:
-    name: '{{pointName}} gagné(s) par action :'
+  logChannel:
+    name: 'Salon de logs :'
 channel:
   description:
     disable: "Le salon<#{{channelId}}> ne donne plus de {{pointName}} désormais."
@@ -20,3 +24,5 @@ actionpoint:
   description: "Les points de base pour l'action [{{action}}] sont maintenant [{{point}}] {{pointName}}."
 lang:
   description: 'La langue du serveur est désormais : **français**'
+logchannel:
+  description: "Le salon des logs est maintenant <#{{channelId}}>"

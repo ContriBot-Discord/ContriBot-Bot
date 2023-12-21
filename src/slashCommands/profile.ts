@@ -33,6 +33,6 @@ export const command: SlashCommand = {
       userAvatar
     );
 
-    interaction.reply({ embeds: [embed] });
+    await interaction.reply({ embeds: [embed] });
   },
 };

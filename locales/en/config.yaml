@@ -29,7 +29,7 @@ actionpoint:
   description: "The base points for the action [{{action}}] are now [{{point}}] {{pointName}}."
 
 lang:
-  description: 'The guild language is now: **English**'
+  description: 'The guild language is now set to **English**'
 
 logchannel:
   description: "The log channel is now <#{{channelId}}>"

@@ -5,6 +5,7 @@ import { DB } from "@/index";
 import noItems from "@embeds/errors/shop/noItems";
 import inventoryButtons from "@/builders/buttons/inventory";
 import Inventory from "@embeds/inventory";
+import adminInventoryButtons from "@/builders/buttons/interactInventory";
 
 const event: BotEvent = {
     name: Events.InteractionCreate,
@@ -38,6 +39,8 @@ const event: BotEvent = {
 
         const refunded = interaction.customId.split(" ")[1] === "true" // Fancy way to get the boolean value of the string
         const used = interaction.customId.split(" ")[2] === "true" // Also here
+
+        const admin = interaction.customId.startsWith("a")
 
         // If the item is not refunded or used
         // Or if the item is refunded and the scope allows it
@@ -78,6 +81,13 @@ const event: BotEvent = {
             ? pageButtons.components[1].setDisabled(true)
             : pageButtons.components[1].setDisabled(false);
 
+        const buttons = [pageButtons]
+
+        if (admin) {
+            const refundButtons = adminInventoryButtons(actualPageInt, items, interaction.guild?.roles.cache!, refunded, used);
+            buttons.push(refundButtons)
+        }
+
 
         // We now do generate the embed with all the data we got
         const embed = Inventory(
@@ -90,7 +100,7 @@ const event: BotEvent = {
 
             await interaction.editReply({
                 embeds: [embed],
-                components: [pageButtons],
+                components: buttons,
             });
     }
 };

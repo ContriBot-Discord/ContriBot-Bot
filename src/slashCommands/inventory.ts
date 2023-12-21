@@ -40,10 +40,10 @@ export const command: SlashCommand = {
         // Or if the item is refunded and the scope allows it
         // Or if the item is used and the scope allows it
         const items = user.inventory.filter(item => {
-            if (!refunded && !used) return !(item.refunded || item.used);  // If we do not allow refunded & used in scope
-            if (refunded && !used) return item.refunded;                // If we only allow refunded in scope
-            if (!refunded && used) return item.used;                    // If we only allow used in scope
-            return true;                                                // If we allow both in scope
+            if (!refunded && !used) return !(item.refunded || item.used);   // If we do not allow refunded & used in scope
+            if (refunded && !used) return !item.used;                        // If we only allow refunded in scope
+            if (!refunded && used) return !item.refunded;                    // If we only allow used in scope
+            return true;                                                    // If we allow both in scope
         })
 
 
