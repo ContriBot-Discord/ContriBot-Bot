@@ -77,7 +77,7 @@ help:
       value: "Using this command you can reset {{pointName}} of a member."
     wipe:
       value: "Using this command you can reset {{pointName}} of the entire guild."
-    
+
   user:
     leaderboard:
       value: "Using this command you can see the leaderboard of {{pointName}}."
