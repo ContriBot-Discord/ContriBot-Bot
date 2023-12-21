@@ -10,12 +10,12 @@ export default function (lang: string): EmbedBuilder {
             {
                 name:
                     getEmoji("red_bug") +
-                    i18next.t("errors:item.stocksError.title"),
+                    i18next.t("errors:item.notFound.title"),
                 value: getEmoji("red_line"),
             },
             {
                 name: " ",
-                value: i18next.t("errors:item.stocksError.description")
+                value: i18next.t("errors:item.notFound.description") + "\n\n" + i18next.t("errors:default.serverReport")
             }
         )
         .setColor("#dd4040")
