@@ -109,6 +109,10 @@ export const adminHelpEmbed = function (lang: string, pointName: string) {
         pointName: pointName,
       }),
     })
+    .addFields({
+      name: "inventory (member)",
+      value: i18next.t(`embeds:help.admin.inventory.value`),
+    })
     .setColor(getColor("ORANGE")!.hex as ColorResolvable)
     .setTimestamp();
 };

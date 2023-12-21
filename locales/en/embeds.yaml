@@ -68,7 +68,7 @@ help:
     user: "User"
     config: "Config"
   admin:
-    description: "Here is the list of all admin commands, you can use them by adding `admin` before the command name."
+    description: "Here is the list of all admin commands, you can use them by adding `/admin` before the command name."
     add:
       value: "Using this command you can add {{pointName}} to a member."
     remove:
@@ -77,7 +77,8 @@ help:
       value: "Using this command you can reset {{pointName}} of a member."
     wipe:
       value: "Using this command you can reset {{pointName}} of the entire guild."
-
+    inventory:
+      value: "Using this command you can see the inventory of a member and refund items if needed."
   user:
     leaderboard:
       value: "Using this command you can see the leaderboard of {{pointName}}."
