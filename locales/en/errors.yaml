@@ -16,9 +16,7 @@ noPerms:
 
 roleNotFound:
   title: "Role not found !"
-  description: 
-    - "Sorry, I can't find this role ! \n\n"
-    - default.serverReport
+  description: "Sorry, I can't find this role !"
 
 item:
   fieldsTooLong:
