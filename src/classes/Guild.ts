@@ -502,4 +502,28 @@ export class Guild {
       return false;
     }
   }
+
+  clearIDRelatedItems(ID: string): void {
+    // Remove all items with the AppliedID equal to the ID, and remove them from the DB
+    // Users will be refunded if the item wasn't used nor refunded
+
+    const items = this.globalInventory.filter((item) => item.appliedId === ID);
+    items.forEach((item) => item.delete());
+    this.globalInventory = this.globalInventory.filter((item) => item.appliedId !== ID);
+
+    // Refund users
+    this.users.forEach((user) => {
+
+        // Get all items bought by the user with the given ID
+        const userItems = user.inventory.filter((item) => item.appliedId === ID && !(item.refunded || item.used));
+
+        // Refund the user
+        userItems.forEach((item) => {
+            user.storePoints += item.purchasePrice;
+            user.inventory = user.inventory.filter((item) => item.id !== item.id);
+        });
+    });
+
+  }
+
 }
