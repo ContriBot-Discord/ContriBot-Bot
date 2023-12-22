@@ -29,7 +29,7 @@ export const getUsersField = function getUsersField(
           `**#${i + 1} ·** ` +
           i18next.t("embeds:leaderboard.fields.value", {
             userid: user.id,
-            quantity: user.leaderboardPoints,
+            quantity: Math.floor(user.leaderboardPoints),
             pointName: pointName,
           }),
       });
