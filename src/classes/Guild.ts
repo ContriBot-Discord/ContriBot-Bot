@@ -520,10 +520,8 @@ export class Guild {
         // Refund the user
         userItems.forEach((item) => {
             user.storePoints += item.purchasePrice;
-            user.inventory = user.inventory.filter((item) => item.id !== item.id);
+            item.refunded = true;
         });
     });
-
   }
-
 }
