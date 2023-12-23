@@ -24,9 +24,7 @@ item:
     ignored: "Les phrases {{ignored}} ont été ignorées car elles étaient vides."
   delete:
     title: "Article supprimé avec succès"
-    description:
-      ""Successfully deleted {{itemName}} (with id": '`{{itemId}}`). Heureusement,'
-      0: il était recyclable !"
+    description: '{{itemName}} supprimé avec succès (avec l''id : `{{itemId}}`). Heureusement, il était recyclable !'
 shop:
   title: "**Boutique** [{{index}}]"
   footer:
@@ -112,3 +110,7 @@ inventory:
   used: " (utilisé)"
   id: "ID de l'article: `{{id}}`"
   footer: "Page {{pageNumber}}/{{totalPages}}"
+boost:
+  extended: "J'ai allongé l'incroyable boost déjà actif pour qu'il soit incroyable encore plus longtemps !"
+  added: "Ouais ! Je viens de déverser cette super potion (sans gluten) sur {{mentionedObject}} !"
+  guild: "le serveur"

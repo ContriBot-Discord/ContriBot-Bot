@@ -1,23 +1,19 @@
 default:
   title: "**{{command_name}}** command"
-
 add:
   description:
     leaderboardPoints: "<@{{userid}}> added {{quantity}} leaderboard {{pointName}} to <@{{memberid}}>"
     storePoints: "<@{{userid}}> added {{quantity}} store {{pointName}} to <@{{memberid}}>"
     both: "<@{{userid}}> added {{quantity}} {{pointName}} to <@{{memberid}}>"
-
 get:
   description:
     leaderboardPoints: "<@{{userid}}> has **{{amount}}** leaderboard {{pointName}}."
     storePoints: "<@{{userid}}> has **{{amount}}** store {{pointName}}."
-
 remove:
   description:
     leaderboardPoints: "<@{{userid}}> removed {{quantity}} leaderboard {{pointName}} from <@{{memberid}}>"
     storePoints: "<@{{userid}}> removed {{quantity}} store {{pointName}} from <@{{memberid}}>"
     both: "<@{{userid}}> removed {{quantity}} {{pointName}} from <@{{memberid}}>"
-
 item:
   create:
     description: "Yaaay ! You just created {{itemName}} with success !"
@@ -28,41 +24,30 @@ item:
     ignored: "{{ignored}} strings were ignored because they were empty."
   delete:
     title: "Successfully deleted the item"
-    description:
-      "Successfully deleted {{itemName}} (with id: `{{itemId}}`). Hopefully,
-      it was recyclable !"
-
+    description: 'Successfully deleted {{itemName}} (with id: `{{itemId}}`). Hopefully, it was recyclable !'
 shop:
   title: "**Shop** [{{index}}]"
   footer:
     text: "Page {{pageNumber}}/{{totalPages}}"
-
 ping:
-  description: "🏓 Pong!\n
-    📡 Ping: {{ping}}ms"
-
+  description: "🏓 Pong!\n 📡 Ping: {{ping}}ms"
 profile:
   description: "Here is the profile of <@{{userid}}>"
   stats:
     name: "Stats :"
-    value: "Messages sent: **{{messagesSent}}**\n
-      Voice channels: **{{hours}}h {{minutes}}m {{seconds}}s**"
+    value: "Messages sent: **{{messagesSent}}**\n Voice channels: **{{hours}}h {{minutes}}m {{seconds}}s**"
   points:
     name: "{{pointName}} :"
-    value: "store (spendable): **{{storePoints}}**\n
-      leaderboard (unlosable): **{{leaderboardPoints}}**"
-
+    value: "store (spendable): **{{storePoints}}**\n leaderboard (unlosable): **{{leaderboardPoints}}**"
 wipe:
   description:
     leaderboardPoints: "Guild's leaderboard {{pointName}} have been reset."
     storePoints: "Guild's store {{pointName}} have been reset."
     both: "Guild's {{pointName}} have been fully reset"
-
 help:
   title: "Help [{{index}}]"
   description: "Here is the list of all commands"
-  description2: "This bot uses slash commands. \n
-    Select a category to see the commands list."
+  description2: "This bot uses slash commands. \n Select a category to see the commands list."
   categories:
     admin: "Admin"
     user: "User"
@@ -102,7 +87,6 @@ help:
       value: "You can modify the number of points that users will receive for each action."
     lang:
       value: "Using this command you can change the bot's language."
-
 leaderboard:
   title: "**Leaderboard** [{{index}}]"
   description: "Here is the leaderboard"
@@ -111,22 +95,14 @@ leaderboard:
     value: "<@{{userid}}> with {{quantity}} {{pointName}}"
   footer:
     text: "Page {{pageNumber}}/{{totalPages}}"
-
 whois:
   title: "Who are we ?"
-  description: "
-    ContriBot is a student project, made by [EAnathos](https://eanathos.com) &  [Voltis](https://voltis.me) at [Laval](https://maps.app.goo.gl/umYo5wYmG7eGwLWx5) in France.\n
-    This project has been started in early October 2023, while trying to find a Discord bot that would allow us to manage our training's minecraft server community.\n
-    Our main objective was to create a useful, fully configurable, documented and powerful Discord Bot, with all essential features free, and translated the most languages as possible.\n\n
-    We've decided to develop this bot in TypeScript while using Discord.JS\n
-    If you have any questions, do not hesitate to ask it on our [Discord Server](https://discord.gg/wMHa7XHkNj) !"
-
+  description: " ContriBot is a student project, made by [EAnathos](https://eanathos.com) &  [Voltis](https://voltis.me) at [Laval](https://maps.app.goo.gl/umYo5wYmG7eGwLWx5) in France.\n This project has been started in early October 2023, while trying to find a Discord bot that would allow us to manage our training's minecraft server community.\n Our main objective was to create a useful, fully configurable, documented and powerful Discord Bot, with all essential features free, and translated the most languages as possible.\n\n We've decided to develop this bot in TypeScript while using Discord.JS\n If you have any questions, do not hesitate to ask it on our [Discord Server](https://discord.gg/wMHa7XHkNj) !"
 reset:
   description:
     leaderboardPoints: "<@{{userid}}>'s leaderboard {{pointName}} have been reset."
     storePoints: "<@{{userid}}>'s leaderboard {{pointName}} have been reset."
     both: "<@{{userid}}>'s {{pointName}} have been fully reset"
-
 inventory:
   title: "**Inventory** [{{index}}]"
   boughtAt: "Bought the {{date}}"
@@ -134,8 +110,7 @@ inventory:
   used: " (used)"
   id: "Item ID: `{{id}}`"
   footer: "Page {{pageNumber}}/{{totalPages}}"
-
 boost:
-  extended: "Extended the amazing boost that was already active, so it is amazing for even longer!",
-  added: "Yay ! I just spread the amazing (gluten-free) boost potion on {{mentionedObject}} !`"
+  extended: "Extended the amazing boost that was already active, so it is amazing for even longer!"
+  added: "Yay ! I just spread the amazing (gluten-free) boost potion on {{mentionedObject}} !"
   guild: "the guild"
