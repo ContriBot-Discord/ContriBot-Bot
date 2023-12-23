@@ -64,11 +64,15 @@ help:
       value: "En utilisant cette commande, vous pouvez réinitialiser les {{pointName}} d'un membre."
     wipe:
       value: "En utilisant cette commande, vous pouvez réinitialiser les {{pointName}} de l'intégralité du serveur."
+    inventory:
+      value: "En utilisant cette commande, vous pouvez voir l'inventaire d'un membre et les rembourser si nécessaire."
   user:
     leaderboard:
       value: "En utilisant cette commande, vous pouvez voir le classement de {{pointName}}."
     whois:
       value: "En utilisant cette commande, vous pouvez voir des informations sur le bot et ses développeurs."
+    data:
+      value: "En utilisant cette commande, vous pouvez voir toutes les données que le bot a à votre sujet."
     ping:
       value: "En utilisant cette commande, vous pouvez voir la latence du bot."
     profile:
