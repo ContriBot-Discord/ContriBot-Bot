@@ -65,7 +65,7 @@ export default function (client: ClientUser) {
 
     // Change the activity every two hours
 
-    const job = schedule.scheduleJob('* */2 * * *', function () {
+    const job = schedule.scheduleJob('0 */2 * * *', function () {
 
         // We choose a random string
         const string = activities[
