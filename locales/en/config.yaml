@@ -1,24 +1,24 @@
 default:
-  title: '**{{command_name}}** command'
+  title: "**{{command_name}}** command"
 
 pointname:
-  description: 'Guild points are now called : **{{pointName}}**'
+  description: "Guild points are now called : **{{pointName}}**"
 show:
   description: "Here is your server's config"
   pointsCfg:
-    name: '{{pointName}} earned by action:        ‎'
+    name: "{{pointName}} earned by action:        ‎"
     value: "Send message: **{{message}}**/60 seconds\n
-            Voice channel: **{{voice}}**/15 minutes"
+      Voice channel: **{{voice}}**/15 minutes"
   settings:
-    name: 'Settings:'
+    name: "Settings:"
     value: "Guild language: **English**\n
-            Points name: **{{pointName}}**"
+      Points name: **{{pointName}}**"
   channels:
-    andXOthers: 'and {{remainingChannelsCount}} others'
-    name: 'Channels disabled:'
-    noChannels: 'No channels disabled'
+    andXOthers: "and {{remainingChannelsCount}} others"
+    name: "Channels disabled:"
+    noChannels: "No channels disabled"
   logChannel:
-    name: 'Log channel:'
+    name: "Log channel:"
 
 channel:
   description:
@@ -29,7 +29,7 @@ actionpoint:
   description: "The base points for the action [{{action}}] are now [{{point}}] {{pointName}}."
 
 lang:
-  description: 'The guild language is now set to **English**'
+  description: "The guild language is now set to **English**"
 
 logchannel:
   description: "The log channel is now <#{{channelId}}>"
