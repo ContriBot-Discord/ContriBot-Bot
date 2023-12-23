@@ -24,7 +24,7 @@ item:
     ignored: "Les phrases {{ignored}} ont été ignorées car elles étaient vides."
   delete:
     title: "Article supprimé avec succès"
-    description: [ ]
+    description: '{{itemName}} supprimé avec succès (avec l''id : `{{itemId}}`). Heureusement, il était recyclable !'
 shop:
   title: "**Boutique** [{{index}}]"
   footer:
