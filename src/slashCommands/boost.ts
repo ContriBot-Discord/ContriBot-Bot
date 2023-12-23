@@ -22,6 +22,9 @@ export const command: SlashCommand = {
     ),
   async execute(interaction: CommandInteraction) {
     const guild = DB.getGuild(interaction.guildId!);
+
+    await i18next.changeLanguage(guild.lang);
+
     const user = guild.getUser(interaction.user.id);
 
     const options = interaction.options as CommandInteractionOptionResolver;
