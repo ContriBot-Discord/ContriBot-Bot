@@ -6,6 +6,7 @@ import {
 import { SlashCommand } from "@/types";
 import { DB } from "@/index";
 import boostNotFoundInventory from "@/builders/embeds/errors/boosts/boostNotFoundInventory";
+import i18next from "i18next";
 
 export const command: SlashCommand = {
   name: "boost",
@@ -45,7 +46,7 @@ export const command: SlashCommand = {
 
     switch (item.boostType) {
       case 1: // guild
-        appliedIdMention = `the guild`;
+        appliedIdMention = i18next.t("embeds:commands.boost.guild");
         break;
 
       case 2: // channel
@@ -59,19 +60,24 @@ export const command: SlashCommand = {
       case 4: // User
         appliedIdMention = `<@${item.appliedId}>`;
         break;
+
+      default:
+        appliedIdMention = "something I couldn't find";
     }
 
     if (extendedBoost) {
       await interaction.reply({
         content:
-          "Extended the amazing boost that was already active, so it is amazing for even longer!",
+        i18next.t("embeds:commands.boost.extended"),
         ephemeral: true,
       });
     } else {
       // Retrieve the applied id from the cache and mention it
 
       await interaction.reply({
-        content: `Yay ! I just spread the amazing (gluten-free) boost potion on ${appliedIdMention!} !`,
+        content: i18next.t("embeds:commands.boost.applied", {
+          appliedIdMention: appliedIdMention,
+        }),
         ephemeral: true,
       });
     }
