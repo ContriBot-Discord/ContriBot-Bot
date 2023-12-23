@@ -8,12 +8,16 @@ export default function (lang: string): EmbedBuilder {
   return new EmbedBuilder()
     .addFields(
       {
-        name: getEmoji("red_bug") + i18next.t("errors:shop.notEnoughMoney.title"),
+        name:
+          getEmoji("red_bug") + i18next.t("errors:shop.notEnoughMoney.title"),
         value: getEmoji("red_line"),
       },
       {
         name: " ",
-        value: i18next.t("errors:shop.notEnoughMoney.description"),
+        value:
+          i18next.t("errors:shop.notEnoughMoney.description") +
+          "\n\n" +
+          i18next.t("errors:default.serverReport"),
       }
     )
     .setColor("#dd4040")

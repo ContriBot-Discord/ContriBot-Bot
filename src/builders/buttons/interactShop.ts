@@ -26,12 +26,15 @@ export default function (
         break;
       default:
         style = 4;
+        break;
     }
 
     if (item) {
-      const label: string =
-        item.action == 0
-          ? roles.get(item.label.match(/<@&(\d+)>/)![1])?.name!
+      const name: RegExpMatchArray | null =  item.label.match(/<@&(\d+)>/)
+
+      // If the item is a role, and the id is in the label
+      const label : string = item.action == 0 && name
+          ? roles.get(name[1])?.name || item.label
           : item.label;
 
       buttons.addComponents(

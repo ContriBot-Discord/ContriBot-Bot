@@ -48,8 +48,8 @@ export default function (
         }),
       value: i18next.t(`embeds:profile.points.value`, {
         pointName: pointName,
-        storePoints: storePoints,
-        leaderboardPoints: leaderboardPoints,
+        storePoints: Math.floor(storePoints),
+        leaderboardPoints: Math.floor(leaderboardPoints),
       }),
       inline: true,
     })

@@ -493,13 +493,40 @@ export class Guild {
 
       activeBoost.update();
 
-      return true;
     } else {
       // If there is no active boost, we create it
       boost.create();
       this.boosts.push(boost);
 
-      return false;
     }
+
+    return !!activeBoost;
+  }
+
+  clearIDRelatedItems(ID: string): void {
+    // Remove all items with the AppliedID equal to the ID, and remove them from the DB
+    // Users will be refunded if the item wasn't used nor refunded
+
+
+    // Remove items from the "global inventory"
+    this.globalInventory.filter((item) => item.appliedId !== ID);
+
+    // Remove items from the shop & DB
+    this.shop.filter((item) => item.applied_id === ID).forEach((item) => item.delete());
+    this.shop = this.shop.filter((item) => item.applied_id !== ID);
+
+
+    // Refund users
+    this.users.forEach((user) => {
+
+        // Get all items bought by the user with the given ID
+        const userItems = user.inventory.filter((item) => item.appliedId == ID && !(item.refunded || item.used));
+
+        // Refund the user
+        userItems.forEach((item) => {
+            user.storePoints += item.purchasePrice;
+            item.refunded = true;
+        });
+    });
   }
 }

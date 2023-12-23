@@ -24,7 +24,7 @@ export class UserData {
     }
 
     retrieveUserData(callback: (data: Record<string, any>[], nextRequest: Date) => void): void {
-        if (this.nextRequest.getTime() < Date.now()) {
+        if (this.nextRequest.getTime() <= Date.now()) {
             this.#db.query(`
                 UPDATE RGPD
                 SET nextRequest = DATE_ADD(now(), INTERVAL 1 MONTH),
