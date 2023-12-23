@@ -7,6 +7,7 @@ import {
 import fetchVoice from "@/tools/voiceFetcher"
 
 import profilePicChooser from "@/tools/profilePicChooser";
+import changePresence from "@/tools/richPresence";
 
 // import DiscordAnalytics from "discord-analytics/discordjs";
 
@@ -20,6 +21,7 @@ const event: BotEvent = {
     console.log(`🎤 Fetched voice users`)
 
     profilePicChooser(client.user!);
+    changePresence(client.user!);
 
     if (process.env.DEBUG === "false") {
 
