@@ -134,3 +134,8 @@ inventory:
   used: " (used)"
   id: "Item ID: `{{id}}`"
   footer: "Page {{pageNumber}}/{{totalPages}}"
+
+boost:
+  extended: "Extended the amazing boost that was already active, so it is amazing for even longer!",
+  added: "Yay ! I just spread the amazing (gluten-free) boost potion on {{mentionedObject}} !`"
+  guild: "the guild"
