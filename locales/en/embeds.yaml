@@ -47,7 +47,7 @@ wipe:
 help:
   title: "Help [{{index}}]"
   description: "Here is the list of all commands"
-  description2: "This bot uses slash commands. \n Select a category to see the commands list."
+  description2: "This bot uses slash commands `\\`.\n Select a category to see the commands list."
   categories:
     admin: "Admin"
     user: "User"
