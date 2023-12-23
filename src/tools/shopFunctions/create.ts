@@ -11,6 +11,7 @@ import boostCreate from "@/builders/embeds/errors/items/itemCreate";
 
 
 export const boostNamer = function boostNamer(boost_type: number, duration: string, multiplicator:number, applied_id: string|null): string {
+
   if (applied_id == null) {
     if (boost_type == 1) {
       return `${duration} x${multiplicator} Guild boost`
@@ -36,6 +37,8 @@ export const boostNamer = function boostNamer(boost_type: number, duration: stri
 export const create = async function create(
   interaction: CommandInteraction<CacheType>
 ) {
+  await interaction.deferReply();
+
   const guild = DB.getGuild(interaction.guildId!);
 
   let subcommand: CommandInteractionOptionResolver | string =
@@ -152,9 +155,11 @@ export const create = async function create(
   }
 
   if (label!.length > 50 || description!.length > 150) {
-    await interaction.reply({ embeds: [Error(guild.lang)] });
+    await interaction.editReply({ embeds: [Error(guild.lang)] });
     return;
   }
+
+
 
   if (success) {
     guild.createShopItem(
@@ -170,10 +175,9 @@ export const create = async function create(
       duration!
     );
 
-    await interaction.reply({ embeds: [Success(guild.lang, label!)] });
+    await interaction.editReply({ embeds: [Success(guild.lang, label!)] });
   } else {
     // Catch the error
-    await interaction.reply({ embeds: [boostCreate(guild.lang)] });
-    return;
+    await interaction.editReply({ embeds: [boostCreate(guild.lang)] });
   }
 };
