@@ -61,7 +61,7 @@ export const command: SlashCommand = {
         break;
     }
 
-    if (!extendedBoost) {
+    if (extendedBoost) {
       await interaction.reply({
         content:
           "Extended the amazing boost that was already active, so it is amazing for even longer!",
