@@ -112,3 +112,6 @@ inventory:
   used: " (utilisé)"
   id: "ID de l'article: `{{id}}`"
   footer: "Page {{pageNumber}}/{{totalPages}}"
+boost:
+  added: "Ouais ! Je viens de déverser cette super potion (sans gluten) sur {{mentionedObject}} !"
+  guild: "le serveur"
