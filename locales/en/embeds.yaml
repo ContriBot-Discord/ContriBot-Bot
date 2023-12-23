@@ -23,10 +23,8 @@ item:
     description: "Successfully added {{strings}} strings to the item, for a total of {{total}} strings."
     ignored: "{{ignored}} strings were ignored because they were empty."
   delete:
-    title: "Successfully deleted the item"
-    description:
-      ""Successfully deleted {{itemName}} (with id": '`{{itemId}}`). Hopefully,'
-      0: it was recyclable !"
+    title: "Successfully deleted {{itemName}} (with id: `{{itemId}}`). Hopefully, it was recyclable !"
+    description: [ ]
 shop:
   title: "**Shop** [{{index}}]"
   footer:
