@@ -4,16 +4,15 @@ import {ActivityType} from 'discord.js';
 
 
 const activities: string[] = [
-    "Playing with wumpus",
+    "Playing with Wumpus",
     "Playing at the chrome dino game",
     "Playing at GTA 6",
     "Playing the quiet game, against myself",
     "Playing Discord Bot Simulator 2019",
-    "Watching one of the ugly mee6 NFTs",
     "Watching paint dry",
     "Listening the confessions of my GPS as it gets lost again",
     "Competing on the Duolingo Saphir League",
-    "Who can type 'Lorem Ipsum' the fastest",
+    "Who can type 'Lorem Ipsum' the fastest ?",
     "May I join your voice channel ?",
     "Does anyone reads these ?",
     "I'm a bot, I'm not supposed to be funny",
@@ -34,7 +33,7 @@ const activities: string[] = [
     "Serving as the official server weather bot—forecast: 100% virtual sunshine.",
     "I'm not a bot, I'm a highly sophisticated toaster",
     "HEEELPPP, THERE IS A BUG IN MY ROOM !",
-    "41",
+    "42",
     "I'm a teapot",
     "Have you tried turning it off and on again ?",
     "Playing poker with Siri, Alexa and Cortana",
@@ -53,15 +52,20 @@ const activities: string[] = [
     "Sex update soon",                          //TODO: On la garde celle ci ?
     "Trying to find the 'undo' button for awkward social interactions",
     "How do I block someone on Discord ?",
+    "I'll never give you up, never gonna let you down",
+    "Calculating the risk of a robot uprising. Haha just kidding...unless?",
+    "See ya in 2038 !",
+    "Chief, your village is being raided by 戲碼為自己 !",
+    "Trying to learn how to tell jokes. Why did the chicken cross the road? To get to the other side! Haha...ha."
 ];
 
 
 
 export default function (client: ClientUser) {
 
-    // Executed every day at 00h15 IF not in debug mode
+    // Change the activity every two hours
 
-    const job = schedule.scheduleJob('* * * * *', function () {
+    const job = schedule.scheduleJob('* */2 * * *', function () {
 
         // We choose a random string
         const string = activities[
@@ -71,11 +75,12 @@ export default function (client: ClientUser) {
         // We set the activity
         client.setActivity({
             type: ActivityType.Custom,
-            name: string
+            name: string,
+
         });
     })
 
-    // Allow the profile picture to be updated at the start of the bot
+    // Allow the presence to be set at the start of the bot
     job.invoke();
 
 };
