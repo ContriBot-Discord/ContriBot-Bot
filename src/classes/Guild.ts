@@ -493,13 +493,13 @@ export class Guild {
 
       activeBoost.update();
 
-      return true;
     } else {
       // If there is no active boost, we create it
       boost.create();
       this.boosts.push(boost);
 
-      return false;
     }
+
+    return !!activeBoost;
   }
 }
