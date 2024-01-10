@@ -18,9 +18,9 @@ const event: BotEvent = {
       user.id === "302050872383242240" &&
       message.interaction?.commandName === "bump"
     ) {
-      dbGuild
-        .getUser(message.interaction?.user?.id!)
-        .addPoints(dbGuild.bumpPoint);
+      const dbUser = dbGuild.getUser(message.interaction?.user?.id!);
+      dbUser.addPoints(dbGuild.bumpPoint);
+      dbUser.bumpCount++;
     } else {
       const channel = message.channel;
       const dbUser = dbGuild.getUser(user.id);
