@@ -1,5 +1,8 @@
 default:
   title: "**{{command_name}}** command"
+words:
+  received: "Received"
+  admissible: "Admissible"
 add:
   description:
     leaderboardPoints: "<@{{userid}}> added {{quantity}} leaderboard {{pointName}} to <@{{memberid}}>"
@@ -24,7 +27,7 @@ item:
     ignored: "{{ignored}} strings were ignored because they were empty."
   delete:
     title: "Successfully deleted the item"
-    description: 'Successfully deleted {{itemName}} (with id: `{{itemId}}`). Hopefully, it was recyclable !'
+    description: "Successfully deleted {{itemName}} (with id: `{{itemId}}`). Hopefully, it was recyclable !"
 shop:
   title: "**Shop** [{{index}}]"
   footer:
@@ -38,7 +41,7 @@ profile:
     value: "Messages sent: **{{messagesSent}}**\n Voice channels: **{{hours}}h {{minutes}}m {{seconds}}s**"
   points:
     name: "{{pointName}} :"
-    value: "store (spendable): **{{storePoints}}**\n leaderboard (unlosable): **{{leaderboardPoints}}**"
+    value: "store (spendable): **{{storePoints}}**\n leaderboard (unlosable): **{{leaderboardPoints}}**\n nitro boost : **{{nitroBoost}}**"
 wipe:
   description:
     leaderboardPoints: "Guild's leaderboard {{pointName}} have been reset."
