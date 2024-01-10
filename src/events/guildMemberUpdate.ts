@@ -6,15 +6,21 @@ const event: BotEvent = {
   name: Events.GuildMemberUpdate,
   once: false,
 
+  /*
+  * @param oldMember The member before the update
+  * @param newMember The member after the update
+  * 
+  * @returns void
+  */
   async execute(oldMember: GuildMember, newMember: GuildMember) {
     const guild = DB.getGuild(oldMember.guild.id);
     const user = guild.getUser(newMember.id);
 
-    // if a user boosts the server
-    if (newMember.premiumSince) {
+    // if a user boosts the server for the first time
+    if (newMember.premiumSince && !user.nitroBoost) {
       user.addPoints(guild.boostPoint);
     }
-    // If a user removes their boost
+    // If a user removes their boost before the 30 days
     else if (oldMember.premiumSince && !newMember.premiumSince) {
       user.addPoints(-guild.boostPoint);
     }
