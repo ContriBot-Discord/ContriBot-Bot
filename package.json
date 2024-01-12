@@ -25,6 +25,7 @@
     "discord-analytics": "^2.0.1",
     "discord.js": "^14.14.1",
     "dotenv": "^16.3.1",
+    "emoji-regex": "^10.3.0",
     "i18next": "^23.6.0",
     "i18next-fs-backend": "^2.2.0",
     "module-alias": "^2.2.3",

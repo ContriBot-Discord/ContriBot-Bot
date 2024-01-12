@@ -4,10 +4,13 @@ import langEmbed from "@embeds/config/lang";
 import pointNameEmbed from "@embeds/config/pointName";
 import showEmbed from "@embeds/config/show";
 import logChannelEmbed from "@embeds/config/logChannel";
+const emojiRegex = require('emoji-regex');
 
 import { CacheType, Channel, CommandInteraction } from "discord.js";
 
 import { DB } from "@/index";
+
+const emojiregex = emojiRegex();
 
 export const lang = async function lang(
   interaction: CommandInteraction<CacheType>
@@ -108,4 +111,23 @@ export const show = async function show(
   );
 
   await interaction.reply({ embeds: [embed] });
+};
+
+
+export const pointIcon = async function pointIcon(
+  interaction: CommandInteraction<import("discord.js").CacheType>
+) {
+  let emoji = interaction.options.get("emoji")?.value as string;
+
+  // Check if the emoji is valid
+  const emojiMatch = emoji.match(/<a?:.+?:\d{18}>/gu);
+  if (emojiMatch || emojiregex.exec(emoji)) {
+
+    emoji = emojiMatch ? emojiMatch[0] : emojiregex.exec(emoji);
+
+    await interaction.reply("ui ! " + emoji)
+  } else {
+    await interaction.reply("nion !")
+  }
+
 };

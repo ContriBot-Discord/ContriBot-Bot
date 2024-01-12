@@ -18,6 +18,7 @@ import {
   actionPoint,
   channel,
   show,
+  pointIcon
 } from "@/tools/config";
 
 export const command: SlashCommand = {
@@ -63,6 +64,17 @@ export const command: SlashCommand = {
             .setRequired(true)
         )
     )
+      .addSubcommand((subcommand: SlashCommandSubcommandBuilder) =>
+        subcommand
+            .setName("pointicon")
+            .setDescription("Change the icon of the points.")
+            .addStringOption((option: SlashCommandStringOption) =>
+            option
+                .setName("Emoji")
+                .setDescription("What emoji would you like to use for the points ?")
+                .setRequired(true)
+            )
+      )
     .addSubcommand((subcommand: SlashCommandSubcommandBuilder) =>
       subcommand
         .setName("actionpoint")
@@ -134,6 +146,9 @@ export const command: SlashCommand = {
         break;
       case "channel":
         await channel(interaction);
+        break;
+      case "pointicon":
+        await pointIcon(interaction);
         break;
       default:
         await show(interaction);
