@@ -35,6 +35,7 @@ profile:
   description: "Voici le profil de <@{{userid}}>"
   stats:
     name: "Stats :"
+    value: "Messages envoyés : **{{messagesSent}}**\n Temps passé en vocal : **{{hours}}h {{minutes}}m {{seconds}}s**\n Nombre de bumps: **{{bumps}}**"
   points:
     name: "{{pointName}} :"
     value: "boutique (dépensable): **{{storePoints}}**\n classement (permanent) : **{{leaderboardPoints}}**"
