@@ -79,7 +79,6 @@ export class UserItem {
       ],
       (err, result) => {
         if (err) throw err;
-
         this.id = result.insertId;
         if (callback) callback(this);
       }
