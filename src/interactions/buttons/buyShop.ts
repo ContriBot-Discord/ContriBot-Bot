@@ -150,11 +150,11 @@ const event: BotEvent = {
             }
         }
 
-        if (!guild.logChannel) return;
+        const channel = interaction.client.channels.cache.get(guild.logChannel)
 
-        await (
-            interaction.client.channels.cache.get(guild.logChannel) as TextChannel
-        ).send({
+        if (!channel || !(channel instanceof TextChannel)) return;
+
+        await channel.send({
           embeds: [
             buyShopLogEmbed(
                 guild.lang,
