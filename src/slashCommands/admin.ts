@@ -17,6 +17,7 @@ export const command: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName("admin")
     .setDescription("Admin commands.")
+    .setDMPermission(false)
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
     .addSubcommand((subcommand: SlashCommandSubcommandBuilder) =>
       subcommand

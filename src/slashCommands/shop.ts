@@ -10,7 +10,8 @@ export const command: SlashCommand = {
   name: "shop",
   data: new SlashCommandBuilder()
     .setName("shop")
-    .setDescription("Display the shop items"),
+    .setDescription("Display the shop items")
+    .setDMPermission(false),
 
   async execute(interaction: CommandInteraction<CacheType>) {
     const guild = DB.getGuild(interaction.guildId!);

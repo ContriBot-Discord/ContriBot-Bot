@@ -14,7 +14,8 @@ export const command: SlashCommand = {
     name: "whois",
     data: new SlashCommandBuilder()
         .setName("whois")
-        .setDescription("Display informations about the developers of ContriBot"),
+        .setDescription("Display informations about the developers of ContriBot")
+        .setDMPermission(false),
     execute: async (interaction: CommandInteraction<CacheType>) => {
         await interaction.reply({
             embeds: [

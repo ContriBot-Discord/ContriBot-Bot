@@ -25,6 +25,7 @@ export const command: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName("config")
     .setDescription("Configure the bot.")
+    .setDMPermission(false)
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
     .addSubcommand((subcommand: SlashCommandSubcommandBuilder) =>
       subcommand
