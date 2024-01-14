@@ -13,6 +13,7 @@ export const command: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName("boost")
     .setDescription("Use a boost from your inventory")
+    .setDMPermission(false)
     .addIntegerOption((option) =>
       option
         .setName("id")
