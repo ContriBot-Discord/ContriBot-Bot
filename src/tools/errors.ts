@@ -1,6 +1,12 @@
 import short from "short-uuid";
 import {Database} from "@/classes/Database";
-import {CommandInteraction} from "discord.js";
+import {CommandInteraction, EmbedBuilder, WebhookClient} from "discord.js";
+
+console.log(process.env.ERROR_WEBHOOK_URL)
+const webhook = new WebhookClient({
+    url: process.env.ERROR_WEBHOOK_URL!
+})
+
 
 function bigIntHandler(key: string, value: any) {
     key; // Prevent unused variable warning
@@ -28,6 +34,16 @@ export default function (error: Error, db: Database, interaction?: CommandIntera
         console.log(`[${new Date().toLocaleString()}] Failed to register error #${id}: ${err.message}`);
         id = "couldn't register"
     }
+
+    webhook.send({
+        embeds: [
+            new EmbedBuilder()
+                .setTitle(`Unhandled ${asyncErr? 'async' : ''} error #\`${id}\``)
+                .setDescription(`\`\`\`js\n${error.stack}\`\`\``)
+                .setColor(0xFF0000)
+                .setTimestamp()
+        ]
+    });
 
     return id;
 }
