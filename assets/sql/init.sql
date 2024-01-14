@@ -76,7 +76,7 @@ create table if not exists USER (
     messages_sent int default 0 not null,
     voice_duration int default 0 not null,
     nitro_boost tinyint(1) default 0 not null,
-    bump_points int default 0 not null,
+    bump_count int default 0 not null,
     primary key (user_id, guild_id),
     foreign key (guild_id) references GUILD (guild_id) on delete cascade
 );

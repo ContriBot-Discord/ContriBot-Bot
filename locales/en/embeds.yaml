@@ -38,7 +38,7 @@ profile:
   description: "Here is the profile of <@{{userid}}>"
   stats:
     name: "Stats :"
-    value: "Messages sent: **{{messagesSent}}**\n Voice channels: **{{hours}}h {{minutes}}m {{seconds}}s**"
+    value: "Messages sent: **{{messagesSent}}**\n Voice channels: **{{hours}}h {{minutes}}m {{seconds}}s**\n bump counter: **{{bumps}}**"
   points:
     name: "{{pointName}} :"
     value: "store (spendable): **{{storePoints}}**\n leaderboard (unlosable): **{{leaderboardPoints}}**\n nitro boost : **{{nitroBoost}}**"

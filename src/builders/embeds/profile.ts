@@ -12,6 +12,7 @@ export default function (
   messagesSent: number,
   voiceDuration: number,
   nitroBoost: boolean,
+  bumpCount: number,
   userAvatar: string
 ): EmbedBuilder {
   i18next.changeLanguage(lang);
@@ -38,6 +39,7 @@ export default function (
         hours: hours,
         minutes: minutes,
         seconds: seconds,
+        bumps: bumpCount,
       }),
       inline: true,
     })
