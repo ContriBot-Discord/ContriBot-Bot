@@ -8,7 +8,8 @@ show:
   pointsCfg:
     name: '{{pointName}} earned by action:        ‎'
     value: "Send message: **{{message}}**/60 seconds\n
-            Voice channel: **{{voice}}**/15 minutes"
+            Voice channel: **{{voice}}**/15 minutes\n
+            Nitro boost: **{{nitroBoost}}**/boost (only once)\n"
   settings:
     name: 'Settings:'
     value: "Guild language: **English**\n
