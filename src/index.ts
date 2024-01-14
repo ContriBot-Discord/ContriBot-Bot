@@ -13,6 +13,10 @@ import { Database } from "@/classes/Database";
 
 dotenv.config();
 
+// Imported after dotenv.config() to allow the use of environment variables in the logger
+import errorLogger from "@/tools/errors";
+
+
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -46,6 +50,12 @@ const handlersDir = join(__dirname, "handlers");
 
 readdirSync(handlersDir).forEach((handler) => {
   require(`${handlersDir}/${handler}`)(client);
+});
+
+
+// Logging unhandled asynchronous errors that should be fatal if not handled
+process.on('uncaughtException', error => {
+  errorLogger(error, DB, undefined, true);
 });
 
 client.login(process.env.TOKEN);
