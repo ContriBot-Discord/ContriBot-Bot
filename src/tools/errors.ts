@@ -11,18 +11,17 @@ function bigIntHandler(key: string, value: any) {
     }
 }
 
-export default function (error: Error, db: Database, interaction?: CommandInteraction): string {
+export default function (error: Error, db: Database, interaction?: CommandInteraction, asyncErr = false): string {
 
     let id = short.uuid().toString();
 
-    console.log(`[${new Date().toLocaleString()}] Unhandled error #${id}: ${error.message}`);
+    console.log(`${asyncErr? '/!\\ WARNING /!\\' : ''} [${new Date().toLocaleString("fr-FR")}] Unhandled ${asyncErr? 'async' : ''} error #${id}: ${error.message}`);
 
     try {
-
         db.registerError(id, error.name, error.message, error.stack || null, error.cause || null,
             JSON.stringify(
                 interaction?.toJSON(),
-                bigIntHandler)
+                bigIntHandler) || null
         );
     } catch (err) {
         // @ts-ignore
