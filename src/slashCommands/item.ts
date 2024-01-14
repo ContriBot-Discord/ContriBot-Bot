@@ -1,7 +1,7 @@
 import {
-  SlashCommandBuilder,
-  CommandInteraction,
-  SlashCommandSubcommandBuilder,
+    SlashCommandBuilder,
+    CommandInteraction,
+    SlashCommandSubcommandBuilder, PermissionFlagsBits,
 } from "discord.js";
 import { SlashCommand } from "@/types";
 
@@ -13,6 +13,7 @@ export const command: SlashCommand = {
     .setName("item")
     .setDescription("Item command group.")
     .setDMPermission(false)
+    .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
     .addSubcommandGroup((group) =>
       group
         .setName("create")

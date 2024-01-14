@@ -24,7 +24,7 @@ item:
     ignored: "Les phrases {{ignored}} ont été ignorées car elles étaient vides."
   delete:
     title: "Article supprimé avec succès"
-    description: '{{itemName}} supprimé avec succès (avec l''id : `{{itemId}}`). Heureusement, il était recyclable !'
+    description: "{{itemName}} supprimé avec succès (avec l'id : `{{itemId}}`). Heureusement, il était recyclable !"
 shop:
   title: "**Boutique** [{{index}}]"
   footer:
@@ -35,7 +35,7 @@ profile:
   description: "Voici le profil de <@{{userid}}>"
   stats:
     name: "Stats :"
-    value: "Messages envoyés : **{{messagesSent}}**\n Temps passé en vocal : **{{hours}}h {{minutes}}m {{seconds}}s**"
+    value: "Messages envoyés : **{{messagesSent}}**\n Temps passé en vocal : **{{hours}}h {{minutes}}m {{seconds}}s**\n Nombre de bumps: **{{bumps}}**"
   points:
     name: "{{pointName}} :"
     value: "boutique (dépensable): **{{storePoints}}**\n classement (permanent) : **{{leaderboardPoints}}**"

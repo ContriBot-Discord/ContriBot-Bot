@@ -39,9 +39,8 @@ const event: BotEvent = {
 
     // If there are no items, send an error message
     if (items.length === 0) {
-      await interaction.reply({
+      await interaction.editReply({
         embeds: [noItems(guild.lang)],
-        ephemeral: true,
       });
       return;
     }

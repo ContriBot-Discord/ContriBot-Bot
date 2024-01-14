@@ -10,6 +10,8 @@ export class User {
   leaderboardPoints: number;
   messagesSent: number;
   voiceDuration: number;
+  nitroBoost: boolean;
+  bumpCount: number;
   inventory: UserItem[];
   readonly #db: mysql.Pool;
   voiceJoinedAt: Date | null;
@@ -21,6 +23,8 @@ export class User {
     leaderboardPoints: number = 0,
     messagesSent: number = 0,
     voiceDuration: number = 0,
+    nitroBoost: boolean = false,
+    bumpCount: number = 0,
     db: mysql.Pool
   ) {
     this.#db = db;
@@ -30,6 +34,8 @@ export class User {
     this.leaderboardPoints = leaderboardPoints;
     this.messagesSent = messagesSent;
     this.voiceDuration = voiceDuration;
+    this.nitroBoost = nitroBoost;
+    this.bumpCount = bumpCount;
     this.inventory = this.fetchInventory();
     this.voiceJoinedAt = null;
   }
@@ -75,7 +81,7 @@ export class User {
   create(): void {
     // Register user in database
     this.#db.query<RowDataPacket[]>(
-      "INSERT INTO USER (user_id, guild_id, store_points, leaderboard_points, messages_sent, voice_duration) VALUES (?, ?, ?, ?, ?, ?)",
+      "INSERT INTO USER (user_id, guild_id, store_points, leaderboard_points, messages_sent, voice_duration, nitro_boost, bump_count) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
       [
         this.id,
         this.guild.id,
@@ -83,6 +89,8 @@ export class User {
         this.leaderboardPoints,
         this.messagesSent,
         this.voiceDuration,
+        this.nitroBoost,
+        this.bumpCount,
       ],
 
       (err) => {
@@ -97,12 +105,14 @@ export class User {
 
     // If the user exists in the database, it gets updated. If not, it gets created
     this.#db.query(
-      "UPDATE USER SET store_points = ?, leaderboard_points = ?, messages_sent = ?, voice_duration = ? WHERE user_id = ? AND guild_id = ?",
+      "UPDATE USER SET store_points = ?, leaderboard_points = ?, messages_sent = ?, voice_duration = ?,  nitro_boost = ?, bump_count = ? WHERE user_id = ? AND guild_id = ?",
       [
         this.storePoints,
         this.leaderboardPoints,
         this.messagesSent,
         this.voiceDuration,
+        this.nitroBoost,
+        this.bumpCount,
         this.id,
         this.guild.id,
       ],

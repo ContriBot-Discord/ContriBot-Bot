@@ -19,9 +19,12 @@ export const command: SlashCommand = {
     ),
   async execute(interaction: CommandInteraction<CacheType>) {
     const guild = DB.getGuild(interaction.guildId!);
-    const userId = interaction.options.getUser("member")?.id || interaction.user.id;
+    const userId =
+      interaction.options.getUser("member")?.id || interaction.user.id;
     const user = guild.getUser(userId);
-    const userAvatar = interaction.options.getUser("member")?.displayAvatarURL() || interaction.user.displayAvatarURL();
+    const userAvatar =
+      interaction.options.getUser("member")?.displayAvatarURL() ||
+      interaction.user.displayAvatarURL();
 
     const embed = profileEmbed(
       guild.lang,
@@ -31,6 +34,8 @@ export const command: SlashCommand = {
       user.leaderboardPoints,
       user.messagesSent,
       user.voiceDuration,
+      user.nitroBoost,
+      user.bumpCount,
       userAvatar
     );
 

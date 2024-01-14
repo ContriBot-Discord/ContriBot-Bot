@@ -12,32 +12,50 @@ const event: BotEvent = {
   async execute(message: Message) {
     const guild = message.guild!;
     const user = message.author;
-    const channel = message.channel;
+    const dbGuild = DB.getGuild(guild.id);
+    // Check if the message is a bump
+    if (
+      user.id === "302050872383242240" &&
+      message.interaction?.commandName === "bump"
+    ) {
+      const dbUser = dbGuild.getUser(message.interaction?.user?.id!);
+      dbUser.addPoints(dbGuild.bumpPoint);
+      dbUser.bumpCount++;
+    } else {
+      const channel = message.channel;
+      const dbUser = dbGuild.getUser(user.id);
 
-    // If the message is from a bot, return
-    if (user.bot) return;
+      // If the message is from a bot, return
+      if (user.bot) return;
 
-    // If the message comes from a blocked channel, return
-    if (DB.getGuild(guild.id).disabledChannels.includes(channel.id)) return;
+      // If the message comes from a blocked channel, return
+      if (dbGuild.disabledChannels.includes(channel.id)) return;
 
-    // Get the current time
-    const now = Date.now();
+      // Get the current time
+      const now = Date.now();
 
-    // Check if the user has a timestamp in the cache
-    if (messageCooldowns.has(user.id)) {
-      const cooldown = 60000; // 60 seconds in milliseconds
+      // Check if the user has a timestamp in the cache
+      if (messageCooldowns.has(user.id)) {
+        const cooldown = 60000; // 60 seconds in milliseconds
 
-      // Check if 60 seconds have passed since the user's last message
-      if (now - messageCooldowns.get(user.id)! >= cooldown) {
-        // Add points to the user
-        DB.getGuild(guild.id).getUser(user.id).addMessagePoint(channel.id, message.member!.roles.cache.map((role) => role.id));
-        // Update the timestamp in the cache
+        // Check if 60 seconds have passed since the user's last message
+        if (now - messageCooldowns.get(user.id)! >= cooldown) {
+          // Add points to the user
+          dbUser.addMessagePoint(
+            channel.id,
+            message.member!.roles.cache.map((role) => role.id)
+          );
+          // Update the timestamp in the cache
+          messageCooldowns.set(user.id, now);
+        }
+      } else {
+        dbUser.addMessagePoint(
+          channel.id,
+          message.member!.roles.cache.map((role) => role.id)
+        );
+        // If the user doesn't have a timestamp in the cache, add it
         messageCooldowns.set(user.id, now);
       }
-    } else {
-      DB.getGuild(guild.id).getUser(user.id).addMessagePoint(channel.id, message.member!.roles.cache.map((role) => role.id));
-      // If the user doesn't have a timestamp in the cache, add it
-      messageCooldowns.set(user.id, now);
     }
   },
 };
