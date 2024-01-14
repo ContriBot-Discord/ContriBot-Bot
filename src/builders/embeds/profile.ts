@@ -11,6 +11,7 @@ export default function (
   leaderboardPoints: number,
   messagesSent: number,
   voiceDuration: number,
+  nitroBoost: boolean,
   bumpCount: number,
   userAvatar: string
 ): EmbedBuilder {
@@ -52,6 +53,7 @@ export default function (
         pointName: pointName,
         storePoints: Math.floor(storePoints),
         leaderboardPoints: Math.floor(leaderboardPoints),
+        nitroBoost: nitroBoost ? i18next.t("embeds:words.received") : i18next.t("embeds:words.admissible"),
       }),
       inline: true,
     })

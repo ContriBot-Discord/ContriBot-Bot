@@ -33,6 +33,7 @@ export const command: SlashCommand = {
       user.leaderboardPoints,
       user.messagesSent,
       user.voiceDuration,
+      user.nitroBoost,
       user.bumpCount,
       userAvatar
     );
