@@ -9,7 +9,8 @@ export const command: SlashCommand = {
   name: "leaderboard",
   data: new SlashCommandBuilder()
     .setName("leaderboard")
-    .setDescription("Show the leaderboard of users"),
+    .setDescription("Show the leaderboard of users")
+    .setDMPermission(false),
 
   async execute(interaction: CommandInteraction) {
     const guild = DB.getGuild(interaction.guildId!);

@@ -11,6 +11,7 @@ export const command: SlashCommand = {
     data: new SlashCommandBuilder()
         .setName("inventory")
         .setDescription("Show your super-cosy inventory")
+        .setDMPermission(false)
         .addBooleanOption((option) =>
             option
                 .setName("refunded")

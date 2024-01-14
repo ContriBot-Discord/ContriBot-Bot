@@ -23,6 +23,7 @@ export const command: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName("help")
     .setDescription("Show the help menu.")
+    .setDMPermission(false)
     .addStringOption((option) =>
       option
         .setName("type")

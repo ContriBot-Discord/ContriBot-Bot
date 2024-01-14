@@ -12,6 +12,7 @@ export const command: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName("item")
     .setDescription("Item command group.")
+    .setDMPermission(false)
     .addSubcommandGroup((group) =>
       group
         .setName("create")

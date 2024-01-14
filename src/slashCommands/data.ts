@@ -7,7 +7,8 @@ export const command: SlashCommand = {
     name: "data",
     data: new SlashCommandBuilder()
         .setName("data")
-        .setDescription("Get all the data I have about you"),
+        .setDescription("Get all the data I have about you")
+        .setDMPermission(false),
     execute: async (interaction: CommandInteraction<CacheType>) => {
         await interaction.deferReply({ ephemeral: true });
 

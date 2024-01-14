@@ -9,7 +9,8 @@ export const command: SlashCommand = {
   name: "ping",
   data: new SlashCommandBuilder()
     .setName("ping")
-    .setDescription("Displays the bot's ping"),
+    .setDescription("Displays the bot's ping")
+    .setDMPermission(false),
   execute: async (interaction: CommandInteraction<CacheType>) => {
     await interaction.reply({
       embeds: [
