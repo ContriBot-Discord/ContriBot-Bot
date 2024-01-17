@@ -58,12 +58,13 @@ function givePoints(member: GuildMember, user: User, channel:  VoiceBasedChannel
   if (members.size <= 1) {
 
     members.forEach(member => {
-      user = guild.getUser(member.id);
+      const dbuser = guild.getUser(member.id);
 
-      if (registered(user)) {
+      if (registered(dbuser)) {
 
         // Giving points to every newly uneligible member
-        givePoints(member, user, channel, guild);
+        givePoints(member, dbuser, channel, guild);
+        dbuser.voiceJoinedAt = null;
       }
     });
   }
@@ -122,7 +123,6 @@ const event: BotEvent = {
         const newGuild = DB.getGuild(newState.guild.id);
 
         register(newGuild.getUser(newState.member!.id), newState.channel!, newGuild);
-
       }
     }
   },
