@@ -58,12 +58,13 @@ function givePoints(member: GuildMember, user: User, channel:  VoiceBasedChannel
   if (members.size <= 1) {
 
     members.forEach(member => {
-      user = guild.getUser(member.id);
+      const dbuser = guild.getUser(member.id);
 
-      if (registered(user)) {
+      if (registered(dbuser)) {
 
         // Giving points to every newly uneligible member
-        givePoints(member, user, channel, guild);
+        givePoints(member, dbuser, channel, guild);
+        dbuser.voiceJoinedAt = null;
       }
     });
   }
@@ -96,7 +97,9 @@ const event: BotEvent = {
 
       if (!eligible(newState)) {
 
-        givePoints(newState.member!, user, newState.channel!, guild);
+        // If the user is not eligible anymore, we are giving them their points based on the old voice channel
+        // We are sure that the channel is not null because the user was eligible
+        givePoints(newState.member!, user, oldState.channel!, guild);
 
 
       } else if (
@@ -104,8 +107,9 @@ const event: BotEvent = {
         newState.guild.id === oldState.guild.id &&
         newState.channelId !== oldState.channelId
       ) {
-
-        givePoints(newState.member!, user, newState.channel!, guild);
+        // We are giving the points to the user on the old voice channel
+        // We are sure that the channel is not null because the user was eligible
+        givePoints(newState.member!, user, oldState.channel!, guild);
 
         // We are re-registering the user as "In voice channel" in our RAM DB
         register(user, newState.channel!, guild);
@@ -122,7 +126,6 @@ const event: BotEvent = {
         const newGuild = DB.getGuild(newState.guild.id);
 
         register(newGuild.getUser(newState.member!.id), newState.channel!, newGuild);
-
       }
     }
   },
