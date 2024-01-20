@@ -46,9 +46,10 @@ function givePoints(member: GuildMember, user: User, channel:  VoiceBasedChannel
   const voiceDuration = new Date().getTime() - user.voiceJoinedAt!.getTime();
   user.addVoicePoint(
     voiceDuration,
-    member.voice.channel!.id,
+    channel.id,
     member.roles.cache.map((role) => role.id)
   );
+  user.voiceJoinedAt = null;
 
 
   // Represent a list of all eligible members in the voice channel
@@ -68,9 +69,6 @@ function givePoints(member: GuildMember, user: User, channel:  VoiceBasedChannel
       }
     });
   }
-
-  user.voiceJoinedAt = null;
-
 }
 
 
