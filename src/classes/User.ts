@@ -164,7 +164,7 @@ export class User {
     const points: number =
       (duration / 900000) * this.guild.getMultiplier(roles);
 
-    this.voiceDuration += duration;
+    this.voiceDuration += Math.floor(duration);
     this.addPoints(this.guild.voicePoint * points);
   }
 
