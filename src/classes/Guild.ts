@@ -400,9 +400,6 @@ export class Guild {
       case "message":
         this.setMessagePoint(point);
         break;
-      case "react":
-        this.setVoicePoint(point);
-        break;
       case "voice":
         this.setVoicePoint(point);
         break;
