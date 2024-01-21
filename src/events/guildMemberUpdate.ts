@@ -18,6 +18,7 @@ const event: BotEvent = {
 
     // if a user boosts the server for the first time
     if (newMember.premiumSince && !user.nitroBoost) {
+      user.nitroBoost = true;
       user.addPoints(guild.boostPoint);
     }
   },
