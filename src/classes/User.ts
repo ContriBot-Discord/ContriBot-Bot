@@ -9,7 +9,7 @@ export class User {
   storePoints: number;
   leaderboardPoints: number;
   messagesSent: number;
-  voiceDuration: number;
+  voiceDuration: bigint;
   nitroBoost: boolean;
   bumpCount: number;
   inventory: UserItem[];
@@ -22,7 +22,7 @@ export class User {
     storePoints: number = 0,
     leaderboardPoints: number = 0,
     messagesSent: number = 0,
-    voiceDuration: number = 0,
+    voiceDuration: bigint = 0n,
     nitroBoost: boolean = false,
     bumpCount: number = 0,
     db: mysql.Pool
@@ -164,7 +164,7 @@ export class User {
     const points: number =
       (duration / 900000) * this.guild.getMultiplier(roles);
 
-    this.voiceDuration += Math.floor(duration);
+    this.voiceDuration += BigInt(Math.floor(duration));
     this.addPoints(this.guild.voicePoint * points);
   }
 

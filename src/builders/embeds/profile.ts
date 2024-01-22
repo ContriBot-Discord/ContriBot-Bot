@@ -10,7 +10,7 @@ export default function (
   storePoints: number,
   leaderboardPoints: number,
   messagesSent: number,
-  voiceDuration: number,
+  voiceDuration: bigint,
   nitroBoost: boolean,
   bumpCount: number,
   userAvatar: string
@@ -62,16 +62,16 @@ export default function (
     .setTimestamp();
 }
 
-function formatDuration(milliseconds: number) {
+function formatDuration(milliseconds: bigint) {
   // Ensure the input is a non-negative integer
-  if (!Number.isInteger(milliseconds) || milliseconds < 0) {
+  if (!Number.isSafeInteger(milliseconds) || milliseconds < 0n) {
     throw new Error(
       "Input must be a non-negative integer representing milliseconds"
     );
   }
 
   // Calculate hours, minutes, and seconds
-  let seconds: number = Math.floor(milliseconds / 1000);
+  let seconds: number = Math.floor(Number(milliseconds) / 1000);
   const hours: number = Math.floor(seconds / 3600);
   seconds %= 3600;
   const minutes: number = Math.floor(seconds / 60);
