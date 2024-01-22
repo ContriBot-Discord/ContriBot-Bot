@@ -72,7 +72,7 @@ const event: BotEvent = {
             interaction.fields.getTextInputValue("boostEditStocks")
           );
 
-          label = boostNamer(item.boost_type!, item.boost_duration!, item.multiplier!, item.applied_id!);
+          label = boostNamer(item.boost_type!, item.boost_duration!, item.multiplier!);
 
           break;
         case 2: // text
@@ -105,7 +105,6 @@ const event: BotEvent = {
             ephemeral: true,
           });
           return;
-          break;
       }
 
       if (label.length > 50) {
