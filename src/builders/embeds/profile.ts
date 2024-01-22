@@ -63,8 +63,8 @@ export default function (
 }
 
 function formatDuration(milliseconds: bigint) {
-  // Ensure the input is a non-negative integer
-  if (!Number.isSafeInteger(milliseconds) || milliseconds < 0n) {
+  // Ensure the input is a non-negative bigint
+  if (milliseconds < 0n) {
     throw new Error(
       "Input must be a non-negative integer representing milliseconds"
     );
