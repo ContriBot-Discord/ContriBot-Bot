@@ -10,18 +10,10 @@ import Error from "@/builders/embeds/errors/items/itemCreateTooLong";
 import boostCreate from "@/builders/embeds/errors/items/itemCreate";
 
 
-export const boostNamer = function boostNamer(boost_type: number, duration: string, multiplicator:number, applied_id: string|null): string {
-
-  if (applied_id == null) {
-    if (boost_type == 1) {
-      return `${duration} x${multiplicator} Guild boost`
-    } else {
-      return ""
-    }
-  }
-
-  else {
+export const boostNamer = function boostNamer(boost_type: number, duration: string, multiplicator:number): string {
     switch (boost_type) {
+      case 1:
+          return `${duration} x${multiplicator} Guild boost`
       case 2:
         return `${duration} x${multiplicator} channel boost`
       case 3:
@@ -31,7 +23,6 @@ export const boostNamer = function boostNamer(boost_type: number, duration: stri
       default:
           return ""
       }
-    }
 }
 
 export const create = async function create(
@@ -109,7 +100,7 @@ export const create = async function create(
 
       applied_id = applied_id_list[boost_type!];
 
-      label = boostNamer(boost_type!, duration!, boost!, applied_id!);
+      label = boostNamer(boost_type!, duration!, boost!);
 
       if (label == "") {
         success = false;
