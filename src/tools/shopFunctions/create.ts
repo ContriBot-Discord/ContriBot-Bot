@@ -89,7 +89,9 @@ export const create = async function create(
       // Even if it is a mess, it is build so that it can be handled easily later.
 
 
-      const applied_id_list = [ null, null,
+      const applied_id_list = [ null,
+
+            interaction.guildId,
 
             subcommand.getChannel("channel", false)
                 ? subcommand.getChannel("channel", false)!.id
