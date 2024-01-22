@@ -33,7 +33,7 @@ export const command: SlashCommand = {
     const boostId = options.getInteger("id", true);
 
     const item = user.inventory.find(
-      (item) => item.id == boostId && item.itemType === 1 && !item.used
+      (item) => item.id == boostId && item.itemType === 1 && !item.used && !item.refunded
     );
 
     if (!item) {
