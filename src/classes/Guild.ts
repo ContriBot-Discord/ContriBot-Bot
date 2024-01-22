@@ -103,7 +103,7 @@ export class Guild {
   createUser(id: string): User {
     // Create a guild in the database
     // Since Database is not configured yet, return a new guild
-    let user = new User(this, id, 0, 0, 0, 0, false, 0, this.#db);
+    let user = new User(this, id, 0, 0, 0, 0n, false, 0, this.#db);
 
     // Insert a new row in the database
     user.create();
