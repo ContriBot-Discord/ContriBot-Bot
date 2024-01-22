@@ -9,6 +9,7 @@ show:
     name: '{{pointName}} earned by action:        ‎'
     value: "Send message: **{{message}}**/60 seconds\n
             Voice channel: **{{voice}}**/15 minutes\n
+            Bump (Disboard): **{{bump}}**/bump\n
             Nitro boost: **{{nitroBoost}}**/boost (only once)\n"
   settings:
     name: 'Settings:'

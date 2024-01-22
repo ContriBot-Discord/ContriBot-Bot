@@ -17,7 +17,7 @@ export const command: SlashCommand = {
         .setDescription("The user you want to see the profile of.")
         .setRequired(false)
     ),
-  async execute(interaction: CommandInteraction<CacheType>) {
+  async execute(interaction: CommandInteraction<CacheType>) {    
     const guild = DB.getGuild(interaction.guildId!);
     const userId =
       interaction.options.getUser("member")?.id || interaction.user.id;
