@@ -33,7 +33,9 @@ function eligible(newState: VoiceState) {
 
   if (newState.channel === null) return false;
 
-  const members = newState.channel.members.filter(member => !member.user.bot)
+  const members = newState.channel.members.filter(
+      member => !member.user.bot && !member.voice.deaf && !member.voice.mute
+  )
 
   // If the user is a bot, is muted or deaf or is not in a voice channel or is alone in the voice channel, we return false
   // Else, True will be returned
@@ -53,7 +55,7 @@ function givePoints(member: GuildMember, user: User, channel:  VoiceBasedChannel
 
 
   // Represent a list of all eligible members in the voice channel
-  const members = channel.members.filter(member => eligible(member.voice))
+  const members = channel.members.filter(member => eligible(member.voice) && !registered(guild.getUser(member.id)))
 
   // If the voice channel do not have enough eligible members, we are unregistering the user, and giving them their points
   if (members.size <= 1) {
@@ -61,12 +63,14 @@ function givePoints(member: GuildMember, user: User, channel:  VoiceBasedChannel
     members.forEach(member => {
       const dbuser = guild.getUser(member.id);
 
-      if (registered(dbuser)) {
-
-        // Giving points to every newly uneligible member
-        givePoints(member, dbuser, channel, guild);
+      const DBvoiceDuration = new Date().getTime() - dbuser.voiceJoinedAt!.getTime();
+      user.addVoicePoint(
+          DBvoiceDuration,
+          channel.id,
+          member.roles.cache.map((role) => role.id)
+      );
         dbuser.voiceJoinedAt = null;
-      }
+
     });
   }
 }
