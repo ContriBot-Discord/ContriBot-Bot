@@ -6,6 +6,7 @@ show:
   description: "Voici la configuration de votre serveur"
   pointsCfg:
     name: '{{pointName}} gagné(s) par action :'
+    value: "Envoyer un message : **{{message}}**/60 secondes\n Salons vocaux : **{{voice}}**/15 minutes\n Bump (Disboard): **{{bump}}**/bump\n Boost Nitro : **{{nitroBoost}}**/boost (seulement une fois)\n"
   settings:
     name: 'Paramètres :'
     value: "Langue du serveur : **Français**\n Nom des points : **{{pointName}}**"
