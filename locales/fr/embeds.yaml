@@ -1,5 +1,8 @@
 default:
   title: "Commande **{{command_name}}**"
+words:
+  received: "Reçu"
+  admissible: "Obtenable"
 add:
   description:
     leaderboardPoints: "<@{{userid}}> a ajouté {{quantity}} {{pointName}} de classement à <@{{memberid}}>"
